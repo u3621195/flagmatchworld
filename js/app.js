@@ -133,7 +133,16 @@ function startGame(mode='main', level=1){
   renderGame(); startTimer();
 }
 function renderGame(){
-  screen.innerHTML = `<section class="gameplay"><header class="hud"><div class="hud-left"><div class="stat-block"><div class="stat-label">LEVEL</div><div class="stat-value" id="hudLevel">${state.mode==='quick'?'QG':pad(state.level)}</div></div><div class="stat-block"><div class="stat-label">SCORE</div><div class="stat-value" id="hudScore">${fmt(state.matchScore)}</div></div><div class="stat-block time-stat"><div class="stat-label">TIME</div><div class="stat-value" id="hudTime">${timeText(state.remaining)}</div></div><div class="stat-block matches-stat"><div class="stat-label">MATCHES</div><div class="stat-value" id="hudMatches">--</div></div></div><div class="country-pill empty" id="countryPill">Select a flag</div><div class="hud-right"><button id="hintBtn" class="hud-btn" title="Hint">💡<small id="hintCount">${state.helpers.hint}</small></button><button id="shuffleBtn" class="hud-btn" title="Shuffle">🔀<small id="shuffleCount">${state.helpers.shuffle}</small></button><button id="pauseBtn" class="hud-btn" title="Pause">Ⅱ</button></div></header><div class="timer-bar"><div id="timerFill" class="timer-fill"></div></div><div class="board-wrap"><div id="board" class="board" style="--cols:${COLS};--rows:${ROWS}"></div></div></section>`;
+  screen.innerHTML = `<section class="gameplay"><div class="board-frame"><header class="topbar">
+    <div class="hud-pill matches-pill"><span>MATCHES</span><strong id="hudMatches">--</strong></div>
+    <div class="hud-pill level-pill"><span>LEVEL</span><strong id="hudLevel">${state.mode==='quick'?'QG':pad(state.level)}</strong></div>
+    <div class="hud-pill country-pill empty" id="countryPill"><span>FLAG</span><strong>Select a flag</strong></div>
+    <button id="hintBtn" class="hud-btn" title="Hint"><span>Hint</span><strong id="hintCount">${state.helpers.hint}</strong></button>
+    <button id="shuffleBtn" class="hud-btn" title="Shuffle"><span>Shuffle</span><strong id="shuffleCount">${state.helpers.shuffle}</strong></button>
+    <div class="timer-panel"><span>TIME</span><strong class="timer-text" id="hudTime">${timeText(state.remaining)}</strong></div>
+    <div class="score-panel"><span>SCORE</span><strong id="hudScore">${fmt(state.matchScore)}</strong></div>
+    <button id="pauseBtn" class="pause-btn" title="Pause"><span class="pause-icon"></span></button>
+  </header><div class="board-time-meter"><div id="timerFill" class="board-time-bar timer-fill"></div></div><div class="board-wrap"><div id="board" class="board" style="--cols:${COLS};--rows:${ROWS}"></div></div></div></section>`;
   $('#hintBtn').addEventListener('click',useHint); $('#shuffleBtn').addEventListener('click',manualShuffle); $('#pauseBtn').addEventListener('click',pauseGame);
   drawBoard(); updateHud();
 }
@@ -153,7 +162,7 @@ function updateHud(){
   $('#hintCount') && ($('#hintCount').textContent=state.helpers.hint); $('#shuffleCount') && ($('#shuffleCount').textContent=state.helpers.shuffle); $('#hudMatches') && ($('#hudMatches').textContent=String(countConnectablePairs(state.board)).padStart(2,'0'));
   const fill=$('#timerFill'); if(fill){ const total=state.mode==='quick'?480:levelSeconds(state.level); fill.style.width=`${Math.max(0,state.remaining/total*100)}%`; fill.classList.toggle('warn',state.remaining<=60); fill.classList.toggle('danger',state.remaining<=10); }
 }
-function setCountry(name){ const p=$('#countryPill'); if(!p) return; p.textContent=name||'Select a flag'; p.classList.toggle('empty',!name); }
+function setCountry(name){ const p=$('#countryPill'); if(!p) return; const v=$('strong',p); if(v) v.textContent=name||'Select a flag'; else p.textContent=name||'Select a flag'; p.classList.toggle('empty',!name); }
 function selectTile(r,c){
   if(state.paused || state.completed) return; const tile=state.board[r][c]; if(!tile||tile.removed) return;
   state.hinted=null; setCountry(tile.name);
