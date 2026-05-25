@@ -4921,3 +4921,40 @@ refreshSaveSlot(); // show saved game slot on start screen if one exists
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleFit).catch(() => {});
   [0, 40, 80, 160, 320, 640, 1000, 1600].forEach(ms => setTimeout(scheduleFit, ms));
 })();
+
+// =========================================================
+// Flag Match World startup hotspot safety binding
+// Keeps the approved startup artwork visible while ensuring
+// the invisible button hotspots always trigger the game actions.
+// =========================================================
+(function fmwBindStartupHotspots(){
+  function bindOnce(){
+    const map = [
+      ["startBtn", function(){ startNewGameFromTitle(false); }],
+      ["quickGameBtn", function(){ startQuickGame(); }],
+      ["continueFromSaveBtn", function(){ continueFromSave(); }],
+      ["themePillBtn", function(){ openCompactThemePicker(); }]
+    ];
+    map.forEach(function(pair){
+      const el = document.getElementById(pair[0]);
+      if (!el || el.dataset.fmwHotspotBound === "1") return;
+      el.dataset.fmwHotspotBound = "1";
+      el.addEventListener("click", function(e){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        try { unlockAudio(); } catch (err) {}
+        if (pair[0] === "continueFromSaveBtn" && el.disabled) {
+          try { sfx.invalid(); } catch (err) {}
+          return;
+        }
+        pair[1]();
+      }, true);
+      el.addEventListener("pointerup", function(e){
+        e.stopPropagation();
+      }, true);
+    });
+  }
+  bindOnce();
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", bindOnce);
+  window.addEventListener("pageshow", bindOnce);
+})();

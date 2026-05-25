@@ -6655,3 +6655,72 @@ body{
 @media (max-width: 900px) and (orientation: landscape){
   .country-pill{ height:24px; top:calc(var(--topbar-h, 44px) + 8px); min-width:220px; font-size:12px; }
 }
+
+/* =========================================================
+   Flag Match World approved startup mockup screen
+   Uses the locked emerald globe artwork exactly as the visible UI.
+   Live HTML buttons remain as invisible hotspots for functionality.
+   ========================================================= */
+#overlay:not(.hidden) {
+  padding: 0 !important;
+  display: block !important;
+  background: #00251f url("assets/ui/startup-selected.jpeg") center center / cover no-repeat !important;
+  backdrop-filter: none !important;
+  overflow: hidden !important;
+}
+#overlay:not(.hidden) .flag-start-modal {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+#overlay:not(.hidden) .flag-start-modal::before,
+#overlay:not(.hidden) .flag-start-copy,
+#overlay:not(.hidden) .flag-save-info,
+#overlay:not(.hidden) .sprite-select {
+  display: none !important;
+}
+#overlay:not(.hidden) .flag-start-actions {
+  position: absolute !important;
+  left: 16.6vw !important;
+  top: 44.1vh !important;
+  width: 30.1vw !important;
+  height: 34.2vh !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  z-index: 5 !important;
+  pointer-events: auto !important;
+}
+#overlay:not(.hidden) .flag-start-actions .start-btn {
+  position: absolute !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 20.5% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  opacity: 0.001 !important;
+  color: transparent !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+#overlay:not(.hidden) #continueFromSaveBtn { top: 0 !important; }
+#overlay:not(.hidden) #startBtn { top: 26.5% !important; }
+#overlay:not(.hidden) #quickGameBtn { top: 53.0% !important; }
+#overlay:not(.hidden) #themePillBtn { top: 79.5% !important; }
+#overlay:not(.hidden) .flag-start-actions .start-btn:disabled {
+  pointer-events: auto !important;
+  cursor: default !important;
+}
