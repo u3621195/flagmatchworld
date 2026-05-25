@@ -373,3 +373,87 @@ button{font:inherit;cursor:pointer;touch-action:manipulation} button:disabled{op
   .hud-btn{height:36px;min-width:43px;border-radius:12px;font-size:15px;padding:0 8px}.hud-btn small{min-width:15px;height:15px;font-size:9px;margin-left:3px;padding:0 4px}
   .board{padding:6px;gap:3px;border-radius:18px}.board::before,.board::after{inset:7px;border-radius:14px}.tile,.slot{border-radius:8px}.tile img{border-radius:6px}
 }
+
+/* V0.2.4 Pocket Match board geometry alignment
+   Goal: make the board feel like Pocket Match first: wide, readable, compact frame,
+   bigger tiles, tight clean gaps. Flag Match World styling remains emerald/gold. */
+.gameplay{
+  grid-template-rows:auto 8px minmax(0,1fr);
+  gap:6px;
+  padding:6px 12px 8px;
+}
+.board-wrap{
+  padding:0;
+  display:grid;
+  place-items:start center;
+  overflow:visible!important;
+}
+.board{
+  /* Width-led sizing like Pocket Match on desktop/iPad so the board uses the play area. */
+  width:min(calc(100vw - 24px), 1320px)!important;
+  height:auto!important;
+  aspect-ratio:16 / 9;
+  max-width:100%;
+  max-height:none;
+  padding:6px!important;
+  gap:2px!important;
+  border-radius:18px!important;
+  border:1px solid color-mix(in srgb,var(--gold),transparent 54%)!important;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(255,255,255,.040), transparent 42%),
+    linear-gradient(180deg, color-mix(in srgb,var(--primary2),#061f1b 32%), color-mix(in srgb,var(--bg),#020806 6%))!important;
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.36),
+    inset 0 1px 0 rgba(255,255,255,.13),
+    inset 0 0 0 1px rgba(0,0,0,.36),
+    inset 0 0 0 2px color-mix(in srgb,var(--gold),transparent 88%)!important;
+}
+.board::before{
+  inset:6px!important;
+  border-radius:13px!important;
+  opacity:.12!important;
+  background:
+    radial-gradient(ellipse at 50% 50%, transparent 0 38%, rgba(233,207,130,.14) 38.5% 39%, transparent 40%),
+    linear-gradient(90deg, transparent 0 49%, rgba(233,207,130,.10) 49.5% 50.5%, transparent 51%)!important;
+}
+.board::after{
+  inset:6px!important;
+  border-radius:13px!important;
+  box-shadow:inset 0 0 20px rgba(0,0,0,.26), inset 0 0 0 1px rgba(255,255,255,.028)!important;
+}
+.slot{
+  border-radius:7px!important;
+  background:rgba(0,24,20,.42)!important;
+  border:1px solid rgba(255,255,255,.040)!important;
+  box-shadow:inset 0 1px 4px rgba(0,0,0,.42)!important;
+}
+.slot::before{display:none!important}
+.tile{
+  border-radius:7px!important;
+  padding:1px!important;
+  box-shadow:
+    0 4px 7px rgba(0,0,0,.42),
+    inset 0 1px 0 rgba(255,255,255,.23),
+    inset 0 -1px 0 rgba(0,0,0,.40)!important;
+}
+.tile img{
+  border-radius:5px!important;
+  object-fit:contain!important;
+}
+.path-canvas{filter:drop-shadow(0 0 7px color-mix(in srgb,var(--accent),transparent 36%))}
+
+/* On small iPhone landscape, fit by height to avoid clipping. */
+@media (max-height:520px){
+  .gameplay{grid-template-rows:auto 6px minmax(0,1fr);gap:4px;padding:4px 8px 6px}
+  .board-wrap{place-items:center}
+  .board{
+    width:min(calc(100vw - 16px), calc((100vh - 62px) * 16 / 9))!important;
+    height:min(calc(100vh - 62px), calc((100vw - 16px) * 9 / 16))!important;
+    aspect-ratio:auto!important;
+    padding:4px!important;
+    gap:2px!important;
+    border-radius:14px!important;
+  }
+  .board::before,.board::after{inset:4px!important;border-radius:10px!important}
+  .tile,.slot{border-radius:6px!important}.tile img{border-radius:4px!important}
+}
