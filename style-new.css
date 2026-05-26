@@ -7219,3 +7219,125 @@ html[data-theme="tropical-teal"] {
   .fmw-menu-list { top: 24.2em !important; }
   .fmw-settings-pill { top: 42.3em !important; }
 }
+
+
+/* ==========================================================
+   FMW v1.0 — iOS / iPadOS Startup Screen Fix
+   Addresses:
+   1. Portrait mode: stage was 56.25 vw tall (16:9 slice) —
+      on iPhone/iPad portrait the stage now fills the viewport
+      width and centers vertically so the artwork always shows.
+   2. Safe-area insets for notched iPhones and iPads with
+      home-bar (viewport-fit=cover already set in <head>).
+   3. Stage background: was 100% 100% (stretches art) — now
+      uses cover so the image scales proportionally.
+   4. iPad landscape 4:3 query tightened (1.4/1 is more
+      accurate for iPad's 4:3 screen than the old 1.55/1).
+   5. Very narrow landscape (e.g. iPhone SE landscape):
+      stage shrinks to fit the shorter dimension.
+   ========================================================== */
+
+/* ── Overlay: respect safe areas on notched/dynamic-island
+      iPhones and iPads with home bar. ── */
+#overlay.fmw-startup-screen {
+  padding-top:    env(safe-area-inset-top,    0px) !important;
+  padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+  padding-left:   env(safe-area-inset-left,   0px) !important;
+  padding-right:  env(safe-area-inset-right,  0px) !important;
+  /* Use dvh so Chrome/Safari on iOS don't cut off the bottom. */
+  height: 100dvh !important;
+  box-sizing: border-box !important;
+}
+
+/* ── Stage: always scale as one locked artboard, cover not stretch. ── */
+.fmw-startup-stage {
+  background-size: cover !important;
+  background-position: center center !important;
+}
+
+/* ── PORTRAIT (iPhone & iPad held upright)
+      The artwork is 16:9 landscape.  In portrait the screen is
+      taller than it is wide, so we fit the stage to the full
+      viewport width and let it be shorter than the screen —
+      the overlay centres it vertically.
+      font-size tracks 1 vw (= 1/100 of stage width). ── */
+@media (orientation: portrait) {
+  #overlay.fmw-startup-screen {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .fmw-startup-stage {
+    /* Stage width = full viewport width (minus safe-area sides).
+       Stage height = 9/16 of that width (keeps 16:9 art intact). */
+    width:  calc(100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right,  0px)) !important;
+    height: calc((100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)) * 9 / 16) !important;
+    font-size: calc((100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)) / 100) !important;
+    aspect-ratio: unset !important;
+  }
+}
+
+/* ── LANDSCAPE — wide screens (≥ 16:9, e.g. iPhone landscape,
+      laptop, desktop): constrain to the shorter dimension. ── */
+@media (orientation: landscape) and (min-aspect-ratio: 16/9) {
+  .fmw-startup-stage {
+    height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)) !important;
+    width:  calc((100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)) * 16 / 9) !important;
+    font-size: calc((100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)) / 56.25) !important;
+    aspect-ratio: unset !important;
+  }
+}
+
+/* ── LANDSCAPE — narrower-than-16:9 screens (iPad 4:3, iPad Mini,
+      iPad Air landscape).  Fit to full viewport width. ── */
+@media (orientation: landscape) and (max-aspect-ratio: 16/9) {
+  .fmw-startup-stage {
+    width:  calc(100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)) !important;
+    height: calc((100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)) * 9 / 16) !important;
+    font-size: calc((100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)) / 100) !important;
+    aspect-ratio: unset !important;
+  }
+  #overlay.fmw-startup-screen {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
+
+/* ── Very-tight landscape (iPhone SE landscape, ~568 px tall):
+      stage can't be taller than the available height. ── */
+@media (orientation: landscape) and (max-height: 420px) {
+  .fmw-startup-stage {
+    height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)) !important;
+    width:  calc((100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)) * 16 / 9) !important;
+    font-size: calc((100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)) / 56.25) !important;
+    aspect-ratio: unset !important;
+  }
+}
+
+/* ── @supports fallback: browsers without dvh (older iOS Safari < 15.4) ── */
+@supports not (height: 100dvh) {
+  #overlay.fmw-startup-screen { height: 100vh !important; }
+
+  @media (orientation: portrait) {
+    .fmw-startup-stage {
+      width:  100vw !important;
+      height: calc(100vw * 9 / 16) !important;
+      font-size: calc(100vw / 100) !important;
+    }
+  }
+  @media (orientation: landscape) and (min-aspect-ratio: 16/9) {
+    .fmw-startup-stage {
+      height: 100vh !important;
+      width:  calc(100vh * 16 / 9) !important;
+      font-size: calc(100vh / 56.25) !important;
+    }
+  }
+  @media (orientation: landscape) and (max-aspect-ratio: 16/9) {
+    .fmw-startup-stage {
+      width:  100vw !important;
+      height: calc(100vw * 9 / 16) !important;
+      font-size: calc(100vw / 100) !important;
+    }
+  }
+}
