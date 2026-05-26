@@ -2,15 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
-<meta http-equiv="Pragma" content="no-cache"/>
-<meta http-equiv="Expires" content="0"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" name="viewport"/>
 <title>Flag Match World</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
 
-<link href="fmw-v033.css?v=033" rel="stylesheet"/>
+<link href="style-new.css?v=fmw-startup-v2" rel="stylesheet"/>
 
 
 </head>
@@ -88,7 +85,6 @@
 <div aria-hidden="true" class="board-time-meter">
 <div class="board-time-bar" id="boardTimerBar"></div>
 </div>
-<div class="country-pill" id="countryPill">Select a flag</div>
 <div class="board-header">
 <span id="boardInfo">MATCHES: --</span>
 <span id="moveStatus">SYSTEM READY</span>
@@ -103,12 +99,11 @@
 
 <div class="theme-picker hidden" id="themePicker" aria-hidden="true">
 <div class="theme-picker-label">Select Theme</div>
-<div class="theme-option active" data-theme="neon-night"><span class="theme-name">EMERALD GREEN</span></div>
-<div class="theme-option" data-theme="cyber-blue"><span class="theme-name">CLASSIC BLUE</span></div>
-<div class="theme-option" data-theme="arcade-purple"><span class="theme-name">ROYAL PURPLE</span></div>
-<div class="theme-option" data-theme="soft-sky"><span class="theme-name">DARK NAVY</span></div>
-<div class="theme-option" data-theme="candy-pop"><span class="theme-name">BURGUNDY RED</span></div>
-<div class="theme-option" data-theme="mint-fresh"><span class="theme-name">EMERALD LIGHT</span></div>
+<div class="theme-option active" data-theme="emerald-green"><span class="theme-name">EMERALD</span></div>
+<div class="theme-option" data-theme="deep-ocean"><span class="theme-name">DEEP OCEAN</span></div>
+<div class="theme-option" data-theme="jade-gold"><span class="theme-name">JADE GOLD</span></div>
+<div class="theme-option" data-theme="midnight-green"><span class="theme-name">MIDNIGHT GREEN</span></div>
+<div class="theme-option" data-theme="tropical-teal"><span class="theme-name">TROPICAL TEAL</span></div>
 </div>
 <div class="theme-picker-overlay hidden" id="themePickerOverlay" aria-hidden="true">
   <div class="theme-picker-panel" role="dialog" aria-modal="true" aria-labelledby="themePickerTitle">
@@ -116,68 +111,83 @@
     <button class="theme-picker-close" id="themePickerClose" type="button" aria-label="Close theme picker">×</button>
     <h2 id="themePickerTitle">Choose Theme</h2>
     <div class="theme-picker-grid" id="themePickerGrid">
-      <button class="theme-picker-card theme-option active" data-theme="neon-night" type="button">
-        <span class="theme-card-swatch"><i style="background:#060915"></i><i style="background:#37e8ff"></i><i style="background:#ff4fd8"></i></span><span class="theme-card-name">Neon Night</span>
+      <button class="theme-picker-card theme-option active" data-theme="emerald-green" type="button">
+        <span class="theme-card-swatch"><i style="background:#083d35"></i><i style="background:#28b86e"></i><i style="background:#e8c56c"></i></span><span class="theme-card-name">Emerald</span>
       </button>
-      <button class="theme-picker-card theme-option" data-theme="cyber-blue" type="button">
-        <span class="theme-card-swatch"><i style="background:#020610"></i><i style="background:#25c8ff"></i><i style="background:#6aa8ff"></i></span><span class="theme-card-name">Cyber Blue</span>
+      <button class="theme-picker-card theme-option" data-theme="deep-ocean" type="button">
+        <span class="theme-card-swatch"><i style="background:#061f2f"></i><i style="background:#0d6e75"></i><i style="background:#d6be78"></i></span><span class="theme-card-name">Deep Ocean</span>
       </button>
-      <button class="theme-picker-card theme-option" data-theme="arcade-purple" type="button">
-        <span class="theme-card-swatch"><i style="background:#241128"></i><i style="background:#ff8a4d"></i><i style="background:#ffd05d"></i></span><span class="theme-card-name">Sunset Arcade</span>
+      <button class="theme-picker-card theme-option" data-theme="jade-gold" type="button">
+        <span class="theme-card-swatch"><i style="background:#07392f"></i><i style="background:#1ca66a"></i><i style="background:#d7b85a"></i></span><span class="theme-card-name">Jade Gold</span>
       </button>
-      <button class="theme-picker-card theme-option" data-theme="soft-sky" type="button">
-        <span class="theme-card-swatch"><i style="background:#f7fbff"></i><i style="background:#3c8cff"></i><i style="background:#ffd45d"></i></span><span class="theme-card-name">Soft Sky</span>
+      <button class="theme-picker-card theme-option" data-theme="midnight-green" type="button">
+        <span class="theme-card-swatch"><i style="background:#020b0a"></i><i style="background:#06332e"></i><i style="background:#14916e"></i></span><span class="theme-card-name">Midnight Green</span>
       </button>
-      <button class="theme-picker-card theme-option" data-theme="candy-pop" type="button">
-        <span class="theme-card-swatch"><i style="background:#fffaf4"></i><i style="background:#ff73b7"></i><i style="background:#52d8ff"></i></span><span class="theme-card-name">Candy Pop</span>
-      </button>
-      <button class="theme-picker-card theme-option" data-theme="mint-fresh" type="button">
-        <span class="theme-card-swatch"><i style="background:#f7fffb"></i><i style="background:#2acb8f"></i><i style="background:#28a9ff"></i></span><span class="theme-card-name">Mint Fresh</span>
+      <button class="theme-picker-card theme-option" data-theme="tropical-teal" type="button">
+        <span class="theme-card-swatch"><i style="background:#073d3a"></i><i style="background:#15a692"></i><i style="background:#f0d47a"></i></span><span class="theme-card-name">Tropical Teal</span>
       </button>
     </div>
   </div>
 </div>
-<section class="overlay" id="overlay">
-  <div class="modal start-modal flag-start-modal">
-    <div class="flag-start-copy">
-      <div class="modal-kicker">WORLD FLAG PUZZLE</div>
-      <h1>Flag Match <span>World</span></h1>
-      <p>Match flags across the globe.</p>
-    </div>
-    <div class="flag-start-actions start-actions action-grid">
-      <button class="start-btn action-btn continue-action" id="continueFromSaveBtn" type="button">Continue</button>
-      <button class="start-btn action-btn primary-action" id="startBtn" type="button">New Game</button>
-      <button class="start-btn action-btn quick-action" id="quickGameBtn" type="button">Quick Game</button>
-      <button class="start-btn action-btn settings-action" id="themePillBtn" type="button" aria-haspopup="dialog" aria-expanded="false">
-        <span id="themePillName">Settings</span><span id="themePillSwatches" aria-hidden="true"></span>
+<section class="overlay fmw-startup-screen" id="overlay" aria-label="Flag Match World startup screen">
+  <div class="fmw-startup-stage" aria-hidden="false">
+    <nav class="fmw-menu-list" aria-label="Main menu buttons">
+      <button class="fmw-menu-btn fmw-btn-continue" id="continueFromSaveBtn" type="button">
+        <span class="fmw-btn-icon"><i class="fa-solid fa-location-arrow"></i></span>
+        <span class="fmw-btn-label">Continue</span>
+        <span class="fmw-btn-arrow">›</span>
+      </button>
+      <button class="fmw-menu-btn fmw-btn-newgame" id="startBtn" type="button">
+        <span class="fmw-btn-icon"><i class="fa-solid fa-globe"></i></span>
+        <span class="fmw-btn-label">New Game</span>
+        <span class="fmw-btn-arrow">›</span>
+      </button>
+      <button class="fmw-menu-btn fmw-btn-quick" id="quickGameBtn" type="button">
+        <span class="fmw-btn-icon"><i class="fa-solid fa-bolt"></i></span>
+        <span class="fmw-btn-label">Quick Game</span>
+        <span class="fmw-btn-arrow">›</span>
+      </button>
+    </nav>
+
+    <div class="fmw-settings-pill" id="fmwSettingsPill" aria-label="Quick settings">
+      <button class="fmw-pill-item" id="fmwMusicToggle" type="button" aria-pressed="true">
+        <span class="fmw-pill-icon"><i class="fa-solid fa-music"></i></span>
+        <span class="fmw-pill-label"><span>Music</span><small id="fmwMusicSub">On</small></span>
+      </button>
+      <span class="fmw-pill-divider" aria-hidden="true"></span>
+      <button class="fmw-pill-item" id="fmwSoundToggle" type="button" aria-pressed="true">
+        <span class="fmw-pill-icon"><i class="fa-solid fa-volume-high"></i></span>
+        <span class="fmw-pill-label"><span>Sound</span><small id="fmwSoundSub">On</small></span>
+      </button>
+      <span class="fmw-pill-divider" aria-hidden="true"></span>
+      <button class="fmw-pill-item" id="fmwThemeCycle" type="button">
+        <span class="fmw-pill-icon"><i class="fa-solid fa-palette"></i></span>
+        <span class="fmw-pill-label"><span>Theme</span><small id="fmwThemeSub">Emerald</small></span>
       </button>
     </div>
-    <div class="fmw-startup-hotspots" id="fmwStartupHotspots" aria-label="Startup actions">
-      <button id="fmwHotspotContinue" type="button" aria-label="Continue"></button>
-      <button id="fmwHotspotNew" type="button" aria-label="New Game"></button>
-      <button id="fmwHotspotQuick" type="button" aria-label="Quick Game"></button>
-      <button id="fmwHotspotSettings" type="button" aria-label="Settings"></button>
-    </div>
-    <div class="saved-slot selected-run-info flag-save-info" id="savedSlot">
-      <div class="saved-slot-card">
-        <div class="saved-slot-info"><span class="saved-slot-label">Saved Journey</span><div class="saved-slot-details"><span id="saveLevel">—</span><span class="saved-slot-sep">·</span><span id="saveScore">—</span></div></div>
-        <div class="saved-slot-info"><span class="saved-slot-label">Last Saved</span><div class="saved-slot-details"><span id="saveDate">—</span><button class="delete-save-btn" id="deleteSaveBtn" title="Delete saved game">✕</button></div></div>
-      </div>
-    </div>
-    <div class="sprite-select visually-hidden" aria-hidden="true">
+  </div>
+
+  <div class="fmw-startup-logic-only" aria-hidden="true">
+    <div class="sprite-select hidden">
       <button class="sprite-carousel-arrow sprite-carousel-prev" id="spriteCarouselPrev" type="button">‹</button>
-      <div class="sprite-options" id="spriteOptions" data-carousel-ready="1"><button class="sprite-option active" data-set="flags" type="button"><span class="sprite-name">Flags</span></button></div>
+      <div class="sprite-options" id="spriteOptions">
+        <button class="sprite-option active" data-set="flags" type="button"><span class="sprite-name">Flags</span><span class="sprite-save-pill">NEW</span></button>
+      </div>
       <button class="sprite-carousel-arrow sprite-carousel-next" id="spriteCarouselNext" type="button">›</button>
       <div class="sprite-carousel-dots" id="spriteCarouselDots"></div>
+    </div>
+    <div class="saved-slot hidden" id="savedSlot">
+      <span id="saveLevel">—</span><span id="saveScore">—</span><span id="saveDate">—</span>
+      <button class="delete-save-btn hidden" id="deleteSaveBtn" type="button">×</button>
     </div>
   </div>
 </section>
 <section class="overlay hidden" id="newGameConfirmOverlay">
 <div class="modal save-modal confirm-modal">
-<div class="modal-kicker">NEW GAME</div>
+<div class="modal-kicker">SAVE SLOT WARNING</div>
 <h1>Start New Game?</h1>
 <p id="newGameConfirmMsg">
-          This will restart your Flag Match World progress.
+          This will delete the saved progress for the selected tile set.
         </p>
 <div class="popup-actions">
 <button class="modal-btn secondary" id="cancelNewGameBtn" type="button">
@@ -367,7 +377,7 @@
       </div>
     </div>
     <div class="pause-action-wrap">
-      <div class="rc-next-pill rc-next-pill--danger" id="goPack">Flag Pack · —</div>
+      <div class="rc-next-pill rc-next-pill--danger" id="goPack">Tile Pack · —</div>
       <div class="pause-actions">
         <button class="modal-btn secondary" id="gameOverQuitBtn" type="button">Back to Start</button>
         <button class="modal-btn primary" id="gameOverNewGameBtn" type="button">New Game</button>
@@ -419,6 +429,6 @@
 </div>
 </section>
 <div aria-hidden="true" class="combo-layer" id="comboLayer"></div>
-<script src="fmw-v033.js?v=033"></script>
+<script src="game.js?v=3.6.5"></script>
 </body>
 </html>
