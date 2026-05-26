@@ -387,7 +387,7 @@ body.low-time .timer-text { animation: lowTimePulse .65s ease-in-out infinite al
       linear-gradient(135deg, #070b1f, #181047 58%, #2b145f);
   }
   .app-shell::after {
-    content: "Please turn your iPhone sideways for the best Pocket Match layout.";
+    content: "Please turn your iPhone sideways for the best Flag Match World layout.";
     position: fixed;
     left: 30px;
     right: 30px;
@@ -6387,7 +6387,7 @@ body.pm-desktop-size .entity-sprite {
   }
 
   body.pm-desktop-size .game-area::after {
-    content: "Widen the window for the best Pocket Match layout.";
+    content: "Widen the window for the best Flag Match World layout.";
     position: fixed;
     left: 50%;
     bottom: max(14px, env(safe-area-inset-bottom));
@@ -6477,7 +6477,7 @@ body.pm-tablet-portrait .game-area::before {
 }
 
 body.pm-tablet-portrait .game-area::after {
-  content: "Please turn your iPad sideways for the best Pocket Match layout.";
+  content: "Please turn your iPad sideways for the best Flag Match World layout.";
   position: fixed;
   left: 40px;
   right: 40px;
@@ -6536,808 +6536,629 @@ body.pm-tablet-landscape .board-wrap {
   align-self: start !important;
 }
 
-/* =========================================================
-   Flag Match World v1.0 Startup Replacement - corrected v2
-   Blank startup artwork + real clickable HTML controls.
-   Uses a unique blank background filename to avoid browser cache
-   loading the old composite reference image.
-   ========================================================= */
-#overlay.fmw-startup-screen {
-  position: fixed !important;
-  inset: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  display: flex !important;
-  align-items: stretch !important;
-  justify-content: flex-start !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  background-color: #062d28 !important;
-  background-image: url("assets/startup/fmw-startup-blank-v2.png") !important;
-  background-position: center center !important;
-  background-size: cover !important;
-  background-repeat: no-repeat !important;
-  backdrop-filter: none !important;
-  overflow: hidden !important;
-  z-index: 9999 !important;
+/* ─────────────────────────────────────────────
+   Flag Match World popup replacement: Pause
+   Uses the uploaded FMW popup/button component direction.
+   ───────────────────────────────────────────── */
+#pauseOverlay.fmw-popup-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(12px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  background: rgba(0, 11, 10, .62);
+  backdrop-filter: blur(5px) saturate(1.08);
+  -webkit-backdrop-filter: blur(5px) saturate(1.08);
+  z-index: 850;
 }
-#overlay.fmw-startup-screen::before {
+#pauseOverlay.fmw-popup-overlay.hidden { display: none !important; }
+.fmw-pause-modal {
+  position: relative;
+  width: min(52vw, 630px);
+  min-width: 460px;
+  max-height: calc(100dvh - 24px);
+  padding: clamp(22px, 3vmin, 32px) clamp(38px, 4.2vmin, 54px) clamp(24px, 3vmin, 34px);
+  border-radius: clamp(30px, 4vmin, 46px);
+  border: 2px solid rgba(222, 185, 92, .82);
+  background:
+    radial-gradient(circle at 50% 100%, rgba(255, 220, 110, .13), transparent 31%),
+    radial-gradient(circle at 50% -10%, rgba(57, 174, 128, .28), transparent 39%),
+    linear-gradient(180deg, rgba(11, 93, 77, .96), rgba(5, 66, 62, .98) 56%, rgba(3, 52, 55, .99));
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, .62),
+    0 0 0 1px rgba(255, 243, 176, .18) inset,
+    0 0 34px rgba(238, 202, 105, .28),
+    inset 0 1px 0 rgba(255,255,255,.14),
+    inset 0 -22px 52px rgba(0,0,0,.20);
+  color: #f8efd1;
+  text-align: center;
+  overflow: visible;
+}
+.fmw-pause-modal::before {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: 9px;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 220, 118, .30);
   pointer-events: none;
-  background: linear-gradient(90deg, rgba(0,30,25,.04), transparent 44%);
 }
-.fmw-startup-controls {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  transform: none;
-}
-.fmw-menu-list {
+.fmw-pause-modal::after {
+  content: "";
   position: absolute;
-  left: clamp(170px, 16.8vw, 345px);
-  top: clamp(250px, 39.8vh, 460px);
+  left: 50%;
+  bottom: -7px;
+  width: min(56%, 360px);
+  height: 16px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(255, 228, 120, .92), rgba(255, 198, 70, .24) 42%, transparent 72%);
+  filter: blur(1px);
+  pointer-events: none;
+}
+.fmw-popup-flag {
+  position: absolute;
+  left: 50%;
+  top: -10px;
+  width: 58px;
+  height: 34px;
+  transform: translateX(-50%);
+  background:
+    linear-gradient(90deg, transparent 0 13px, rgba(248, 221, 111, .95) 13px 17px, transparent 17px),
+    linear-gradient(160deg, #f4d75e 0 50%, #b88929 51% 100%);
+  clip-path: polygon(44% 0, 100% 15%, 78% 45%, 100% 76%, 43% 63%, 43% 100%, 34% 100%, 34% 0);
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,.36));
+  opacity: .95;
+}
+.fmw-popup-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  opacity: .95;
+  color: #f4dc8a;
+}
+.fmw-popup-title-row span {
+  width: min(16vw, 172px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(244, 220, 138, .78), transparent);
+}
+.fmw-pause-modal h1 {
+  margin: 4px 0 5px !important;
+  font-family: var(--font-display, 'Changa One'), Georgia, serif;
+  font-size: clamp(36px, 6.2vmin, 72px) !important;
+  line-height: .95 !important;
+  letter-spacing: .18em !important;
+  color: #fff2cc !important;
+  text-shadow: 0 3px 0 rgba(62, 34, 4, .42), 0 8px 22px rgba(0,0,0,.52), 0 0 18px rgba(255, 218, 110, .22) !important;
+}
+.fmw-title-underline {
+  width: min(46vw, 370px);
+  height: 10px;
+  margin: 0 auto clamp(16px, 2vmin, 24px);
+  background: radial-gradient(ellipse at center, rgba(255,226,122,.88), rgba(255,207,86,.20) 40%, transparent 72%);
+}
+.fmw-pause-message { display: none !important; }
+.fmw-pause-actions {
+  width: min(100%, 456px);
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: clamp(10px, 1.12vw, 22px);
-  width: clamp(300px, 29.6vw, 610px);
+  gap: clamp(9px, 1.35vmin, 14px);
 }
-.fmw-menu-btn {
+.fmw-btn {
+  position: relative;
   display: flex;
   align-items: center;
   width: 100%;
+  min-height: clamp(48px, 7vmin, 66px);
   border: 0;
   border-radius: 999px;
-  cursor: pointer;
-  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-  font-size: clamp(17px, 1.45vw, 30px);
-  font-weight: 800;
-  letter-spacing: .24px;
+  padding: 5px clamp(18px, 2.4vmin, 26px) 5px 5px;
+  outline: 1.5px solid rgba(218, 178, 78, .84);
   color: #fff;
-  padding: clamp(5px, .46vw, 9px) clamp(18px, 1.7vw, 34px) clamp(5px, .46vw, 9px) clamp(6px, .55vw, 11px);
-  text-align: left;
-  transition: filter .15s ease, transform .12s ease, opacity .15s ease;
-  position: relative;
+  font-family: var(--font-ui, 'Space Grotesk'), system-ui, sans-serif;
+  font-weight: 800;
+  font-size: clamp(17px, 2.6vmin, 28px);
+  letter-spacing: .015em;
+  cursor: pointer;
+  text-shadow: 0 2px 6px rgba(0,0,0,.46);
+  box-shadow: 0 7px 24px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.16), inset 0 -5px 14px rgba(0,0,0,.28);
+  transition: transform .12s ease, filter .14s ease;
   overflow: hidden;
-  text-shadow: 0 1px 3px rgba(0,0,0,.35);
-  min-height: clamp(48px, 4.2vw, 88px);
-  box-shadow: 0 4px 15px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.12);
-  -webkit-tap-highlight-color: transparent;
 }
-.fmw-menu-btn::before {
+.fmw-btn:hover { filter: brightness(1.08); transform: translateY(-1px) scale(1.012); }
+.fmw-btn:active { transform: scale(.975); filter: brightness(.94); }
+.fmw-btn::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 50%;
-  border-radius: 999px 999px 0 0;
-  background: rgba(255,255,255,.08);
+  left: 12%; right: 12%; top: 0;
+  height: 48%;
+  border-radius: 999px 999px 60% 60%;
+  background: linear-gradient(180deg, rgba(255,255,255,.28), transparent);
   pointer-events: none;
 }
-.fmw-menu-btn:hover:not(:disabled) { filter: brightness(1.1); transform: translateX(3px); }
-.fmw-menu-btn:active:not(:disabled) { transform: scale(.975); filter: brightness(.96); }
-.fmw-menu-btn:disabled,
-.fmw-menu-btn.disabled {
-  opacity: .48 !important;
-  cursor: not-allowed !important;
-  filter: grayscale(.22) brightness(.8) !important;
-}
+.fmw-btn-primary { background: linear-gradient(180deg,#70de69 0%,#3fc052 18%,#27943d 48%,#17682d 75%,#10471f 100%); }
+.fmw-btn-secondary { min-height: clamp(41px, 5.35vmin, 54px); background: linear-gradient(180deg,#21b191 0%,#16846f 28%,#0d6659 58%,#07483f 100%); font-size: clamp(14px, 2vmin, 21px); }
 .fmw-btn-icon {
+  position: relative;
+  z-index: 1;
   flex: 0 0 auto;
-  width: clamp(39px, 3.9vw, 76px);
-  height: clamp(39px, 3.9vw, 76px);
+  width: clamp(40px, 5.7vmin, 56px);
+  height: clamp(40px, 5.7vmin, 56px);
+  margin-right: clamp(10px, 1.6vmin, 18px);
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-right: clamp(13px, 1.35vw, 25px);
-  box-shadow: inset 0 2px 3px rgba(255,255,255,.24), 0 3px 9px rgba(0,0,0,.32);
-  font-size: clamp(16px, 1.45vw, 29px);
+  color: #176b2b;
+  background: radial-gradient(circle at 36% 30%, #fff 0%, #eaf8e9 34%, #a8dcae 70%, #77bd84 100%);
+  box-shadow: 0 0 0 2px rgba(183, 145, 40, .82), 0 0 0 4px rgba(255, 220, 98, .20), 0 4px 10px rgba(0,0,0,.36), inset 0 2px 3px rgba(255,255,255,.36);
 }
-.fmw-btn-label { flex: 1; }
-.fmw-btn-arrow { font-size: clamp(22px, 2vw, 40px); font-weight: 400; opacity: .78; line-height: 1; }
-.fmw-btn-continue { background: linear-gradient(180deg, #34b76e 0%, #208b4f 100%); }
-.fmw-btn-continue .fmw-btn-icon { background: radial-gradient(circle at 38% 36%, #40d982, #168646); }
-.fmw-btn-newgame { background: linear-gradient(180deg, #1d9a78 0%, #10785f 100%); }
-.fmw-btn-newgame .fmw-btn-icon { background: radial-gradient(circle at 38% 36%, #24c79a, #0d765c); }
-.fmw-btn-quick { background: linear-gradient(180deg, #168b8d 0%, #0d6b70 100%); }
-.fmw-btn-quick .fmw-btn-icon { background: radial-gradient(circle at 38% 36%, #1bbdc0, #0b6970); }
-.fmw-btn-settings { background: linear-gradient(180deg, #107a78 0%, #095d5e 100%); }
-.fmw-btn-settings .fmw-btn-icon { background: radial-gradient(circle at 38% 36%, #18aaa6, #075d5d); }
-.fmw-settings-pill {
-  position: absolute;
-  left: clamp(190px, 19.1vw, 392px);
-  top: clamp(500px, 86.6vh, 998px);
-  display: inline-flex;
-  align-items: center;
-  background: rgba(8, 38, 34, .70);
-  backdrop-filter: blur(18px) saturate(1.35);
-  -webkit-backdrop-filter: blur(18px) saturate(1.35);
-  border: 1px solid rgba(255,255,255,.10);
-  border-radius: 999px;
-  padding: clamp(7px, .76vw, 15px) clamp(16px, 1.55vw, 32px);
-  box-shadow: 0 4px 28px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.07);
+.fmw-btn-secondary .fmw-btn-icon { color: #eefdf6; background: radial-gradient(circle at 36% 30%, #35d5b5, #12947e 44%, #0a6255 100%); }
+.fmw-btn-label { position: relative; z-index: 1; flex: 1; text-align: center; padding-right: clamp(28px, 5vmin, 56px); }
+.fmw-btn.hidden, .fmw-btn[hidden] { display: none !important; }
+@media (max-aspect-ratio: 13/9) {
+  .fmw-pause-modal { width: min(72vw, 620px); min-width: 0; }
 }
-.fmw-pill-item {
-  display: inline-flex;
-  align-items: center;
-  gap: clamp(9px, .9vw, 17px);
-  padding: clamp(4px, .38vw, 8px) clamp(9px, 1.05vw, 21px);
-  border: 0;
-  background: transparent;
-  color: #eaf9f2;
-  cursor: pointer;
-  user-select: none;
-  transition: opacity .15s ease, transform .12s ease;
-  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-  -webkit-tap-highlight-color: transparent;
-}
-.fmw-pill-item:hover { opacity: .88; }
-.fmw-pill-item:active { transform: scale(.965); }
-.fmw-pill-icon {
-  width: clamp(38px, 3.7vw, 74px);
-  height: clamp(38px, 3.7vw, 74px);
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #2ec9a0, #1a7a60);
-  box-shadow: 0 2px 8px rgba(0,0,0,.38), inset 0 1px 2px rgba(255,255,255,.25);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-  font-size: clamp(15px, 1.35vw, 27px);
-}
-.fmw-pill-item.off .fmw-pill-icon {
-  background: radial-gradient(circle at 35% 35%, #42645b, #1e3d35);
-}
-.fmw-pill-label {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  line-height: 1.05;
-  white-space: nowrap;
-}
-.fmw-pill-label span { font-size: clamp(12px, 1.02vw, 21px); font-weight: 750; letter-spacing: .25px; }
-.fmw-pill-label small { font-size: clamp(10px, .82vw, 17px); color: #86cbb5; margin-top: 3px; font-weight: 650; }
-.fmw-pill-divider {
-  width: 1px;
-  height: clamp(30px, 3.25vw, 65px);
-  background: rgba(255,255,255,.15);
-  flex: 0 0 auto;
-}
-.fmw-startup-logic-only {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  overflow: hidden !important;
-  clip: rect(0 0 0 0) !important;
-  white-space: nowrap !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-@media (max-aspect-ratio: 1.55/1) {
-  .fmw-menu-list { left: 14.8vw; top: 39.2vh; width: clamp(290px, 31vw, 500px); }
-  .fmw-settings-pill { left: 16vw; top: 85.2vh; transform: scale(.9); transform-origin: left top; }
-}
-@media (max-height: 520px) {
-  .fmw-menu-list { left: clamp(150px, 16.8vw, 180px); top: clamp(200px, 39vh, 235px); width: clamp(285px, 29.5vw, 330px); gap: clamp(7px, 1vw, 11px); }
-  .fmw-menu-btn { min-height: clamp(42px, 4.15vw, 50px); font-size: clamp(14px, 1.45vw, 17px); }
-  .fmw-btn-icon { width: clamp(34px, 3.8vw, 42px); height: clamp(34px, 3.8vw, 42px); font-size: clamp(14px, 1.35vw, 17px); }
-  .fmw-settings-pill { left: clamp(170px, 19vw, 205px); top: clamp(430px, 84.5vh, 500px); transform: scale(.78); transform-origin: left top; }
+@media (max-width: 740px), (max-height: 480px) {
+  .fmw-pause-modal {
+    width: min(72vw, 560px);
+    min-width: 0;
+    padding: 16px 28px 18px;
+    border-radius: 28px;
+  }
+  .fmw-popup-flag { width: 44px; height: 28px; top: -8px; }
+  .fmw-popup-title-row { margin-top: 0; }
+  .fmw-pause-modal h1 { font-size: clamp(28px, 8.6vh, 46px) !important; }
+  .fmw-title-underline { margin-bottom: 10px; }
+  .fmw-pause-actions { width: min(100%, 390px); gap: 8px; }
+  .fmw-btn { min-height: 42px; font-size: clamp(15px, 4.3vh, 22px); }
+  .fmw-btn-secondary { min-height: 34px; font-size: clamp(12px, 3.3vh, 16px); }
+  .fmw-btn-icon { width: 34px; height: 34px; margin-right: 8px; }
 }
 
 
-/* FMW startup functional fix:
-   The startup overlay has high-specificity display:flex rules for the full-screen
-   background. When the game starts, game.js adds .hidden to #overlay. This rule
-   must come AFTER the startup block so .hidden really removes the overlay and
-   exposes the tile board underneath. */
-#overlay.fmw-startup-screen.hidden,
-#overlay.fmw-startup-screen[aria-hidden="true"] {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
+/* FMW unified popup family update */
+.fmw-popup-overlay{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:16px;background:rgba(0,10,8,.58);backdrop-filter:blur(6px) brightness(.55);}
+.fmw-popup-overlay.hidden{display:none!important;}
+.fmw-pause-modal,.fmw-result-modal,.fmw-settings-modal{position:relative;isolation:isolate;width:min(86vw,630px);border-radius:30px;padding:clamp(18px,2.3vw,30px);color:#f8f1d6;background:radial-gradient(circle at 50% -18%,rgba(95,190,140,.34),transparent 34%),linear-gradient(145deg,rgba(0,84,69,.96),rgba(0,49,43,.98) 55%,rgba(0,36,36,.99));border:2px solid rgba(229,190,86,.75);box-shadow:0 0 0 1px rgba(255,231,148,.18),0 24px 70px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.12),inset 0 -18px 45px rgba(0,0,0,.22);overflow:hidden;text-align:center;}
+.fmw-pause-modal:before,.fmw-result-modal:before,.fmw-settings-modal:before{content:"";position:absolute;inset:0;z-index:-1;background-image:radial-gradient(circle at 18% 26%,rgba(255,255,255,.09) 0 1px,transparent 1.6px),linear-gradient(110deg,transparent,rgba(255,255,255,.055),transparent);background-size:16px 16px,100% 100%;opacity:.55;mix-blend-mode:overlay;}
+.fmw-pause-modal:after,.fmw-result-modal:after,.fmw-settings-modal:after{content:"";position:absolute;left:50%;bottom:-7px;width:46%;height:12px;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(255,217,92,.95),rgba(255,217,92,.22) 42%,transparent 72%);filter:blur(1px);}
+.fmw-popup-flag{width:34px;height:22px;margin:0 auto 4px;border-radius:4px 4px 2px 2px;background:linear-gradient(#f2d068,#d7a93a);box-shadow:0 0 14px rgba(255,213,88,.45);clip-path:polygon(0 0,100% 10%,72% 48%,100% 85%,0 78%)}
+.fmw-popup-flag-red{background:linear-gradient(#e34e4e,#9d2222)}
+.fmw-popup-title-row{display:flex;align-items:center;gap:13px;justify-content:center;color:#d9bd64;margin:0 auto 4px;max-width:420px}.fmw-popup-title-row span{height:1px;flex:1;background:linear-gradient(to right,transparent,rgba(219,188,92,.7),transparent)}.fmw-popup-title-row b{font-size:13px;line-height:1}.fmw-pause-modal h1,.fmw-result-modal h1,.fmw-settings-modal h1{margin:2px 0 4px;font-family:Georgia,'Times New Roman',serif;font-weight:900;font-size:clamp(34px,5vw,58px);letter-spacing:.14em;line-height:.95;text-shadow:0 3px 0 rgba(61,35,8,.36),0 8px 18px rgba(0,0,0,.42);color:#fff3cf}.fmw-title-underline{height:9px;width:min(340px,72%);margin:2px auto 16px;background:linear-gradient(to right,transparent,rgba(238,194,73,.95),transparent);clip-path:polygon(0 45%,42% 45%,50% 0,58% 45%,100% 45%,100% 58%,58% 58%,50% 100%,42% 58%,0 58%)}
+.fmw-pause-message{margin:0 auto 14px;max-width:520px;color:rgba(246,253,238,.76);font-weight:700;font-size:clamp(12px,1.6vw,15px)}
+.fmw-action-stack,.fmw-pause-actions{display:flex;flex-direction:column;gap:11px;width:min(430px,100%);margin:0 auto}.fmw-action-stack-result{width:min(460px,100%)}.fmw-btn-row{display:grid;grid-template-columns:1fr 1fr;gap:11px}.fmw-btn{position:relative;display:flex;align-items:center;width:100%;border:0;border-radius:999px;cursor:pointer;font-family:inherit;font-size:clamp(15px,2vw,22px);font-weight:900;letter-spacing:.025em;color:#fff;padding:5px 20px 5px 5px;overflow:hidden;transition:filter .14s,transform .12s;outline:2px solid rgba(205,165,50,.80);outline-offset:0;text-shadow:0 1px 4px rgba(0,0,0,.5);box-shadow:0 0 0 1px rgba(255,215,90,.22),0 5px 22px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.1)}.fmw-btn:hover{filter:brightness(1.08);transform:scale(1.018)}.fmw-btn:active{transform:scale(.975)}.fmw-btn:before{content:"";position:absolute;top:0;left:10%;right:10%;height:48%;border-radius:999px 999px 55% 55%;background:linear-gradient(to bottom,rgba(255,255,255,.31),rgba(255,255,255,0));pointer-events:none;z-index:2}.fmw-btn:after{content:"";position:absolute;inset:0;border-radius:999px;box-shadow:inset 0 -4px 12px rgba(0,0,0,.30);pointer-events:none;z-index:2}.fmw-btn-icon{position:relative;z-index:4;flex-shrink:0;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;box-shadow:0 0 0 2px rgba(195,155,35,.85),0 0 0 3.5px rgba(255,215,80,.28),0 3px 10px rgba(0,0,0,.42),inset 0 2px 3px rgba(255,255,255,.35),inset 0 -2px 4px rgba(0,0,0,.18)}.fmw-btn-label{position:relative;z-index:4;flex:1;text-align:center;padding-right:8px}.fmw-btn-primary{background:linear-gradient(180deg,#72e06e 0%,#40c050 14%,#2aa040 36%,#1f8034 58%,#176030 80%,#104820 100%)}.fmw-btn-primary .fmw-btn-icon{background:radial-gradient(circle at 38% 32%,#fff 0%,#e2f8e6 28%,#b4e4be 60%,#80c890 100%);color:#186828}.fmw-btn-secondary{font-size:clamp(13px,1.45vw,17px);background:linear-gradient(180deg,#28c0a0 0%,#18a085 20%,#107868 48%,#0c5e50 74%,#084840 100%)}.fmw-btn-secondary .fmw-btn-icon{width:44px;height:44px;background:radial-gradient(circle at 38% 32%,#40ddc0 0%,#18b095 38%,#0c7860 100%);color:#fff}.fmw-score-panel{width:min(470px,100%);margin:0 auto 17px;padding:12px 16px;border-radius:15px;background:rgba(0,37,32,.42);border:1px solid rgba(234,195,83,.36);box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}.fmw-score-row,.fmw-total-row{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:7px 4px;border-bottom:1px solid rgba(255,255,255,.08);font-weight:800}.fmw-score-row span{display:flex;align-items:center;gap:10px;color:#ecf5df;font-size:14px}.fmw-score-row strong{font-size:17px;color:#fff2c6}.fmw-total-row{border-bottom:0;margin-top:5px;padding-top:10px;color:#ffe7a5;font-family:Georgia,'Times New Roman',serif;letter-spacing:.06em;font-size:20px}.fmw-total-row strong{font-size:30px}.fmw-mini-logo{font-family:Georgia,'Times New Roman',serif;color:#fff3d0;font-weight:900;font-size:24px;line-height:.78;text-shadow:0 3px 10px rgba(0,0,0,.5);margin-top:-4px}.fmw-mini-logo span{font-size:.76em;font-style:italic;color:#d5b95e}.fmw-game-over-modal{width:min(86vw,560px)}.fmw-game-over-modal h1{color:#ffd7ca}.fmw-game-over-stats{margin-top:4px}.fmw-settings-modal{width:min(90vw,650px)}.fmw-settings-toggles{width:min(500px,100%);margin:0 auto 16px;border-radius:14px;overflow:hidden;background:rgba(0,36,32,.45);border:1px solid rgba(234,195,83,.28)}.fmw-setting-row{width:100%;display:flex;align-items:center;gap:13px;padding:11px 16px;background:transparent;color:#eafff3;border:0;border-bottom:1px solid rgba(255,255,255,.08);font-weight:800;text-align:left}.fmw-setting-row:last-child{border-bottom:0}.fmw-setting-icon{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 38% 32%,#38d8b8,#0e8868);box-shadow:0 0 0 1.5px rgba(195,155,35,.7)}.fmw-switch{margin-left:auto;width:52px;height:28px;border-radius:999px;background:#1a4a38;border:1.5px solid rgba(200,160,45,.4);box-shadow:inset 0 2px 5px rgba(0,0,0,.4);position:relative}.fmw-switch:before{content:"";position:absolute;width:22px;height:22px;border-radius:50%;left:3px;top:2px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.35);transition:transform .25s}.fmw-switch.is-on{background:linear-gradient(135deg,#38c068,#189840)}.fmw-switch.is-on:before{transform:translateX(24px)}.fmw-theme-title{display:flex;align-items:center;gap:10px;justify-content:center;color:#f0c84a;font-size:13px;font-weight:900;letter-spacing:3px;margin:8px auto 10px}.fmw-theme-title span{height:1px;flex:1;max-width:160px;background:linear-gradient(to right,transparent,rgba(240,200,74,.45),transparent)}.fmw-theme-grid{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}.fmw-theme-swatch{background:transparent;border:0;color:rgba(255,255,255,.7);font-size:11px;font-weight:800;display:flex;flex-direction:column;gap:7px;align-items:center;cursor:pointer}.fmw-theme-swatch i{width:76px;height:70px;border-radius:10px;border:2px solid rgba(255,255,255,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.15),0 4px 13px rgba(0,0,0,.34)}.fmw-theme-swatch.active i{border-color:#f0c84a;box-shadow:0 0 0 2px rgba(240,200,74,.28),0 4px 16px rgba(0,0,0,.45)}.sw-blue{background:linear-gradient(145deg,#2c62b0,#1a3e7e 55%,#102860)}.sw-navy{background:linear-gradient(145deg,#1e2458,#0e1440 55%,#080e2c)}.sw-emerald{background:linear-gradient(145deg,#1e7c52,#0e5038 55%,#083428)}.sw-purple{background:linear-gradient(145deg,#6c24b4,#3c107e 55%,#260870)}.sw-red{background:linear-gradient(145deg,#8c1c2a,#5a0e18 55%,#3c0810)}.fmw-settings-back{width:min(360px,100%);margin:0 auto}.hidden{display:none!important}@media(max-height:520px){.fmw-pause-modal,.fmw-result-modal,.fmw-settings-modal{padding:12px 18px;border-radius:24px}.fmw-pause-modal h1,.fmw-result-modal h1,.fmw-settings-modal h1{font-size:32px}.fmw-title-underline{margin-bottom:8px}.fmw-btn-icon{width:42px;height:42px}.fmw-btn-secondary .fmw-btn-icon{width:38px;height:38px}.fmw-score-row{padding:4px}.fmw-theme-swatch i{width:60px;height:48px}.fmw-settings-toggles{margin-bottom:8px}.fmw-setting-row{padding:7px 12px}.fmw-setting-icon{width:30px;height:30px}.fmw-mini-logo{display:none}}
 
 /* =========================================================
-   FMW v1.0 — Polished startup stage + FMW-only themes
-   - Startup is a single 16:9 artboard for iPhone/iPad landscape.
-   - Background, buttons, and toggles scale together.
-   - Theme changes UI accents only; it never replaces the startup art.
+   Flag Match World v3.7.0 — Popup family hard replacement
+   Removes the remaining legacy modal look from every
+   in-game popup and keeps all existing button IDs clickable.
    ========================================================= */
-:root,
-html[data-theme="emerald-green"] {
-  color-scheme: dark;
-  --screen-1: #062d28;
-  --screen-2: #0a463d;
-  --screen-3: #08221f;
-  --frame-1: #0f554a;
-  --frame-2: #06231f;
-  --frame-edge: rgba(232, 197, 108, .38);
-  --frame-inner: rgba(255,255,255,.10);
-  --hud-bg: rgba(5, 37, 33, .82);
-  --hud-bg-2: rgba(10, 67, 57, .88);
-  --hud-border: rgba(232, 197, 108, .34);
-  --hud-label: rgba(214, 241, 230, .82);
-  --hud-value: #fff8df;
-  --hud-value-bg: rgba(3, 24, 21, .78);
-  --hud-sheen: rgba(255,255,255,.10);
-  --accent-cyan: #3ccaa3;
-  --accent-pink: #28b86e;
-  --accent-yellow: #e8c56c;
-  --accent-red: #e65f55;
-  --accent-primary-rgb: 40, 184, 110;
-  --accent-secondary-rgb: 232, 197, 108;
-  --accent-warn-rgb: 232, 197, 108;
-  --tile-bg: #f9fbf7;
-  --tile-bg-2: #edf8f2;
-  --tile-edge: #d7eadf;
-  --tile-shadow: rgba(4, 20, 18, .25);
-  --board-well: rgba(1, 19, 17, .48);
-  --timer-gradient: linear-gradient(90deg, #28b86e, #3ccaa3, #e8c56c);
-  --path-line: #e8c56c;
-  --path-core: #fffdf2;
-  --path-halo: rgba(232, 197, 108, .38);
-  --popup-bg-1: rgba(10, 62, 54, .97);
-  --popup-bg-2: rgba(3, 25, 23, .98);
-  --popup-border: rgba(232, 197, 108, .22);
-  --hud-action-hint-bg: linear-gradient(180deg, rgba(232,197,108,.50), rgba(40,184,110,.34));
-  --hud-action-shuffle-bg: linear-gradient(180deg, rgba(60,202,163,.46), rgba(12,103,89,.38));
-  --hud-action-border: rgba(232,197,108,.60);
-  --hud-action-glow: rgba(232,197,108,.22);
-  --hud-action-text: #fff;
-  --hud-display-glass: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.025)), var(--hud-bg);
-  --hud-separator: rgba(255,255,255,.12);
-  --hud-time: #67f29d;
-  --hud-score: #e8c56c;
-  --fmw-startup-primary: #2fb967;
-  --fmw-startup-primary-dark: #1b8d4d;
-  --fmw-startup-secondary: #168d73;
-  --fmw-startup-secondary-dark: #0d6d59;
-  --fmw-startup-tertiary: #11868a;
-  --fmw-startup-tertiary-dark: #0b696d;
-  --fmw-startup-icon: #29be94;
-  --fmw-startup-icon-dark: #137558;
-  --fmw-startup-pill: rgba(5, 36, 32, .76);
-  --fmw-startup-sub: #8bd6bb;
-}
 
-html[data-theme="classic-blue"] {
-  color-scheme: dark;
-  --screen-1: #061b36; --screen-2: #073c72; --screen-3: #0a1d35;
-  --frame-1: #0b4a86; --frame-2: #041425; --frame-edge: rgba(154,215,255,.40); --frame-inner: rgba(255,255,255,.10);
-  --hud-bg: rgba(4, 25, 50, .84); --hud-bg-2: rgba(8, 55, 102, .90); --hud-border: rgba(154,215,255,.36);
-  --hud-label: rgba(210,235,255,.84); --hud-value:#fff; --hud-value-bg: rgba(2, 13, 27, .82); --hud-sheen: rgba(255,255,255,.10);
-  --accent-cyan:#36c8ff; --accent-pink:#2f93ff; --accent-yellow:#9ad7ff; --accent-red:#ff617d;
-  --accent-primary-rgb:47,147,255; --accent-secondary-rgb:154,215,255; --accent-warn-rgb:154,215,255;
-  --tile-bg:#f8fbff; --tile-bg-2:#edf6ff; --tile-edge:#d5e7fb; --tile-shadow:rgba(5,12,24,.24); --board-well:rgba(2,11,27,.50);
-  --timer-gradient: linear-gradient(90deg,#2f93ff,#36c8ff,#9ad7ff); --path-line:#36c8ff; --path-core:#fff; --path-halo:rgba(54,200,255,.38);
-  --popup-bg-1:rgba(9,49,92,.97); --popup-bg-2:rgba(3,14,32,.98); --popup-border:rgba(154,215,255,.22);
-  --hud-action-hint-bg:linear-gradient(180deg,rgba(47,147,255,.52),rgba(14,82,154,.42)); --hud-action-shuffle-bg:linear-gradient(180deg,rgba(54,200,255,.44),rgba(9,92,157,.42));
-  --hud-action-border:rgba(154,215,255,.62); --hud-action-glow:rgba(54,200,255,.24); --hud-time:#72f096; --hud-score:#ffd166;
-  --fmw-startup-primary:#2d95ff; --fmw-startup-primary-dark:#1269be; --fmw-startup-secondary:#197ecb; --fmw-startup-secondary-dark:#0d5794; --fmw-startup-tertiary:#117bb8; --fmw-startup-tertiary-dark:#0a5b8b; --fmw-startup-icon:#37b7ff; --fmw-startup-icon-dark:#0a6fa8; --fmw-startup-pill:rgba(5,28,52,.78); --fmw-startup-sub:#9bd7ff;
-}
-
-html[data-theme="dark-navy"] {
-  color-scheme: dark;
-  --screen-1:#030711; --screen-2:#071936; --screen-3:#040812;
-  --frame-1:#10295d; --frame-2:#020611; --frame-edge:rgba(94,231,255,.38); --frame-inner:rgba(255,255,255,.08);
-  --hud-bg:rgba(3,8,21,.86); --hud-bg-2:rgba(9,25,56,.92); --hud-border:rgba(94,231,255,.34); --hud-label:rgba(198,224,255,.82); --hud-value:#fff; --hud-value-bg:rgba(1,5,15,.85); --hud-sheen:rgba(255,255,255,.08);
-  --accent-cyan:#5ee7ff; --accent-pink:#1e5eff; --accent-yellow:#8fd8ff; --accent-red:#ff5470;
-  --accent-primary-rgb:30,94,255; --accent-secondary-rgb:94,231,255; --accent-warn-rgb:143,216,255;
-  --tile-bg:#f7fbff; --tile-bg-2:#edf4ff; --tile-edge:#d6e4f7; --tile-shadow:rgba(2,7,18,.28); --board-well:rgba(1,5,15,.56);
-  --timer-gradient:linear-gradient(90deg,#1e5eff,#5ee7ff,#8fd8ff); --path-line:#5ee7ff; --path-core:#fff; --path-halo:rgba(94,231,255,.38);
-  --popup-bg-1:rgba(9,23,55,.98); --popup-bg-2:rgba(2,6,17,.98); --popup-border:rgba(94,231,255,.20);
-  --hud-action-hint-bg:linear-gradient(180deg,rgba(30,94,255,.46),rgba(8,35,96,.48)); --hud-action-shuffle-bg:linear-gradient(180deg,rgba(94,231,255,.38),rgba(8,48,92,.46)); --hud-action-border:rgba(94,231,255,.58); --hud-action-glow:rgba(94,231,255,.22); --hud-time:#66ef97; --hud-score:#ffbf45;
-  --fmw-startup-primary:#2d62ff; --fmw-startup-primary-dark:#183dbe; --fmw-startup-secondary:#194fbd; --fmw-startup-secondary-dark:#102f78; --fmw-startup-tertiary:#14556f; --fmw-startup-tertiary-dark:#0a3548; --fmw-startup-icon:#3bb7ff; --fmw-startup-icon-dark:#0a5d99; --fmw-startup-pill:rgba(4,11,27,.82); --fmw-startup-sub:#9fdfff;
-}
-
-html[data-theme="royal-purple"] {
-  color-scheme: dark;
-  --screen-1:#180922; --screen-2:#321452; --screen-3:#110718;
-  --frame-1:#4d2380; --frame-2:#16071f; --frame-edge:rgba(240,198,107,.38); --frame-inner:rgba(255,255,255,.10);
-  --hud-bg:rgba(28,10,43,.84); --hud-bg-2:rgba(58,25,89,.90); --hud-border:rgba(240,198,107,.34); --hud-label:rgba(237,221,255,.84); --hud-value:#fff9ed; --hud-value-bg:rgba(18,6,28,.84); --hud-sheen:rgba(255,255,255,.09);
-  --accent-cyan:#d45bff; --accent-pink:#8d4dff; --accent-yellow:#f0c66b; --accent-red:#ff5f72;
-  --accent-primary-rgb:141,77,255; --accent-secondary-rgb:240,198,107; --accent-warn-rgb:240,198,107;
-  --tile-bg:#fffaff; --tile-bg-2:#f6eeff; --tile-edge:#e5d8f5; --tile-shadow:rgba(22,7,31,.24); --board-well:rgba(18,6,28,.50);
-  --timer-gradient:linear-gradient(90deg,#8d4dff,#d45bff,#f0c66b); --path-line:#d45bff; --path-core:#fff; --path-halo:rgba(212,91,255,.36);
-  --popup-bg-1:rgba(61,27,91,.97); --popup-bg-2:rgba(17,6,27,.98); --popup-border:rgba(240,198,107,.20);
-  --hud-action-hint-bg:linear-gradient(180deg,rgba(141,77,255,.50),rgba(75,37,138,.46)); --hud-action-shuffle-bg:linear-gradient(180deg,rgba(212,91,255,.42),rgba(82,38,128,.44)); --hud-action-border:rgba(240,198,107,.58); --hud-action-glow:rgba(212,91,255,.23); --hud-time:#69ef9c; --hud-score:#f0c66b;
-  --fmw-startup-primary:#7e49e8; --fmw-startup-primary-dark:#5526a7; --fmw-startup-secondary:#6c39cc; --fmw-startup-secondary-dark:#401f7b; --fmw-startup-tertiary:#7b2ea2; --fmw-startup-tertiary-dark:#4f1d68; --fmw-startup-icon:#b064ff; --fmw-startup-icon-dark:#6125a8; --fmw-startup-pill:rgba(28,10,43,.80); --fmw-startup-sub:#e0c8ff;
-}
-
-html[data-theme="burgundy-red"] {
-  color-scheme: dark;
-  --screen-1:#250912; --screen-2:#481523; --screen-3:#17060b;
-  --frame-1:#6e2232; --frame-2:#1c0710; --frame-edge:rgba(240,183,90,.38); --frame-inner:rgba(255,255,255,.09);
-  --hud-bg:rgba(42,11,19,.84); --hud-bg-2:rgba(84,24,38,.90); --hud-border:rgba(240,183,90,.33); --hud-label:rgba(255,225,216,.84); --hud-value:#fff7ed; --hud-value-bg:rgba(27,6,12,.84); --hud-sheen:rgba(255,255,255,.08);
-  --accent-cyan:#f0b75a; --accent-pink:#c83f55; --accent-yellow:#f0b75a; --accent-red:#ff5b63;
-  --accent-primary-rgb:200,63,85; --accent-secondary-rgb:240,183,90; --accent-warn-rgb:240,183,90;
-  --tile-bg:#fff9f6; --tile-bg-2:#fff0ec; --tile-edge:#efd8d3; --tile-shadow:rgba(30,7,12,.24); --board-well:rgba(27,6,12,.50);
-  --timer-gradient:linear-gradient(90deg,#c83f55,#ff6e65,#f0b75a); --path-line:#f0b75a; --path-core:#fff; --path-halo:rgba(240,183,90,.36);
-  --popup-bg-1:rgba(88,28,42,.97); --popup-bg-2:rgba(28,7,13,.98); --popup-border:rgba(240,183,90,.20);
-  --hud-action-hint-bg:linear-gradient(180deg,rgba(200,63,85,.50),rgba(111,31,44,.46)); --hud-action-shuffle-bg:linear-gradient(180deg,rgba(240,183,90,.42),rgba(120,50,42,.44)); --hud-action-border:rgba(240,183,90,.58); --hud-action-glow:rgba(240,183,90,.22); --hud-time:#70f09a; --hud-score:#f0b75a;
-  --fmw-startup-primary:#b7344e; --fmw-startup-primary-dark:#7a1e30; --fmw-startup-secondary:#9b2b42; --fmw-startup-secondary-dark:#611929; --fmw-startup-tertiary:#8c3540; --fmw-startup-tertiary-dark:#582028; --fmw-startup-icon:#d74d64; --fmw-startup-icon-dark:#7b2032; --fmw-startup-pill:rgba(42,11,19,.80); --fmw-startup-sub:#f1c9bc;
-}
-
-/* Hide obsolete startup settings button if an older cached DOM still includes it. */
-#fmwSettingsBtn,
-.fmw-btn-settings { display: none !important; }
-
-#overlay.fmw-startup-screen {
+.fmw-popup-overlay.overlay,
+#pauseOverlay.fmw-popup-overlay,
+#levelCompleteOverlay.fmw-popup-overlay,
+#gameOverOverlay.fmw-popup-overlay,
+#settingsOverlay.fmw-popup-overlay,
+#newGameConfirmOverlay.fmw-popup-overlay,
+#saveOverlay.fmw-popup-overlay,
+#helperMessageOverlay.fmw-popup-overlay,
+#quitConfirmOverlay.fmw-popup-overlay,
+#endQuickConfirmOverlay.fmw-popup-overlay {
   position: fixed !important;
   inset: 0 !important;
-  width: 100vw !important;
-  height: 100dvh !important;
+  z-index: 2000 !important;
   display: grid !important;
   place-items: center !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  overflow: hidden !important;
-  z-index: 9999 !important;
-  background-color: #062d28 !important;
-  background-image:
-    linear-gradient(rgba(4,28,25,.36), rgba(4,28,25,.36)),
-    url("assets/startup/fmw-startup-blank-v2.png") !important;
-  background-position: center !important;
-  background-size: cover !important;
-  background-repeat: no-repeat !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+  padding: clamp(10px, 2vw, 28px) !important;
+  background:
+    radial-gradient(900px 520px at 52% 45%, rgba(22, 133, 96, .20), transparent 62%),
+    rgba(0, 10, 8, .66) !important;
+  backdrop-filter: blur(8px) brightness(.62) saturate(.92) !important;
+  -webkit-backdrop-filter: blur(8px) brightness(.62) saturate(.92) !important;
 }
-#overlay.fmw-startup-screen::before {
+
+.fmw-popup-overlay.hidden,
+#pauseOverlay.hidden,
+#levelCompleteOverlay.hidden,
+#gameOverOverlay.hidden,
+#settingsOverlay.hidden,
+#newGameConfirmOverlay.hidden,
+#saveOverlay.hidden,
+#helperMessageOverlay.hidden,
+#quitConfirmOverlay.hidden,
+#endQuickConfirmOverlay.hidden {
+  display: none !important;
+}
+
+.fmw-pause-modal,
+.fmw-result-modal,
+.fmw-settings-modal,
+.fmw-confirm-modal {
+  position: relative !important;
+  isolation: isolate !important;
+  box-sizing: border-box !important;
+  margin: 0 auto !important;
+  color: #f8f1d6 !important;
+  font-family: 'Space Grotesk', 'Lato', 'Inter', system-ui, -apple-system, sans-serif !important;
+  text-align: center !important;
+  border: 2px solid rgba(229, 190, 86, .80) !important;
+  border-radius: clamp(24px, 3vw, 34px) !important;
+  background:
+    radial-gradient(circle at 50% -18%, rgba(110, 205, 150, .32), transparent 36%),
+    radial-gradient(circle at 82% 82%, rgba(0, 148, 113, .18), transparent 42%),
+    linear-gradient(145deg, rgba(0, 84, 69, .965), rgba(0, 49, 43, .985) 56%, rgba(0, 34, 34, .99)) !important;
+  box-shadow:
+    0 0 0 1px rgba(255, 232, 150, .20),
+    0 24px 70px rgba(0, 0, 0, .66),
+    inset 0 1px 0 rgba(255, 255, 255, .12),
+    inset 0 -18px 45px rgba(0, 0, 0, .22) !important;
+  overflow: hidden !important;
+}
+
+.fmw-pause-modal::before,
+.fmw-result-modal::before,
+.fmw-settings-modal::before,
+.fmw-confirm-modal::before {
   content: "" !important;
   position: absolute !important;
-  inset: -18px !important;
-  background: rgba(0,0,0,.12) !important;
-  backdrop-filter: blur(12px) saturate(1.02) !important;
-  -webkit-backdrop-filter: blur(12px) saturate(1.02) !important;
+  inset: 0 !important;
+  z-index: -1 !important;
+  opacity: .55 !important;
+  mix-blend-mode: overlay !important;
   pointer-events: none !important;
-  z-index: 0 !important;
+  background-image:
+    radial-gradient(circle at 18% 26%, rgba(255, 255, 255, .10) 0 1px, transparent 1.6px),
+    linear-gradient(110deg, transparent, rgba(255, 255, 255, .055), transparent) !important;
+  background-size: 16px 16px, 100% 100% !important;
 }
-.fmw-startup-stage {
+
+.fmw-pause-modal::after,
+.fmw-result-modal::after,
+.fmw-settings-modal::after,
+.fmw-confirm-modal::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 50% !important;
+  bottom: -8px !important;
+  width: 48% !important;
+  height: 14px !important;
+  transform: translateX(-50%) !important;
+  background: radial-gradient(ellipse, rgba(255, 217, 92, .95), rgba(255, 217, 92, .22) 42%, transparent 72%) !important;
+  filter: blur(1px) !important;
+  pointer-events: none !important;
+}
+
+.fmw-pause-modal { width: min(72vw, 640px) !important; padding: clamp(20px, 2.4vw, 34px) clamp(28px, 4.2vw, 62px) clamp(18px, 2.2vw, 30px) !important; }
+.fmw-result-modal { width: min(78vw, 700px) !important; padding: clamp(18px, 2.2vw, 30px) clamp(28px, 4vw, 58px) clamp(18px, 2.2vw, 30px) !important; }
+.fmw-game-over-modal { width: min(74vw, 610px) !important; }
+.fmw-settings-modal { width: min(84vw, 770px) !important; padding: clamp(18px, 2.2vw, 30px) clamp(28px, 4vw, 58px) !important; }
+.fmw-confirm-modal { width: min(64vw, 560px) !important; padding: clamp(18px, 2.1vw, 28px) clamp(26px, 3.8vw, 52px) !important; }
+
+.fmw-popup-flag {
+  width: 78px !important;
+  height: 38px !important;
+  margin: -6px auto 2px !important;
   position: relative !important;
-  z-index: 1 !important;
-  width: min(100vw, calc(100dvh * 16 / 9)) !important;
-  height: min(100dvh, calc(100vw * 9 / 16)) !important;
-  aspect-ratio: 16 / 9 !important;
-  overflow: hidden !important;
-  background-image: url("assets/startup/fmw-startup-blank-v2.png") !important;
-  background-size: 100% 100% !important;
-  background-repeat: no-repeat !important;
-  background-position: center center !important;
-  box-shadow: 0 0 0 1px rgba(255,255,255,.04), 0 18px 70px rgba(0,0,0,.30) !important;
-  font-size: min(1vw, 1.777777dvh) !important;
+  opacity: .95 !important;
 }
-.fmw-startup-stage::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(90deg, rgba(0,25,22,.03), transparent 42%),
-    radial-gradient(circle at 24% 78%, rgba(var(--accent-primary-rgb), .05), transparent 26%);
-}
-.fmw-menu-list {
+.fmw-popup-flag::before {
+  content: "" !important;
   position: absolute !important;
-  z-index: 2 !important;
-  left: 16.1em !important;
-  top: 22.0em !important;
-  width: 29.6em !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: .82em !important;
-  transform: none !important;
+  left: 38px !important;
+  top: 0 !important;
+  width: 3px !important;
+  height: 34px !important;
+  border-radius: 999px !important;
+  background: linear-gradient(#ffeaa2, #b4852a) !important;
+  box-shadow: 0 0 10px rgba(255, 213, 92, .45) !important;
 }
-.fmw-menu-btn {
-  height: 4.05em !important;
-  min-height: 0 !important;
+.fmw-popup-flag::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 41px !important;
+  top: 2px !important;
+  width: 42px !important;
+  height: 20px !important;
+  background: linear-gradient(135deg, #ffe486, #c39939) !important;
+  clip-path: polygon(0 0, 100% 12%, 82% 46%, 100% 84%, 0 100%) !important;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,.38)) !important;
+}
+.fmw-popup-flag-red::after { background: linear-gradient(135deg, #e7493c, #8b191b) !important; }
+
+.fmw-popup-title-row { display: flex !important; align-items: center !important; justify-content: center !important; gap: 14px !important; color: #d9bd64 !important; margin: 0 auto 4px !important; max-width: 430px !important; }
+.fmw-popup-title-row span { height: 1px !important; flex: 1 !important; background: linear-gradient(to right, transparent, rgba(219,188,92,.72), transparent) !important; }
+.fmw-popup-title-row b { font-size: 14px !important; line-height: 1 !important; }
+
+.fmw-pause-modal h1,
+.fmw-result-modal h1,
+.fmw-settings-modal h1,
+.fmw-confirm-modal h1 {
+  margin: 2px 0 4px !important;
+  font-family: Georgia, 'Times New Roman', serif !important;
+  font-size: clamp(34px, 5vw, 60px) !important;
+  font-weight: 900 !important;
+  line-height: .96 !important;
+  letter-spacing: .14em !important;
+  color: #fff3cf !important;
+  text-transform: uppercase !important;
+  text-shadow: 0 3px 0 rgba(61,35,8,.36), 0 8px 18px rgba(0,0,0,.42) !important;
+}
+.fmw-game-over-modal h1 { color: #ffd8c8 !important; }
+.fmw-confirm-modal h1 { font-size: clamp(25px, 3.4vw, 42px) !important; letter-spacing: .08em !important; }
+.fmw-title-underline { height: 9px !important; width: min(340px, 72%) !important; margin: 2px auto 16px !important; background: linear-gradient(to right, transparent, rgba(238,194,73,.96), transparent) !important; clip-path: polygon(0 45%,42% 45%,50% 0,58% 45%,100% 45%,100% 58%,58% 58%,50% 100%,42% 58%,0 58%) !important; }
+
+#pauseOverlay .fmw-pause-message,
+#gameOverOverlay .fmw-pause-message { display: none !important; }
+.fmw-confirm-modal p,
+.fmw-message-modal p { margin: 0 auto 20px !important; max-width: 420px !important; color: rgba(244, 255, 240, .88) !important; font-weight: 800 !important; font-size: clamp(14px, 1.65vw, 18px) !important; line-height: 1.35 !important; }
+.fmw-modal-kicker { margin: -4px 0 2px !important; color: #f0c84a !important; font-weight: 900 !important; letter-spacing: .18em !important; font-size: 11px !important; text-transform: uppercase !important; }
+
+.fmw-mini-logo { margin-top: -4px !important; margin-bottom: 6px !important; font-family: Georgia, 'Times New Roman', serif !important; color: #fff3d0 !important; font-weight: 900 !important; font-size: clamp(20px, 2.4vw, 28px) !important; line-height: .78 !important; text-shadow: 0 3px 10px rgba(0,0,0,.5) !important; }
+.fmw-mini-logo span { font-size: .76em !important; font-style: italic !important; color: #d5b95e !important; }
+
+.fmw-action-stack,
+.fmw-pause-actions { width: min(430px, 100%) !important; margin: 0 auto !important; display: flex !important; flex-direction: column !important; gap: 11px !important; }
+.fmw-action-stack-result { width: min(480px, 100%) !important; }
+.fmw-btn-row { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 11px !important; width: 100% !important; }
+.fmw-confirm-actions { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 13px !important; width: min(420px, 100%) !important; margin: 0 auto !important; }
+.fmw-single-action { grid-template-columns: 1fr !important; width: min(260px, 100%) !important; }
+
+.fmw-btn {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
   width: 100% !important;
+  min-height: 54px !important;
+  border: 0 !important;
   border-radius: 999px !important;
-  border: 1px solid rgba(255,255,255,.10) !important;
-  padding: .34em 1.28em .34em .34em !important;
-  font-size: 1.34em !important;
-  font-family: 'Space Grotesk', 'Inter', 'Segoe UI', system-ui, sans-serif !important;
-  letter-spacing: .02em !important;
+  cursor: pointer !important;
+  font-family: 'Space Grotesk', 'Lato', 'Inter', system-ui, sans-serif !important;
+  font-size: clamp(16px, 2vw, 22px) !important;
+  font-weight: 900 !important;
+  letter-spacing: .025em !important;
   color: #fff !important;
-  text-shadow: 0 1px 2px rgba(0,0,0,.36) !important;
-  box-shadow:
-    0 .34em 1.05em rgba(0,0,0,.28),
-    inset 0 1px 0 rgba(255,255,255,.16),
-    inset 0 -1px 0 rgba(0,0,0,.18) !important;
-  opacity: .96 !important;
+  padding: 5px 20px 5px 5px !important;
+  overflow: hidden !important;
+  outline: 2px solid rgba(205,165,50,.82) !important;
+  outline-offset: 0 !important;
+  text-shadow: 0 1px 4px rgba(0,0,0,.5) !important;
+  box-shadow: 0 0 0 1px rgba(255,215,90,.22), 0 5px 22px rgba(0,0,0,.48), inset 0 1px 0 rgba(255,255,255,.10) !important;
+  transition: filter .14s, transform .12s !important;
 }
-.fmw-menu-btn:hover:not(:disabled) { filter: brightness(1.06) saturate(1.02) !important; transform: translateX(.18em) !important; }
-.fmw-menu-btn:active:not(:disabled) { transform: scale(.985) !important; }
-.fmw-menu-btn::before { background: rgba(255,255,255,.075) !important; }
-.fmw-btn-icon {
-  width: 3.35em !important;
-  height: 3.35em !important;
-  margin-right: 1.16em !important;
-  font-size: 1.08em !important;
-  box-shadow: inset 0 1px 2px rgba(255,255,255,.25), 0 .16em .55em rgba(0,0,0,.28) !important;
-}
-.fmw-btn-arrow { font-size: 1.55em !important; opacity: .72 !important; }
-.fmw-btn-continue { background: linear-gradient(180deg, var(--fmw-startup-primary) 0%, var(--fmw-startup-primary-dark) 100%) !important; }
-.fmw-btn-newgame { background: linear-gradient(180deg, var(--fmw-startup-secondary) 0%, var(--fmw-startup-secondary-dark) 100%) !important; }
-.fmw-btn-quick { background: linear-gradient(180deg, var(--fmw-startup-tertiary) 0%, var(--fmw-startup-tertiary-dark) 100%) !important; }
-.fmw-btn-icon { background: radial-gradient(circle at 38% 36%, var(--fmw-startup-icon), var(--fmw-startup-icon-dark)) !important; }
+.fmw-btn:hover { filter: brightness(1.09) !important; transform: scale(1.018) !important; }
+.fmw-btn:active { transform: scale(.974) !important; filter: brightness(.94) !important; }
+.fmw-btn::before { content: "" !important; position: absolute !important; top: 0 !important; left: 10% !important; right: 10% !important; height: 48% !important; border-radius: 999px 999px 55% 55% !important; background: linear-gradient(to bottom, rgba(255,255,255,.31), rgba(255,255,255,0)) !important; pointer-events: none !important; z-index: 2 !important; }
+.fmw-btn::after { content: "" !important; position: absolute !important; inset: 0 !important; border-radius: 999px !important; box-shadow: inset 0 -4px 12px rgba(0,0,0,.30) !important; pointer-events: none !important; z-index: 2 !important; }
+.fmw-btn-icon { position: relative !important; z-index: 4 !important; flex-shrink: 0 !important; width: 52px !important; height: 52px !important; border-radius: 50% !important; display: grid !important; place-items: center !important; box-shadow: 0 0 0 2px rgba(195,155,35,.85), 0 0 0 3.5px rgba(255,215,80,.28), 0 3px 10px rgba(0,0,0,.42), inset 0 2px 3px rgba(255,255,255,.35), inset 0 -2px 4px rgba(0,0,0,.18) !important; }
+.fmw-btn-label { position: relative !important; z-index: 4 !important; flex: 1 !important; text-align: center !important; padding-right: 8px !important; }
+.fmw-btn-primary { background: linear-gradient(180deg, #72e06e 0%, #40c050 14%, #2aa040 36%, #1f8034 58%, #176030 80%, #104820 100%) !important; }
+.fmw-btn-primary .fmw-btn-icon { background: radial-gradient(circle at 38% 32%, #fff 0%, #e2f8e6 28%, #b4e4be 60%, #80c890 100%) !important; color: #186828 !important; }
+.fmw-btn-secondary { min-height: 44px !important; font-size: clamp(13px, 1.45vw, 17px) !important; background: linear-gradient(180deg, #28c0a0 0%, #18a085 20%, #107868 48%, #0c5e50 74%, #084840 100%) !important; }
+.fmw-btn-secondary .fmw-btn-icon { width: 44px !important; height: 44px !important; background: radial-gradient(circle at 38% 32%, #40ddc0 0%, #18b095 38%, #0c7860 100%) !important; color: #fff !important; }
+.fmw-btn-warning { background: linear-gradient(180deg, #ffe080 0%, #e5ae37 24%, #be7a20 62%, #825016 100%) !important; color: #fff8de !important; }
+.fmw-btn-warning .fmw-btn-label { padding-right: 0 !important; }
+.fmw-confirm-cancel .fmw-btn-label { padding-right: 0 !important; }
+.fmw-btn.hidden, .fmw-btn[hidden] { display: none !important; }
 
-.fmw-settings-pill {
-  position: absolute !important;
-  z-index: 2 !important;
-  left: 18.1em !important;
-  top: 46.1em !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  background: var(--fmw-startup-pill) !important;
-  border: 1px solid rgba(255,255,255,.095) !important;
-  border-radius: 999px !important;
-  padding: .58em 1.35em !important;
-  box-shadow: 0 .35em 1.8em rgba(0,0,0,.30), inset 0 1px 0 rgba(255,255,255,.08) !important;
-  backdrop-filter: blur(14px) saturate(1.18) !important;
-  -webkit-backdrop-filter: blur(14px) saturate(1.18) !important;
-  transform: none !important;
-}
-.fmw-pill-item {
-  gap: .72em !important;
-  padding: .22em 1.08em !important;
-  color: #eefbf6 !important;
-  font-family: 'Space Grotesk', 'Inter', 'Segoe UI', system-ui, sans-serif !important;
-}
-.fmw-pill-icon {
-  width: 3.1em !important;
-  height: 3.1em !important;
-  font-size: 1.05em !important;
-  background: radial-gradient(circle at 35% 35%, var(--fmw-startup-icon), var(--fmw-startup-icon-dark)) !important;
-  box-shadow: 0 .12em .50em rgba(0,0,0,.30), inset 0 1px 2px rgba(255,255,255,.25) !important;
-}
-.fmw-pill-item.off .fmw-pill-icon { background: radial-gradient(circle at 35% 35%, #536a64, #253c37) !important; }
-.fmw-pill-label span { font-size: .98em !important; font-weight: 800 !important; letter-spacing: .02em !important; }
-.fmw-pill-label small { font-size: .78em !important; color: var(--fmw-startup-sub) !important; font-weight: 750 !important; }
-.fmw-pill-divider { height: 2.55em !important; background: rgba(255,255,255,.14) !important; }
+.fmw-score-panel { width: min(500px, 100%) !important; margin: 0 auto 17px !important; padding: 13px 17px !important; border-radius: 16px !important; background: rgba(0,37,32,.44) !important; border: 1px solid rgba(234,195,83,.38) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 10px 22px rgba(0,0,0,.20) !important; }
+.fmw-score-row, .fmw-total-row { display: flex !important; align-items: center !important; justify-content: space-between !important; gap: 22px !important; padding: 7px 4px !important; border-bottom: 1px solid rgba(255,255,255,.08) !important; font-weight: 800 !important; }
+.fmw-score-row span { display: flex !important; align-items: center !important; gap: 12px !important; color: #ecf5df !important; font-size: clamp(13px, 1.5vw, 16px) !important; }
+.fmw-score-row i { color: #f0c84a !important; min-width: 22px !important; text-align: center !important; }
+.fmw-score-row strong { font-size: clamp(16px, 1.8vw, 20px) !important; color: #fff2c6 !important; }
+.fmw-total-row { border-bottom: 0 !important; margin-top: 6px !important; padding-top: 11px !important; color: #ffe7a5 !important; font-family: Georgia, 'Times New Roman', serif !important; letter-spacing: .06em !important; font-size: clamp(19px, 2.1vw, 25px) !important; }
+.fmw-total-row strong { font-size: clamp(26px, 3vw, 38px) !important; }
 
-@supports not (height: 100dvh) {
-  #overlay.fmw-startup-screen { height: 100vh !important; }
-  .fmw-startup-stage { width: min(100vw, calc(100vh * 16 / 9)) !important; height: min(100vh, calc(100vw * 9 / 16)) !important; font-size: min(1vw, 1.777777vh) !important; }
-}
+.fmw-settings-toggles { width: min(560px, 100%) !important; margin: 0 auto 16px !important; border-radius: 14px !important; overflow: hidden !important; background: rgba(0,36,32,.45) !important; border: 1px solid rgba(234,195,83,.30) !important; }
+.fmw-setting-row { width: 100% !important; display: flex !important; align-items: center !important; gap: 13px !important; padding: 11px 16px !important; border: 0 !important; border-bottom: 1px solid rgba(255,255,255,.08) !important; background: transparent !important; color: #eafff3 !important; font-weight: 800 !important; text-align: left !important; cursor: pointer !important; }
+.fmw-setting-row:last-child { border-bottom: 0 !important; }
+.fmw-setting-icon { width: 38px !important; height: 38px !important; border-radius: 50% !important; display: grid !important; place-items: center !important; background: radial-gradient(circle at 38% 32%, #38d8b8, #0e8868) !important; box-shadow: 0 0 0 1.5px rgba(195,155,35,.72), 0 2px 8px rgba(0,0,0,.32), inset 0 1px 2px rgba(255,255,255,.22) !important; }
+.fmw-switch { margin-left: auto !important; width: 52px !important; height: 28px !important; border-radius: 999px !important; background: #1a4a38 !important; border: 1.5px solid rgba(200,160,45,.42) !important; box-shadow: inset 0 2px 5px rgba(0,0,0,.40) !important; position: relative !important; }
+.fmw-switch::before { content: "" !important; position: absolute !important; width: 22px !important; height: 22px !important; left: 3px !important; top: 2px !important; border-radius: 50% !important; background: #fff !important; box-shadow: 0 2px 6px rgba(0,0,0,.35) !important; transition: transform .25s !important; }
+.fmw-switch.is-on { background: linear-gradient(135deg, #38c068, #189840) !important; }
+.fmw-switch.is-on::before { transform: translateX(24px) !important; }
+.fmw-theme-title { display: flex !important; align-items: center !important; justify-content: center !important; gap: 10px !important; color: #f0c84a !important; font-size: 13px !important; font-weight: 900 !important; letter-spacing: 3px !important; margin: 8px auto 10px !important; text-transform: uppercase !important; }
+.fmw-theme-title span { height: 1px !important; flex: 1 !important; max-width: 160px !important; background: linear-gradient(to right, transparent, rgba(240,200,74,.45), transparent) !important; }
+.fmw-theme-grid { display: flex !important; justify-content: center !important; gap: 12px !important; flex-wrap: wrap !important; margin-bottom: 16px !important; }
+.fmw-theme-swatch { background: transparent !important; border: 0 !important; color: rgba(255,255,255,.70) !important; font-size: 11px !important; font-weight: 800 !important; display: flex !important; flex-direction: column !important; gap: 7px !important; align-items: center !important; cursor: pointer !important; }
+.fmw-theme-swatch i { position: relative !important; width: 78px !important; height: 70px !important; border-radius: 10px !important; border: 2px solid rgba(255,255,255,.14) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 4px 13px rgba(0,0,0,.34) !important; }
+.fmw-theme-swatch.active i, .fmw-theme-swatch.selected i { border-color: #f0c84a !important; box-shadow: 0 0 0 2px rgba(240,200,74,.28), 0 4px 16px rgba(0,0,0,.45) !important; }
+.fmw-theme-swatch.active i::after, .fmw-theme-swatch.selected i::after { content: "✓" !important; position: absolute !important; right: 6px !important; top: 6px !important; width: 28px !important; height: 28px !important; border-radius: 50% !important; display: grid !important; place-items: center !important; background: #f0c84a !important; color: #1a4030 !important; font-style: normal !important; font-size: 15px !important; font-weight: 900 !important; box-shadow: 0 2px 8px rgba(0,0,0,.4) !important; }
+.fmw-settings-back { width: min(360px, 100%) !important; margin: 0 auto !important; }
 
-/* iPad 4:3 landscape keeps the stage intact and centered; no independent drifting. */
-@media (orientation: landscape) and (max-aspect-ratio: 1.55/1) {
-  .fmw-startup-stage { width: 100vw !important; height: 56.25vw !important; font-size: 1vw !important; }
+@media (max-height: 620px) {
+  .fmw-pause-modal, .fmw-result-modal, .fmw-settings-modal, .fmw-confirm-modal { padding-top: 12px !important; padding-bottom: 12px !important; border-radius: 22px !important; }
+  .fmw-popup-flag { display: none !important; }
+  .fmw-pause-modal h1, .fmw-result-modal h1, .fmw-settings-modal h1 { font-size: clamp(28px, 7vh, 42px) !important; }
+  .fmw-confirm-modal h1 { font-size: clamp(22px, 5.4vh, 32px) !important; }
+  .fmw-title-underline { margin-bottom: 8px !important; }
+  .fmw-btn { min-height: 42px !important; font-size: clamp(14px, 3.7vh, 18px) !important; }
+  .fmw-btn-icon { width: 38px !important; height: 38px !important; }
+  .fmw-btn-secondary .fmw-btn-icon { width: 34px !important; height: 34px !important; }
+  .fmw-score-row { padding: 4px !important; }
+  .fmw-total-row strong { font-size: 27px !important; }
+  .fmw-theme-swatch i { width: 60px !important; height: 48px !important; }
+  .fmw-setting-row { padding: 7px 12px !important; }
+  .fmw-setting-icon { width: 30px !important; height: 30px !important; }
+  .fmw-mini-logo { display: none !important; }
 }
 
-/* Very wide iPhone landscape: fit to height and keep the designed artboard centered. */
-@media (orientation: landscape) and (min-aspect-ratio: 1.9/1) {
-  .fmw-startup-stage { height: 100dvh !important; width: 177.7778dvh !important; font-size: 1.777777dvh !important; }
-}
-
-/* Portrait testing / screenshots: still keep one artboard instead of letting pieces drift. */
-@media (orientation: portrait) {
-  .fmw-startup-stage { width: 100vw !important; height: 56.25vw !important; font-size: 1vw !important; }
-}
-
-#overlay.fmw-startup-screen.hidden,
-#overlay.fmw-startup-screen[aria-hidden="true"] {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-
-html[data-theme="emerald-green"],
-html[data-theme="classic-blue"],
-html[data-theme="dark-navy"],
-html[data-theme="royal-purple"],
-html[data-theme="burgundy-red"] {
-  --hud-panel-bg: linear-gradient(180deg, rgba(255,255,255,.070), rgba(255,255,255,.018));
-  --hud-panel-bg-strong: linear-gradient(180deg, rgba(255,255,255,.095), rgba(0,0,0,.10));
-  --pm-hud-surface: linear-gradient(180deg, color-mix(in srgb, var(--hud-bg-2) 74%, transparent), color-mix(in srgb, var(--hud-bg) 92%, transparent));
-  --pm-hud-panel: linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.012));
-  --pm-hud-panel-strong: linear-gradient(180deg, rgba(255,255,255,.090), rgba(0,0,0,.12));
-  --pm-hud-sep: linear-gradient(180deg, rgba(255,255,255,0), rgba(var(--accent-primary-rgb), .32), rgba(255,255,255,0));
-  --pm-hud-label: var(--hud-label);
-  --pm-hud-label-accent: var(--accent-cyan);
-  --pm-hud-value: var(--hud-value);
-  --pm-hud-rule-bg: rgba(var(--accent-primary-rgb), .16);
-  --pm-hud-rule-border: rgba(var(--accent-primary-rgb), .36);
-  --pm-hud-hint-bg: var(--hud-action-hint-bg);
-  --pm-hud-shuffle-bg: var(--hud-action-shuffle-bg);
-  --pm-hud-button-border: var(--hud-action-border);
-  --pm-hud-button-glow: var(--hud-action-glow);
-  --pm-hud-badge-bg: color-mix(in srgb, var(--accent-yellow) 84%, #fff 16%);
-  --pm-hud-time: var(--hud-time);
-  --pm-hud-score: var(--hud-score);
-  --pm-hud-surface: linear-gradient(180deg, rgba(var(--accent-primary-rgb), .18), rgba(0,0,0,.42));
-  --final-hud-bar-bg: linear-gradient(180deg, rgba(255,255,255,.08), rgba(0,0,0,.18)), var(--hud-bg);
-  --final-hud-bar-border: var(--hud-border);
-  --final-hud-bar-shadow: 0 12px 28px rgba(0,0,0,.24), 0 0 22px rgba(var(--accent-primary-rgb), .12);
-  --final-hud-label: var(--hud-label);
-  --final-hud-muted-label: color-mix(in srgb, var(--hud-label) 70%, transparent);
-  --final-hud-value: var(--hud-value);
-  --final-hud-rule-bg: rgba(var(--accent-primary-rgb), .14);
-  --final-hud-rule-border: rgba(var(--accent-primary-rgb), .34);
-  --final-hud-rule-label: var(--accent-cyan);
-  --final-hud-rule-text: var(--hud-value);
-  --final-hud-hint-bg: var(--hud-action-hint-bg);
-  --final-hud-shuffle-bg: var(--hud-action-shuffle-bg);
-  --final-hud-hint-icon: #ffffff;
-  --final-hud-shuffle-icon: #ffffff;
-  --final-hud-pause-bg: rgba(var(--accent-primary-rgb), .15);
-  --final-hud-pause-border: var(--hud-border);
-  --final-hud-pause-color: var(--hud-value);
-  --final-hud-divider: rgba(255,255,255,.12);
-  --final-hud-match-line: var(--accent-yellow);
-  --final-hud-match-line-shadow: rgba(var(--accent-secondary-rgb), .36);
-  --final-hud-badge-bg: color-mix(in srgb, var(--accent-yellow) 84%, #fff 16%);
-  --final-hud-badge-border: rgba(255,255,255,.28);
-  --final-hud-badge-text: #10201c;
-}
-
-
-/* =========================================================
-   FMW v1.0 — Emerald-family theme variants
-   Keeps the travel/world artwork as the fixed identity. Themes are
-   subtle emerald/teal/gold mood variants applied to UI accents only.
-   ========================================================= */
-html[data-theme="emerald-green"],
-html[data-theme="deep-ocean"],
-html[data-theme="jade-gold"],
-html[data-theme="midnight-green"],
-html[data-theme="tropical-teal"] {
-  color-scheme: dark;
-  --hud-panel-bg: linear-gradient(180deg, rgba(255,255,255,.070), rgba(255,255,255,.018));
-  --hud-panel-bg-strong: linear-gradient(180deg, rgba(255,255,255,.095), rgba(0,0,0,.10));
-  --pm-hud-surface: linear-gradient(180deg, color-mix(in srgb, var(--hud-bg-2) 74%, transparent), color-mix(in srgb, var(--hud-bg) 92%, transparent));
-  --pm-hud-panel: linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.012));
-  --pm-hud-panel-strong: linear-gradient(180deg, rgba(255,255,255,.090), rgba(0,0,0,.12));
-  --pm-hud-sep: linear-gradient(180deg, rgba(255,255,255,0), rgba(var(--accent-primary-rgb), .32), rgba(255,255,255,0));
-  --pm-hud-label: var(--hud-label);
-  --pm-hud-label-accent: var(--accent-cyan);
-  --pm-hud-value: var(--hud-value);
-}
-
-html[data-theme="deep-ocean"] {
-  --screen-1:#041c24; --screen-2:#073943; --screen-3:#031515;
-  --frame-1:#0b5560; --frame-2:#031b1d; --frame-edge:rgba(214,190,120,.36); --frame-inner:rgba(255,255,255,.09);
-  --hud-bg:rgba(4,31,42,.84); --hud-bg-2:rgba(8,75,83,.90); --hud-border:rgba(214,190,120,.30); --hud-label:rgba(213,242,238,.84); --hud-value:#fff8df; --hud-value-bg:rgba(2,18,23,.84); --hud-sheen:rgba(255,255,255,.09);
-  --accent-cyan:#2bb5a0; --accent-pink:#0d6e75; --accent-yellow:#d6be78; --accent-red:#e66a5e;
-  --accent-primary-rgb:43,181,160; --accent-secondary-rgb:214,190,120; --accent-warn-rgb:214,190,120;
-  --tile-bg:#f7fbf8; --tile-bg-2:#edf8f3; --tile-edge:#d6eadf; --tile-shadow:rgba(3,17,18,.26); --board-well:rgba(2,21,23,.52);
-  --timer-gradient:linear-gradient(90deg,#0d6e75,#2bb5a0,#d6be78); --path-line:#d6be78; --path-core:#fffaf0; --path-halo:rgba(214,190,120,.36);
-  --popup-bg-1:rgba(9,69,72,.97); --popup-bg-2:rgba(3,20,22,.98); --popup-border:rgba(214,190,120,.22);
-  --hud-action-hint-bg:linear-gradient(180deg,rgba(214,190,120,.46),rgba(43,181,160,.34)); --hud-action-shuffle-bg:linear-gradient(180deg,rgba(43,181,160,.44),rgba(13,110,117,.38)); --hud-action-border:rgba(214,190,120,.58); --hud-action-glow:rgba(214,190,120,.20); --hud-time:#70efad; --hud-score:#d6be78;
-  --fmw-startup-primary:#238f78; --fmw-startup-primary-dark:#126b60; --fmw-startup-secondary:#0d7671; --fmw-startup-secondary-dark:#07575a; --fmw-startup-tertiary:#0b6974; --fmw-startup-tertiary-dark:#064d56; --fmw-startup-icon:#22b99a; --fmw-startup-icon-dark:#0a6a5c; --fmw-startup-pill:rgba(3,31,34,.78); --fmw-startup-sub:#94d7c4;
-}
-
-html[data-theme="jade-gold"] {
-  --screen-1:#062b25; --screen-2:#0b4d3a; --screen-3:#041e1a;
-  --frame-1:#1d6d4e; --frame-2:#062419; --frame-edge:rgba(255,224,143,.42); --frame-inner:rgba(255,255,255,.10);
-  --hud-bg:rgba(5,37,30,.84); --hud-bg-2:rgba(12,79,56,.90); --hud-border:rgba(255,224,143,.36); --hud-label:rgba(226,246,230,.84); --hud-value:#fff5cc; --hud-value-bg:rgba(4,22,17,.84); --hud-sheen:rgba(255,255,255,.10);
-  --accent-cyan:#1ca66a; --accent-pink:#2fc271; --accent-yellow:#d7b85a; --accent-red:#df624e;
-  --accent-primary-rgb:47,194,113; --accent-secondary-rgb:215,184,90; --accent-warn-rgb:215,184,90;
-  --tile-bg:#fffdf5; --tile-bg-2:#f2faef; --tile-edge:#dcebd7; --tile-shadow:rgba(5,20,15,.24); --board-well:rgba(3,21,15,.52);
-  --timer-gradient:linear-gradient(90deg,#1ca66a,#2fc271,#d7b85a); --path-line:#d7b85a; --path-core:#fff9e6; --path-halo:rgba(215,184,90,.40);
-  --popup-bg-1:rgba(13,74,51,.97); --popup-bg-2:rgba(4,23,17,.98); --popup-border:rgba(255,224,143,.24);
-  --hud-action-hint-bg:linear-gradient(180deg,rgba(215,184,90,.54),rgba(47,194,113,.32)); --hud-action-shuffle-bg:linear-gradient(180deg,rgba(47,194,113,.42),rgba(17,105,72,.40)); --hud-action-border:rgba(255,224,143,.62); --hud-action-glow:rgba(215,184,90,.26); --hud-time:#77f0a3; --hud-score:#ffd76e;
-  --fmw-startup-primary:#31ad66; --fmw-startup-primary-dark:#1d8150; --fmw-startup-secondary:#188b66; --fmw-startup-secondary-dark:#0e6751; --fmw-startup-tertiary:#127a72; --fmw-startup-tertiary-dark:#0a5a59; --fmw-startup-icon:#33c887; --fmw-startup-icon-dark:#147452; --fmw-startup-pill:rgba(5,35,29,.78); --fmw-startup-sub:#e1c978;
-}
-
-html[data-theme="midnight-green"] {
-  --screen-1:#010706; --screen-2:#05221e; --screen-3:#010504;
-  --frame-1:#063b33; --frame-2:#010908; --frame-edge:rgba(191,161,90,.34); --frame-inner:rgba(255,255,255,.06);
-  --hud-bg:rgba(1,10,9,.88); --hud-bg-2:rgba(6,44,38,.92); --hud-border:rgba(191,161,90,.30); --hud-label:rgba(202,230,220,.80); --hud-value:#fff4d0; --hud-value-bg:rgba(0,5,4,.88); --hud-sheen:rgba(255,255,255,.06);
-  --accent-cyan:#14916e; --accent-pink:#0d6f58; --accent-yellow:#bfa15a; --accent-red:#d95c4d;
-  --accent-primary-rgb:20,145,110; --accent-secondary-rgb:191,161,90; --accent-warn-rgb:191,161,90;
-  --tile-bg:#f3f8f3; --tile-bg-2:#e8f3ec; --tile-edge:#cfdfd4; --tile-shadow:rgba(0,8,7,.32); --board-well:rgba(0,7,6,.62);
-  --timer-gradient:linear-gradient(90deg,#0d6f58,#14916e,#bfa15a); --path-line:#bfa15a; --path-core:#fff7db; --path-halo:rgba(191,161,90,.36);
-  --popup-bg-1:rgba(5,46,39,.98); --popup-bg-2:rgba(1,7,6,.98); --popup-border:rgba(191,161,90,.22);
-  --hud-action-hint-bg:linear-gradient(180deg,rgba(191,161,90,.42),rgba(20,145,110,.30)); --hud-action-shuffle-bg:linear-gradient(180deg,rgba(20,145,110,.38),rgba(5,58,48,.46)); --hud-action-border:rgba(191,161,90,.54); --hud-action-glow:rgba(191,161,90,.18); --hud-time:#60e79a; --hud-score:#cdae66;
-  --fmw-startup-primary:#197d54; --fmw-startup-primary-dark:#0d5c43; --fmw-startup-secondary:#0d6555; --fmw-startup-secondary-dark:#074a42; --fmw-startup-tertiary:#09585f; --fmw-startup-tertiary-dark:#043f46; --fmw-startup-icon:#1da875; --fmw-startup-icon-dark:#0a5f45; --fmw-startup-pill:rgba(1,14,13,.82); --fmw-startup-sub:#92c7b0;
-}
-
-html[data-theme="tropical-teal"] {
-  --screen-1:#073633; --screen-2:#09665b; --screen-3:#052722;
-  --frame-1:#0f7566; --frame-2:#063027; --frame-edge:rgba(240,212,122,.36); --frame-inner:rgba(255,255,255,.11);
-  --hud-bg:rgba(6,50,45,.82); --hud-bg-2:rgba(13,103,88,.88); --hud-border:rgba(240,212,122,.32); --hud-label:rgba(220,252,241,.84); --hud-value:#fffbe5; --hud-value-bg:rgba(4,28,24,.82); --hud-sheen:rgba(255,255,255,.11);
-  --accent-cyan:#49d6a7; --accent-pink:#15a692; --accent-yellow:#f0d47a; --accent-red:#e86655;
-  --accent-primary-rgb:73,214,167; --accent-secondary-rgb:240,212,122; --accent-warn-rgb:240,212,122;
-  --tile-bg:#f8fffa; --tile-bg-2:#edfbf5; --tile-edge:#d4eadf; --tile-shadow:rgba(5,28,24,.24); --board-well:rgba(3,29,25,.50);
-  --timer-gradient:linear-gradient(90deg,#15a692,#49d6a7,#f0d47a); --path-line:#f0d47a; --path-core:#fffdf1; --path-halo:rgba(240,212,122,.38);
-  --popup-bg-1:rgba(12,87,75,.97); --popup-bg-2:rgba(4,30,26,.98); --popup-border:rgba(240,212,122,.22);
-  --hud-action-hint-bg:linear-gradient(180deg,rgba(240,212,122,.48),rgba(73,214,167,.30)); --hud-action-shuffle-bg:linear-gradient(180deg,rgba(73,214,167,.42),rgba(15,117,102,.40)); --hud-action-border:rgba(240,212,122,.58); --hud-action-glow:rgba(240,212,122,.20); --hud-time:#8ff5b3; --hud-score:#f0d47a;
-  --fmw-startup-primary:#31b676; --fmw-startup-primary-dark:#1a8b61; --fmw-startup-secondary:#18a28b; --fmw-startup-secondary-dark:#0c746b; --fmw-startup-tertiary:#129391; --fmw-startup-tertiary-dark:#08696d; --fmw-startup-icon:#49d6a7; --fmw-startup-icon-dark:#0e755c; --fmw-startup-pill:rgba(5,44,39,.76); --fmw-startup-sub:#bdf1d8;
-}
-
-/* Keep startup artwork fixed and immune to theme variables. */
-#overlay.fmw-startup-screen,
-.fmw-startup-stage {
-  background-image: url("assets/startup/fmw-startup-blank-v2.png") !important;
-}
-#overlay.fmw-startup-screen {
-  background-color: #062d28 !important;
+@media (max-width: 760px) {
+  .fmw-pause-modal, .fmw-result-modal, .fmw-settings-modal, .fmw-confirm-modal { width: min(94vw, 620px) !important; }
+  .fmw-btn-row, .fmw-confirm-actions { grid-template-columns: 1fr 1fr !important; }
 }
 
 /* =========================================================
-   FMW v1.0 — Startup alignment refinement
-   - Move main buttons below tagline.
-   - Make Music/Sound/Theme pill share the same left edge and width as buttons.
-   - Keep stage-based sizing so iPhone/iPad/laptop scale as one artboard.
+   v3.7.1 — Source-popup shell implementation
+   Removes baked buttons from popup artwork and overlays live HTML controls.
    ========================================================= */
-.fmw-menu-list {
-  left: 16.1em !important;
-  top: 24.7em !important;
-  width: 29.6em !important;
-  gap: .74em !important;
-}
-.fmw-menu-btn {
-  height: 3.95em !important;
-  font-size: 1.28em !important;
-  padding: .32em 1.20em .32em .32em !important;
-}
-.fmw-btn-icon {
-  width: 3.24em !important;
-  height: 3.24em !important;
-  margin-right: 1.08em !important;
-}
-.fmw-settings-pill {
-  left: 16.1em !important;
-  top: 42.9em !important;
-  width: 29.6em !important;
-  min-height: 3.95em !important;
-  padding: .38em .78em !important;
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-}
-.fmw-pill-item {
-  flex: 1 1 0 !important;
-  min-width: 0 !important;
-  justify-content: center !important;
-  gap: .58em !important;
-  padding: .18em .45em !important;
-}
-.fmw-pill-icon {
-  width: 2.92em !important;
-  height: 2.92em !important;
-  font-size: .98em !important;
-}
-.fmw-pill-label span { font-size: .86em !important; }
-.fmw-pill-label small { font-size: .68em !important; }
-.fmw-pill-divider {
-  flex: 0 0 1px !important;
-  height: 2.45em !important;
-  margin: 0 .22em !important;
+
+.sr-only{
+  position:absolute!important;
+  width:1px!important;height:1px!important;
+  padding:0!important;margin:-1px!important;
+  overflow:hidden!important;clip:rect(0,0,0,0)!important;
+  white-space:nowrap!important;border:0!important;
 }
 
-/* Extra-tight landscape devices: keep the control group clear of the tagline. */
-@media (orientation: landscape) and (max-height: 470px) {
-  .fmw-menu-list { top: 24.2em !important; }
-  .fmw-settings-pill { top: 42.3em !important; }
+#pauseOverlay.fmw-popup-overlay,
+#levelCompleteOverlay.fmw-popup-overlay,
+#gameOverOverlay.fmw-popup-overlay,
+#settingsOverlay.fmw-popup-overlay{
+  background: rgba(0, 10, 8, .52) !important;
+  backdrop-filter: blur(6px) brightness(.72) !important;
 }
 
+.fmw-shell-modal{
+  position:relative;
+  display:block;
+  max-width:calc(100vw - 24px);
+  max-height:calc(100vh - 24px);
+}
+.fmw-shell-modal-pause{width:min(80vw, 638px); aspect-ratio:638/589;}
+.fmw-shell-modal-level{width:min(80vw, 648px); aspect-ratio:648/675;}
+.fmw-shell-modal-gameover{width:min(76vw, 625px); aspect-ratio:625/636;}
+.fmw-shell-modal-settings{width:min(88vw, 856px); aspect-ratio:856/616;}
 
-/* ==========================================================
-   FMW v1.0 — iOS / iPadOS Startup Screen Fix
-   Addresses:
-   1. Portrait mode: stage was 56.25 vw tall (16:9 slice) —
-      on iPhone/iPad portrait the stage now fills the viewport
-      width and centers vertically so the artwork always shows.
-   2. Safe-area insets for notched iPhones and iPads with
-      home-bar (viewport-fit=cover already set in <head>).
-   3. Stage background: was 100% 100% (stretches art) — now
-      uses cover so the image scales proportionally.
-   4. iPad landscape 4:3 query tightened (1.4/1 is more
-      accurate for iPad's 4:3 screen than the old 1.55/1).
-   5. Very narrow landscape (e.g. iPhone SE landscape):
-      stage shrinks to fit the shorter dimension.
-   ========================================================== */
-
-/* ── Overlay: respect safe areas on notched/dynamic-island
-      iPhones and iPads with home bar. ── */
-#overlay.fmw-startup-screen {
-  padding-top:    env(safe-area-inset-top,    0px) !important;
-  padding-bottom: env(safe-area-inset-bottom, 0px) !important;
-  padding-left:   env(safe-area-inset-left,   0px) !important;
-  padding-right:  env(safe-area-inset-right,  0px) !important;
-  /* Use dvh so Chrome/Safari on iOS don't cut off the bottom. */
-  height: 100dvh !important;
-  box-sizing: border-box !important;
+.fmw-shell-bg{
+  position:absolute; inset:0;
+  width:100%; height:100%; object-fit:contain;
+  pointer-events:none; user-select:none;
 }
 
-/* ── Stage: always scale as one locked artboard, cover not stretch. ── */
-.fmw-startup-stage {
-  background-size: cover !important;
-  background-position: center center !important;
+.fmwc-stack,.fmwc-scorepanel,.fmwc-settings-body,.fmwc-settings-back{position:absolute;z-index:2;}
+
+/* -------- Buttons from popup-components, recreated live -------- */
+.fmwc-stack{display:flex;flex-direction:column;gap:11px;}
+.fmwc-row{display:flex;gap:11px;}
+.fmwc-row>.fmwc-btn{flex:1;min-width:0;}
+.fmwc-btn{
+  position:relative; display:flex; align-items:center; width:100%;
+  border:none; border-radius:999px; cursor:pointer; overflow:hidden;
+  padding:5px 18px 5px 5px; color:#fff;
+  font-family: Inter, 'Space Grotesk', system-ui, sans-serif; font-size:17px; font-weight:800;
+  letter-spacing:.2px; text-shadow:0 1px 4px rgba(0,0,0,.46);
+  outline:2px solid rgba(205,165,50,.80); outline-offset:0;
+  box-shadow:0 0 0 1px rgba(255,215,90,.22),0 5px 22px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.10);
+  transition:filter .14s, transform .12s;
+}
+.fmwc-btn:hover{filter:brightness(1.06);transform:scale(1.01);}
+.fmwc-btn:active{transform:scale(.985);filter:brightness(.96);}
+.fmwc-btn::before{
+  content:''; position:absolute; top:0; left:10%; right:10%; height:48%; z-index:0;
+  border-radius:999px 999px 55% 55%;
+  background:linear-gradient(to bottom,rgba(255,255,255,.30) 0%,rgba(255,255,255,0) 100%);
+}
+.fmwc-btn::after{
+  content:''; position:absolute; inset:0; z-index:0; border-radius:999px; pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='68'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.80' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='68' filter='url(%23g)' opacity='0.11'/%3E%3C/svg%3E");
+  background-size:300px 68px; mix-blend-mode:overlay;
+}
+.fmwc-btn-green{background:linear-gradient(180deg,#72e06e 0%,#40c050 14%,#2aa040 36%,#1f8034 58%,#176030 80%,#104820 100%);}
+.fmwc-btn-teal{background:linear-gradient(180deg,#28c0a0 0%,#18a085 20%,#107868 48%,#0c5e50 74%,#084840 100%);}
+.fmwc-btn-lg{font-size:20px; padding-top:6px; padding-bottom:6px;}
+.fmwc-icon,.fmwc-label{position:relative; z-index:1;}
+.fmwc-icon{
+  flex-shrink:0; width:52px; height:52px; margin-right:10px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-size:24px; line-height:1;
+  box-shadow:0 0 0 2px rgba(195,155,35,.85),0 0 0 3.5px rgba(255,215,80,.28),0 3px 10px rgba(0,0,0,.42),inset 0 2px 3px rgba(255,255,255,.35),inset 0 -2px 4px rgba(0,0,0,.18);
+}
+.fmwc-btn-green .fmwc-icon{background:radial-gradient(circle at 38% 32%,#ffffff 0%,#e2f8e6 28%,#b4e4be 60%,#80c890 100%); color:#186828;}
+.fmwc-btn-teal .fmwc-icon{background:radial-gradient(circle at 38% 32%,#40ddc0 0%,#18b095 38%,#0c7860 100%); color:#fff;}
+.fmwc-label{flex:1; text-align:center; padding-right:8px;}
+
+/* Pause layout */
+.fmwc-pause-stack{left:12.5%; top:41%; width:75%;}
+
+/* Level complete layout */
+.fmwc-scorepanel{
+  background:linear-gradient(180deg, rgba(8,56,59,.90), rgba(5,35,38,.90));
+  border:2px solid rgba(209,177,84,.95); border-radius:28px;
+  box-shadow:0 18px 28px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.07);
+  color:#f4f0dd;
+}
+.fmwc-scorepanel-level{left:9.8%; top:27.4%; width:79%; padding:20px 28px 16px;}
+.fmwc-scorepanel-gameover{left:11.5%; top:23.6%; width:71%; padding:20px 26px 18px;}
+.fmwc-score-row,.fmwc-total-row{display:flex; align-items:center; justify-content:space-between; gap:18px;}
+.fmwc-score-row{padding:8px 0; border-bottom:1px solid rgba(255,255,255,.11); font-size:15px; font-weight:700;}
+.fmwc-score-row:last-of-type{border-bottom:none;}
+.fmwc-score-row strong,.fmwc-total-row strong{font-size:18px; color:#fff7d5; letter-spacing:.02em;}
+.fmwc-total-row{margin-top:10px; padding-top:12px; border-top:2px solid rgba(217,190,104,.55); font-size:16px; font-weight:800; color:#ffd977;}
+.fmwc-level-stack{left:11.5%; bottom:8.4%; width:77%;}
+.fmwc-gameover-stack{left:14.8%; bottom:9.2%; width:69%;}
+
+/* Settings layout */
+.fmwc-settings-body{left:10.5%; top:16.2%; width:79.5%; color:#ecf8ef; display:flex; flex-direction:column; align-items:stretch;}
+.fmwc-setting-row{
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding:12px 18px; margin-bottom:10px;
+  border:none; border-radius:18px; cursor:pointer;
+  color:#f2fbf2; background:rgba(7,54,57,.72); border:1px solid rgba(209,177,84,.35);
+  font-family:Inter,'Space Grotesk',system-ui,sans-serif; font-size:19px; font-weight:700;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
+}
+.fmwc-setting-name{display:block; text-align:left;}
+.fmwc-switch{
+  width:56px; height:30px; border-radius:999px; background:#1a4a38; position:relative; flex-shrink:0;
+  border:1.5px solid rgba(200,160,45,.40); box-shadow:inset 0 2px 5px rgba(0,0,0,.40);
+}
+.fmwc-switch::before{content:''; position:absolute; width:22px; height:22px; border-radius:50%; left:4px; top:3px; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,.35); transition:transform .25s;}
+.fmwc-switch.is-on{background:linear-gradient(135deg,#38c068,#189840); border-color:rgba(200,160,45,.55);}
+.fmwc-switch.is-on::before{transform:translateX(25px);}
+.fmwc-theme-title{margin:10px 0 12px; text-align:center; color:#f0c84a; font-size:14px; font-weight:800; letter-spacing:3px;}
+.fmwc-theme-grid{display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:10px;}
+.fmwc-theme-swatch{
+  display:flex; flex-direction:column; align-items:center; gap:7px; padding:0; background:none; border:none; cursor:pointer;
+  color:rgba(255,255,255,.72); font:700 12px Inter,system-ui,sans-serif; text-align:center;
+}
+.fmwc-theme-swatch i{
+  display:block; width:100%; aspect-ratio:1/1; border-radius:12px; border:2px solid rgba(255,255,255,.12); position:relative;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12), 0 4px 12px rgba(0,0,0,.20);
+}
+.fmwc-theme-swatch.active i,.fmwc-theme-swatch.selected i{border-color:#f0c84a; box-shadow:0 0 0 2px rgba(240,200,74,.28),0 4px 16px rgba(0,0,0,.45);}
+.fmwc-theme-swatch span{line-height:1.2;}
+.fmwc-settings-back{left:29.2%; bottom:3.4%; width:41.5%;}
+
+.sw-blue{background:linear-gradient(145deg,#2c62b0 0%,#1a3e7e 55%,#102860 100%);}
+.sw-navy{background:linear-gradient(145deg,#1e2458 0%,#0e1440 55%,#080e2c 100%);}
+.sw-emerald{background:linear-gradient(145deg,#1e7c52 0%,#0e5038 55%,#083428 100%);}
+.sw-purple{background:linear-gradient(145deg,#6c24b4 0%,#3c107e 55%,#260870 100%);}
+.sw-red{background:linear-gradient(145deg,#8c1c2a 0%,#5a0e18 55%,#3c0810 100%);}
+
+@media (max-width: 820px){
+  .fmw-shell-modal-pause{width:min(92vw, 638px);}
+  .fmw-shell-modal-level{width:min(92vw, 648px);}
+  .fmw-shell-modal-gameover{width:min(90vw, 625px);}
+  .fmw-shell-modal-settings{width:min(95vw, 856px);}
+  .fmwc-btn{font-size:15px;}
+  .fmwc-btn-lg{font-size:18px;}
+  .fmwc-icon{width:44px;height:44px;font-size:20px;margin-right:8px;}
+  .fmwc-scorepanel-level{padding:16px 18px 14px;}
+  .fmwc-scorepanel-gameover{padding:16px 18px 14px;}
+  .fmwc-score-row{font-size:13px;padding:6px 0;}
+  .fmwc-score-row strong,.fmwc-total-row strong{font-size:16px;}
+  .fmwc-total-row{font-size:15px;}
+  .fmwc-setting-row{font-size:16px; padding:10px 14px; margin-bottom:8px;}
+  .fmwc-theme-grid{gap:8px;}
+  .fmwc-theme-swatch{font-size:10px;}
 }
 
-/* ── PORTRAIT (iPhone & iPad held upright)
-      The artwork is 16:9 landscape.  In portrait the screen is
-      taller than it is wide, so we fit the stage to the full
-      viewport width and let it be shorter than the screen —
-      the overlay centres it vertically.
-      font-size tracks 1 vw (= 1/100 of stage width). ── */
-@media (orientation: portrait) {
-  #overlay.fmw-startup-screen {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-  .fmw-startup-stage {
-    /* Stage width = full viewport width (minus safe-area sides).
-       Stage height = 9/16 of that width (keeps 16:9 art intact). */
-    width:  calc(100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right,  0px)) !important;
-    height: calc((100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)) * 9 / 16) !important;
-    font-size: calc((100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)) / 100) !important;
-    aspect-ratio: unset !important;
-  }
-}
-
-/* ── LANDSCAPE — wide screens (≥ 16:9, e.g. iPhone landscape,
-      laptop, desktop): constrain to the shorter dimension. ── */
-@media (orientation: landscape) and (min-aspect-ratio: 16/9) {
-  .fmw-startup-stage {
-    height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)) !important;
-    width:  calc((100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)) * 16 / 9) !important;
-    font-size: calc((100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)) / 56.25) !important;
-    aspect-ratio: unset !important;
-  }
-}
-
-/* ── LANDSCAPE — narrower-than-16:9 screens (iPad 4:3, iPad Mini,
-      iPad Air landscape).  Fit to full viewport width. ── */
-@media (orientation: landscape) and (max-aspect-ratio: 16/9) {
-  .fmw-startup-stage {
-    width:  calc(100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)) !important;
-    height: calc((100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)) * 9 / 16) !important;
-    font-size: calc((100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)) / 100) !important;
-    aspect-ratio: unset !important;
-  }
-  #overlay.fmw-startup-screen {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-}
-
-/* ── Very-tight landscape (iPhone SE landscape, ~568 px tall):
-      stage can't be taller than the available height. ── */
-@media (orientation: landscape) and (max-height: 420px) {
-  .fmw-startup-stage {
-    height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)) !important;
-    width:  calc((100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)) * 16 / 9) !important;
-    font-size: calc((100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)) / 56.25) !important;
-    aspect-ratio: unset !important;
-  }
-}
-
-/* ── @supports fallback: browsers without dvh (older iOS Safari < 15.4) ── */
-@supports not (height: 100dvh) {
-  #overlay.fmw-startup-screen { height: 100vh !important; }
-
-  @media (orientation: portrait) {
-    .fmw-startup-stage {
-      width:  100vw !important;
-      height: calc(100vw * 9 / 16) !important;
-      font-size: calc(100vw / 100) !important;
-    }
-  }
-  @media (orientation: landscape) and (min-aspect-ratio: 16/9) {
-    .fmw-startup-stage {
-      height: 100vh !important;
-      width:  calc(100vh * 16 / 9) !important;
-      font-size: calc(100vh / 56.25) !important;
-    }
-  }
-  @media (orientation: landscape) and (max-aspect-ratio: 16/9) {
-    .fmw-startup-stage {
-      width:  100vw !important;
-      height: calc(100vw * 9 / 16) !important;
-      font-size: calc(100vw / 100) !important;
-    }
-  }
-}
+/* v3.7.2 — Restore FMW startup + live button click hardening */
+.fmw-startup-overlay{position:fixed!important;inset:0!important;z-index:60!important;display:block!important;overflow:hidden!important;padding:0!important;background:#06231d!important;}
+.fmw-startup-overlay.hidden{display:none!important;}
+.fmw-startup-bg{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;pointer-events:none!important;user-select:none!important;}
+.fmw-startup-hotspots{position:absolute!important;inset:0!important;z-index:5!important;pointer-events:none!important;}
+.fmw-startup-hit{position:absolute!important;left:10.4%!important;width:22.8%!important;height:5.4%!important;border:0!important;background:rgba(0,0,0,.001)!important;color:transparent!important;border-radius:999px!important;cursor:pointer!important;z-index:6!important;pointer-events:auto!important;-webkit-tap-highlight-color:transparent!important;}
+.fmw-startup-hit-continue{top:40.8%!important;}
+.fmw-startup-hit-new{top:46.5%!important;}
+.fmw-startup-hit-quick{top:52.35%!important;}
+.fmw-startup-hit-settings{top:58.15%!important;}
+.fmw-startup-hit:focus-visible{outline:2px solid rgba(255,220,100,.95)!important;outline-offset:3px!important;}
+.fmw-startup-hidden-state{display:none!important;}
+.fmw-shell-bg{pointer-events:none!important;}
+.fmw-shell-modal{pointer-events:auto!important;}
+.fmwc-stack,.fmwc-row,.fmwc-btn,.fmwc-btn *{pointer-events:auto!important;}
+#pauseOverlay .fmwc-pause-stack{z-index:200!important;pointer-events:auto!important;}
+#pauseOverlay .fmwc-btn{position:relative!important;z-index:201!important;pointer-events:auto!important;}
+#pauseOverlay .fmw-shell-bg{pointer-events:none!important;}

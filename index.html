@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" name="viewport"/>
-<title>Pocket Match</title>
+<title>Flag Match World</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
 
-<link href="style-new.css?v=3.6.5" rel="stylesheet"/>
+<link href="style-new.css?v=3.7.0-fmw-popups" rel="stylesheet"/>
 
 
 </head>
@@ -133,315 +133,176 @@
     </div>
   </div>
 </div>
-<section class="overlay" id="overlay">
-<div class="modal start-modal">
-<div class="modal-kicker">RETRO CARTRIDGE SYSTEM</div>
-<h1>Pocket <span>Match</span></h1>
-<p>Match pairs · trace clean paths · beat the clock.</p>
-<div class="start-theme-compact" aria-label="Color theme">
-<button class="theme-pill" id="themePillBtn" type="button" aria-haspopup="dialog" aria-expanded="false">
-<span class="theme-pill-label">Theme</span>
-<span class="theme-pill-name" id="themePillName">NEON NIGHT</span>
-<span class="theme-pill-caret" aria-hidden="true">▾</span>
-<span class="theme-pill-swatches" id="themePillSwatches" aria-hidden="true"></span>
-</button>
-</div>
-<div class="sprite-select">
-<div class="sprite-select-label"><span>Tile Pack</span></div>
-<button aria-label="Previous theme" class="sprite-carousel-arrow sprite-carousel-prev" id="spriteCarouselPrev" type="button">
-            ‹
-          </button>
-<div class="sprite-options" id="spriteOptions">
-<button class="sprite-option active" data-set="original" type="button">
-<span class="sprite-icon icon-shell"><img alt="Pokémon icon" class="sprite-icon-img" src="assets/ui-icons/pokemon-card.png"/></span><span class="sprite-name">Pokémon</span><span class="sprite-save-pill">NEW</span>
-</button>
-<button class="sprite-option" data-set="brands" type="button">
-<span class="sprite-icon icon-shell"><img alt="Brands icon" class="sprite-icon-img" src="assets/ui-icons/brands-card.png"/></span><span class="sprite-name">Brands</span><span class="sprite-save-pill">NEW</span>
-</button>
-<button class="sprite-option" data-set="flags" type="button">
-<span class="sprite-icon icon-shell"><img alt="Flags icon" class="sprite-icon-img" src="assets/ui-icons/flags-card.png"/></span><span class="sprite-name">Flags</span><span class="sprite-save-pill">NEW</span>
-</button>
-<button class="sprite-option" data-set="foodies" type="button">
-<span class="sprite-icon icon-shell"><img alt="Foodies 1 icon" class="sprite-icon-img" src="assets/ui-icons/foodies1-card.png"/></span><span class="sprite-name">Foodies 1</span><span class="sprite-save-pill">NEW</span>
-</button>
-<button class="sprite-option" data-set="foodies2" type="button">
-<span class="sprite-icon icon-shell"><img alt="Foodies 2 icon" class="sprite-icon-img" src="assets/ui-icons/foodies2-card.png"/></span><span class="sprite-name">Foodies 2</span><span class="sprite-save-pill">NEW</span>
-</button>
-<button class="sprite-option" data-set="football" type="button">
-<span class="sprite-icon icon-shell"><img alt="Football icon" class="sprite-icon-img" src="assets/ui-icons/football-card.png"/></span><span class="sprite-name">Football</span><span class="sprite-save-pill">NEW</span>
-</button>
-<button class="sprite-option" data-set="gadgets" type="button">
-<span class="sprite-icon icon-shell"><img alt="Gadgets icon" class="sprite-icon-img" src="assets/ui-icons/gadgets-card.png"/></span><span class="sprite-name">Gadgets</span><span class="sprite-save-pill">NEW</span>
-</button>
-<button class="sprite-option" data-set="home" type="button">
-<span class="sprite-icon icon-shell"><img alt="Home icon" class="sprite-icon-img" src="assets/ui-icons/home-card.png"/></span><span class="sprite-name">Home</span><span class="sprite-save-pill">NEW</span>
-</button>
-<button class="sprite-option" data-set="sports" type="button">
-<span class="sprite-icon icon-shell"><img alt="Sports icon" class="sprite-icon-img" src="assets/ui-icons/sports-card.png"/></span><span class="sprite-name">Sports</span><span class="sprite-save-pill">NEW</span>
-</button>
-<button class="sprite-option" data-set="tools" type="button">
-<span class="sprite-icon icon-shell"><img alt="Tools icon" class="sprite-icon-img" src="assets/ui-icons/tools-card.png"/></span><span class="sprite-name">Tools</span><span class="sprite-save-pill">NEW</span>
-</button>
-<button class="sprite-option" data-set="travel" type="button">
-<span class="sprite-icon icon-shell"><img alt="Travel icon" class="sprite-icon-img" src="assets/ui-icons/travel-card.png"/></span><span class="sprite-name">Travel</span><span class="sprite-save-pill">NEW</span>
-</button>
-</div>
-<button aria-label="Next theme" class="sprite-carousel-arrow sprite-carousel-next" id="spriteCarouselNext" type="button">
-            ›
-          </button>
-<div aria-hidden="true" class="sprite-carousel-dots" id="spriteCarouselDots"></div>
-</div>
-<div class="saved-slot selected-run-info" id="savedSlot">
-<div class="saved-slot-card">
-<div class="saved-slot-info">
-<span class="saved-slot-label">Selected Run</span>
-<div class="saved-slot-details">
-<span id="saveLevel">—</span>
-<span class="saved-slot-sep">·</span>
-<span id="saveScore">—</span>
-</div>
-</div>
-<div class="saved-slot-info">
-<span class="saved-slot-label">Last Saved</span>
-<div class="saved-slot-details">
-<span id="saveDate">—</span>
-<button class="delete-save-btn" id="deleteSaveBtn" title="Delete selected saved game">
-                  ✕
-                </button>
-</div>
-</div>
-</div>
-</div>
-<div class="start-actions action-grid">
-<button class="start-btn action-btn continue-action" id="continueFromSaveBtn" type="button">
-            Continue
-          </button>
-<button class="start-btn action-btn primary-action" id="startBtn" type="button">
-            New Game
-          </button>
-<button class="start-btn action-btn quick-action" id="quickGameBtn" type="button">
-            Quick Game
-          </button>
-</div>
-</div>
-</section>
-<section class="overlay hidden" id="newGameConfirmOverlay">
-<div class="modal save-modal confirm-modal">
-<div class="modal-kicker">SAVE SLOT WARNING</div>
-<h1>Start New Game?</h1>
-<p id="newGameConfirmMsg">
-          This will delete the saved progress for the selected tile set.
-        </p>
-<div class="popup-actions">
-<button class="modal-btn secondary" id="cancelNewGameBtn" type="button">
-            Cancel
-          </button>
-<button class="modal-btn primary" id="confirmNewGameBtn" type="button">
-            New Game
-          </button>
-</div>
-</div>
-</section>
-<section class="overlay hidden" id="saveOverlay">
-<div class="modal save-modal">
-<div class="modal-kicker">CARTRIDGE SAVE</div>
-<h1>Game Saved</h1>
-<p id="saveMsg">
-          Progress saved — continue any time from the main screen.
-        </p>
-<div class="popup-actions">
-<button class="modal-btn primary" id="saveOkBtn" type="button">
-            OK
-          </button>
-</div>
-</div>
-</section>
-<section class="overlay pause-overlay hidden fmw-popup-overlay" id="pauseOverlay">
-  <div class="fmw-pause-modal" role="dialog" aria-modal="true" aria-labelledby="pauseTitle">
-    <div class="fmw-popup-flag" aria-hidden="true"></div>
-    <div class="fmw-popup-title-row" aria-hidden="true"><span></span><b>✦</b><span></span></div>
-    <h1 id="pauseTitle">PAUSED</h1>
-    <div class="fmw-title-underline" aria-hidden="true"></div>
-    <p id="pauseMessage" class="fmw-pause-message">The timer is stopped. Continue the journey when ready.</p>
-
-    <nav class="fmw-pause-actions" id="pauseActions" aria-label="Pause menu">
-      <button class="fmw-btn fmw-btn-primary" id="continueBtn" type="button">
-        <span class="fmw-btn-icon" aria-hidden="true"><i class="fa-solid fa-location-arrow"></i></span>
-        <span class="fmw-btn-label">Resume</span>
-      </button>
-      <button class="fmw-btn fmw-btn-secondary" id="restartFromPauseBtn" type="button">
-        <span class="fmw-btn-icon" aria-hidden="true"><i class="fa-solid fa-rotate-right"></i></span>
-        <span class="fmw-btn-label">Restart Level</span>
-      </button>
-      <button class="fmw-btn fmw-btn-secondary" id="pauseSettingsBtn" type="button">
-        <span class="fmw-btn-icon" aria-hidden="true"><i class="fa-solid fa-gear"></i></span>
-        <span class="fmw-btn-label">Settings</span>
-      </button>
-      <button class="fmw-btn fmw-btn-secondary" id="saveFromPauseBtn" type="button">
-        <span class="fmw-btn-icon" aria-hidden="true"><i class="fa-solid fa-house"></i></span>
-        <span class="fmw-btn-label">Home</span>
-      </button>
-      <button class="fmw-btn fmw-btn-secondary hidden" id="saveContinueBtn" type="button">Save &amp; Continue</button>
-      <button class="fmw-btn fmw-btn-secondary hidden" id="endQuickGameBtn" type="button">End Quick Game</button>
-    </nav>
+<section class="overlay fmw-startup-overlay" id="overlay">
+  <img class="fmw-startup-bg" src="assets/ui/startup-screen.png" alt="" aria-hidden="true" />
+  <nav class="fmw-startup-hotspots" aria-label="Start menu">
+    <button class="fmw-startup-hit fmw-startup-hit-continue" id="continueFromSaveBtn" type="button" aria-label="Continue">Continue</button>
+    <button class="fmw-startup-hit fmw-startup-hit-new" id="startBtn" type="button" aria-label="New Game">New Game</button>
+    <button class="fmw-startup-hit fmw-startup-hit-quick" id="quickGameBtn" type="button" aria-label="Quick Game">Quick Game</button>
+    <button class="fmw-startup-hit fmw-startup-hit-settings" id="startupSettingsBtn" type="button" aria-label="Settings">Settings</button>
+  </nav>
+  <div class="fmw-startup-hidden-state" aria-hidden="true">
+    <button class="theme-pill" id="themePillBtn" type="button" aria-haspopup="dialog" aria-expanded="false">
+      <span class="theme-pill-label">Theme</span>
+      <span class="theme-pill-name" id="themePillName">EMERALD GREEN</span>
+      <span class="theme-pill-caret" aria-hidden="true">▾</span>
+      <span class="theme-pill-swatches" id="themePillSwatches" aria-hidden="true"></span>
+    </button>
+    <div class="saved-slot selected-run-info" id="savedSlot">
+      <span id="saveLevel">—</span>
+      <span id="saveScore">—</span>
+      <span id="saveDate">—</span>
+      <button class="delete-save-btn" id="deleteSaveBtn" type="button">✕</button>
+    </div>
   </div>
 </section>
-<section class="overlay score-summary-overlay hidden" id="levelCompleteOverlay">
-  <article class="score-summary-card" role="dialog" aria-label="Level Complete Score Summary">
-    <button class="score-summary-close" id="levelCompleteCloseBtn" type="button" aria-label="Close">×</button>
-
-    <header class="score-summary-header">
-      <div class="score-summary-badge" aria-hidden="true">★</div>
-      <h1 class="score-summary-title">LEVEL COMPLETE</h1>
-      <div class="score-summary-subtitle">Score Summary</div>
-    </header>
-
-    <section class="score-summary-stats" aria-label="Score summary">
-      <div class="score-summary-stat-card">
-        <div class="score-summary-stat-icon" aria-hidden="true">★</div>
-        <div>
-          <div class="score-summary-stat-label">Level Score</div>
-          <div class="score-summary-stat-value" id="lcLevelScore">0</div>
-        </div>
-      </div>
-      <div class="score-summary-stat-card">
-        <div class="score-summary-stat-icon" aria-hidden="true">🏆</div>
-        <div>
-          <div class="score-summary-stat-label">Total Score</div>
-          <div class="score-summary-stat-value" id="lcTotalScore">0</div>
-        </div>
-      </div>
-      <div class="score-summary-stat-card">
-        <div class="score-summary-stat-icon" aria-hidden="true">⚡</div>
-        <div>
-          <div class="score-summary-stat-label">Best Combo</div>
-          <div class="score-summary-stat-value" id="lcBestCombo">—</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="score-summary-history" aria-label="Run score history">
-      <div class="score-summary-table-scroll" id="scoreHistoryScroll">
-        <table class="score-summary-table">
-          <thead>
-            <tr>
-              <th>LEVEL</th>
-              <th>SCORE</th>
-              <th>TIME USED</th>
-            </tr>
-          </thead>
-          <tbody id="scoreHistoryBody"></tbody>
-        </table>
-      </div>
-    </section>
-
-    <nav class="score-summary-actions">
-      <button class="modal-btn primary score-summary-next" id="nextLevelBtn" type="button">» Next Level</button>
-      <button class="modal-btn secondary score-summary-home" id="levelCompleteQuitBtn" type="button">⌂ Home</button>
+<section class="overlay hidden fmw-popup-overlay" id="newGameConfirmOverlay">
+  <article class="fmw-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="newGameConfirmTitle">
+    <div class="fmw-popup-flag" aria-hidden="true"></div>
+    <div class="fmw-popup-title-row" aria-hidden="true"><span></span><b>✦</b><span></span></div>
+    <h1 id="newGameConfirmTitle">START A NEW GAME?</h1>
+    <div class="fmw-title-underline" aria-hidden="true"></div>
+    <p id="newGameConfirmMsg">Your current progress will be reset. This cannot be undone.</p>
+    <nav class="fmw-confirm-actions" aria-label="New game confirmation">
+      <button class="fmw-btn fmw-btn-secondary fmw-confirm-cancel" id="cancelNewGameBtn" type="button">
+        <span class="fmw-btn-label">Cancel</span>
+      </button>
+      <button class="fmw-btn fmw-btn-warning" id="confirmNewGameBtn" type="button">
+        <span class="fmw-btn-label">Start New Game</span>
+      </button>
     </nav>
   </article>
 </section>
-<section class="overlay rc-overlay rc-overlay--danger hidden" id="gameOverOverlay">
-<div class="modal pause-modal premium-pause-card rc-card rc-card--danger">
-  <section class="pause-hero rc-hero rc-hero--danger">
-    <div class="pause-glyph rc-glyph rc-glyph--danger" aria-hidden="true">
-      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="rc-glyph-svg">
-        <line x1="13" y1="13" x2="35" y2="35" stroke="currentColor" stroke-width="5.5" stroke-linecap="round"/>
-        <line x1="35" y1="13" x2="13" y2="35" stroke="currentColor" stroke-width="5.5" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <div class="pause-copy">
-      <div class="premium-eyebrow rc-eyebrow" id="goKicker">Time Limit Reached</div>
-      <h1 id="goTitle">Game<br /><em>Over</em></h1>
-      <p id="goMessage">The clock ran out. Start a new run or head back — your best score is safe.</p>
-    </div>
-    <div class="pause-settings">
-      <div class="rc-tag rc-tag--danger" id="goHeroTag">High Score Saved</div>
-    </div>
-  </section>
-  <section class="pause-panel rc-panel">
-    <div class="pause-level-chip">
-      <span class="pause-badge rc-badge--danger" id="goLevelBadge">LV 1</span>
-      <span class="pause-chip-lbl">Mode</span>
-      <span class="pause-chip-name" id="goSummary">NORMAL · BRANDS</span>
-    </div>
-    <div class="pause-status-bar rc-status-bar--danger">
-      <div class="pause-live">
-        <div class="pause-live-label"><span class="rc-pulse rc-pulse--danger"></span>Final Score</div>
-        <div class="pause-live-value" id="goScore">0<span class="pause-unit">PTS</span></div>
-      </div>
-      <div class="pause-timer-col">
-        <div class="pause-timer-label">Best Score</div>
-        <div class="pause-timer-value" id="goBestScore">0 pts</div>
-      </div>
-    </div>
-    <div class="pause-mini-stats">
-      <div class="pause-mini">
-        <div class="pause-mini-l">Level Reached</div>
-        <div class="pause-mini-v" id="goLevel">—</div>
-      </div>
-      <div class="pause-mini">
-        <div class="pause-mini-l">Best Combo</div>
-        <div class="pause-mini-v combo" id="goBestCombo">—</div>
-      </div>
-      <div class="pause-mini">
-        <div class="pause-mini-l">Time Survived</div>
-        <div class="pause-mini-v" id="goTimeSurvived">—</div>
-      </div>
-    </div>
-    <div class="pause-action-wrap">
-      <div class="rc-next-pill rc-next-pill--danger" id="goPack">Tile Pack · —</div>
-      <div class="pause-actions">
-        <button class="modal-btn secondary" id="gameOverQuitBtn" type="button">Back to Start</button>
-        <button class="modal-btn primary" id="gameOverNewGameBtn" type="button">New Game</button>
-      </div>
-    </div>
-  </section>
-</div>
+<section class="overlay hidden fmw-popup-overlay" id="saveOverlay">
+  <article class="fmw-confirm-modal fmw-message-modal" role="dialog" aria-modal="true" aria-labelledby="saveTitle">
+    <div class="fmw-popup-flag" aria-hidden="true"></div>
+    <div class="fmw-popup-title-row" aria-hidden="true"><span></span><b>✦</b><span></span></div>
+    <h1 id="saveTitle">GAME SAVED</h1>
+    <div class="fmw-title-underline" aria-hidden="true"></div>
+    <p id="saveMsg">Progress saved — continue any time from the main screen.</p>
+    <nav class="fmw-confirm-actions fmw-single-action" aria-label="Save message">
+      <button class="fmw-btn fmw-btn-primary" id="saveOkBtn" type="button">
+        <span class="fmw-btn-label">OK</span>
+      </button>
+    </nav>
+  </article>
 </section>
-<section class="overlay hidden compact-message-overlay" id="helperMessageOverlay">
-<div class="modal save-modal compact-message-modal">
-<div class="modal-kicker" id="helperMessageKicker">HELPER</div>
-<h1 id="helperMessageTitle">No Helpers Left</h1>
-<p id="helperMessageText">You have no helpers available.</p>
-<div class="popup-actions">
-<button class="modal-btn primary" id="helperMessageOkBtn" type="button">
-            OK
-          </button>
-</div>
-</div>
+<section class="overlay pause-overlay hidden fmw-popup-overlay" id="pauseOverlay">
+  <div class="fmw-shell-modal fmw-shell-modal-pause" role="dialog" aria-modal="true" aria-labelledby="pauseTitle">
+    <img class="fmw-shell-bg" src="assets/ui/pause-shell.png" alt="" aria-hidden="true" />
+    <h2 id="pauseTitle" class="sr-only">Paused</h2>
+    <p id="pauseMessage" class="sr-only">The timer is stopped. Continue the journey when ready.</p>
+    <nav class="fmwc-stack fmwc-pause-stack" id="pauseActions" aria-label="Pause menu">
+      <button class="fmwc-btn fmwc-btn-green fmwc-btn-lg" id="continueBtn" type="button"><span class="fmwc-icon">➤</span><span class="fmwc-label">Resume</span></button>
+      <button class="fmwc-btn fmwc-btn-teal" id="restartFromPauseBtn" type="button"><span class="fmwc-icon">↻</span><span class="fmwc-label">Restart Level</span></button>
+      <button class="fmwc-btn fmwc-btn-teal" id="pauseSettingsBtn" type="button"><span class="fmwc-icon">⚙</span><span class="fmwc-label">Settings</span></button>
+      <button class="fmwc-btn fmwc-btn-teal" id="saveFromPauseBtn" type="button"><span class="fmwc-icon">⌂</span><span class="fmwc-label">Home</span></button>
+      <button class="fmwc-btn fmwc-btn-teal hidden" id="saveContinueBtn" type="button"><span class="fmwc-label">Save &amp; Continue</span></button>
+      <button class="fmwc-btn fmwc-btn-teal hidden" id="endQuickGameBtn" type="button"><span class="fmwc-label">End Quick Game</span></button>
+    </nav>
+  </div>
 </section>
-<section class="overlay hidden" id="quitConfirmOverlay">
-<div class="modal save-modal confirm-modal">
-<div class="modal-kicker">QUIT GAME</div>
-<h1>Quit Game?</h1>
-<p>Your current level progress will not be saved.</p>
-<div class="popup-actions">
-<button class="modal-btn secondary" id="cancelQuitGameBtn" type="button">
-            Cancel
-          </button>
-<button class="modal-btn primary" id="confirmQuitGameBtn" type="button">
-            Quit
-          </button>
-</div>
-</div>
+<section class="overlay hidden fmw-popup-overlay" id="levelCompleteOverlay">
+  <article class="fmw-shell-modal fmw-shell-modal-level" role="dialog" aria-modal="true" aria-labelledby="levelCompleteTitle">
+    <img class="fmw-shell-bg" src="assets/ui/level-complete-shell.png" alt="" aria-hidden="true" />
+    <h2 id="levelCompleteTitle" class="sr-only">Level Complete</h2>
+    <section class="fmwc-scorepanel fmwc-scorepanel-level" aria-label="Score summary">
+      <div class="fmwc-score-row"><span>Match Score</span><strong id="lcLevelScore">0</strong></div>
+      <div class="fmwc-score-row"><span>Time Bonus</span><strong id="lcTimeBonus">0</strong></div>
+      <div class="fmwc-score-row"><span>Perfect Bonus</span><strong id="lcPerfectBonus">0</strong></div>
+      <div class="fmwc-score-row"><span>Best Combo</span><strong id="lcBestCombo">—</strong></div>
+      <div class="fmwc-total-row"><span>TOTAL</span><strong id="lcTotalScore">0</strong></div>
+    </section>
+    <nav class="fmwc-stack fmwc-level-stack" aria-label="Level complete actions">
+      <button class="fmwc-btn fmwc-btn-green fmwc-btn-lg" id="nextLevelBtn" type="button"><span class="fmwc-icon">➤</span><span class="fmwc-label">Next Level</span></button>
+      <div class="fmwc-row">
+        <button class="fmwc-btn fmwc-btn-teal" id="replayLevelBtn" type="button"><span class="fmwc-icon">↻</span><span class="fmwc-label">Replay Level</span></button>
+        <button class="fmwc-btn fmwc-btn-teal" id="levelCompleteQuitBtn" type="button"><span class="fmwc-icon">⌂</span><span class="fmwc-label">Home</span></button>
+      </div>
+    </nav>
+    <div class="score-summary-history hidden" aria-hidden="true"><tbody id="scoreHistoryBody"></tbody></div>
+  </article>
 </section>
-<section class="overlay hidden" id="endQuickConfirmOverlay">
-<div class="modal save-modal confirm-modal">
-<div class="modal-kicker">QUICK GAME</div>
-<h1>End Quick Game?</h1>
-<p>Your Quick Game progress will not be saved.</p>
-<div class="popup-actions">
-<button class="modal-btn secondary" id="cancelEndQuickBtn" type="button">
-            Cancel
-          </button>
-<button class="modal-btn primary" id="confirmEndQuickBtn" type="button">
-            End Game
-          </button>
-</div>
-</div>
+<section class="overlay hidden fmw-popup-overlay" id="gameOverOverlay">
+  <article class="fmw-shell-modal fmw-shell-modal-gameover" role="dialog" aria-modal="true" aria-labelledby="goTitle">
+    <img class="fmw-shell-bg" src="assets/ui/game-over-shell.png" alt="" aria-hidden="true" />
+    <h2 id="goTitle" class="sr-only">Game Over</h2>
+    <p id="goMessage" class="sr-only">The clock ran out. Start a new run or head back to the start screen.</p>
+    <section class="fmwc-scorepanel fmwc-scorepanel-gameover" aria-label="Game over summary">
+      <div class="fmwc-score-row"><span>Level</span><strong id="goLevel">23</strong></div>
+      <div class="fmwc-score-row"><span>Score</span><strong id="goScore">0</strong></div>
+      <div class="fmwc-score-row"><span>Best Combo</span><strong id="goBestCombo">—</strong></div>
+      <div class="fmwc-score-row"><span>Tiles Remaining</span><strong id="goTilesRemaining">—</strong></div>
+    </section>
+    <nav class="fmwc-stack fmwc-gameover-stack" aria-label="Game over actions">
+      <button class="fmwc-btn fmwc-btn-green" id="gameOverNewGameBtn" type="button"><span class="fmwc-icon">➤</span><span class="fmwc-label">Retry</span></button>
+      <button class="fmwc-btn fmwc-btn-teal" id="gameOverQuitBtn" type="button"><span class="fmwc-icon">⌂</span><span class="fmwc-label">Home</span></button>
+    </nav>
+    <span id="goLevelBadge" class="hidden"></span><span id="goSummary" class="hidden"></span><span id="goBestScore" class="hidden"></span><span id="goTimeSurvived" class="hidden"></span><span id="goPack" class="hidden"></span><span id="goKicker" class="hidden"></span><span id="goHeroTag" class="hidden"></span>
+  </article>
 </section>
-<div aria-hidden="true" class="combo-layer" id="comboLayer"></div>
-<script src="game.js?v=3.6.6"></script>
+<section class="overlay hidden fmw-popup-overlay" id="helperMessageOverlay"><section class="overlay hidden fmw-popup-overlay" id="helperMessageOverlay">
+  <article class="fmw-confirm-modal fmw-message-modal" role="dialog" aria-modal="true" aria-labelledby="helperMessageTitle">
+    <div class="fmw-popup-flag" aria-hidden="true"></div>
+    <div class="fmw-popup-title-row" aria-hidden="true"><span></span><b>✦</b><span></span></div>
+    <div class="fmw-modal-kicker" id="helperMessageKicker">HELPER</div>
+    <h1 id="helperMessageTitle">NO HELPERS LEFT</h1>
+    <div class="fmw-title-underline" aria-hidden="true"></div>
+    <p id="helperMessageText">You have no helpers available.</p>
+    <nav class="fmw-confirm-actions fmw-single-action" aria-label="Helper message">
+      <button class="fmw-btn fmw-btn-primary" id="helperMessageOkBtn" type="button">
+        <span class="fmw-btn-label">OK</span>
+      </button>
+    </nav>
+  </article>
+</section>
+<section class="overlay hidden fmw-popup-overlay" id="quitConfirmOverlay">
+  <article class="fmw-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="quitConfirmTitle">
+    <div class="fmw-popup-flag" aria-hidden="true"></div>
+    <div class="fmw-popup-title-row" aria-hidden="true"><span></span><b>✦</b><span></span></div>
+    <h1 id="quitConfirmTitle">RETURN HOME?</h1>
+    <div class="fmw-title-underline" aria-hidden="true"></div>
+    <p>Your current level attempt will be lost.</p>
+    <nav class="fmw-confirm-actions" aria-label="Return home confirmation">
+      <button class="fmw-btn fmw-btn-secondary fmw-confirm-cancel" id="cancelQuitGameBtn" type="button"><span class="fmw-btn-label">Cancel</span></button>
+      <button class="fmw-btn fmw-btn-warning" id="confirmQuitGameBtn" type="button"><span class="fmw-btn-label">Home</span></button>
+    </nav>
+  </article>
+</section>
+<section class="overlay hidden fmw-popup-overlay" id="endQuickConfirmOverlay">
+  <article class="fmw-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="endQuickConfirmTitle">
+    <div class="fmw-popup-flag" aria-hidden="true"></div>
+    <div class="fmw-popup-title-row" aria-hidden="true"><span></span><b>✦</b><span></span></div>
+    <h1 id="endQuickConfirmTitle">END QUICK GAME?</h1>
+    <div class="fmw-title-underline" aria-hidden="true"></div>
+    <p>Your Quick Game progress will not be saved.</p>
+    <nav class="fmw-confirm-actions" aria-label="End Quick Game confirmation">
+      <button class="fmw-btn fmw-btn-secondary fmw-confirm-cancel" id="cancelEndQuickBtn" type="button"><span class="fmw-btn-label">Cancel</span></button>
+      <button class="fmw-btn fmw-btn-warning" id="confirmEndQuickBtn" type="button"><span class="fmw-btn-label">End Game</span></button>
+    </nav>
+  </article>
+</section>
+<section class="overlay hidden fmw-popup-overlay" id="settingsOverlay">
+  <article class="fmw-shell-modal fmw-shell-modal-settings" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <img class="fmw-shell-bg" src="assets/ui/settings-shell.png" alt="" aria-hidden="true" />
+    <h2 id="settingsTitle" class="sr-only">Settings</h2>
+    <section class="fmwc-settings-body" aria-label="Settings controls">
+      <button class="fmwc-setting-row" id="settingsMusicBtn" type="button"><span class="fmwc-setting-name">Music</span><span class="fmwc-switch is-on" id="settingsMusicSwitch"></span></button>
+      <button class="fmwc-setting-row" id="settingsSoundBtn" type="button"><span class="fmwc-setting-name">Sound Effects</span><span class="fmwc-switch is-on" id="settingsSoundSwitch"></span></button>
+      <button class="fmwc-setting-row" id="settingsHapticsBtn" type="button"><span class="fmwc-setting-name">Haptics</span><span class="fmwc-switch is-on" id="settingsHapticsSwitch"></span></button>
+      <div class="fmwc-theme-title">THEME</div>
+      <section class="fmwc-theme-grid" aria-label="Theme">
+        <button class="fmwc-theme-swatch theme-option" data-theme="cyber-blue" type="button"><i class="sw-blue"></i><span>Classic Blue</span></button>
+        <button class="fmwc-theme-swatch theme-option" data-theme="neon-night" type="button"><i class="sw-navy"></i><span>Dark Navy</span></button>
+        <button class="fmwc-theme-swatch theme-option" data-theme="mint-fresh" type="button"><i class="sw-emerald"></i><span>Emerald Green</span></button>
+        <button class="fmwc-theme-swatch theme-option" data-theme="arcade-purple" type="button"><i class="sw-purple"></i><span>Royal Purple</span></button>
+        <button class="fmwc-theme-swatch theme-option" data-theme="candy-pop" type="button"><i class="sw-red"></i><span>Burgundy Red</span></button>
+      </section>
+    </section>
+    <button class="fmwc-btn fmwc-btn-green fmwc-settings-back" id="settingsBackBtn" type="button"><span class="fmwc-icon">←</span><span class="fmwc-label">Back</span></button>
+  </article>
+</section>
+<div aria-hidden="true" class="combo-layer" id="comboLayer"></div><div aria-hidden="true" class="combo-layer" id="comboLayer"></div>
+<script src="game.js?v=3.7.0-fmw-popups"></script>
 </body>
 </html>

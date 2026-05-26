@@ -1,20 +1,18 @@
-Flag Match World v1.0 - iOS/iPadOS Startup Screen Fix
+# Flag Match World – FMW Popup Replacement Build
 
-Changes in this build:
-- Rebuilt startup as a locked 16:9 stage so background, buttons, and toggles scale together.
-- Removed Settings button from startup.
-- Kept Continue, New Game, Quick Game, Music, Sound, and Theme as real controls.
-- Replaced old Pocket Match themes with FMW themes: Emerald Green, Classic Blue, Dark Navy, Royal Purple, Burgundy Red.
-- Theme toggle changes UI accent colors only and does not replace or hide the startup artwork.
-- Added FMW theme variables for startup controls, HUD, popup, board/frame, timer, path, and helper buttons.
+This build removes the remaining Pocket Match popup screens and replaces the in-game popup family with the Flag Match World emerald/gold popup system.
 
-iOS/iPadOS Startup Fix (style-new.css append):
-- Portrait mode: stage now fits full viewport width with 16:9 height and centers vertically
-  (previously the 56.25vw height caused buttons to appear in the top quarter only).
-- Safe-area insets applied to the overlay for notched iPhones (Dynamic Island, Face ID)
-  and iPads with home bar using env(safe-area-inset-*).
-- Stage background-size changed from 100% 100% (stretch) to cover (proportional scale).
-- iPad 4:3 landscape: corrected media query from max-aspect-ratio:1.55/1 to max-aspect-ratio:16/9
-  for accurate detection of iPad (4:3 = 1.33) vs widescreen (16:9 = 1.78) displays.
-- Very tight landscape (iPhone SE landscape, ~568px): stage constrained to available height.
-- @supports dvh fallback for older iOS Safari (< 15.4) using 100vh instead.
+Included updates:
+- Pause popup replaced with FMW design and working Resume / Restart Level / Settings / Home buttons.
+- Level Complete popup replaced with FMW design and working Next Level / Replay Level / Home buttons.
+- Game Over popup replaced with FMW design and working Retry / Home buttons.
+- Settings popup replaced with FMW design and working Music / Sound Effects / Haptics / Theme / Back controls.
+- Confirmation and message popups replaced with the compact FMW popup family.
+- Only the flag sprite set is active; legacy non-flag sprite sets and startup card icons are removed.
+- Continue remains checkpoint-based: it starts the saved level from the beginning, with full 8:00 time and a newly randomized tile layout.
+
+The original uploaded standalone button component HTML files are kept in `/popup-components/` for reference.
+
+- v3.7.1: Removed baked buttons from source popup artwork and overlaid live HTML controls for Pause, Level Complete, Game Over, and Settings.
+
+- v3.7.2: Restored FMW startup artwork with live hotspots and hardened Pause popup live button clicks.

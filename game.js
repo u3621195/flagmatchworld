@@ -5,19 +5,17 @@ const ROWS = 9,
   TIMER_STEP_PER_LOOP = 15,
   LEVEL_LOOP_SIZE = 8,
   HINTS = 5,
-  SHUFFLES = 5,
-  MAX_HINTS = 99,
-  MAX_SHUFFLES = 99;
+  SHUFFLES = 10,
+  MAX_HINTS = 10,
+  MAX_SHUFFLES = 15;
 const SAVE_KEY = "pocketmatch_save_v1"; // legacy single-slot save key
-const SAVES_KEY = "fmw_progress_v1";
-const BEST_SCORES_KEY = "fmw_best_scores_v1";
-const SPRITE_SET_KEY = "fmw_sprite_set_v1";
+const SAVES_KEY = "pocketmatch_saves_v2";
+const BEST_SCORES_KEY = "pocketmatch_best_scores_v1";
+const SPRITE_SET_KEY = "pocketmatch_sprite_set_v1";
 let audioCtx = null,
   muted = false,
   timerWarned = false;
 let audioUnlocked = false;
-let musicEnabled = true;
-let soundEnabled = true;
 
 function audio() {
   if (!audioCtx) {
@@ -62,7 +60,7 @@ function unlockAudio() {
 );
 
 function withAudio(run) {
-  if (muted || !soundEnabled) return;
+  if (muted) return;
   let ac;
   try {
     ac = audio();
@@ -173,43 +171,34 @@ const sfx = {
 //  THEME SYSTEM
 // ─────────────────────────────────────────────
 const THEMES = [
-  { id: "emerald-green", name: "EMERALD", shortName: "Emerald" },
-  { id: "deep-ocean", name: "DEEP OCEAN", shortName: "Ocean" },
-  { id: "jade-gold", name: "JADE GOLD", shortName: "Jade Gold" },
-  { id: "midnight-green", name: "MIDNIGHT GREEN", shortName: "Midnight" },
-  { id: "tropical-teal", name: "TROPICAL TEAL", shortName: "Tropical" },
+  { id: "cyber-blue", name: "CLASSIC BLUE" },
+  { id: "neon-night", name: "DARK NAVY" },
+  { id: "mint-fresh", name: "EMERALD GREEN" },
+  { id: "arcade-purple", name: "ROYAL PURPLE" },
+  { id: "candy-pop", name: "BURGUNDY RED" },
 ];
 const THEME_ALIASES = {
-  arcade: "emerald-green",
-  ocean: "deep-ocean",
-  obsidian: "midnight-green",
-  cyber: "deep-ocean",
-  amethyst: "jade-gold",
-  "neon-night": "emerald-green",
-  "cyber-blue": "deep-ocean",
-  "arcade-purple": "jade-gold",
-  "soft-sky": "emerald-green",
-  "candy-pop": "jade-gold",
-  "mint-fresh": "tropical-teal",
-  "classic-blue": "deep-ocean",
-  "dark-navy": "midnight-green",
-  "royal-purple": "jade-gold",
-  "burgundy-red": "jade-gold",
+  arcade: "neon-night",
+  ocean: "cyber-blue",
+  obsidian: "arcade-purple",
+  cyber: "cyber-blue",
+  amethyst: "arcade-purple",
 };
-const THEME_STORAGE_KEY = "fmwThemeV1";
-let currentTheme = "emerald-green";
+const THEME_STORAGE_KEY = "pocketMatchTheme";
+let currentTheme = "mint-fresh";
 
 const THEME_SWATCHES = {
-  "emerald-green": ["#083d35", "#28b86e", "#3ccaa3", "#e8c56c"],
-  "deep-ocean": ["#061f2f", "#0d6e75", "#2bb5a0", "#d6be78"],
-  "jade-gold": ["#07392f", "#1ca66a", "#d7b85a", "#fff1b5"],
-  "midnight-green": ["#020b0a", "#06332e", "#14916e", "#bfa15a"],
-  "tropical-teal": ["#073d3a", "#15a692", "#49d6a7", "#f0d47a"],
+  "neon-night": ["#060915", "#37e8ff", "#ff4fd8", "#a7ef3a"],
+  "cyber-blue": ["#020610", "#25c8ff", "#6aa8ff", "#8af3ff"],
+  "arcade-purple": ["#241128", "#ff8a4d", "#ffd05d", "#ff5f72"],
+  "soft-sky": ["#f7fbff", "#3c8cff", "#69c7ff", "#ffd45d"],
+  "candy-pop": ["#fffaf4", "#ff73b7", "#52d8ff", "#ffd66d"],
+  "mint-fresh": ["#f7fffb", "#2acb8f", "#28a9ff", "#ffd96a"],
 };
 
 function getThemeMeta(id) {
   const themeId = normalizeThemeId(id);
-  return THEMES.find((theme) => theme.id === themeId) || THEMES[0];
+  return THEMES.find((theme) => theme.id === themeId) || THEMES.find((theme) => theme.id === "mint-fresh") || THEMES[0];
 }
 
 function updateCompactThemeUi(id) {
@@ -220,7 +209,7 @@ function updateCompactThemeUi(id) {
   if (pillName) pillName.textContent = meta.name;
   if (pillSwatches) {
     pillSwatches.innerHTML = "";
-    (THEME_SWATCHES[themeId] || THEME_SWATCHES["emerald-green"]).forEach((color) => {
+    (THEME_SWATCHES[themeId] || THEME_SWATCHES["mint-fresh"]).forEach((color) => {
       const dot = document.createElement("i");
       dot.style.background = color;
       pillSwatches.appendChild(dot);
@@ -263,8 +252,8 @@ function pathColors() {
 }
 
 function normalizeThemeId(id) {
-  const normalized = THEME_ALIASES[id] || id || "emerald-green";
-  return THEMES.some((theme) => theme.id === normalized) ? normalized : "emerald-green";
+  const normalized = THEME_ALIASES[id] || id || "mint-fresh";
+  return THEMES.some((theme) => theme.id === normalized) ? normalized : "mint-fresh";
 }
 
 function applyTheme(id, persist = true) {
@@ -374,6 +363,159 @@ function applyMovement(strategy) {
 // ─────────────────────────────────────────────
 //  SPRITES & ENTITIES
 // ─────────────────────────────────────────────
+const SPRITES = [
+  {
+    id: 1,
+    n: "Character 01",
+    img: "assets/sprites/original/01-character-01.png",
+  },
+  {
+    id: 2,
+    n: "Character 02",
+    img: "assets/sprites/original/02-character-02.png",
+  },
+  {
+    id: 3,
+    n: "Character 03",
+    img: "assets/sprites/original/03-character-03.png",
+  },
+  {
+    id: 4,
+    n: "Character 04",
+    img: "assets/sprites/original/04-character-04.png",
+  },
+  {
+    id: 5,
+    n: "Character 05",
+    img: "assets/sprites/original/05-character-05.png",
+  },
+  {
+    id: 6,
+    n: "Character 06",
+    img: "assets/sprites/original/06-character-06.png",
+  },
+  {
+    id: 7,
+    n: "Character 07",
+    img: "assets/sprites/original/07-character-07.png",
+  },
+  {
+    id: 8,
+    n: "Character 08",
+    img: "assets/sprites/original/08-character-08.png",
+  },
+  {
+    id: 9,
+    n: "Character 09",
+    img: "assets/sprites/original/09-character-09.png",
+  },
+  {
+    id: 10,
+    n: "Character 10",
+    img: "assets/sprites/original/10-character-10.png",
+  },
+  {
+    id: 11,
+    n: "Character 11",
+    img: "assets/sprites/original/11-character-11.png",
+  },
+  {
+    id: 12,
+    n: "Character 12",
+    img: "assets/sprites/original/12-character-12.png",
+  },
+  {
+    id: 13,
+    n: "Character 13",
+    img: "assets/sprites/original/13-character-13.png",
+  },
+  {
+    id: 14,
+    n: "Character 14",
+    img: "assets/sprites/original/14-character-14.png",
+  },
+  {
+    id: 15,
+    n: "Character 15",
+    img: "assets/sprites/original/15-character-15.png",
+  },
+  {
+    id: 16,
+    n: "Character 16",
+    img: "assets/sprites/original/16-character-16.png",
+  },
+  {
+    id: 17,
+    n: "Character 17",
+    img: "assets/sprites/original/17-character-17.png",
+  },
+  {
+    id: 18,
+    n: "Character 18",
+    img: "assets/sprites/original/18-character-18.png",
+  },
+  {
+    id: 19,
+    n: "Character 19",
+    img: "assets/sprites/original/19-character-19.png",
+  },
+  {
+    id: 20,
+    n: "Character 20",
+    img: "assets/sprites/original/20-character-20.png",
+  },
+  {
+    id: 21,
+    n: "Character 21",
+    img: "assets/sprites/original/21-character-21.png",
+  },
+  {
+    id: 22,
+    n: "Character 22",
+    img: "assets/sprites/original/22-character-22.png",
+  },
+  {
+    id: 23,
+    n: "Character 23",
+    img: "assets/sprites/original/23-character-23.png",
+  },
+  {
+    id: 24,
+    n: "Character 24",
+    img: "assets/sprites/original/24-character-24.png",
+  },
+  {
+    id: 25,
+    n: "Character 25",
+    img: "assets/sprites/original/25-character-25.png",
+  },
+  {
+    id: 26,
+    n: "Character 26",
+    img: "assets/sprites/original/26-character-26.png",
+  },
+  {
+    id: 27,
+    n: "Character 27",
+    img: "assets/sprites/original/27-character-27.png",
+  },
+  {
+    id: 28,
+    n: "Character 28",
+    img: "assets/sprites/original/28-character-28.png",
+  },
+  {
+    id: 29,
+    n: "Character 29",
+    img: "assets/sprites/original/29-character-29.png",
+  },
+  {
+    id: 30,
+    n: "Character 30",
+    img: "assets/sprites/original/30-character-30.png",
+  },
+];
+// Flag Match World uses only the uploaded flag sprite set.
 const FLAGS_SPRITES = [
   { id: 1, n: "Afghanistan", img: "assets/sprites/flags/Afghanistan.png" },
   { id: 2, n: "Albania", img: "assets/sprites/flags/Albania.png" },
@@ -586,9 +728,9 @@ const FLAGS_SPRITES = [
   { id: 209, n: "Yap State", img: "assets/sprites/flags/Yap State.png" },
   { id: 210, n: "Yemen", img: "assets/sprites/flags/Yemen.png" },
   { id: 211, n: "Zambia", img: "assets/sprites/flags/Zambia.png" },
-  { id: 212, n: "Zimbabwe", img: "assets/sprites/flags/Zimbabwe.png" }
+  { id: 212, n: "Zimbabwe", img: "assets/sprites/flags/Zimbabwe.png" },
 ];
-const DEFAULT_SPRITE_SET_ID = "flags";
+// Legacy non-flag sprite sets removed for Flag Match World.
 const SPRITE_SETS = {
   flags: {
     name: "FLAGS",
@@ -597,39 +739,21 @@ const SPRITE_SETS = {
     scale: 1,
   },
 };
-let currentSpriteSetId = determineInitialSpriteSet();
+let currentSpriteSetId = "flags";
 let entities = [];
-
-const FRIENDLY_FLAG_NAMES = {
-  "United States of America": "USA",
-  "United Kingdom": "UK",
-  "United Arab Emirates": "UAE",
-  "Czech Republic": "Czechia",
-  "Federated States of Micronesia": "Micronesia",
-  "Democratic Republic of the Congo": "DR Congo",
-  "Republic of the Congo": "Congo",
-  "Republic of Ireland": "Ireland",
-  "North Korea": "N. Korea",
-  "South Korea": "S. Korea",
-};
-
-function friendlyFlagName(name) {
-  return FRIENDLY_FLAG_NAMES[name] || name;
-}
 
 function buildEntities(setId) {
   const set = SPRITE_SETS[setId] || SPRITE_SETS.flags;
   return set.sprites.map((e) => ({
     id: e.id,
-    name: friendlyFlagName(e.n),
-    fullName: e.n,
+    name: e.n,
     img: e.img,
     scale: e.scale || set.scale || 0.85,
   }));
 }
 
 function applySpriteSet(setId, opts = {}) {
-  currentSpriteSetId = SPRITE_SETS[setId] ? setId : DEFAULT_SPRITE_SET_ID;
+  currentSpriteSetId = SPRITE_SETS[setId] ? setId : "flags";
   entities = buildEntities(currentSpriteSetId);
 
   // Expose the active tile set to CSS so each asset pack can be tuned
@@ -663,12 +787,7 @@ function applySpriteSet(setId, opts = {}) {
 }
 
 function randomSpriteSetId(excludeId = null) {
-  const ids = Object.keys(SPRITE_SETS);
-  const pool = ids.length > 1 ? ids.filter((id) => id !== excludeId) : ids;
-  const pick = typeof randomIndex === "function"
-    ? randomIndex(pool.length)
-    : Math.floor(Math.random() * pool.length);
-  return pool[pick] || ids[0] || DEFAULT_SPRITE_SET_ID;
+  return "flags";
 }
 
 function applyQuickGameRandomSet() {
@@ -723,14 +842,13 @@ let comboCount = 0,
   usedHintLvl = 0,
   usedShuffLvl = 0;
 const COMBO_WINDOW_MS = 5000;
-const COMBO_POINTS = [100, 200, 300, 400, 500, 600];
+const COMBO_POINTS = [100, 150, 200, 300, 400, 500];
 const TIME_BONUS_PER_SECOND = 50;
 const PERFECT_BONUS = 5000;
 let isQuickGame = false,
   currentSaveSlotId = null;
 let nextLevelReadyAfterComplete = false;
 let scoreHistory = [];
-let bestLevelScores = {};
 let currentStrategy = STRATEGIES[0];
 
 function getLevelTime(lvl) {
@@ -741,6 +859,24 @@ function getLevelTime(lvl) {
 
 function formatScore(value) {
   return Number(value || 0).toLocaleString("en-US");
+}
+
+function setFmwButtonLabel(buttonOrId, label) {
+  const btn = typeof buttonOrId === "string" ? $(buttonOrId) : buttonOrId;
+  if (!btn) return;
+  const labelEl = btn.querySelector?.(".fmw-btn-label");
+  if (labelEl) labelEl.textContent = label;
+  else btn.textContent = label;
+}
+
+function hideOverlay(id) {
+  const el = $(id);
+  if (el) el.classList.add("hidden");
+}
+
+function showOverlay(id) {
+  const el = $(id);
+  if (el) el.classList.remove("hidden");
 }
 function setScoreDisplay() {
   // HUD displays the current level score only.
@@ -754,41 +890,14 @@ function updateHelperDisplay() {
   hintCountEl.textContent = formatHelperCount(hintCount);
   shuffleCountEl.textContent = formatHelperCount(shuffleCount);
 }
-function refillHelpersAfterClearedLevel(clearedLevel, perfectClear = false) {
-  if (isQuickGame) return false;
-  let changed = false;
+function refillHelpersAfterClearedLevel(clearedLevel) {
   if (clearedLevel > 0 && clearedLevel % 3 === 0) {
     hintCount = Math.min(MAX_HINTS, hintCount + 1);
-    changed = true;
+    shuffleCount = Math.min(MAX_SHUFFLES, shuffleCount + 2);
+    updateHelperDisplay();
+    return true;
   }
-  if (clearedLevel > 0 && clearedLevel % 5 === 0) {
-    shuffleCount = Math.min(MAX_SHUFFLES, shuffleCount + 1);
-    changed = true;
-  }
-  if (clearedLevel > 0 && clearedLevel % LEVEL_LOOP_SIZE === 0) {
-    hintCount = Math.min(MAX_HINTS, hintCount + 2);
-    shuffleCount = Math.min(MAX_SHUFFLES, shuffleCount + 1);
-    changed = true;
-  }
-  if (perfectClear) {
-    hintCount = Math.min(MAX_HINTS, hintCount + 1);
-    changed = true;
-  }
-  if (changed) updateHelperDisplay();
-  return changed;
-}
-
-function getUniqueFlagCountForLevel(lvl) {
-  const safeLevel = Math.max(1, Number(lvl) || 1);
-  if (safeLevel <= 8) return 24;
-  if (safeLevel <= 16) return 30;
-  if (safeLevel <= 24) return 36;
-  if (safeLevel <= 32) return 42;
-  return 48;
-}
-
-function totalFromBestLevelScores(scores = bestLevelScores) {
-  return Object.values(scores || {}).reduce((sum, value) => sum + Math.max(0, Number(value) || 0), 0);
+  return false;
 }
 applySpriteSet(currentSpriteSetId);
 let bgm = new Audio("assets/audio/background-music.mp3");
@@ -801,13 +910,13 @@ const uiAudio = {
 uiAudio.levelComplete.volume = 0.65;
 uiAudio.gameOver.volume = 0.6;
 function playUiAudio(name) {
-  if (muted || !soundEnabled) return;
+  if (muted) return;
   const a = uiAudio[name];
   if (!a) return;
   try {
     a.pause();
     a.currentTime = 0;
-    a.muted = muted || !soundEnabled;
+    a.muted = muted;
     a.play().catch(() => {});
   } catch (e) {}
 }
@@ -817,13 +926,13 @@ let bgmWasPlayingBeforeLifecyclePause = false;
 let bgmResumeRetryTimer = null;
 
 function canPlayBgmNow() {
-  return musicEnabled && gameStarted && !paused && !document.hidden;
+  return !muted && gameStarted && !paused && !document.hidden;
 }
 
 function playBgmIfAllowed() {
   if (!canPlayBgmNow()) return;
   try {
-    bgm.muted = !musicEnabled;
+    bgm.muted = false;
     const playPromise = bgm.play();
     if (playPromise && typeof playPromise.catch === "function") {
       playPromise.catch(() => {});
@@ -853,7 +962,7 @@ function pauseAudioForLifecycle() {
   // Preserve the original “was playing” state instead of letting a later blur
   // overwrite it after the BGM has already been paused.
   bgmWasPlayingBeforeLifecyclePause =
-    bgmWasPlayingBeforeLifecyclePause || (musicEnabled && !bgm.paused);
+    bgmWasPlayingBeforeLifecyclePause || (!muted && !bgm.paused);
   bgmPausedByLifecycle = true;
 
   clearTimeout(bgmResumeRetryTimer);
@@ -943,7 +1052,7 @@ function migrateLegacySave() {
     if (!raw) return;
     const old = JSON.parse(raw);
     if (!old || !old.board) return;
-    const slot = SPRITE_SETS[old.spriteSet] ? old.spriteSet : DEFAULT_SPRITE_SET_ID;
+    const slot = SPRITE_SETS[old.spriteSet] ? old.spriteSet : "original";
     const saves = {};
     saves[slot] = {
       ...old,
@@ -975,7 +1084,7 @@ function saveBestScores(scores) {
 }
 
 function getBestScoreKey() {
-  return isQuickGame ? "quick" : `set:${currentSpriteSetId || DEFAULT_SPRITE_SET_ID}`;
+  return isQuickGame ? "quick" : `set:${currentSpriteSetId || "original"}`;
 }
 
 function updateAndGetBestScore(latestScore) {
@@ -992,14 +1101,12 @@ function updateAndGetBestScore(latestScore) {
 
 function isUsableSave(save) {
   if (!save) return false;
-  // Normal saves contain a serialized board. Fresh-level checkpoints are saved
-  // just after a level is completed; they intentionally generate a fresh board
-  // when continued so quitting/restarting the new level does not repeat the same
-  // tile placement.
-  if (!save.board && !save.freshLevelCheckpoint) return false;
-  const savedTime = Number(save.timeLeft);
-  if (!Number.isFinite(savedTime) || savedTime <= 1) return false;
-  return true;
+  // FMW progress is level-checkpoint based: a save only represents the next
+  // unlocked level after a completed level. It never represents a partially
+  // played board. Older saves that still contain a board are accepted, but
+  // continue will ignore the board and create a fresh level start.
+  const savedLevel = Number(save.level);
+  return Number.isFinite(savedLevel) && savedLevel >= 1;
 }
 
 function getLatestSavedSetId() {
@@ -1020,8 +1127,8 @@ function determineInitialSpriteSet() {
   migrateLegacySave();
   const latest = getLatestSavedSetId();
   if (latest) return latest;
-  const stored = localStorage.getItem(SPRITE_SET_KEY) || DEFAULT_SPRITE_SET_ID;
-  return SPRITE_SETS[stored] ? stored : DEFAULT_SPRITE_SET_ID;
+  const stored = localStorage.getItem(SPRITE_SET_KEY) || "flags";
+  return SPRITE_SETS[stored] ? stored : "flags";
 }
 
 function getSaveForSet(setId = currentSpriteSetId) {
@@ -1033,17 +1140,24 @@ function getSaveForSet(setId = currentSpriteSetId) {
 function saveGame(options = {}) {
   if (isQuickGame) return false;
   const saveMode = typeof options === "object" ? options : {};
+
+  // Do not save a partially played level. In FMW, saved progress is only a
+  // checkpoint created immediately after a level is completed. Continuing from
+  // this checkpoint always starts that level from the beginning with a new
+  // random tile layout.
+  if (!saveMode.freshLevelCheckpoint) return false;
+
   const slot = SPRITE_SETS[currentSaveSlotId]
     ? currentSaveSlotId
     : currentSpriteSetId;
   const save = {
-    version: 2,
+    version: 3,
     ts: Date.now(),
     level,
-    score: totalFromBestLevelScores(bestLevelScores),
+    score,
     levelScore: 0,
-    timeLeft,
-    levelTotalTime,
+    timeLeft: TOTAL_TIME,
+    levelTotalTime: TOTAL_TIME,
     hintCount,
     shuffleCount,
     comboCount: 0,
@@ -1054,11 +1168,9 @@ function saveGame(options = {}) {
     strategyId: currentStrategy.id,
     theme: currentTheme,
     spriteSet: slot,
-    board: saveMode.freshLevelCheckpoint ? null : null,
+    board: null,
     scoreHistory,
-    bestLevelScores,
     freshLevelCheckpoint: true,
-    latestUnlockedLevel: level,
   };
   const saves = loadAllSaves();
   saves[slot] = save;
@@ -1151,6 +1263,7 @@ function returnToTitleAfterSave() {
   $("endQuickConfirmOverlay")?.classList.add("hidden");
   $("quitConfirmOverlay")?.classList.add("hidden");
   $("helperMessageOverlay")?.classList.add("hidden");
+  $("settingsOverlay")?.classList.add("hidden");
   appShell.classList.remove("paused");
   document.body.classList.remove("low-time");
   overlay.classList.remove("hidden");
@@ -1165,7 +1278,7 @@ function triggerSave(fromPause = false) {
   $("saveMsg").textContent = isQuickGame
     ? "Quick Game is a single-session mode and does not save progress."
     : ok
-      ? `Progress saved for ${(SPRITE_SETS[currentSaveSlotId] || SPRITE_SETS[currentSpriteSetId]).name}.`
+      ? `Progress saved for ${(SPRITE_SETS[currentSaveSlotId] || SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.flags).name}.`
       : "Save failed — localStorage may be unavailable.";
   pauseOverlay.classList.add("hidden");
   saveOverlay.classList.remove("hidden");
@@ -1175,36 +1288,35 @@ function triggerSave(fromPause = false) {
 
 function restoreGame(save) {
   // Keep the currently selected theme when continuing a saved game.
-  // Saved games still restore the sprite set/progress, but should not override
-  // the player's current theme choice from the startup screen.
+  // Saved games restore only completed-level progress, not a half-played board.
+  // Every Continue starts the saved level from the beginning with full time and
+  // a newly randomized tile layout.
   // applyTheme(save.theme || "arcade");
-  applySpriteSet(save.spriteSet || DEFAULT_SPRITE_SET_ID);
+  applySpriteSet(save.spriteSet || "original");
   currentSaveSlotId = save.spriteSet || currentSpriteSetId;
   isQuickGame = false;
-  level = save.level;
-  score = save.score;
-  levelScore = save.levelScore || 0;
-  levelTotalTime = save.levelTotalTime || getLevelTime(level);
-  timeLeft = Math.min(save.timeLeft, levelTotalTime);
+
+  level = Math.max(1, Number(save.level) || 1);
+  score = Number.isFinite(save.score) ? save.score : 0;
+  levelScore = 0;
+  scoreHistory = Array.isArray(save.scoreHistory) ? save.scoreHistory : [];
+
+  levelTotalTime = TOTAL_TIME;
+  timeLeft = TOTAL_TIME;
+  timerWarned = false;
+
   hintCount = Number.isFinite(save.hintCount) ? save.hintCount : HINTS;
   shuffleCount = Number.isFinite(save.shuffleCount)
     ? save.shuffleCount
     : SHUFFLES;
-  comboCount = save.comboCount || 0;
-  lastMatchAt = save.lastMatchAt || 0;
-  bestCombo = save.bestCombo || 0;
-  usedHintLvl = save.usedHintLvl || 0;
-  usedShuffLvl = save.usedShuffLvl || 0;
-  scoreHistory = Array.isArray(save.scoreHistory) ? save.scoreHistory : [];
-  bestLevelScores = save.bestLevelScores && typeof save.bestLevelScores === "object" ? save.bestLevelScores : {};
-  score = totalFromBestLevelScores(bestLevelScores);
-  currentStrategy =
-    STRATEGIES.find((s) => s.id === save.strategyId) || STRATEGIES[0];
-  if (save.freshLevelCheckpoint || !save.board) {
-    createBoard();
-  } else {
-    board = deserializeBoard(save.board);
-  }
+
+  resetLevelScoring();
+  currentStrategy = getStrategy(level);
+
+  // Always generate a fresh random board on Continue. This intentionally ignores
+  // serialized boards from older saves so the same saved level never resumes
+  // with the same tile positions.
+  createBoard();
 
   // Sync HUD
   levelEl.textContent = String(level).padStart(2, "0");
@@ -1222,7 +1334,7 @@ function restoreGame(save) {
 // Board generation should never depend only on sprite set + level number.
 // Every newly created board uses fresh entropy; saved games still restore the
 // serialized board directly through restoreGame(), bypassing createBoard().
-const RECENT_BOARD_SIGNATURE_KEY = "pocketmatch_recent_board_sig_v1";
+const RECENT_BOARD_SIGNATURE_KEY = "flagmatchworld_recent_board_sig_v1";
 
 function randomUnit() {
   try {
@@ -1258,7 +1370,7 @@ function boardSignatureFromValues(values) {
 }
 
 function recentBoardSignatureKey() {
-  return `${currentSpriteSetId || DEFAULT_SPRITE_SET_ID}|${level || 1}`;
+  return `${currentSpriteSetId || "original"}|${level || 1}`;
 }
 
 function readRecentBoardSignatures() {
@@ -1310,14 +1422,12 @@ function createBoard() {
   const previousSignature = getRecentBoardSignature();
   let values = [];
   let signature = "";
-  const uniqueLimit = isQuickGame ? Math.min(48, entities.length) : Math.min(getUniqueFlagCountForLevel(level), entities.length);
 
   // Retry a few times if the exact same board somehow appears for the same
   // sprite set + level in the current session. This is mostly a guard; with
   // crypto randomness the repeat chance is already extremely small.
   for (let attempt = 0; attempt < 8; attempt++) {
-    const levelEntities = shuf([...entities]).slice(0, uniqueLimit);
-    const selectedPairs = buildRandomPairPool(levelEntities, pairCount);
+    const selectedPairs = buildRandomPairPool(entities, pairCount);
     values = [];
 
     selectedPairs.forEach((entity) => {
@@ -1539,8 +1649,9 @@ function clearSel() {
 //  SCORING HELPERS
 // ─────────────────────────────────────────────
 function comboPts() {
-  const combo = Math.max(1, Number(comboCount) || 1);
-  return combo <= COMBO_POINTS.length ? COMBO_POINTS[combo - 1] : combo * 100;
+  return COMBO_POINTS[
+    Math.min(COMBO_POINTS.length - 1, Math.max(0, comboCount - 1))
+  ];
 }
 
 function showCombo(text) {
@@ -1733,7 +1844,7 @@ function clickTile(r, c, el) {
       bestCombo = Math.max(bestCombo, comboCount);
       const pts = comboPts();
       const isComboMatch = comboCount > 1;
-      if (isQuickGame) score += pts;
+      score += pts;
       levelScore += pts;
       setScoreDisplay();
       showMatchFeedback(a, b, pts, isComboMatch);
@@ -1909,12 +2020,12 @@ function showGameOver() {
   const rule = currentStrategy ? currentStrategy.name : "NORMAL";
   const activeSetName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.flags).name;
   const modeLabel = isQuickGame ? "QUICK PLAY" : String(rule).toUpperCase();
-  const bestScore = isQuickGame ? score : updateAndGetBestScore(score);
+  const bestScore = updateAndGetBestScore(score);
 
   const goKicker = $("goKicker");
   if (goKicker) goKicker.textContent = isQuickGame ? "QUICK RUN ENDED" : "TIME LIMIT REACHED";
   const goTitle = $("goTitle");
-  if (goTitle) goTitle.innerHTML = "Game<br /><em>Over</em>";
+  if (goTitle) goTitle.textContent = "GAME OVER";
   const goHeroTag = $("goHeroTag");
   if (goHeroTag) goHeroTag.textContent = bestScore >= score ? "HIGH SCORE SAVED" : "RUN COMPLETE";
   const goLevelBadge = $("goLevelBadge");
@@ -1924,9 +2035,9 @@ function showGameOver() {
     goSummary.textContent = `${modeLabel} · ${String(activeSetName).toUpperCase()}`;
   }
   const goLevel = $("goLevel");
-  if (goLevel) goLevel.textContent = `LV ${String(level).padStart(2, "0")}`;
+  if (goLevel) goLevel.textContent = String(level);
   const goScore = $("goScore");
-  if (goScore) goScore.innerHTML = `${formatScore(score)}<span class="pause-unit">PTS</span>`;
+  if (goScore) goScore.textContent = formatScore(score);
   const goBestScore = $("goBestScore");
   if (goBestScore) goBestScore.textContent = `${formatScore(bestScore)} pts`;
   const goBestCombo = $("goBestCombo");
@@ -1935,6 +2046,12 @@ function showGameOver() {
   if (goPack) goPack.textContent = `Tile Pack · ${activeSetName}`;
   const goTimeSurvived = $("goTimeSurvived");
   if (goTimeSurvived) goTimeSurvived.textContent = formatTime(elapsed);
+  const goTilesRemaining = $("goTilesRemaining");
+  if (goTilesRemaining && board && board.length) {
+    let rem = 0;
+    for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) if (board[r] && board[r][c] && !board[r][c].removed) rem++;
+    goTilesRemaining.textContent = String(rem);
+  }
   const goMsg = $("goMessage");
   if (goMsg) {
     goMsg.textContent = isQuickGame
@@ -1942,9 +2059,9 @@ function showGameOver() {
       : "The clock ran out. Start a new run or head back to the start screen — your best score is safe.";
   }
   const goNew = $("gameOverNewGameBtn");
-  if (goNew) goNew.textContent = isQuickGame ? "New Quick Game" : "New Game";
+  if (goNew) setFmwButtonLabel(goNew, "Retry");
   const goQuit = $("gameOverQuitBtn");
-  if (goQuit) goQuit.textContent = "Back to Start";
+  if (goQuit) setFmwButtonLabel(goQuit, "Home");
   moveStatus.textContent = "GAME OVER";
   playUiAudio("gameOver");
   gameOverOverlay.classList.remove("hidden");
@@ -2044,7 +2161,6 @@ function hint() {
   hintCount--;
   usedHintLvl++;
   updateHelperDisplay();
-  if (!isQuickGame) saveGame({ inventoryOnly: true });
   document
     .querySelectorAll(".tile.hint")
     .forEach((t) => t.classList.remove("hint"));
@@ -2085,10 +2201,7 @@ function shuffleTiles(count = true) {
   if (count) {
     shuffleCount--;
     usedShuffLvl++;
-    comboCount = 0;
-    lastMatchAt = 0;
     updateHelperDisplay();
-    if (!isQuickGame) saveGame({ inventoryOnly: true });
   }
   renderBoard();
   sfx.shuffle();
@@ -2144,12 +2257,7 @@ function showLevelComplete() {
   const clearSeconds = Math.max(0, levelTotalTime - timeLeft);
   const completedLevelScore = matchComboScore + timeBonus + perfect;
 
-  if (isQuickGame) {
-    score = completedLevelScore;
-  } else {
-    bestLevelScores[clearedLevel] = Math.max(Number(bestLevelScores[clearedLevel] || 0), completedLevelScore);
-    score = totalFromBestLevelScores(bestLevelScores);
-  }
+  score += timeBonus + perfect;
   levelScore = completedLevelScore;
   setScoreDisplay();
 
@@ -2179,37 +2287,40 @@ function showLevelComplete() {
   if (lcTotalScore) lcTotalScore.textContent = formatScore(score);
   const lcBestCombo = $("lcBestCombo");
   if (lcBestCombo) lcBestCombo.textContent = bestCombo > 1 ? `x${bestCombo}` : "—";
+  const lcTimeBonus = $("lcTimeBonus");
+  if (lcTimeBonus) lcTimeBonus.textContent = formatScore(Math.max(0, timeLeft) * 50);
+  const lcPerfectBonus = $("lcPerfectBonus");
+  if (lcPerfectBonus) lcPerfectBonus.textContent = perfect ? formatScore(perfect) : "0";
   renderScoreHistory(clearedLevel);
 
   showLevelClearBurst();
   playUiAudio("levelComplete");
 
   if (!isQuickGame) {
-    prepareNextLevelState(perfect > 0);
+    prepareNextLevelState();
     saveGame({ freshLevelCheckpoint: true });
     refreshSpriteSavePills();
     nextLevelReadyAfterComplete = true;
     moveStatus.textContent = `AUTO-SAVED  LV ${clearedLevel}`;
   }
 
-  const nextBtn = $("nextLevelBtn");
-  if (nextBtn) nextBtn.textContent = isQuickGame ? "» New Quick Game" : "» Next Level";
   const quitBtn = $("levelCompleteQuitBtn");
-  if (quitBtn) quitBtn.textContent = isQuickGame ? "⌂ Home" : "⌂ Home";
+  if (quitBtn) setFmwButtonLabel(quitBtn, isQuickGame ? "End Quick Game" : "Home");
   levelCompleteOverlay.classList.remove("hidden");
 }
 
-function prepareNextLevelState(perfectClear = false) {
+function prepareNextLevelState() {
   const clearedLevel = level;
   level++;
   levelScore = 0;
   setScoreDisplay();
   resetLevelScoring();
-  refillHelpersAfterClearedLevel(clearedLevel, perfectClear);
-  currentStrategy = isQuickGame ? STRATEGIES[0] : getStrategy(level);
+  refillHelpersAfterClearedLevel(clearedLevel);
+  if (isQuickGame) applyQuickGameRandomSet();
+  currentStrategy = getStrategy(level);
   levelEl.textContent = String(level).padStart(2, "0");
   updateRuleTag();
-  levelTotalTime = isQuickGame ? TOTAL_TIME : getLevelTime(level);
+  levelTotalTime = getLevelTime(level);
   timeLeft = levelTotalTime;
   timerWarned = false;
   updateHelperDisplay();
@@ -2219,11 +2330,6 @@ function prepareNextLevelState(perfectClear = false) {
 }
 
 function startNextLevel() {
-  if (isQuickGame) {
-    levelCompleteOverlay.classList.add("hidden");
-    startQuickGame();
-    return;
-  }
   levelCompleteOverlay.classList.add("hidden");
   gameOverOverlay.classList.add("hidden");
   $("endQuickConfirmOverlay")?.classList.add("hidden");
@@ -2283,11 +2389,10 @@ function startGame(options = {}) {
   score = 0;
   levelScore = 0;
   scoreHistory = [];
-  bestLevelScores = {};
   level = 1;
   resetLevelScoring();
-  currentStrategy = STRATEGIES[0];
-  levelTotalTime = isQuickGame ? TOTAL_TIME : getLevelTime(1);
+  currentStrategy = getStrategy(1);
+  levelTotalTime = getLevelTime(1);
   timeLeft = levelTotalTime;
   timerWarned = false;
   hintCount = HINTS;
@@ -2316,7 +2421,7 @@ function startNewGameFromTitle(force = false) {
     const setName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.flags)
       .name;
     $("newGameConfirmMsg").textContent =
-      `Starting a new ${setName} game will delete its saved progress.`;
+      `Your current ${setName} progress will be reset. This cannot be undone.`;
     $("newGameConfirmOverlay").classList.remove("hidden");
     return;
   }
@@ -2326,7 +2431,7 @@ function startNewGameFromTitle(force = false) {
 }
 
 function startQuickGame() {
-  startGame({ quick: true, randomSet: false });
+  startGame({ quick: true, randomSet: true });
 }
 
 function continueFromSave() {
@@ -2350,7 +2455,7 @@ function continueFromSave() {
   sfx.level();
   playBgmIfAllowed();
   startTimer();
-  moveStatus.textContent = `SAVE RESTORED  LV ${level}`;
+  moveStatus.textContent = `CONTINUE  LV ${level} · NEW BOARD`;
 }
 
 function setupPauseModal() {
@@ -2373,17 +2478,17 @@ function setupPauseModal() {
 
   pauseOverlay.classList.toggle("quick-pause", isQuickGame);
   if (pauseActions) pauseActions.classList.toggle("quick-pause-actions", isQuickGame);
-  if (saveQuit) saveQuit.textContent = "Quit";
-  if (endQuick) endQuick.textContent = "End Quick Game";
+  if (saveQuit) setFmwButtonLabel(saveQuit, "Home");
+  if (endQuick) setFmwButtonLabel(endQuick, "End Quick Game");
 
   if (isQuickGame) {
-    if (title) { title.innerHTML = "Quick<br /><em>Paused</em>"; }
+    if (title) { title.textContent = "PAUSED"; }
     if (msg) msg.textContent = "Quick Game is single-session only. Continue the run or end it now.";
     setPauseBtnHidden(saveContinue, true);
     setPauseBtnHidden(saveQuit, true);
     setPauseBtnHidden(endQuick, false);
   } else {
-    if (title) { title.innerHTML = "Take a<br /><em>break</em>"; }
+    if (title) { title.textContent = "PAUSED"; }
     if (msg) msg.textContent = "The timer is stopped. If you quit now, this current level progress will not be saved.";
     setPauseBtnHidden(saveContinue, true);
     setPauseBtnHidden(saveQuit, false);
@@ -2525,8 +2630,8 @@ function restartCurrentLevel() {
   levelScore = 0;
   setScoreDisplay();
   resetLevelScoring();
-  currentStrategy = isQuickGame ? STRATEGIES[0] : getStrategy(level);
-  levelTotalTime = isQuickGame ? TOTAL_TIME : getLevelTime(level);
+  currentStrategy = getStrategy(level);
+  levelTotalTime = getLevelTime(level);
   timeLeft = levelTotalTime;
   timerWarned = false;
   updateRuleTag();
@@ -2543,9 +2648,11 @@ function newGameFromGameOver() {
   gameOverOverlay.classList.add("hidden");
   if (isQuickGame) {
     startQuickGame();
-  } else {
-    startGame({ quick: false });
+    return;
   }
+  // FMW Game Over uses Retry: restart the current level from the beginning
+  // with a fresh randomized board instead of sending the player back to LV 1.
+  restartCurrentLevel();
 }
 
 function quitFromGameOver() {
@@ -2852,18 +2959,54 @@ function _syncPauseToggleState() {
 }
 function _setGameSoundMuted(nextMuted) {
   unlockAudio();
-  soundEnabled = !nextMuted;
-  muted = !soundEnabled;
-  Object.values(uiAudio).forEach((a) => (a.muted = !soundEnabled));
+  muted = nextMuted;
+  bgm.muted = muted;
+  Object.values(uiAudio).forEach((a) => (a.muted = muted));
   const topSoundBtn = $("musicBtn");
-  if (topSoundBtn) topSoundBtn.textContent = soundEnabled ? "♪" : "×";
-  if (musicEnabled) playBgmIfAllowed();
-  syncFmwStartupToggles();
+  if (topSoundBtn) topSoundBtn.textContent = muted ? "×" : "♪";
+  if (!muted) playBgmIfAllowed();
   _syncPauseToggleState();
 }
 if (_pauseSoundToggle) {
   _pauseSoundToggle.onclick = () => _setGameSoundMuted(!muted);
 }
+
+const restartFromPauseBtn = $("restartFromPauseBtn");
+if (restartFromPauseBtn) {
+  restartFromPauseBtn.onclick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!gameStarted) return;
+    pauseOverlay.classList.add("hidden");
+    appShell.classList.remove("paused");
+    paused = false;
+    restartCurrentLevel();
+  };
+}
+const pauseSettingsBtn = $("pauseSettingsBtn");
+if (pauseSettingsBtn) {
+  pauseSettingsBtn.onclick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const settingsOverlay = $("settingsOverlay");
+    if (settingsOverlay) { syncSettingsSwitches(); settingsOverlay.classList.remove("hidden"); }
+    else openCompactThemePicker();
+  };
+}
+const settingsBackBtn = $("settingsBackBtn");
+if (settingsBackBtn) settingsBackBtn.onclick = () => $("settingsOverlay")?.classList.add("hidden");
+const settingsOverlay = $("settingsOverlay");
+if (settingsOverlay) settingsOverlay.addEventListener("click", (e) => { if (e.target === settingsOverlay) settingsOverlay.classList.add("hidden"); });
+const settingsMusicBtn = $("settingsMusicBtn");
+function syncSettingsSwitches() {
+  $("settingsMusicSwitch")?.classList.toggle("is-on", !muted);
+  $("settingsSoundSwitch")?.classList.toggle("is-on", !muted);
+}
+if (settingsMusicBtn) settingsMusicBtn.onclick = () => { _setGameSoundMuted(!muted); syncSettingsSwitches(); };
+const settingsSoundBtn = $("settingsSoundBtn");
+if (settingsSoundBtn) settingsSoundBtn.onclick = () => { _setGameSoundMuted(!muted); syncSettingsSwitches(); };
+const settingsHapticsBtn = $("settingsHapticsBtn");
+if (settingsHapticsBtn) settingsHapticsBtn.onclick = () => $("settingsHapticsSwitch")?.classList.toggle("is-on");
 $("continueBtn").onclick = (e) => {
   e.preventDefault();
   e.stopPropagation();
@@ -2871,6 +3014,12 @@ $("continueBtn").onclick = (e) => {
   resumeGame();
 };
 $("nextLevelBtn").onclick = startNextLevel;
+const replayLevelBtn = $("replayLevelBtn");
+if (replayLevelBtn) replayLevelBtn.onclick = () => {
+  levelCompleteOverlay.classList.add("hidden");
+  nextLevelReadyAfterComplete = false;
+  startLevel(true);
+};
 $("levelCompleteQuitBtn").onclick = levelCompleteQuit;
 const levelCompleteCloseBtn = $("levelCompleteCloseBtn");
 if (levelCompleteCloseBtn) levelCompleteCloseBtn.onclick = levelCompleteQuit;
@@ -2881,7 +3030,12 @@ $("themeBtn").onclick = (e) => {
   toggleThemePicker();
 };
 $("musicBtn").onclick = () => {
-  setFmwMusicEnabled(!musicEnabled);
+  unlockAudio();
+  muted = !muted;
+  bgm.muted = muted;
+  Object.values(uiAudio).forEach((a) => (a.muted = muted));
+  $("musicBtn").textContent = muted ? "×" : "♪";
+  if (!muted) playBgmIfAllowed();
 };
 
 // Save buttons
@@ -3026,98 +3180,6 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeCompactThemePicker();
 });
 
-// Flag Match World startup controls: all visible buttons/toggles are real controls.
-const FMW_MUSIC_KEY = "fmw_music_enabled_v1";
-const FMW_SOUND_KEY = "fmw_sound_enabled_v1";
-
-function readStoredBool(key, fallback) {
-  try {
-    const raw = localStorage.getItem(key);
-    if (raw === null) return fallback;
-    return raw === "true";
-  } catch (e) {
-    return fallback;
-  }
-}
-
-function syncFmwStartupToggles() {
-  const musicToggle = $("fmwMusicToggle");
-  const soundToggle = $("fmwSoundToggle");
-  const musicSub = $("fmwMusicSub");
-  const soundSub = $("fmwSoundSub");
-  const themeSub = $("fmwThemeSub");
-  const meta = getThemeMeta(currentTheme);
-
-  if (musicToggle) {
-    musicToggle.classList.toggle("off", !musicEnabled);
-    musicToggle.setAttribute("aria-pressed", musicEnabled ? "true" : "false");
-  }
-  if (soundToggle) {
-    soundToggle.classList.toggle("off", !soundEnabled);
-    soundToggle.setAttribute("aria-pressed", soundEnabled ? "true" : "false");
-  }
-  if (musicSub) musicSub.textContent = musicEnabled ? "On" : "Off";
-  if (soundSub) soundSub.textContent = soundEnabled ? "On" : "Off";
-  if (themeSub && meta) themeSub.textContent = meta.shortName || meta.name;
-}
-
-function setFmwMusicEnabled(enabled) {
-  unlockAudio();
-  musicEnabled = !!enabled;
-  try { localStorage.setItem(FMW_MUSIC_KEY, String(musicEnabled)); } catch (e) {}
-  if (!musicEnabled) {
-    try { bgm.pause(); } catch (e) {}
-    bgm.muted = true;
-  } else {
-    bgm.muted = false;
-    playBgmIfAllowed();
-  }
-  syncFmwStartupToggles();
-}
-
-function setFmwSoundEnabled(enabled) {
-  unlockAudio();
-  soundEnabled = !!enabled;
-  muted = !soundEnabled;
-  try { localStorage.setItem(FMW_SOUND_KEY, String(soundEnabled)); } catch (e) {}
-  Object.values(uiAudio).forEach((a) => (a.muted = !soundEnabled));
-  const topSoundBtn = $("musicBtn");
-  if (topSoundBtn) topSoundBtn.textContent = soundEnabled ? "♪" : "×";
-  if (soundEnabled && typeof sfx !== "undefined") sfx.select();
-  syncFmwStartupToggles();
-  _syncPauseToggleState();
-}
-
-function cycleFmwTheme() {
-  const ids = THEMES.map((theme) => theme.id);
-  const idx = Math.max(0, ids.indexOf(currentTheme));
-  applyTheme(ids[(idx + 1) % ids.length]);
-  syncFmwStartupToggles();
-  if (soundEnabled && typeof sfx !== "undefined") sfx.select();
-}
-
-musicEnabled = readStoredBool(FMW_MUSIC_KEY, true);
-soundEnabled = readStoredBool(FMW_SOUND_KEY, true);
-muted = !soundEnabled;
-try { bgm.muted = !musicEnabled; } catch (e) {}
-Object.values(uiAudio).forEach((a) => (a.muted = !soundEnabled));
-
-const fmwMusicToggle = $("fmwMusicToggle");
-if (fmwMusicToggle) fmwMusicToggle.onclick = () => setFmwMusicEnabled(!musicEnabled);
-const fmwSoundToggle = $("fmwSoundToggle");
-if (fmwSoundToggle) fmwSoundToggle.onclick = () => setFmwSoundEnabled(!soundEnabled);
-const fmwThemeCycle = $("fmwThemeCycle");
-if (fmwThemeCycle) fmwThemeCycle.onclick = cycleFmwTheme;
-const fmwSettingsBtn = $("fmwSettingsBtn");
-if (fmwSettingsBtn) {
-  fmwSettingsBtn.onclick = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    openCompactThemePicker();
-  };
-}
-syncFmwStartupToggles();
-
 // ─────────────────────────────────────────────
 //  INIT
 // ─────────────────────────────────────────────
@@ -3126,7 +3188,6 @@ try {
 } catch (err) {
   applyTheme(currentTheme, false);
 }
-syncFmwStartupToggles();
 updateTimer();
 createBoard();
 renderBoard();
@@ -3370,4 +3431,38 @@ refreshSaveSlot(); // show saved game slot on start screen if one exists
 
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleFit).catch(() => {});
   [0, 40, 80, 160, 320, 640, 1000, 1600].forEach(ms => setTimeout(scheduleFit, ms));
+})();
+
+// v3.7.2 — FMW startup and popup live-control hardening
+(function hardenFmwStartupAndPauseControls(){
+  function byId(id){ return (typeof $ === "function") ? $(id) : document.getElementById(id); }
+  const liveIds = [
+    "continueBtn","restartFromPauseBtn","pauseSettingsBtn","saveFromPauseBtn",
+    "nextLevelBtn","replayLevelBtn","levelCompleteQuitBtn",
+    "gameOverNewGameBtn","gameOverQuitBtn","settingsBackBtn",
+    "settingsMusicBtn","settingsSoundBtn","settingsHapticsBtn",
+    "continueFromSaveBtn","startBtn","quickGameBtn","startupSettingsBtn"
+  ];
+  document.querySelectorAll(".fmw-shell-bg,.fmw-startup-bg").forEach((el)=>{ el.style.pointerEvents = "none"; });
+  liveIds.forEach((id)=>{
+    const el = byId(id);
+    if (el) {
+      el.style.pointerEvents = "auto";
+      el.removeAttribute("disabled");
+    }
+  });
+  const startupSettingsBtn = byId("startupSettingsBtn");
+  if (startupSettingsBtn && !startupSettingsBtn.dataset.boundFmwSettings) {
+    startupSettingsBtn.dataset.boundFmwSettings = "1";
+    startupSettingsBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const settingsOverlay = byId("settingsOverlay");
+      if (settingsOverlay) {
+        if (typeof syncSettingsSwitches === "function") syncSettingsSwitches();
+        settingsOverlay.classList.remove("hidden");
+        settingsOverlay.setAttribute("aria-hidden", "false");
+      }
+    });
+  }
 })();
