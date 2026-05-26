@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" name="viewport"/>
-<title>Flag Match World</title>
+<title>Pocket Match</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
 
-<link href="style-new.css?v=fmw-startup-v3-ios" rel="stylesheet"/>
+<link href="style-new.css?v=3.6.5" rel="stylesheet"/>
 
 
 </head>
@@ -99,11 +99,12 @@
 
 <div class="theme-picker hidden" id="themePicker" aria-hidden="true">
 <div class="theme-picker-label">Select Theme</div>
-<div class="theme-option active" data-theme="emerald-green"><span class="theme-name">EMERALD</span></div>
-<div class="theme-option" data-theme="deep-ocean"><span class="theme-name">DEEP OCEAN</span></div>
-<div class="theme-option" data-theme="jade-gold"><span class="theme-name">JADE GOLD</span></div>
-<div class="theme-option" data-theme="midnight-green"><span class="theme-name">MIDNIGHT GREEN</span></div>
-<div class="theme-option" data-theme="tropical-teal"><span class="theme-name">TROPICAL TEAL</span></div>
+<div class="theme-option active" data-theme="neon-night"><span class="theme-name">NEON NIGHT</span></div>
+<div class="theme-option" data-theme="cyber-blue"><span class="theme-name">CYBER BLUE</span></div>
+<div class="theme-option" data-theme="arcade-purple"><span class="theme-name">SUNSET ARCADE</span></div>
+<div class="theme-option" data-theme="soft-sky"><span class="theme-name">SOFT SKY</span></div>
+<div class="theme-option" data-theme="candy-pop"><span class="theme-name">CANDY POP</span></div>
+<div class="theme-option" data-theme="mint-fresh"><span class="theme-name">MINT FRESH</span></div>
 </div>
 <div class="theme-picker-overlay hidden" id="themePickerOverlay" aria-hidden="true">
   <div class="theme-picker-panel" role="dialog" aria-modal="true" aria-labelledby="themePickerTitle">
@@ -111,76 +112,118 @@
     <button class="theme-picker-close" id="themePickerClose" type="button" aria-label="Close theme picker">×</button>
     <h2 id="themePickerTitle">Choose Theme</h2>
     <div class="theme-picker-grid" id="themePickerGrid">
-      <button class="theme-picker-card theme-option active" data-theme="emerald-green" type="button">
-        <span class="theme-card-swatch"><i style="background:#083d35"></i><i style="background:#28b86e"></i><i style="background:#e8c56c"></i></span><span class="theme-card-name">Emerald</span>
+      <button class="theme-picker-card theme-option active" data-theme="neon-night" type="button">
+        <span class="theme-card-swatch"><i style="background:#060915"></i><i style="background:#37e8ff"></i><i style="background:#ff4fd8"></i></span><span class="theme-card-name">Neon Night</span>
       </button>
-      <button class="theme-picker-card theme-option" data-theme="deep-ocean" type="button">
-        <span class="theme-card-swatch"><i style="background:#061f2f"></i><i style="background:#0d6e75"></i><i style="background:#d6be78"></i></span><span class="theme-card-name">Deep Ocean</span>
+      <button class="theme-picker-card theme-option" data-theme="cyber-blue" type="button">
+        <span class="theme-card-swatch"><i style="background:#020610"></i><i style="background:#25c8ff"></i><i style="background:#6aa8ff"></i></span><span class="theme-card-name">Cyber Blue</span>
       </button>
-      <button class="theme-picker-card theme-option" data-theme="jade-gold" type="button">
-        <span class="theme-card-swatch"><i style="background:#07392f"></i><i style="background:#1ca66a"></i><i style="background:#d7b85a"></i></span><span class="theme-card-name">Jade Gold</span>
+      <button class="theme-picker-card theme-option" data-theme="arcade-purple" type="button">
+        <span class="theme-card-swatch"><i style="background:#241128"></i><i style="background:#ff8a4d"></i><i style="background:#ffd05d"></i></span><span class="theme-card-name">Sunset Arcade</span>
       </button>
-      <button class="theme-picker-card theme-option" data-theme="midnight-green" type="button">
-        <span class="theme-card-swatch"><i style="background:#020b0a"></i><i style="background:#06332e"></i><i style="background:#14916e"></i></span><span class="theme-card-name">Midnight Green</span>
+      <button class="theme-picker-card theme-option" data-theme="soft-sky" type="button">
+        <span class="theme-card-swatch"><i style="background:#f7fbff"></i><i style="background:#3c8cff"></i><i style="background:#ffd45d"></i></span><span class="theme-card-name">Soft Sky</span>
       </button>
-      <button class="theme-picker-card theme-option" data-theme="tropical-teal" type="button">
-        <span class="theme-card-swatch"><i style="background:#073d3a"></i><i style="background:#15a692"></i><i style="background:#f0d47a"></i></span><span class="theme-card-name">Tropical Teal</span>
+      <button class="theme-picker-card theme-option" data-theme="candy-pop" type="button">
+        <span class="theme-card-swatch"><i style="background:#fffaf4"></i><i style="background:#ff73b7"></i><i style="background:#52d8ff"></i></span><span class="theme-card-name">Candy Pop</span>
+      </button>
+      <button class="theme-picker-card theme-option" data-theme="mint-fresh" type="button">
+        <span class="theme-card-swatch"><i style="background:#f7fffb"></i><i style="background:#2acb8f"></i><i style="background:#28a9ff"></i></span><span class="theme-card-name">Mint Fresh</span>
       </button>
     </div>
   </div>
 </div>
-<section class="overlay fmw-startup-screen" id="overlay" aria-label="Flag Match World startup screen">
-  <div class="fmw-startup-stage" aria-hidden="false">
-    <nav class="fmw-menu-list" aria-label="Main menu buttons">
-      <button class="fmw-menu-btn fmw-btn-continue" id="continueFromSaveBtn" type="button">
-        <span class="fmw-btn-icon"><i class="fa-solid fa-location-arrow"></i></span>
-        <span class="fmw-btn-label">Continue</span>
-        <span class="fmw-btn-arrow">›</span>
-      </button>
-      <button class="fmw-menu-btn fmw-btn-newgame" id="startBtn" type="button">
-        <span class="fmw-btn-icon"><i class="fa-solid fa-globe"></i></span>
-        <span class="fmw-btn-label">New Game</span>
-        <span class="fmw-btn-arrow">›</span>
-      </button>
-      <button class="fmw-menu-btn fmw-btn-quick" id="quickGameBtn" type="button">
-        <span class="fmw-btn-icon"><i class="fa-solid fa-bolt"></i></span>
-        <span class="fmw-btn-label">Quick Game</span>
-        <span class="fmw-btn-arrow">›</span>
-      </button>
-    </nav>
-
-    <div class="fmw-settings-pill" id="fmwSettingsPill" aria-label="Quick settings">
-      <button class="fmw-pill-item" id="fmwMusicToggle" type="button" aria-pressed="true">
-        <span class="fmw-pill-icon"><i class="fa-solid fa-music"></i></span>
-        <span class="fmw-pill-label"><span>Music</span><small id="fmwMusicSub">On</small></span>
-      </button>
-      <span class="fmw-pill-divider" aria-hidden="true"></span>
-      <button class="fmw-pill-item" id="fmwSoundToggle" type="button" aria-pressed="true">
-        <span class="fmw-pill-icon"><i class="fa-solid fa-volume-high"></i></span>
-        <span class="fmw-pill-label"><span>Sound</span><small id="fmwSoundSub">On</small></span>
-      </button>
-      <span class="fmw-pill-divider" aria-hidden="true"></span>
-      <button class="fmw-pill-item" id="fmwThemeCycle" type="button">
-        <span class="fmw-pill-icon"><i class="fa-solid fa-palette"></i></span>
-        <span class="fmw-pill-label"><span>Theme</span><small id="fmwThemeSub">Emerald</small></span>
-      </button>
-    </div>
-  </div>
-
-  <div class="fmw-startup-logic-only" aria-hidden="true">
-    <div class="sprite-select hidden">
-      <button class="sprite-carousel-arrow sprite-carousel-prev" id="spriteCarouselPrev" type="button">‹</button>
-      <div class="sprite-options" id="spriteOptions">
-        <button class="sprite-option active" data-set="flags" type="button"><span class="sprite-name">Flags</span><span class="sprite-save-pill">NEW</span></button>
-      </div>
-      <button class="sprite-carousel-arrow sprite-carousel-next" id="spriteCarouselNext" type="button">›</button>
-      <div class="sprite-carousel-dots" id="spriteCarouselDots"></div>
-    </div>
-    <div class="saved-slot hidden" id="savedSlot">
-      <span id="saveLevel">—</span><span id="saveScore">—</span><span id="saveDate">—</span>
-      <button class="delete-save-btn hidden" id="deleteSaveBtn" type="button">×</button>
-    </div>
-  </div>
+<section class="overlay" id="overlay">
+<div class="modal start-modal">
+<div class="modal-kicker">RETRO CARTRIDGE SYSTEM</div>
+<h1>Pocket <span>Match</span></h1>
+<p>Match pairs · trace clean paths · beat the clock.</p>
+<div class="start-theme-compact" aria-label="Color theme">
+<button class="theme-pill" id="themePillBtn" type="button" aria-haspopup="dialog" aria-expanded="false">
+<span class="theme-pill-label">Theme</span>
+<span class="theme-pill-name" id="themePillName">NEON NIGHT</span>
+<span class="theme-pill-caret" aria-hidden="true">▾</span>
+<span class="theme-pill-swatches" id="themePillSwatches" aria-hidden="true"></span>
+</button>
+</div>
+<div class="sprite-select">
+<div class="sprite-select-label"><span>Tile Pack</span></div>
+<button aria-label="Previous theme" class="sprite-carousel-arrow sprite-carousel-prev" id="spriteCarouselPrev" type="button">
+            ‹
+          </button>
+<div class="sprite-options" id="spriteOptions">
+<button class="sprite-option active" data-set="original" type="button">
+<span class="sprite-icon icon-shell"><img alt="Pokémon icon" class="sprite-icon-img" src="assets/ui-icons/pokemon-card.png"/></span><span class="sprite-name">Pokémon</span><span class="sprite-save-pill">NEW</span>
+</button>
+<button class="sprite-option" data-set="brands" type="button">
+<span class="sprite-icon icon-shell"><img alt="Brands icon" class="sprite-icon-img" src="assets/ui-icons/brands-card.png"/></span><span class="sprite-name">Brands</span><span class="sprite-save-pill">NEW</span>
+</button>
+<button class="sprite-option" data-set="flags" type="button">
+<span class="sprite-icon icon-shell"><img alt="Flags icon" class="sprite-icon-img" src="assets/ui-icons/flags-card.png"/></span><span class="sprite-name">Flags</span><span class="sprite-save-pill">NEW</span>
+</button>
+<button class="sprite-option" data-set="foodies" type="button">
+<span class="sprite-icon icon-shell"><img alt="Foodies 1 icon" class="sprite-icon-img" src="assets/ui-icons/foodies1-card.png"/></span><span class="sprite-name">Foodies 1</span><span class="sprite-save-pill">NEW</span>
+</button>
+<button class="sprite-option" data-set="foodies2" type="button">
+<span class="sprite-icon icon-shell"><img alt="Foodies 2 icon" class="sprite-icon-img" src="assets/ui-icons/foodies2-card.png"/></span><span class="sprite-name">Foodies 2</span><span class="sprite-save-pill">NEW</span>
+</button>
+<button class="sprite-option" data-set="football" type="button">
+<span class="sprite-icon icon-shell"><img alt="Football icon" class="sprite-icon-img" src="assets/ui-icons/football-card.png"/></span><span class="sprite-name">Football</span><span class="sprite-save-pill">NEW</span>
+</button>
+<button class="sprite-option" data-set="gadgets" type="button">
+<span class="sprite-icon icon-shell"><img alt="Gadgets icon" class="sprite-icon-img" src="assets/ui-icons/gadgets-card.png"/></span><span class="sprite-name">Gadgets</span><span class="sprite-save-pill">NEW</span>
+</button>
+<button class="sprite-option" data-set="home" type="button">
+<span class="sprite-icon icon-shell"><img alt="Home icon" class="sprite-icon-img" src="assets/ui-icons/home-card.png"/></span><span class="sprite-name">Home</span><span class="sprite-save-pill">NEW</span>
+</button>
+<button class="sprite-option" data-set="sports" type="button">
+<span class="sprite-icon icon-shell"><img alt="Sports icon" class="sprite-icon-img" src="assets/ui-icons/sports-card.png"/></span><span class="sprite-name">Sports</span><span class="sprite-save-pill">NEW</span>
+</button>
+<button class="sprite-option" data-set="tools" type="button">
+<span class="sprite-icon icon-shell"><img alt="Tools icon" class="sprite-icon-img" src="assets/ui-icons/tools-card.png"/></span><span class="sprite-name">Tools</span><span class="sprite-save-pill">NEW</span>
+</button>
+<button class="sprite-option" data-set="travel" type="button">
+<span class="sprite-icon icon-shell"><img alt="Travel icon" class="sprite-icon-img" src="assets/ui-icons/travel-card.png"/></span><span class="sprite-name">Travel</span><span class="sprite-save-pill">NEW</span>
+</button>
+</div>
+<button aria-label="Next theme" class="sprite-carousel-arrow sprite-carousel-next" id="spriteCarouselNext" type="button">
+            ›
+          </button>
+<div aria-hidden="true" class="sprite-carousel-dots" id="spriteCarouselDots"></div>
+</div>
+<div class="saved-slot selected-run-info" id="savedSlot">
+<div class="saved-slot-card">
+<div class="saved-slot-info">
+<span class="saved-slot-label">Selected Run</span>
+<div class="saved-slot-details">
+<span id="saveLevel">—</span>
+<span class="saved-slot-sep">·</span>
+<span id="saveScore">—</span>
+</div>
+</div>
+<div class="saved-slot-info">
+<span class="saved-slot-label">Last Saved</span>
+<div class="saved-slot-details">
+<span id="saveDate">—</span>
+<button class="delete-save-btn" id="deleteSaveBtn" title="Delete selected saved game">
+                  ✕
+                </button>
+</div>
+</div>
+</div>
+</div>
+<div class="start-actions action-grid">
+<button class="start-btn action-btn continue-action" id="continueFromSaveBtn" type="button">
+            Continue
+          </button>
+<button class="start-btn action-btn primary-action" id="startBtn" type="button">
+            New Game
+          </button>
+<button class="start-btn action-btn quick-action" id="quickGameBtn" type="button">
+            Quick Game
+          </button>
+</div>
+</div>
 </section>
 <section class="overlay hidden" id="newGameConfirmOverlay">
 <div class="modal save-modal confirm-modal">
@@ -213,65 +256,35 @@
 </div>
 </div>
 </section>
-<section class="overlay pause-overlay hidden" id="pauseOverlay">
-<div class="modal pause-modal premium-pause-card">
-  <section class="pause-hero">
-    <div class="pause-glyph" aria-hidden="true">
-      <div class="pause-bars"><span></span><span></span></div>
-    </div>
-    <div class="pause-copy">
-      <div class="premium-eyebrow">Game Paused</div>
-      <h1>Take a<br /><em>break</em></h1>
-      <p id="pauseMessage">Your run is safe. The timer is stopped — jump back in whenever you're ready.</p>
-    </div>
-    <div class="pause-settings">
-      <button class="pause-tgl" aria-pressed="true" id="pauseSoundToggle" type="button">
-        <span class="pause-led"></span>Game Sound
+<section class="overlay pause-overlay hidden fmw-popup-overlay" id="pauseOverlay">
+  <div class="fmw-pause-modal" role="dialog" aria-modal="true" aria-labelledby="pauseTitle">
+    <div class="fmw-popup-flag" aria-hidden="true"></div>
+    <div class="fmw-popup-title-row" aria-hidden="true"><span></span><b>✦</b><span></span></div>
+    <h1 id="pauseTitle">PAUSED</h1>
+    <div class="fmw-title-underline" aria-hidden="true"></div>
+    <p id="pauseMessage" class="fmw-pause-message">The timer is stopped. Continue the journey when ready.</p>
+
+    <nav class="fmw-pause-actions" id="pauseActions" aria-label="Pause menu">
+      <button class="fmw-btn fmw-btn-primary" id="continueBtn" type="button">
+        <span class="fmw-btn-icon" aria-hidden="true"><i class="fa-solid fa-location-arrow"></i></span>
+        <span class="fmw-btn-label">Resume</span>
       </button>
-    </div>
-  </section>
-  <section class="pause-panel">
-    <div class="pause-level-chip">
-      <span class="pause-badge" id="pauseLevelBadge">LV 1</span>
-      <span class="pause-chip-lbl">On</span>
-      <span class="pause-chip-name" id="pauseLevelName">Level 1</span>
-    </div>
-    <div class="pause-status-bar">
-      <div class="pause-live">
-        <div class="pause-live-label"><span class="pause-pulse"></span>Live Score</div>
-        <div class="pause-live-value" id="pauseLiveScore">0<span class="pause-unit">PTS</span></div>
-      </div>
-      <div class="pause-timer-col">
-        <div class="pause-timer-label">Elapsed</div>
-        <div class="pause-timer-value" id="pauseElapsed">00:00</div>
-      </div>
-    </div>
-    <div class="pause-mini-stats">
-      <div class="pause-mini">
-        <div class="pause-mini-l">Pairs Left</div>
-        <div class="pause-mini-v" id="pausePairsLeft">—</div>
-      </div>
-      <div class="pause-mini">
-        <div class="pause-mini-l">Best Combo</div>
-        <div class="pause-mini-v combo" id="pauseBestCombo">—</div>
-      </div>
-      <div class="pause-mini">
-        <div class="pause-mini-l">Hints Left</div>
-        <div class="pause-mini-v" id="pauseHintsLeft">—</div>
-      </div>
-    </div>
-    <div class="pause-action-wrap">
-      <div class="pause-actions" id="pauseActions">
-        <button class="modal-btn primary pause-continue-btn" id="continueBtn" type="button">
-          <span class="pause-play-icon"></span>Continue
-        </button>
-        <button class="modal-btn secondary hidden" id="saveContinueBtn" type="button">Save &amp; Continue</button>
-        <button class="modal-btn secondary" id="saveFromPauseBtn" type="button">Quit</button>
-        <button class="modal-btn secondary hidden" id="endQuickGameBtn" type="button">End Quick Game</button>
-      </div>
-    </div>
-  </section>
-</div>
+      <button class="fmw-btn fmw-btn-secondary" id="restartFromPauseBtn" type="button">
+        <span class="fmw-btn-icon" aria-hidden="true"><i class="fa-solid fa-rotate-right"></i></span>
+        <span class="fmw-btn-label">Restart Level</span>
+      </button>
+      <button class="fmw-btn fmw-btn-secondary" id="pauseSettingsBtn" type="button">
+        <span class="fmw-btn-icon" aria-hidden="true"><i class="fa-solid fa-gear"></i></span>
+        <span class="fmw-btn-label">Settings</span>
+      </button>
+      <button class="fmw-btn fmw-btn-secondary" id="saveFromPauseBtn" type="button">
+        <span class="fmw-btn-icon" aria-hidden="true"><i class="fa-solid fa-house"></i></span>
+        <span class="fmw-btn-label">Home</span>
+      </button>
+      <button class="fmw-btn fmw-btn-secondary hidden" id="saveContinueBtn" type="button">Save &amp; Continue</button>
+      <button class="fmw-btn fmw-btn-secondary hidden" id="endQuickGameBtn" type="button">End Quick Game</button>
+    </nav>
+  </div>
 </section>
 <section class="overlay score-summary-overlay hidden" id="levelCompleteOverlay">
   <article class="score-summary-card" role="dialog" aria-label="Level Complete Score Summary">
@@ -429,6 +442,6 @@
 </div>
 </section>
 <div aria-hidden="true" class="combo-layer" id="comboLayer"></div>
-<script src="game.js?v=3.6.5"></script>
+<script src="game.js?v=3.6.6"></script>
 </body>
 </html>
