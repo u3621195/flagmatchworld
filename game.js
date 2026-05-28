@@ -3384,11 +3384,22 @@ refreshSaveSlot(); // show saved game slot on start screen if one exists
     bind('continueBtn', (e) => { e.preventDefault(); e.stopPropagation(); if (typeof resumeGame === 'function') resumeGame(); });
   }
 
-  const run = () => { showStartupScreenCleanly(); bindStartupButtonsSafely(); };
+  // Only reset to startup when no game is actively running or paused.
+  function isGameActive() {
+    try { return typeof gameStarted !== 'undefined' && gameStarted; } catch(e) { return false; }
+  }
+
+  const run = () => {
+    // Do NOT override state if a game is already in progress (running or paused).
+    if (!isGameActive()) showStartupScreenCleanly();
+    bindStartupButtonsSafely();
+  };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run, { once: true });
   else run();
 
   // Repeat after other late init/fit routines and iOS page restore events.
+  // Note: these setTimeout calls must also respect game state.
   [0, 50, 200, 600].forEach((ms) => setTimeout(run, ms));
+  // On pageshow (bfcache restore), only reset if no game was in progress.
   window.addEventListener('pageshow', run);
 })();
