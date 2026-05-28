@@ -1,11 +1,2 @@
-Flag Match World v5 - agreed startup and popup replacement
-Base: Flag_Match_World_v5_Google_AI_Structural_Merge.zip
-Changes: replaced startup page and all visible gameplay popups with the agreed Option C / Barlow UI; removed visible theme selector, haptics, How To Play; kept only flag sprites (212 files) and removed unused assets/ui folder.
-
-
-FMW v5 polish fixes:
-- Aligned level-complete score rows left/right.
-- Normalized Best Combo display to dash when there is no combo.
-- Removed HUD underlines below Matches, Time, and Score.
-- Added centered country-name pill below the timer bar.
-- Removed extra dark shadow line under Pause > Home.
+Flag Match World v5.1.1 - Compact Level HUD + Restored Board Size
+Baseline: Flag_Match_World_v5_UI_Replaced_Fixes.zip
