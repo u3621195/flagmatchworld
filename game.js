@@ -3332,3 +3332,51 @@ refreshSaveSlot(); // show saved game slot on start screen if one exists
     }, 0);
   };
 })();
+
+// FMW v5 cleanup hotfix: always start from the title screen on a fresh page load.
+// Some mobile browsers restore the previous DOM with the pause overlay visible.
+// This resets only the initial UI state; saved progress is still available via Continue.
+(function fmwForceTitleOnInitialLoad(){
+  function showTitleScreenCleanly(){
+    try { clearInterval(timerId); } catch(e) {}
+    try { gameStarted = false; paused = false; } catch(e) {}
+    const idsToHide = [
+      'pauseOverlay',
+      'levelCompleteOverlay',
+      'gameOverOverlay',
+      'settingsOverlay',
+      'restartConfirmOverlay',
+      'homeConfirmOverlay',
+      'newGameConfirmOverlay',
+      'helperMessageOverlay',
+      'themePicker'
+    ];
+    idsToHide.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.add('hidden');
+        el.setAttribute('aria-hidden', 'true');
+      }
+    });
+    const title = document.getElementById('overlay');
+    if (title) {
+      title.classList.remove('hidden');
+      title.setAttribute('aria-hidden', 'false');
+    }
+    const shell = document.querySelector('.app-shell');
+    if (shell) shell.classList.remove('paused');
+    document.body.classList.remove('low-time', 'modal-open');
+    try { if (typeof refreshStartScreen === 'function') refreshStartScreen(); } catch(e) {}
+    try { if (typeof renderStartupMosaic === 'function') renderStartupMosaic(); } catch(e) {}
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', showTitleScreenCleanly, { once: true });
+  } else {
+    showTitleScreenCleanly();
+  }
+
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted && !gameStarted) showTitleScreenCleanly();
+  });
+})();

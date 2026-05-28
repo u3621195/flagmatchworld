@@ -1,8 +1,4 @@
-Flag Match World v5 Cleanup
-Base: Flag_Match_World_v5_Popup_Combo_Fixes.zip
-Changes:
-- Removed obsolete hidden Pocket Match pause/save compatibility controls.
-- Removed obsolete save, quit, and end-quick modal overlays and JS bindings.
-- Removed non-flag legacy sprite set definitions from game.js.
-- Removed old board-header country/rule/message row from HTML and CSS.
-- Kept current FMW HUD, popup family, flag-only gameplay, settings, confirmations, and level-complete logic.
+Flag Match World v5 Cleanup Startup Fix
+- Removed beforecleanup backup files from final package.
+- Forced clean startup/title screen on fresh page load.
+- Hidden saved-progress popups no longer appear at launch.
