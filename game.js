@@ -374,338 +374,10 @@ function applyMovement(strategy) {
 // ─────────────────────────────────────────────
 //  SPRITES & ENTITIES
 // ─────────────────────────────────────────────
-const SPRITES = [
-  {
-    id: 1,
-    n: "Character 01",
-    img: "assets/sprites/original/01-character-01.png",
-  },
-  {
-    id: 2,
-    n: "Character 02",
-    img: "assets/sprites/original/02-character-02.png",
-  },
-  {
-    id: 3,
-    n: "Character 03",
-    img: "assets/sprites/original/03-character-03.png",
-  },
-  {
-    id: 4,
-    n: "Character 04",
-    img: "assets/sprites/original/04-character-04.png",
-  },
-  {
-    id: 5,
-    n: "Character 05",
-    img: "assets/sprites/original/05-character-05.png",
-  },
-  {
-    id: 6,
-    n: "Character 06",
-    img: "assets/sprites/original/06-character-06.png",
-  },
-  {
-    id: 7,
-    n: "Character 07",
-    img: "assets/sprites/original/07-character-07.png",
-  },
-  {
-    id: 8,
-    n: "Character 08",
-    img: "assets/sprites/original/08-character-08.png",
-  },
-  {
-    id: 9,
-    n: "Character 09",
-    img: "assets/sprites/original/09-character-09.png",
-  },
-  {
-    id: 10,
-    n: "Character 10",
-    img: "assets/sprites/original/10-character-10.png",
-  },
-  {
-    id: 11,
-    n: "Character 11",
-    img: "assets/sprites/original/11-character-11.png",
-  },
-  {
-    id: 12,
-    n: "Character 12",
-    img: "assets/sprites/original/12-character-12.png",
-  },
-  {
-    id: 13,
-    n: "Character 13",
-    img: "assets/sprites/original/13-character-13.png",
-  },
-  {
-    id: 14,
-    n: "Character 14",
-    img: "assets/sprites/original/14-character-14.png",
-  },
-  {
-    id: 15,
-    n: "Character 15",
-    img: "assets/sprites/original/15-character-15.png",
-  },
-  {
-    id: 16,
-    n: "Character 16",
-    img: "assets/sprites/original/16-character-16.png",
-  },
-  {
-    id: 17,
-    n: "Character 17",
-    img: "assets/sprites/original/17-character-17.png",
-  },
-  {
-    id: 18,
-    n: "Character 18",
-    img: "assets/sprites/original/18-character-18.png",
-  },
-  {
-    id: 19,
-    n: "Character 19",
-    img: "assets/sprites/original/19-character-19.png",
-  },
-  {
-    id: 20,
-    n: "Character 20",
-    img: "assets/sprites/original/20-character-20.png",
-  },
-  {
-    id: 21,
-    n: "Character 21",
-    img: "assets/sprites/original/21-character-21.png",
-  },
-  {
-    id: 22,
-    n: "Character 22",
-    img: "assets/sprites/original/22-character-22.png",
-  },
-  {
-    id: 23,
-    n: "Character 23",
-    img: "assets/sprites/original/23-character-23.png",
-  },
-  {
-    id: 24,
-    n: "Character 24",
-    img: "assets/sprites/original/24-character-24.png",
-  },
-  {
-    id: 25,
-    n: "Character 25",
-    img: "assets/sprites/original/25-character-25.png",
-  },
-  {
-    id: 26,
-    n: "Character 26",
-    img: "assets/sprites/original/26-character-26.png",
-  },
-  {
-    id: 27,
-    n: "Character 27",
-    img: "assets/sprites/original/27-character-27.png",
-  },
-  {
-    id: 28,
-    n: "Character 28",
-    img: "assets/sprites/original/28-character-28.png",
-  },
-  {
-    id: 29,
-    n: "Character 29",
-    img: "assets/sprites/original/29-character-29.png",
-  },
-  {
-    id: 30,
-    n: "Character 30",
-    img: "assets/sprites/original/30-character-30.png",
-  },
-];
-const GADGET_SPRITES = [
-  {
-    id: 1,
-    n: "Air Purifier",
-    img: "assets/sprites/gadgets/01-air-purifier.png",
-  },
-  { id: 2, n: "CCTV", img: "assets/sprites/gadgets/02-cctv.png" },
-  { id: 3, n: "CPU", img: "assets/sprites/gadgets/03-cpu.png" },
-  { id: 4, n: "Camera", img: "assets/sprites/gadgets/04-camera.png" },
-  {
-    id: 5,
-    n: "Desktop Speakers",
-    img: "assets/sprites/gadgets/05-desktop-speakers.png",
-  },
-  { id: 6, n: "Docking", img: "assets/sprites/gadgets/06-docking.png" },
-  { id: 7, n: "Drone", img: "assets/sprites/gadgets/07-drone.png" },
-  { id: 8, n: "Earbuds", img: "assets/sprites/gadgets/08-earbuds.png" },
-  { id: 9, n: "Floppy", img: "assets/sprites/gadgets/09-floppy.png" },
-  { id: 10, n: "GPU", img: "assets/sprites/gadgets/10-gpu.png" },
-  {
-    id: 11,
-    n: "Game Console 1",
-    img: "assets/sprites/gadgets/11-game-console-1.png",
-  },
-  {
-    id: 12,
-    n: "Game Console 2",
-    img: "assets/sprites/gadgets/12-game-console-2.png",
-  },
-  {
-    id: 13,
-    n: "Game Controller",
-    img: "assets/sprites/gadgets/13-game-controller.png",
-  },
-  { id: 14, n: "Headset", img: "assets/sprites/gadgets/14-headset.png" },
-  { id: 15, n: "Joystick", img: "assets/sprites/gadgets/15-joystick.png" },
-  { id: 16, n: "Keyboard", img: "assets/sprites/gadgets/16-keyboard.png" },
-  { id: 17, n: "Laptop", img: "assets/sprites/gadgets/17-laptop.png" },
-  {
-    id: 18,
-    n: "Mobile Phone 1",
-    img: "assets/sprites/gadgets/18-mobile-phone-1.png",
-  },
-  {
-    id: 19,
-    n: "Mobile Phone 2",
-    img: "assets/sprites/gadgets/19-mobile-phone-2.png",
-  },
-  { id: 20, n: "Monitor", img: "assets/sprites/gadgets/20-monitor.png" },
-  {
-    id: 21,
-    n: "Photo Frame",
-    img: "assets/sprites/gadgets/21-photo-frame.png",
-  },
-  { id: 22, n: "Powerbank", img: "assets/sprites/gadgets/22-powerbank.png" },
-  { id: 23, n: "Projector", img: "assets/sprites/gadgets/23-projector.png" },
-  { id: 24, n: "SD Card", img: "assets/sprites/gadgets/24-sd-card.png" },
-  {
-    id: 25,
-    n: "Smart Watch",
-    img: "assets/sprites/gadgets/25-smart-watch.png",
-  },
-  { id: 26, n: "Speaker", img: "assets/sprites/gadgets/26-speaker.png" },
-  { id: 27, n: "Tablet", img: "assets/sprites/gadgets/27-tablet.png" },
-  { id: 28, n: "Turntable", img: "assets/sprites/gadgets/28-turntable.png" },
-  { id: 29, n: "VR", img: "assets/sprites/gadgets/29-vr.png" },
-  { id: 30, n: "Widescreen", img: "assets/sprites/gadgets/30-widescreen.png" },
-];
-const SPORTS_SPRITES = [
-  {
-    id: 1,
-    n: "American Football Helmet",
-    img: "assets/sprites/sports/01-american-football-helmet.png",
-  },
-  {
-    id: 2,
-    n: "American Football",
-    img: "assets/sprites/sports/02-american-football.png",
-  },
-  {
-    id: 3,
-    n: "Analog Timer",
-    img: "assets/sprites/sports/03-analog-timer.png",
-  },
-  { id: 4, n: "Basketball", img: "assets/sprites/sports/04-basketball.png" },
-  { id: 5, n: "Bicycle", img: "assets/sprites/sports/05-bicycle.png" },
-  {
-    id: 6,
-    n: "Bowling Pins",
-    img: "assets/sprites/sports/06-bowling-pins.png",
-  },
-  { id: 7, n: "Bowling", img: "assets/sprites/sports/07-bowling.png" },
-  { id: 8, n: "Boxing", img: "assets/sprites/sports/08-boxing.png" },
-  { id: 9, n: "Dart Board", img: "assets/sprites/sports/09-dart-board.png" },
-  { id: 10, n: "Dumbbell", img: "assets/sprites/sports/10-dumbbell.png" },
-  { id: 11, n: "F1", img: "assets/sprites/sports/11-f1.png" },
-  {
-    id: 12,
-    n: "Football Shoe",
-    img: "assets/sprites/sports/12-football-shoe.png",
-  },
-  { id: 13, n: "Football", img: "assets/sprites/sports/13-football.png" },
-  { id: 14, n: "Golf", img: "assets/sprites/sports/14-golf.png" },
-  { id: 15, n: "Kayak", img: "assets/sprites/sports/15-kayak.png" },
-  {
-    id: 16,
-    n: "Motorcross Bike",
-    img: "assets/sprites/sports/16-motorcross-bike.png",
-  },
-  { id: 17, n: "Parachute", img: "assets/sprites/sports/17-parachute.png" },
-  { id: 18, n: "Ping Pong", img: "assets/sprites/sports/18-ping-pong.png" },
-  { id: 19, n: "Podium", img: "assets/sprites/sports/19-podium.png" },
-  {
-    id: 20,
-    n: "Pommel Horse",
-    img: "assets/sprites/sports/20-pommel-horse.png",
-  },
-  { id: 21, n: "Rollerskate", img: "assets/sprites/sports/21-rollerskate.png" },
-  { id: 22, n: "Sailboat", img: "assets/sprites/sports/22-sailboat.png" },
-  { id: 23, n: "Scoreboard", img: "assets/sprites/sports/23-scoreboard.png" },
-  {
-    id: 24,
-    n: "Scuba Goggles",
-    img: "assets/sprites/sports/24-scuba-goggles.png",
-  },
-  { id: 25, n: "Shuttlecock", img: "assets/sprites/sports/25-shuttlecock.png" },
-  { id: 26, n: "Stadium", img: "assets/sprites/sports/26-stadium.png" },
-  { id: 27, n: "Tennis", img: "assets/sprites/sports/27-tennis.png" },
-  { id: 28, n: "Timer", img: "assets/sprites/sports/28-timer.png" },
-  { id: 29, n: "Trophy", img: "assets/sprites/sports/29-trophy.png" },
-  { id: 30, n: "Volleyball", img: "assets/sprites/sports/30-volleyball.png" },
-];
-const HOME_SPRITES = [
-  { id: 1, n: "Air Fryer", img: "assets/sprites/home/01-air-fryer.png" },
-  { id: 2, n: "Bath Tub", img: "assets/sprites/home/02-bath-tub.png" },
-  { id: 3, n: "Bed", img: "assets/sprites/home/03-bed.png" },
-  {
-    id: 4,
-    n: "Bluetooth Speaker",
-    img: "assets/sprites/home/04-bluetooth-speaker.png",
-  },
-  { id: 5, n: "Bookshelf", img: "assets/sprites/home/05-bookshelf.png" },
-  { id: 6, n: "Bunk Bed", img: "assets/sprites/home/06-bunk-bed.png" },
-  { id: 7, n: "Chandelier", img: "assets/sprites/home/07-chandelier.png" },
-  { id: 8, n: "Clock", img: "assets/sprites/home/08-clock.png" },
-  { id: 9, n: "Cloth Rack", img: "assets/sprites/home/09-cloth-rack.png" },
-  { id: 10, n: "Curtain", img: "assets/sprites/home/10-curtain.png" },
-  { id: 11, n: "Dining Chair", img: "assets/sprites/home/11-dining-chair.png" },
-  { id: 12, n: "Fan", img: "assets/sprites/home/12-fan.png" },
-  { id: 13, n: "Fridge", img: "assets/sprites/home/13-fridge.png" },
-  { id: 14, n: "Hair Dryer", img: "assets/sprites/home/14-hair-dryer.png" },
-  { id: 15, n: "Lounge Chair", img: "assets/sprites/home/15-lounge-chair.png" },
-  { id: 16, n: "Microwave", img: "assets/sprites/home/16-microwave.png" },
-  { id: 17, n: "PC", img: "assets/sprites/home/17-pc.png" },
-  { id: 18, n: "Phone", img: "assets/sprites/home/18-phone.png" },
-  { id: 19, n: "Radio", img: "assets/sprites/home/19-radio.png" },
-  {
-    id: 20,
-    n: "Sewing Machine",
-    img: "assets/sprites/home/20-sewing-machine.png",
-  },
-  { id: 21, n: "Sink", img: "assets/sprites/home/21-sink.png" },
-  { id: 22, n: "Sofa", img: "assets/sprites/home/22-sofa.png" },
-  { id: 23, n: "Stereo", img: "assets/sprites/home/23-stereo.png" },
-  { id: 24, n: "Stove", img: "assets/sprites/home/24-stove.png" },
-  { id: 25, n: "Toaster", img: "assets/sprites/home/25-toaster.png" },
-  { id: 26, n: "TV", img: "assets/sprites/home/26-tv.png" },
-  {
-    id: 27,
-    n: "Vacuum Cleaner",
-    img: "assets/sprites/home/27-vacuum-cleaner.png",
-  },
-  { id: 28, n: "Vase", img: "assets/sprites/home/28-vase.png" },
-  { id: 29, n: "Wardrobe", img: "assets/sprites/home/29-wardrobe.png" },
-  {
-    id: 30,
-    n: "Washing Machine",
-    img: "assets/sprites/home/30-washing-machine.png",
-  },
-];
+
+
+
+
 const FLAGS_SPRITES = [
   { id: 1, n: "Afghanistan", img: "assets/sprites/flags/001-afghanistan.png" },
   { id: 2, n: "Albania", img: "assets/sprites/flags/002-albania.png" },
@@ -920,289 +592,14 @@ const FLAGS_SPRITES = [
   { id: 211, n: "Zambia", img: "assets/sprites/flags/211-zambia.png" },
   { id: 212, n: "Zimbabwe", img: "assets/sprites/flags/212-zimbabwe.png" }
 ];
-const BRAND_SPRITES = [
-  { id: 1, n: "Instagram", img: "assets/sprites/brands/01-instagram.png" },
-  { id: 2, n: "Kodak", img: "assets/sprites/brands/02-kodak.png" },
-  { id: 3, n: "Linux", img: "assets/sprites/brands/03-linux.png" },
-  { id: 4, n: "Maserati", img: "assets/sprites/brands/04-maserati.png" },
-  { id: 5, n: "McDonald's", img: "assets/sprites/brands/05-mcdonalds.png" },
-  { id: 6, n: "Microsoft", img: "assets/sprites/brands/06-microsoft.png" },
-  { id: 7, n: "MTV", img: "assets/sprites/brands/07-mtv.png" },
-  { id: 8, n: "Netflix", img: "assets/sprites/brands/08-netflix.png" },
-  { id: 9, n: "P&G", img: "assets/sprites/brands/09-pandg.png" },
-  { id: 10, n: "Pepsi", img: "assets/sprites/brands/10-pepsi.png" },
-  { id: 11, n: "Philips", img: "assets/sprites/brands/11-philips.png" },
-  { id: 12, n: "Pringles", img: "assets/sprites/brands/12-pringles.png" },
-  { id: 13, n: "Shell", img: "assets/sprites/brands/13-shell.png" },
-  { id: 14, n: "Starbucks", img: "assets/sprites/brands/14-starbucks.png" },
-  { id: 15, n: "Target", img: "assets/sprites/brands/15-target.png" },
-  { id: 16, n: "Uber", img: "assets/sprites/brands/16-uber.png" },
-  { id: 17, n: "Unilever", img: "assets/sprites/brands/17-unilever.png" },
-  { id: 18, n: "UPS", img: "assets/sprites/brands/18-ups.png" },
-  { id: 19, n: "Volkswagen", img: "assets/sprites/brands/19-volkswagen.png" },
-  { id: 20, n: "Yamaha", img: "assets/sprites/brands/20-yamaha.png" },
-  { id: 21, n: "YouTube", img: "assets/sprites/brands/21-youtube.png" },
-  { id: 22, n: "Adidas Original", img: "assets/sprites/brands/22-adidas-original.png" },
-  { id: 23, n: "Apple", img: "assets/sprites/brands/23-apple.png" },
-  { id: 24, n: "BMW", img: "assets/sprites/brands/24-bmw.png" },
-  { id: 25, n: "Caltex", img: "assets/sprites/brands/25-caltex.png" },
-  { id: 26, n: "ChatGPT", img: "assets/sprites/brands/26-chatgpt.png" },
-  { id: 27, n: "Donki", img: "assets/sprites/brands/27-donki.png" },
-  { id: 28, n: "Dairy Queen", img: "assets/sprites/brands/28-dq.png" },
-  { id: 29, n: "Facebook", img: "assets/sprites/brands/29-facebook.png" },
-  { id: 30, n: "Honda", img: "assets/sprites/brands/30-honda.png" },
-];
-const TOOLS_SPRITES = [
-  { id: 1, n: "Excavator", img: "assets/sprites/tools/01-excavator.png" },
-  { id: 2, n: "Forklift", img: "assets/sprites/tools/02-forklift.png" },
-  { id: 3, n: "Generator", img: "assets/sprites/tools/03-generator.png" },
-  { id: 4, n: "Glove", img: "assets/sprites/tools/04-glove.png" },
-  { id: 5, n: "Hammer", img: "assets/sprites/tools/05-hammer.png" },
-  { id: 6, n: "Hinge", img: "assets/sprites/tools/06-hinge.png" },
-  { id: 7, n: "Jackhammer", img: "assets/sprites/tools/07-jackhammer.png" },
-  { id: 8, n: "Ladder", img: "assets/sprites/tools/08-ladder.png" },
-  { id: 9, n: "Level", img: "assets/sprites/tools/09-level.png" },
-  { id: 10, n: "Nail Gun", img: "assets/sprites/tools/10-nail-gun.png" },
-  { id: 11, n: "Pile", img: "assets/sprites/tools/11-pile.png" },
-  { id: 12, n: "Plier", img: "assets/sprites/tools/12-plier.png" },
-  { id: 13, n: "Power Drill", img: "assets/sprites/tools/13-power-drill.png" },
-  { id: 14, n: "Safety Goggles", img: "assets/sprites/tools/14-safety-goggles.png" },
-  { id: 15, n: "Safety Helmet", img: "assets/sprites/tools/15-safety-helmet.png" },
-  { id: 16, n: "Screwdriver", img: "assets/sprites/tools/16-screwdriver.png" },
-  { id: 17, n: "Silicone Gun", img: "assets/sprites/tools/17-silicone-gun.png" },
-  { id: 18, n: "Tape Measure", img: "assets/sprites/tools/18-tape-measure.png" },
-  { id: 19, n: "Toolbox", img: "assets/sprites/tools/19-toolbox.png" },
-  { id: 20, n: "Tower Crane", img: "assets/sprites/tools/20-tower-crane.png" },
-  { id: 21, n: "US Socket", img: "assets/sprites/tools/21-us-socket.png" },
-  { id: 22, n: "Wrench", img: "assets/sprites/tools/22-wrench.png" },
-  { id: 23, n: "Blueprints", img: "assets/sprites/tools/23-blueprints.png" },
-  { id: 24, n: "Boots", img: "assets/sprites/tools/24-boots.png" },
-  { id: 25, n: "Bricks", img: "assets/sprites/tools/25-bricks.png" },
-  { id: 26, n: "Bulldozer", img: "assets/sprites/tools/26-bulldozer.png" },
-  { id: 27, n: "Cement Mixer", img: "assets/sprites/tools/27-cement-mixer.png" },
-  { id: 28, n: "Clamp", img: "assets/sprites/tools/28-clamp.png" },
-  { id: 29, n: "Dump Truck", img: "assets/sprites/tools/29-dump-truck.png" },
-  { id: 30, n: "European Socket", img: "assets/sprites/tools/30-european-socket.png" },
-];
-const TRAVEL_SPRITES = [
-  { id: 1, n: "Airplane", img: "assets/sprites/travel/01-airplane.png" },
-  { id: 2, n: "Shinkansen", img: "assets/sprites/travel/02-shinkansen.png" },
-  { id: 3, n: "Suitcase", img: "assets/sprites/travel/03-suitcase.png" },
-  { id: 4, n: "Backpack", img: "assets/sprites/travel/04-backpack.png" },
-  { id: 5, n: "Water Bottle", img: "assets/sprites/travel/05-water-bottle.png" },
-  { id: 6, n: "Sweater", img: "assets/sprites/travel/06-sweater.png" },
-  { id: 7, n: "Headphone", img: "assets/sprites/travel/07-headphone.png" },
-  { id: 8, n: "Sweatpant", img: "assets/sprites/travel/08-sweatpant.png" },
-  { id: 9, n: "Jacket", img: "assets/sprites/travel/09-jacket.png" },
-  { id: 10, n: "Toiletry Set", img: "assets/sprites/travel/10-toiletry-set.png" },
-  { id: 11, n: "Flip Flops", img: "assets/sprites/travel/11-flip-flops.png" },
-  { id: 12, n: "Diving Goggles", img: "assets/sprites/travel/12-diving-goggles.png" },
-  { id: 13, n: "Action Camera", img: "assets/sprites/travel/13-action-camera.png" },
-  { id: 14, n: "Surf Board", img: "assets/sprites/travel/14-surf-board.png" },
-  { id: 15, n: "DSLR Camera", img: "assets/sprites/travel/15-dslr-camera.png" },
-  { id: 16, n: "Beach Ball", img: "assets/sprites/travel/16-beach-ball.png" },
-  { id: 17, n: "Propeller Plane", img: "assets/sprites/travel/17-propeller-plane.png" },
-  { id: 18, n: "Passport", img: "assets/sprites/travel/18-passport.png" },
-  { id: 19, n: "Boarding Passes", img: "assets/sprites/travel/19-boarding-passes.png" },
-  { id: 20, n: "First Aid Set", img: "assets/sprites/travel/20-first-aid-set.png" },
-  { id: 21, n: "Universal Adaptor", img: "assets/sprites/travel/21-universal-adaptor.png" },
-  { id: 22, n: "Packaged Snacks", img: "assets/sprites/travel/22-packaged-snacks.png" },
-  { id: 23, n: "Aviator Sunglasses", img: "assets/sprites/travel/23-aviator-sunglasses.png" },
-  { id: 24, n: "Neck Pillow", img: "assets/sprites/travel/24-neck-pillow.png" },
-  { id: 25, n: "Yellow Cab", img: "assets/sprites/travel/25-yellow-cab.png" },
-  { id: 26, n: "TSA Lock", img: "assets/sprites/travel/26-tsa-lock.png" },
-  { id: 27, n: "Route 66 Sign", img: "assets/sprites/travel/27-route-66-sign.png" },
-  { id: 28, n: "Beach Bed", img: "assets/sprites/travel/28-beach-bed.png" },
-  { id: 29, n: "Disposable Camera", img: "assets/sprites/travel/29-disposable-camera.png" },
-  { id: 30, n: "Postcard", img: "assets/sprites/travel/30-postcard.png" },
-];
+
+
+
 const SPRITE_SETS = {
-  original: {
-    name: "POKEMON",
-    label: "Pokémon sprites",
-    sprites: SPRITES,
-    scale: 0.85,
-  },
-  brands: {
-    name: "BRANDS",
-    label: "Brand logo sprites",
-    sprites: BRAND_SPRITES,
-    scale: 1.12,
-  },
   flags: {
     name: "FLAGS",
     label: "World flag sprites",
     sprites: FLAGS_SPRITES,
-    scale: 1,
-  },
-  foodies: {
-    name: "FOODIES 1",
-    label: "Foodies 1 sprites",
-    sprites: [
-      { id: 1, n: "Beer", img: "assets/sprites/foodies/01-beer.png" },
-      { id: 2, n: "Bento", img: "assets/sprites/foodies/02-bento.png" },
-      {
-        id: 3,
-        n: "Boba Milk Tea",
-        img: "assets/sprites/foodies/03-boba-milk-tea.png",
-      },
-      { id: 4, n: "Burger", img: "assets/sprites/foodies/04-burger.png" },
-      { id: 5, n: "Cheese", img: "assets/sprites/foodies/05-cheese.png" },
-      {
-        id: 6,
-        n: "Chocolate Bar",
-        img: "assets/sprites/foodies/06-chocolate-bar.png",
-      },
-      { id: 7, n: "Coffee", img: "assets/sprites/foodies/07-coffee.png" },
-      { id: 8, n: "Cupcake", img: "assets/sprites/foodies/08-cupcake.png" },
-      { id: 9, n: "Custard", img: "assets/sprites/foodies/09-custard.png" },
-      { id: 10, n: "Donut", img: "assets/sprites/foodies/10-donut.png" },
-      {
-        id: 11,
-        n: "French Fries",
-        img: "assets/sprites/foodies/11-french-fries.png",
-      },
-      { id: 12, n: "Grape", img: "assets/sprites/foodies/12-grape.png" },
-      { id: 13, n: "Hotdog", img: "assets/sprites/foodies/13-hotdog.png" },
-      {
-        id: 14,
-        n: "Ice Cream",
-        img: "assets/sprites/foodies/14-ice-cream.png",
-      },
-      { id: 15, n: "Lollipop", img: "assets/sprites/foodies/15-lollipop.png" },
-      { id: 16, n: "Macaron", img: "assets/sprites/foodies/16-macaron.png" },
-      { id: 17, n: "Milk", img: "assets/sprites/foodies/17-milk.png" },
-      { id: 18, n: "Orange", img: "assets/sprites/foodies/18-orange.png" },
-      { id: 19, n: "Pizza", img: "assets/sprites/foodies/19-pizza.png" },
-      { id: 20, n: "Popcorn", img: "assets/sprites/foodies/20-popcorn.png" },
-      { id: 21, n: "Ramen", img: "assets/sprites/foodies/21-ramen.png" },
-      { id: 22, n: "Sandwich", img: "assets/sprites/foodies/22-sandwich.png" },
-      { id: 23, n: "Soda", img: "assets/sprites/foodies/23-soda.png" },
-      {
-        id: 24,
-        n: "Strawberry",
-        img: "assets/sprites/foodies/24-strawberry.png",
-      },
-      { id: 25, n: "Sushi", img: "assets/sprites/foodies/25-sushi.png" },
-      { id: 26, n: "Taco", img: "assets/sprites/foodies/26-taco.png" },
-      { id: 27, n: "Waffle", img: "assets/sprites/foodies/27-waffle.png" },
-      {
-        id: 28,
-        n: "Watermelon",
-        img: "assets/sprites/foodies/28-watermelon.png",
-      },
-      { id: 29, n: "Apple", img: "assets/sprites/foodies/29-apple.png" },
-      { id: 30, n: "Banana", img: "assets/sprites/foodies/30-banana.png" },
-    ],
-    scale: 1,
-  },
-  foodies2: {
-    name: "FOODIES 2",
-    label: "Foodies 2 sprites",
-    sprites: [
-      { id: 1, n: "BBQ Sauce", img: "assets/sprites/foodies2/01-bbq-sauce.png" },
-      { id: 2, n: "Beer Can", img: "assets/sprites/foodies2/02-beer-can.png" },
-      { id: 3, n: "Beer", img: "assets/sprites/foodies2/03-beer.png" },
-      { id: 4, n: "Blueberry Donut", img: "assets/sprites/foodies2/04-blueberry-donut.png" },
-      { id: 5, n: "Cake", img: "assets/sprites/foodies2/05-cake.png" },
-      { id: 6, n: "Canned Tuna", img: "assets/sprites/foodies2/06-canned-tuna.png" },
-      { id: 7, n: "Cheese Burger", img: "assets/sprites/foodies2/07-cheese-burger.png" },
-      { id: 8, n: "Chocolate Sundae", img: "assets/sprites/foodies2/08-chocolate-sundae.png" },
-      { id: 9, n: "Croissant", img: "assets/sprites/foodies2/09-croissant.png" },
-      { id: 10, n: "Cup Noodle", img: "assets/sprites/foodies2/10-cup-noodle.png" },
-      { id: 11, n: "Fortune Cookie", img: "assets/sprites/foodies2/11-fortune-cookie.png" },
-      { id: 12, n: "Grilled Chicken", img: "assets/sprites/foodies2/12-grilled-chicken.png" },
-      { id: 13, n: "Ice cream Bowl", img: "assets/sprites/foodies2/13-ice-cream-bowl.png" },
-      { id: 14, n: "Ice cream Cone", img: "assets/sprites/foodies2/14-ice-cream-cone.png" },
-      { id: 15, n: "Ketchup", img: "assets/sprites/foodies2/15-ketchup.png" },
-      { id: 16, n: "Lollipop", img: "assets/sprites/foodies2/16-lollipop.png" },
-      { id: 17, n: "Milk Shake", img: "assets/sprites/foodies2/17-milk-shake.png" },
-      { id: 18, n: "Mustard", img: "assets/sprites/foodies2/18-mustard.png" },
-      { id: 19, n: "Parma Ham", img: "assets/sprites/foodies2/19-parma-ham.png" },
-      { id: 20, n: "Pineapple", img: "assets/sprites/foodies2/20-pineapple.png" },
-      { id: 21, n: "Salad", img: "assets/sprites/foodies2/21-salad.png" },
-      { id: 22, n: "Soft Serve", img: "assets/sprites/foodies2/22-soft-serve.png" },
-      { id: 23, n: "Soup", img: "assets/sprites/foodies2/23-soup.png" },
-      { id: 24, n: "Strawberry Donut", img: "assets/sprites/foodies2/24-strawberry-donut.png" },
-      { id: 25, n: "Sunny Side Up", img: "assets/sprites/foodies2/25-sunny-side-up.png" },
-      { id: 26, n: "Sushi", img: "assets/sprites/foodies2/26-sushi.png" },
-      { id: 27, n: "Tempura", img: "assets/sprites/foodies2/27-tempura.png" },
-      { id: 28, n: "Tuna Sandwich", img: "assets/sprites/foodies2/28-tuna-sandwich.png" },
-      { id: 29, n: "Watermelon", img: "assets/sprites/foodies2/29-watermelon.png" },
-      { id: 30, n: "Yakiniku", img: "assets/sprites/foodies2/30-yakiniku.png" },
-    ],
-    scale: 1,
-  },
-  football: {
-    name: "FOOTBALL",
-    label: "Football club logo sprites",
-    sprites: [
-      { id: 1, n: "AC Milan", img: "assets/sprites/football/01-ac-milan.png" },
-      { id: 2, n: "Ajax Amsterdam", img: "assets/sprites/football/02-ajax-amsterdam.png" },
-      { id: 3, n: "Arsenal", img: "assets/sprites/football/03-arsenal.png" },
-      { id: 4, n: "Atalanta", img: "assets/sprites/football/04-atalanta.png" },
-      { id: 5, n: "Atletico Madrid", img: "assets/sprites/football/05-atletico-madrid.png" },
-      { id: 6, n: "Barcelona", img: "assets/sprites/football/06-barcelona.png" },
-      { id: 7, n: "Bayer Leverkusen", img: "assets/sprites/football/07-bayer-leverkusen.png" },
-      { id: 8, n: "Bayern Munich", img: "assets/sprites/football/08-bayern-munich.png" },
-      { id: 9, n: "Blackburn Rovers", img: "assets/sprites/football/09-blackburn-rovers.png" },
-      { id: 10, n: "Borussia Dortmund", img: "assets/sprites/football/10-borussia-dortmund.png" },
-      { id: 11, n: "Brentford", img: "assets/sprites/football/11-brentford.png" },
-      { id: 12, n: "Brighton", img: "assets/sprites/football/12-brighton.png" },
-      { id: 13, n: "Chelsea", img: "assets/sprites/football/13-chelsea.png" },
-      { id: 14, n: "Derby County", img: "assets/sprites/football/14-derby-county.png" },
-      { id: 15, n: "Everton", img: "assets/sprites/football/15-everton.png" },
-      { id: 16, n: "Inter Milan", img: "assets/sprites/football/16-inter-milan.png" },
-      { id: 17, n: "Juventus", img: "assets/sprites/football/17-juventus.png" },
-      { id: 18, n: "Leeds United", img: "assets/sprites/football/18-leeds-united.png" },
-      { id: 19, n: "Leicester City", img: "assets/sprites/football/19-leicester-city.png" },
-      { id: 20, n: "Liverpool", img: "assets/sprites/football/20-liverpool.png" },
-      { id: 21, n: "Manchester City", img: "assets/sprites/football/21-manchester-city.png" },
-      { id: 22, n: "Manchester United", img: "assets/sprites/football/22-manchester-united.png" },
-      { id: 23, n: "Marseille", img: "assets/sprites/football/23-marseille.png" },
-      { id: 24, n: "Middlesbrough", img: "assets/sprites/football/24-middlesbrough.png" },
-      { id: 25, n: "Napoli", img: "assets/sprites/football/25-napoli.png" },
-      { id: 26, n: "Newcastle United", img: "assets/sprites/football/26-newcastle-united.png" },
-      { id: 27, n: "Nottingham Forest", img: "assets/sprites/football/27-nottingham-forest.png" },
-      { id: 28, n: "Olympiacos", img: "assets/sprites/football/28-olympiacos.png" },
-      { id: 29, n: "Paris Saint-Germain", img: "assets/sprites/football/29-paris-saint-germain.png" },
-      { id: 30, n: "Rangers", img: "assets/sprites/football/30-rangers.png" },
-      { id: 31, n: "Real Madrid", img: "assets/sprites/football/31-real-madrid.png" },
-      { id: 32, n: "Salzburg", img: "assets/sprites/football/32-salzburg.png" },
-      { id: 33, n: "Tottenham Hotspur", img: "assets/sprites/football/33-tottenham-hotspur.png" },
-      { id: 34, n: "West Ham United", img: "assets/sprites/football/34-west-ham-united.png" },
-      { id: 35, n: "Wolverhampton Wanderers", img: "assets/sprites/football/35-wolverhampton-wanderers.png" },
-    ],
-    scale: 1.12,
-  },
-  gadgets: {
-    name: "GADGETS",
-    label: "Optimized gadget sprites",
-    sprites: GADGET_SPRITES,
-    scale: 1,
-  },
-  home: {
-    name: "HOME",
-    label: "Home sprites",
-    sprites: HOME_SPRITES,
-    scale: 1,
-  },
-  sports: {
-    name: "SPORTS",
-    label: "Optimized sports sprites",
-    sprites: SPORTS_SPRITES,
-    scale: 1.24,
-  },
-  tools: {
-    name: "TOOLS",
-    label: "Tools sprites",
-    sprites: TOOLS_SPRITES,
-    scale: 1,
-  },
-  travel: {
-    name: "TRAVEL",
-    label: "Travel item sprites",
-    sprites: TRAVEL_SPRITES,
     scale: 1,
   },
 };
@@ -1277,8 +674,6 @@ const overlay = $("overlay"),
   pauseOverlay = $("pauseOverlay"),
   levelCompleteOverlay = $("levelCompleteOverlay"),
   gameOverOverlay = $("gameOverOverlay");
-const saveOverlay = $("saveOverlay");
-let saveOverlayAction = "none";
 const appShell = document.querySelector(".app-shell");
 const levelEl = $("level"),
   scoreEl = $("score"),
@@ -1287,7 +682,7 @@ const levelEl = $("level"),
   boardTimerBar = $("boardTimerBar");
 const hintCountEl = $("hintCount"),
   shuffleCountEl = $("shuffleCount"),
-  moveStatus = $("moveStatus");
+  moveStatus = $("moveStatus") || { textContent: "" };
 const boardInfoEl = $("boardInfo");
 const movementIconEl = $("movementIcon");
 
@@ -1533,7 +928,7 @@ function migrateLegacySave() {
     if (!raw) return;
     const old = JSON.parse(raw);
     if (!old || !old.board) return;
-    const slot = SPRITE_SETS[old.spriteSet] ? old.spriteSet : "original";
+    const slot = "flags";
     const saves = {};
     saves[slot] = {
       ...old,
@@ -1565,7 +960,7 @@ function saveBestScores(scores) {
 }
 
 function getBestScoreKey() {
-  return isQuickGame ? "quick" : `set:${currentSpriteSetId || "original"}`;
+  return isQuickGame ? "quick" : `set:${currentSpriteSetId || "flags"}`;
 }
 
 function updateAndGetBestScore(latestScore) {
@@ -1725,8 +1120,6 @@ function returnToTitleAfterSave() {
   pauseOverlay.classList.add("hidden");
   levelCompleteOverlay.classList.add("hidden");
   gameOverOverlay.classList.add("hidden");
-  $("endQuickConfirmOverlay")?.classList.add("hidden");
-  $("quitConfirmOverlay")?.classList.add("hidden");
   $("helperMessageOverlay")?.classList.add("hidden");
   appShell.classList.remove("paused");
   document.body.classList.remove("low-time");
@@ -1734,29 +1127,13 @@ function returnToTitleAfterSave() {
   refreshSaveSlot();
 }
 
-function triggerSave(fromPause = false) {
-  const ok = saveGame();
-  sfx.save();
-  saveOverlayAction = fromPause ? "quit" : "continue";
-  saveOverlay.dataset.action = saveOverlayAction;
-  $("saveMsg").textContent = isQuickGame
-    ? "Quick Game is a single-session mode and does not save progress."
-    : ok
-      ? `Progress saved for ${(SPRITE_SETS[currentSaveSlotId] || SPRITE_SETS[currentSpriteSetId]).name}.`
-      : "Save failed — localStorage may be unavailable.";
-  pauseOverlay.classList.add("hidden");
-  saveOverlay.classList.remove("hidden");
-  gameOverOverlay.classList.add("hidden");
-  $("themePicker").classList.add("hidden");
-}
-
 function restoreGame(save) {
   // Keep the currently selected theme when continuing a saved game.
   // Saved games still restore the sprite set/progress, but should not override
   // the player's current theme choice from the startup screen.
   // applyTheme(save.theme || "arcade");
-  applySpriteSet(save.spriteSet || "original");
-  currentSaveSlotId = save.spriteSet || currentSpriteSetId;
+  applySpriteSet("flags");
+  currentSaveSlotId = "flags";
   isQuickGame = false;
   level = save.level;
   score = save.score;
@@ -1833,7 +1210,7 @@ function boardSignatureFromValues(values) {
 }
 
 function recentBoardSignatureKey() {
-  return `${currentSpriteSetId || "original"}|${level || 1}`;
+  return `${currentSpriteSetId || "flags"}|${level || 1}`;
 }
 
 function readRecentBoardSignatures() {
@@ -2528,7 +1905,6 @@ function showGameOver() {
   appShell.classList.remove("paused");
   pauseOverlay.classList.add("hidden");
   levelCompleteOverlay.classList.add("hidden");
-  saveOverlay.classList.add("hidden");
   $("themePicker").classList.add("hidden");
 
   const rule = currentStrategy ? currentStrategy.name : "NORMAL";
@@ -2555,7 +1931,7 @@ function showGameOver() {
   const goBestScore = $("goBestScore");
   if (goBestScore) goBestScore.textContent = `${formatScore(bestScore)} pts`;
   const goBestCombo = $("goBestCombo");
-  if (goBestCombo) goBestCombo.textContent = bestCombo > 1 ? `×${bestCombo}` : "—";
+  if (goBestCombo) goBestCombo.textContent = bestCombo > 0 ? `×${bestCombo}` : "—";
   const goPack = $("goPack");
   if (goPack) goPack.textContent = `Tile Pack · ${activeSetName}`;
   const goTimeSurvived = $("goTimeSurvived");
@@ -2808,7 +2184,7 @@ function showLevelComplete() {
   const lcTotalScore = $("lcTotalScore");
   if (lcTotalScore) lcTotalScore.textContent = formatScore(score);
   const lcBestCombo = $("lcBestCombo");
-  if (lcBestCombo) lcBestCombo.textContent = bestCombo > 1 ? `x${bestCombo}` : "—";
+  if (lcBestCombo) lcBestCombo.textContent = bestCombo > 0 ? `×${bestCombo}` : "—";
   renderScoreHistory(clearedLevel);
 
   showLevelClearBurst();
@@ -2850,8 +2226,6 @@ function prepareNextLevelState(perfectClear = false) {
 function startNextLevel() {
   levelCompleteOverlay.classList.add("hidden");
   gameOverOverlay.classList.add("hidden");
-  $("endQuickConfirmOverlay")?.classList.add("hidden");
-  $("quitConfirmOverlay")?.classList.add("hidden");
   $("helperMessageOverlay")?.classList.add("hidden");
   if (!nextLevelReadyAfterComplete) {
     prepareNextLevelState(false);
@@ -2979,113 +2353,18 @@ function continueFromSave() {
 function setupPauseModal() {
   const title = document.querySelector("#pauseOverlay h1");
   const msg = $("pauseMessage");
-  const saveContinue = $("saveContinueBtn");
-  const saveQuit = $("saveFromPauseBtn");
-  const endQuick = $("endQuickGameBtn");
-  const pauseActions = $("pauseActions");
 
-  // v3.0.8: Pause menu is mode-specific.
-  // Regular Game: Continue + Quit, with confirmation before quitting mid-level.
-  // Quick Game: Continue + End Quick Game, with confirmation before ending.
-  const setPauseBtnHidden = (btn, hidden) => {
-    if (!btn) return;
-    btn.classList.toggle("hidden", hidden);
-    btn.hidden = hidden;
-    btn.style.display = hidden ? "none" : "";
-  };
-
-  pauseOverlay.classList.toggle("quick-pause", isQuickGame);
-  if (pauseActions) pauseActions.classList.toggle("quick-pause-actions", isQuickGame);
-  if (saveQuit) saveQuit.textContent = "Quit";
-  if (endQuick) endQuick.textContent = "End Quick Game";
-
-  if (isQuickGame) {
-    if (title) { title.innerHTML = "Quick<br /><em>Paused</em>"; }
-    if (msg) msg.textContent = "Quick Game is single-session only. Continue the run or end it now.";
-    setPauseBtnHidden(saveContinue, true);
-    setPauseBtnHidden(saveQuit, true);
-    setPauseBtnHidden(endQuick, false);
-  } else {
-    if (title) { title.innerHTML = "Take a<br /><em>break</em>"; }
-    if (msg) msg.textContent = "The timer is stopped. If you quit now, this current level progress will not be saved.";
-    setPauseBtnHidden(saveContinue, true);
-    setPauseBtnHidden(saveQuit, false);
-    setPauseBtnHidden(endQuick, true);
-  }
-
-  // Populate live panel fields
-  const liveScoreEl = $("pauseLiveScore");
-  if (liveScoreEl) liveScoreEl.innerHTML = score.toLocaleString() + '<span class="pause-unit">PTS</span>';
-
-  // Elapsed time = levelTotalTime - timeLeft
-  const elapsedSec = Math.max(0, levelTotalTime - timeLeft);
-  const em = String(Math.floor(elapsedSec / 60)).padStart(2, "0");
-  const es = String(elapsedSec % 60).padStart(2, "0");
-  const elapsedEl = $("pauseElapsed");
-  if (elapsedEl) elapsedEl.textContent = `${em}:${es}`;
-
-  // Level chip
-  const badgeEl = $("pauseLevelBadge");
-  if (badgeEl) badgeEl.textContent = `LV ${level}`;
-  const nameEl = $("pauseLevelName");
-  if (nameEl) {
-    const setName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.flags).name;
-    const ruleName = currentStrategy ? currentStrategy.name || "Normal" : "Normal";
-    nameEl.textContent = `${setName} · ${ruleName}`;
-  }
-
-  // Pairs remaining
-  const pairsEl = $("pausePairsLeft");
-  if (pairsEl && board && board.length) {
-    let remaining = 0;
-    for (let r = 0; r < ROWS; r++)
-      for (let c = 0; c < COLS; c++)
-        if (board[r] && board[r][c] && !board[r][c].removed) remaining++;
-    pairsEl.textContent = String(remaining / 2 | 0);
-  }
-
-  // Best combo
-  const comboEl = $("pauseBestCombo");
-  if (comboEl) comboEl.textContent = bestCombo > 0 ? `×${bestCombo}` : "—";
-
-  // Hints left
-  const hintsEl = $("pauseHintsLeft");
-  if (hintsEl) hintsEl.textContent = String(hintCount);
-
-  // Sync game sound toggle with actual mute state
-  const soundToggle = $("pauseSoundToggle");
-  if (soundToggle) soundToggle.setAttribute("aria-pressed", muted ? "false" : "true");
-}
-
-function saveAndContinue() {
-  if (!gameStarted) return;
-  const ok = saveGame();
-  sfx.save();
-  if (ok) {
-    moveStatus.textContent = "GAME SAVED";
-  }
-  resumeGame();
-}
-
-function saveAndQuit() {
-  if (!gameStarted) return;
-  saveGame();
-  sfx.save();
-  returnToTitleAfterSave();
+  // FMW pause popup is a simple control popup only.
+  if (title) title.textContent = "PAUSED";
+  if (msg) msg.textContent = "The timer is stopped. Your saved progress remains safe.";
 }
 
 function confirmQuitGame() {
   if (!gameStarted) return;
-  const ov = $("quitConfirmOverlay");
-  if (ov) {
-    ov.classList.remove("hidden");
-    return;
-  }
   quitCurrentGameWithoutSaving();
 }
 
 function quitCurrentGameWithoutSaving() {
-  $("quitConfirmOverlay")?.classList.add("hidden");
   returnToTitleAfterSave();
 }
 
@@ -3093,13 +2372,6 @@ function endQuickGame(skipConfirm = false) {
   if (!isQuickGame) {
     returnToTitleAfterSave();
     return;
-  }
-  if (!skipConfirm) {
-    const ov = $("endQuickConfirmOverlay");
-    if (ov) {
-      ov.classList.remove("hidden");
-      return;
-    }
   }
   gameStarted = false;
   paused = false;
@@ -3468,10 +2740,7 @@ $("hintBtn").onclick = hint;
 $("shuffleBtn").onclick = () => shuffleTiles(true);
 $("pauseBtn").onclick = pauseGame;
 
-// Pause overlay game sound toggle
-const _pauseSoundToggle = $("pauseSoundToggle");
 function _syncPauseToggleState() {
-  if (_pauseSoundToggle) _pauseSoundToggle.setAttribute("aria-pressed", muted ? "false" : "true");
 }
 function _setGameSoundMuted(nextMuted) {
   unlockAudio();
@@ -3481,16 +2750,11 @@ function _setGameSoundMuted(nextMuted) {
   const topSoundBtn = $("musicBtn");
   if (topSoundBtn) topSoundBtn.textContent = muted ? "×" : "♪";
   if (!muted) playBgmIfAllowed();
-  _syncPauseToggleState();
   if (typeof syncSettingsToggles === "function") syncSettingsToggles();
-}
-if (_pauseSoundToggle) {
-  _pauseSoundToggle.onclick = () => _setGameSoundMuted(!muted);
 }
 $("continueBtn").onclick = (e) => {
   e.preventDefault();
   e.stopPropagation();
-  saveOverlay.classList.add("hidden");
   resumeGame();
 };
 $("nextLevelBtn").onclick = startNextLevel;
@@ -3546,57 +2810,6 @@ if (settingsMusicToggle) settingsMusicToggle.onclick = ()=>{ _setGameSoundMuted(
 if (settingsSoundToggle) settingsSoundToggle.onclick = ()=>{ _setGameSoundMuted(!muted); syncSettingsToggles(); };
 if (settingsHapticsToggle) settingsHapticsToggle.onclick = ()=>{ const on=settingsHapticsToggle.getAttribute("aria-pressed")!=="true"; settingsHapticsToggle.setAttribute("aria-pressed", on?"true":"false"); };
 
-// Save buttons
-const quickSaveBtn = $("saveBtn");
-if (quickSaveBtn) {
-  quickSaveBtn.onclick = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!gameStarted) return;
-    if (!paused) pauseGame();
-    triggerSave(false);
-  };
-}
-$("saveOkBtn").onclick = (e) => {
-  e.preventDefault();
-  e.stopPropagation();
-  saveOverlay.classList.add("hidden");
-  const action = saveOverlay.dataset.action || saveOverlayAction;
-  saveOverlay.dataset.action = "none";
-  saveOverlayAction = "none";
-  refreshSaveSlot();
-  if (action === "quit") {
-    returnToTitleAfterSave();
-  } else if (gameStarted && paused) {
-    resumeGame();
-  }
-};
-$("saveContinueBtn").onclick = (e) => {
-  e.preventDefault();
-  e.stopPropagation();
-  saveAndContinue();
-};
-$("saveFromPauseBtn").onclick = (e) => {
-  e.preventDefault();
-  e.stopPropagation();
-  confirmQuitGame();
-};
-$("endQuickGameBtn").onclick = (e) => {
-  e.preventDefault();
-  e.stopPropagation();
-  endQuickGame(false);
-};
-$("cancelEndQuickBtn").onclick = () =>
-  $("endQuickConfirmOverlay").classList.add("hidden");
-$("confirmEndQuickBtn").onclick = () => {
-  $("endQuickConfirmOverlay").classList.add("hidden");
-  endQuickGame(true);
-};
-$("cancelQuitGameBtn").onclick = () =>
-  $("quitConfirmOverlay").classList.add("hidden");
-$("confirmQuitGameBtn").onclick = () => {
-  quitCurrentGameWithoutSaving();
-};
 $("helperMessageOkBtn").onclick = () =>
   $("helperMessageOverlay").classList.add("hidden");
 
@@ -4071,7 +3284,7 @@ refreshSaveSlot(); // show saved game slot on start screen if one exists
     const time=q('lcTimeBonus'); if(time) time.textContent=formatScore(last.timeBonus||0);
     const perf=q('lcPerfectBonus'); if(perf) perf.textContent=formatScore(last.perfectBonus||0);
     const total=q('lcTotalScore'); if(total) total.textContent=formatScore(isQuickGame?(last.levelScore||levelScore):score);
-    const combo=q('lcBestCombo'); if(combo) combo.textContent=bestCombo>1?`×${bestCombo}`:'—';
+    const combo=q('lcBestCombo'); if(combo) combo.textContent=bestCombo>0?`×${bestCombo}`:'—';
   };
   const oldStartNextLevel = startNextLevel;
   startNextLevel = function(){ modalOpen(false); oldStartNextLevel(); };
@@ -4085,7 +3298,7 @@ refreshSaveSlot(); // show saved game slot on start screen if one exists
     const row=q('goLevelRow'); if(row) row.classList.toggle('hidden', isQuickGame);
     const lvl=q('goLevel'); if(lvl) lvl.textContent=`LV ${String(level).padStart(2,'0')}`;
     const sc=q('goScore'); if(sc) sc.textContent=formatScore(score);
-    const combo=q('goBestCombo'); if(combo) combo.textContent=bestCombo>1?`×${bestCombo}`:'—';
+    const combo=q('goBestCombo'); if(combo) combo.textContent=bestCombo>0?`×${bestCombo}`:'—';
     const tiles=q('goTilesRemaining'); if(tiles && board){ let rem=0; for(let r=0;r<ROWS;r++) for(let c=0;c<COLS;c++) if(board[r]&&board[r][c]&&!board[r][c].removed) rem++; tiles.textContent=String(rem); }
     const retry=q('gameOverNewGameBtn'); if(retry) retry.textContent=isQuickGame?'New Quick Game':'Retry';
     const home=q('gameOverQuitBtn'); if(home) home.textContent='Home';
@@ -4112,10 +3325,10 @@ refreshSaveSlot(); // show saved game slot on start screen if one exists
   showLevelComplete = function(){
     oldShowLevelCompleteFinal();
     const comboEl = $("lcBestCombo");
-    if (comboEl) comboEl.textContent = bestCombo > 1 ? `×${bestCombo}` : "—";
+    if (comboEl) comboEl.textContent = bestCombo > 0 ? `×${bestCombo}` : "—";
     setTimeout(() => {
       const again = $("lcBestCombo");
-      if (again) again.textContent = bestCombo > 1 ? `×${bestCombo}` : "—";
+      if (again) again.textContent = bestCombo > 0 ? `×${bestCombo}` : "—";
     }, 0);
   };
 })();
