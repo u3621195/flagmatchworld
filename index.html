@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
 
-<link href="style-new.css?v=fmw-v5-startup-button-fix-20260529" rel="stylesheet"/>
+<link href="style-new.css?v=fmw-v5-ui-fixes" rel="stylesheet"/>
 
 
 </head>
@@ -82,7 +82,11 @@
 <div aria-hidden="true" class="board-time-meter">
 <div class="board-time-bar" id="boardTimerBar"></div>
 </div>
-
+<div class="board-header fmw-board-header">
+<span id="boardInfo">MATCHES: --</span>
+<span class="country-name-pill board-country-pill" aria-hidden="true">SELECT A FLAG</span>
+<span id="moveStatus">SYSTEM READY</span>
+</div>
 <div class="board-wrap">
 <canvas id="pathCanvas"></canvas>
 <div class="board" id="board"></div>
@@ -128,6 +132,20 @@
     </div>
   </div>
 </section>
+<section class="overlay hidden" id="saveOverlay">
+<div class="modal save-modal">
+<div class="modal-kicker">CARTRIDGE SAVE</div>
+<h1>Game Saved</h1>
+<p id="saveMsg">
+          Progress saved — continue any time from the main screen.
+        </p>
+<div class="popup-actions">
+<button class="modal-btn primary" id="saveOkBtn" type="button">
+            OK
+          </button>
+</div>
+</div>
+</section>
 <section class="overlay pause-overlay hidden fmw-popup-overlay" id="pauseOverlay">
   <div class="fmw-popup-card fmw-pause-card">
     <h1 class="fmw-popup-title" id="pauseTitle">PAUSED</h1>
@@ -139,6 +157,11 @@
       <button class="fmw-btn fmw-btn-teal" id="pauseSettingsBtn" type="button">Settings</button>
       <button class="fmw-btn fmw-btn-teal" id="pauseHomeBtn" type="button">Home</button>
     </div>
+    <button class="hidden" id="saveContinueBtn" type="button"></button>
+    <button class="hidden" id="saveFromPauseBtn" type="button"></button>
+    <button class="hidden" id="endQuickGameBtn" type="button"></button>
+    <button class="hidden" id="pauseSoundToggle" type="button"></button>
+    <span class="hidden" id="pausePairsLeft"></span><span class="hidden" id="pauseHintsLeft"></span><span class="hidden" id="pauseElapsed"></span><span class="hidden" id="pauseLevelName"></span>
   </div>
 </section>
 <section class="overlay score-summary-overlay hidden fmw-popup-overlay" id="levelCompleteOverlay">
@@ -231,9 +254,37 @@
 </div>
 </div>
 </section>
-
-
+<section class="overlay hidden" id="quitConfirmOverlay">
+<div class="modal save-modal confirm-modal">
+<div class="modal-kicker">QUIT GAME</div>
+<h1>Quit Game?</h1>
+<p>Your current level progress will not be saved.</p>
+<div class="popup-actions">
+<button class="modal-btn secondary" id="cancelQuitGameBtn" type="button">
+            Cancel
+          </button>
+<button class="modal-btn primary" id="confirmQuitGameBtn" type="button">
+            Quit
+          </button>
+</div>
+</div>
+</section>
+<section class="overlay hidden" id="endQuickConfirmOverlay">
+<div class="modal save-modal confirm-modal">
+<div class="modal-kicker">QUICK GAME</div>
+<h1>End Quick Game?</h1>
+<p>Your Quick Game progress will not be saved.</p>
+<div class="popup-actions">
+<button class="modal-btn secondary" id="cancelEndQuickBtn" type="button">
+            Cancel
+          </button>
+<button class="modal-btn primary" id="confirmEndQuickBtn" type="button">
+            End Game
+          </button>
+</div>
+</div>
+</section>
 <div aria-hidden="true" class="combo-layer" id="comboLayer"></div>
-<script src="game.js?v=fmw-v5-startup-button-fix-20260529"></script>
+<script src="game.js?v=fmw-v5-ui-fixes"></script>
 </body>
 </html>
