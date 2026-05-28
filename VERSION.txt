@@ -1,1 +1,3 @@
-Flag Match World v3.7.2 - Startup Restore and Pause Button Fix
+Flag Match World UI Flow Integration v1
+Based on Pocket Match v3.6.5 - iPad Board Overflow Fix
+Changes: Option C startup, simplified settings, responsive popup flow, main/quick game popup behavior.

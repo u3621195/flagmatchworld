@@ -171,11 +171,12 @@ const sfx = {
 //  THEME SYSTEM
 // ─────────────────────────────────────────────
 const THEMES = [
-  { id: "cyber-blue", name: "CLASSIC BLUE" },
-  { id: "neon-night", name: "DARK NAVY" },
-  { id: "mint-fresh", name: "EMERALD GREEN" },
-  { id: "arcade-purple", name: "ROYAL PURPLE" },
-  { id: "candy-pop", name: "BURGUNDY RED" },
+  { id: "neon-night", name: "NEON NIGHT" },
+  { id: "cyber-blue", name: "CYBER BLUE" },
+  { id: "arcade-purple", name: "SUNSET ARCADE" },
+  { id: "soft-sky", name: "SOFT SKY" },
+  { id: "candy-pop", name: "CANDY POP" },
+  { id: "mint-fresh", name: "MINT FRESH" },
 ];
 const THEME_ALIASES = {
   arcade: "neon-night",
@@ -185,7 +186,7 @@ const THEME_ALIASES = {
   amethyst: "arcade-purple",
 };
 const THEME_STORAGE_KEY = "pocketMatchTheme";
-let currentTheme = "mint-fresh";
+let currentTheme = "neon-night";
 
 const THEME_SWATCHES = {
   "neon-night": ["#060915", "#37e8ff", "#ff4fd8", "#a7ef3a"],
@@ -198,7 +199,7 @@ const THEME_SWATCHES = {
 
 function getThemeMeta(id) {
   const themeId = normalizeThemeId(id);
-  return THEMES.find((theme) => theme.id === themeId) || THEMES.find((theme) => theme.id === "mint-fresh") || THEMES[0];
+  return THEMES.find((theme) => theme.id === themeId) || THEMES[0];
 }
 
 function updateCompactThemeUi(id) {
@@ -209,7 +210,7 @@ function updateCompactThemeUi(id) {
   if (pillName) pillName.textContent = meta.name;
   if (pillSwatches) {
     pillSwatches.innerHTML = "";
-    (THEME_SWATCHES[themeId] || THEME_SWATCHES["mint-fresh"]).forEach((color) => {
+    (THEME_SWATCHES[themeId] || THEME_SWATCHES["neon-night"]).forEach((color) => {
       const dot = document.createElement("i");
       dot.style.background = color;
       pillSwatches.appendChild(dot);
@@ -252,8 +253,8 @@ function pathColors() {
 }
 
 function normalizeThemeId(id) {
-  const normalized = THEME_ALIASES[id] || id || "mint-fresh";
-  return THEMES.some((theme) => theme.id === normalized) ? normalized : "mint-fresh";
+  const normalized = THEME_ALIASES[id] || id || "neon-night";
+  return THEMES.some((theme) => theme.id === normalized) ? normalized : "neon-night";
 }
 
 function applyTheme(id, persist = true) {
@@ -515,235 +516,515 @@ const SPRITES = [
     img: "assets/sprites/original/30-character-30.png",
   },
 ];
-// Flag Match World uses only the uploaded flag sprite set.
-const FLAGS_SPRITES = [
-  { id: 1, n: "Afghanistan", img: "assets/sprites/flags/Afghanistan.png" },
-  { id: 2, n: "Albania", img: "assets/sprites/flags/Albania.png" },
-  { id: 3, n: "Algeria", img: "assets/sprites/flags/Algeria.png" },
-  { id: 4, n: "Andorra", img: "assets/sprites/flags/Andorra.png" },
-  { id: 5, n: "Angola", img: "assets/sprites/flags/Angola.png" },
-  { id: 6, n: "Antigua and Barbuda", img: "assets/sprites/flags/Antigua and Barbuda.png" },
-  { id: 7, n: "Argentina", img: "assets/sprites/flags/Argentina.png" },
-  { id: 8, n: "Armenia", img: "assets/sprites/flags/Armenia.png" },
-  { id: 9, n: "Aruba", img: "assets/sprites/flags/Aruba.png" },
-  { id: 10, n: "Australia", img: "assets/sprites/flags/Australia.png" },
-  { id: 11, n: "Austria", img: "assets/sprites/flags/Austria.png" },
-  { id: 12, n: "Azerbaijan", img: "assets/sprites/flags/Azerbaijan.png" },
-  { id: 13, n: "Bahrain", img: "assets/sprites/flags/Bahrain.png" },
-  { id: 14, n: "Bangladesh", img: "assets/sprites/flags/Bangladesh.png" },
-  { id: 15, n: "Barbados", img: "assets/sprites/flags/Barbados.png" },
-  { id: 16, n: "Belarus", img: "assets/sprites/flags/Belarus.png" },
-  { id: 17, n: "Belgium", img: "assets/sprites/flags/Belgium.png" },
-  { id: 18, n: "Belize", img: "assets/sprites/flags/Belize.png" },
-  { id: 19, n: "Benin", img: "assets/sprites/flags/Benin.png" },
-  { id: 20, n: "Bhutan", img: "assets/sprites/flags/Bhutan.png" },
-  { id: 21, n: "Bolivia", img: "assets/sprites/flags/Bolivia.png" },
-  { id: 22, n: "Bosnia and Herzegovina", img: "assets/sprites/flags/Bosnia and Herzegovina.png" },
-  { id: 23, n: "Botswana", img: "assets/sprites/flags/Botswana.png" },
-  { id: 24, n: "Brazil", img: "assets/sprites/flags/Brazil.png" },
-  { id: 25, n: "Brunei", img: "assets/sprites/flags/Brunei.png" },
-  { id: 26, n: "Bulgaria", img: "assets/sprites/flags/Bulgaria.png" },
-  { id: 27, n: "Burkina Faso", img: "assets/sprites/flags/Burkina Faso.png" },
-  { id: 28, n: "Burundi", img: "assets/sprites/flags/Burundi.png" },
-  { id: 29, n: "Cambodia", img: "assets/sprites/flags/Cambodia.png" },
-  { id: 30, n: "Cameroon", img: "assets/sprites/flags/Cameroon.png" },
-  { id: 31, n: "Canada", img: "assets/sprites/flags/Canada.png" },
-  { id: 32, n: "Cape Verde", img: "assets/sprites/flags/Cape Verde.png" },
-  { id: 33, n: "Central African Republic", img: "assets/sprites/flags/Central African Republic.png" },
-  { id: 34, n: "Chad", img: "assets/sprites/flags/Chad.png" },
-  { id: 35, n: "Chile", img: "assets/sprites/flags/Chile.png" },
-  { id: 36, n: "China", img: "assets/sprites/flags/China.png" },
-  { id: 37, n: "Chuuk State", img: "assets/sprites/flags/Chuuk State.png" },
-  { id: 38, n: "Colombia", img: "assets/sprites/flags/Colombia.png" },
-  { id: 39, n: "Comoros", img: "assets/sprites/flags/Comoros.png" },
-  { id: 40, n: "Costa Rica", img: "assets/sprites/flags/Costa Rica.png" },
-  { id: 41, n: "Croatia", img: "assets/sprites/flags/Croatia.png" },
-  { id: 42, n: "Cuba", img: "assets/sprites/flags/Cuba.png" },
-  { id: 43, n: "Curaçao", img: "assets/sprites/flags/Curaçao.png" },
-  { id: 44, n: "Cyprus", img: "assets/sprites/flags/Cyprus.png" },
-  { id: 45, n: "Czech Republic", img: "assets/sprites/flags/Czech Republic.png" },
-  { id: 46, n: "Democratic Republic of the Congo", img: "assets/sprites/flags/Democratic Republic of the Congo.png" },
-  { id: 47, n: "Denmark", img: "assets/sprites/flags/Denmark.png" },
-  { id: 48, n: "Djibouti", img: "assets/sprites/flags/Djibouti.png" },
-  { id: 49, n: "Dominica", img: "assets/sprites/flags/Dominica.png" },
-  { id: 50, n: "Dominican Republic", img: "assets/sprites/flags/Dominican Republic.png" },
-  { id: 51, n: "Ecuador", img: "assets/sprites/flags/Ecuador.png" },
-  { id: 52, n: "Egypt", img: "assets/sprites/flags/Egypt.png" },
-  { id: 53, n: "El Salvador", img: "assets/sprites/flags/El Salvador.png" },
-  { id: 54, n: "England", img: "assets/sprites/flags/England.png" },
-  { id: 55, n: "Equatorial Guinea", img: "assets/sprites/flags/Equatorial Guinea.png" },
-  { id: 56, n: "Eritrea", img: "assets/sprites/flags/Eritrea.png" },
-  { id: 57, n: "Estonia", img: "assets/sprites/flags/Estonia.png" },
-  { id: 58, n: "Eswatini", img: "assets/sprites/flags/Eswatini.png" },
-  { id: 59, n: "Ethiopia", img: "assets/sprites/flags/Ethiopia.png" },
-  { id: 60, n: "Faroe Islands", img: "assets/sprites/flags/Faroe Islands.png" },
-  { id: 61, n: "Federated States of Micronesia", img: "assets/sprites/flags/Federated States of Micronesia.png" },
-  { id: 62, n: "Fiji", img: "assets/sprites/flags/Fiji.png" },
-  { id: 63, n: "Finland", img: "assets/sprites/flags/Finland.png" },
-  { id: 64, n: "France", img: "assets/sprites/flags/France.png" },
-  { id: 65, n: "Gabon", img: "assets/sprites/flags/Gabon.png" },
-  { id: 66, n: "Georgia", img: "assets/sprites/flags/Georgia.png" },
-  { id: 67, n: "Germany", img: "assets/sprites/flags/Germany.png" },
-  { id: 68, n: "Ghana", img: "assets/sprites/flags/Ghana.png" },
-  { id: 69, n: "Greece", img: "assets/sprites/flags/Greece.png" },
-  { id: 70, n: "Greenland", img: "assets/sprites/flags/Greenland.png" },
-  { id: 71, n: "Grenada", img: "assets/sprites/flags/Grenada.png" },
-  { id: 72, n: "Guam", img: "assets/sprites/flags/Guam.png" },
-  { id: 73, n: "Guatemala", img: "assets/sprites/flags/Guatemala.png" },
-  { id: 74, n: "Guinea-Bissau", img: "assets/sprites/flags/Guinea-Bissau.png" },
-  { id: 75, n: "Guinea", img: "assets/sprites/flags/Guinea.png" },
-  { id: 76, n: "Guyana", img: "assets/sprites/flags/Guyana.png" },
-  { id: 77, n: "Haiti", img: "assets/sprites/flags/Haiti.png" },
-  { id: 78, n: "Honduras", img: "assets/sprites/flags/Honduras.png" },
-  { id: 79, n: "Hungary", img: "assets/sprites/flags/Hungary.png" },
-  { id: 80, n: "Iceland", img: "assets/sprites/flags/Iceland.png" },
-  { id: 81, n: "India", img: "assets/sprites/flags/India.png" },
-  { id: 82, n: "Indonesia", img: "assets/sprites/flags/Indonesia.png" },
-  { id: 83, n: "Iran", img: "assets/sprites/flags/Iran.png" },
-  { id: 84, n: "Iraq", img: "assets/sprites/flags/Iraq.png" },
-  { id: 85, n: "Israel", img: "assets/sprites/flags/Israel.png" },
-  { id: 86, n: "Italy", img: "assets/sprites/flags/Italy.png" },
-  { id: 87, n: "Ivory Coast", img: "assets/sprites/flags/Ivory Coast.png" },
-  { id: 88, n: "Jamaica", img: "assets/sprites/flags/Jamaica.png" },
-  { id: 89, n: "Japan", img: "assets/sprites/flags/Japan.png" },
-  { id: 90, n: "Jordan", img: "assets/sprites/flags/Jordan.png" },
-  { id: 91, n: "Kazakhstan", img: "assets/sprites/flags/Kazakhstan.png" },
-  { id: 92, n: "Kenya", img: "assets/sprites/flags/Kenya.png" },
-  { id: 93, n: "Kiribati", img: "assets/sprites/flags/Kiribati.png" },
-  { id: 94, n: "Kosovo", img: "assets/sprites/flags/Kosovo.png" },
-  { id: 95, n: "Kosrae", img: "assets/sprites/flags/Kosrae.png" },
-  { id: 96, n: "Kuwait", img: "assets/sprites/flags/Kuwait.png" },
-  { id: 97, n: "Kyrgyzstan", img: "assets/sprites/flags/Kyrgyzstan.png" },
-  { id: 98, n: "Laos", img: "assets/sprites/flags/Laos.png" },
-  { id: 99, n: "Latvia", img: "assets/sprites/flags/Latvia.png" },
-  { id: 100, n: "Lebanon", img: "assets/sprites/flags/Lebanon.png" },
-  { id: 101, n: "Lesotho", img: "assets/sprites/flags/Lesotho.png" },
-  { id: 102, n: "Liberia", img: "assets/sprites/flags/Liberia.png" },
-  { id: 103, n: "Libya", img: "assets/sprites/flags/Libya.png" },
-  { id: 104, n: "Liechtenstein", img: "assets/sprites/flags/Liechtenstein.png" },
-  { id: 105, n: "Lithuania", img: "assets/sprites/flags/Lithuania.png" },
-  { id: 106, n: "Luxembourg", img: "assets/sprites/flags/Luxembourg.png" },
-  { id: 107, n: "Madagascar", img: "assets/sprites/flags/Madagascar.png" },
-  { id: 108, n: "Malawi", img: "assets/sprites/flags/Malawi.png" },
-  { id: 109, n: "Malaysia", img: "assets/sprites/flags/Malaysia.png" },
-  { id: 110, n: "Maldives", img: "assets/sprites/flags/Maldives.png" },
-  { id: 111, n: "Mali", img: "assets/sprites/flags/Mali.png" },
-  { id: 112, n: "Malta", img: "assets/sprites/flags/Malta.png" },
-  { id: 113, n: "Marshall Islands", img: "assets/sprites/flags/Marshall Islands.png" },
-  { id: 114, n: "Mauritania", img: "assets/sprites/flags/Mauritania.png" },
-  { id: 115, n: "Mauritius", img: "assets/sprites/flags/Mauritius.png" },
-  { id: 116, n: "Mexico", img: "assets/sprites/flags/Mexico.png" },
-  { id: 117, n: "Moldova", img: "assets/sprites/flags/Moldova.png" },
-  { id: 118, n: "Monaco", img: "assets/sprites/flags/Monaco.png" },
-  { id: 119, n: "Mongolia", img: "assets/sprites/flags/Mongolia.png" },
-  { id: 120, n: "Montenegro", img: "assets/sprites/flags/Montenegro.png" },
-  { id: 121, n: "Morocco", img: "assets/sprites/flags/Morocco.png" },
-  { id: 122, n: "Mozambique", img: "assets/sprites/flags/Mozambique.png" },
-  { id: 123, n: "Myanmar", img: "assets/sprites/flags/Myanmar.png" },
-  { id: 124, n: "Namibia", img: "assets/sprites/flags/Namibia.png" },
-  { id: 125, n: "Nauru", img: "assets/sprites/flags/Nauru.png" },
-  { id: 126, n: "Nepal", img: "assets/sprites/flags/Nepal.png" },
-  { id: 127, n: "Netherlands", img: "assets/sprites/flags/Netherlands.png" },
-  { id: 128, n: "New Zealand", img: "assets/sprites/flags/New Zealand.png" },
-  { id: 129, n: "Nicaragua", img: "assets/sprites/flags/Nicaragua.png" },
-  { id: 130, n: "Niger", img: "assets/sprites/flags/Niger.png" },
-  { id: 131, n: "Nigeria", img: "assets/sprites/flags/Nigeria.png" },
-  { id: 132, n: "North Korea", img: "assets/sprites/flags/North Korea.png" },
-  { id: 133, n: "North Macedonia", img: "assets/sprites/flags/North Macedonia.png" },
-  { id: 134, n: "Norway", img: "assets/sprites/flags/Norway.png" },
-  { id: 135, n: "Oman", img: "assets/sprites/flags/Oman.png" },
-  { id: 136, n: "Pakistan", img: "assets/sprites/flags/Pakistan.png" },
-  { id: 137, n: "Palau", img: "assets/sprites/flags/Palau.png" },
-  { id: 138, n: "Palestine", img: "assets/sprites/flags/Palestine.png" },
-  { id: 139, n: "Panama", img: "assets/sprites/flags/Panama.png" },
-  { id: 140, n: "Papua New Guinea", img: "assets/sprites/flags/Papua New Guinea.png" },
-  { id: 141, n: "Paraguay", img: "assets/sprites/flags/Paraguay.png" },
-  { id: 142, n: "Peru", img: "assets/sprites/flags/Peru.png" },
-  { id: 143, n: "Philippines", img: "assets/sprites/flags/Philippines.png" },
-  { id: 144, n: "Pohnpei State", img: "assets/sprites/flags/Pohnpei State.png" },
-  { id: 145, n: "Poland", img: "assets/sprites/flags/Poland.png" },
-  { id: 146, n: "Portugal", img: "assets/sprites/flags/Portugal.png" },
-  { id: 147, n: "Puerto Rico", img: "assets/sprites/flags/Puerto Rico.png" },
-  { id: 148, n: "Qatar", img: "assets/sprites/flags/Qatar.png" },
-  { id: 149, n: "Republic of Ireland", img: "assets/sprites/flags/Republic of Ireland.png" },
-  { id: 150, n: "Republic of the Congo", img: "assets/sprites/flags/Republic of the Congo.png" },
-  { id: 151, n: "Republika Srpska", img: "assets/sprites/flags/Republika Srpska.png" },
-  { id: 152, n: "Romania", img: "assets/sprites/flags/Romania.png" },
-  { id: 153, n: "Russia", img: "assets/sprites/flags/Russia.png" },
-  { id: 154, n: "Rwanda", img: "assets/sprites/flags/Rwanda.png" },
-  { id: 155, n: "Saint Kitts and Nevis", img: "assets/sprites/flags/Saint Kitts and Nevis.png" },
-  { id: 156, n: "Saint Lucia", img: "assets/sprites/flags/Saint Lucia.png" },
-  { id: 157, n: "Saint Vincent and the Grenadines", img: "assets/sprites/flags/Saint Vincent and the Grenadines.png" },
-  { id: 158, n: "Samoa", img: "assets/sprites/flags/Samoa.png" },
-  { id: 159, n: "San Marino", img: "assets/sprites/flags/San Marino.png" },
-  { id: 160, n: "Saudi Arabia", img: "assets/sprites/flags/Saudi Arabia.png" },
-  { id: 161, n: "Scotland", img: "assets/sprites/flags/Scotland.png" },
-  { id: 162, n: "Senegal", img: "assets/sprites/flags/Senegal.png" },
-  { id: 163, n: "Serbia", img: "assets/sprites/flags/Serbia.png" },
-  { id: 164, n: "Seychelles", img: "assets/sprites/flags/Seychelles.png" },
-  { id: 165, n: "Sierra Leone", img: "assets/sprites/flags/Sierra Leone.png" },
-  { id: 166, n: "Singapore", img: "assets/sprites/flags/Singapore.png" },
-  { id: 167, n: "Sint Maarten", img: "assets/sprites/flags/Sint Maarten.png" },
-  { id: 168, n: "Slovakia", img: "assets/sprites/flags/Slovakia.png" },
-  { id: 169, n: "Slovenia", img: "assets/sprites/flags/Slovenia.png" },
-  { id: 170, n: "Solomon Islands", img: "assets/sprites/flags/Solomon Islands.png" },
-  { id: 171, n: "Somalia", img: "assets/sprites/flags/Somalia.png" },
-  { id: 172, n: "South Africa", img: "assets/sprites/flags/South Africa.png" },
-  { id: 173, n: "South Korea", img: "assets/sprites/flags/South Korea.png" },
-  { id: 174, n: "South Sudan", img: "assets/sprites/flags/South Sudan.png" },
-  { id: 175, n: "Spain", img: "assets/sprites/flags/Spain.png" },
-  { id: 176, n: "Sri Lanka", img: "assets/sprites/flags/Sri Lanka.png" },
-  { id: 177, n: "Sudan", img: "assets/sprites/flags/Sudan.png" },
-  { id: 178, n: "Suriname", img: "assets/sprites/flags/Suriname.png" },
-  { id: 179, n: "Sweden", img: "assets/sprites/flags/Sweden.png" },
-  { id: 180, n: "Switzerland", img: "assets/sprites/flags/Switzerland.png" },
-  { id: 181, n: "Syria", img: "assets/sprites/flags/Syria.png" },
-  { id: 182, n: "São Tomé and Príncipe", img: "assets/sprites/flags/São Tomé and Príncipe.png" },
-  { id: 183, n: "Tajikistan", img: "assets/sprites/flags/Tajikistan.png" },
-  { id: 184, n: "Tanzania", img: "assets/sprites/flags/Tanzania.png" },
-  { id: 185, n: "Thailand", img: "assets/sprites/flags/Thailand.png" },
-  { id: 186, n: "The Bahamas", img: "assets/sprites/flags/The Bahamas.png" },
-  { id: 187, n: "The Gambia", img: "assets/sprites/flags/The Gambia.png" },
-  { id: 188, n: "Timor-Leste", img: "assets/sprites/flags/Timor-Leste.png" },
-  { id: 189, n: "Togo", img: "assets/sprites/flags/Togo.png" },
-  { id: 190, n: "Tonga", img: "assets/sprites/flags/Tonga.png" },
-  { id: 191, n: "Trinidad and Tobago", img: "assets/sprites/flags/Trinidad and Tobago.png" },
-  { id: 192, n: "Tunisia", img: "assets/sprites/flags/Tunisia.png" },
-  { id: 193, n: "Turkey", img: "assets/sprites/flags/Turkey.png" },
-  { id: 194, n: "Turkmenistan", img: "assets/sprites/flags/Turkmenistan.png" },
-  { id: 195, n: "Tuvalu", img: "assets/sprites/flags/Tuvalu.png" },
-  { id: 196, n: "Uganda", img: "assets/sprites/flags/Uganda.png" },
-  { id: 197, n: "Ukraine", img: "assets/sprites/flags/Ukraine.png" },
-  { id: 198, n: "United Arab Emirates", img: "assets/sprites/flags/United Arab Emirates.png" },
-  { id: 199, n: "United Kingdom", img: "assets/sprites/flags/United Kingdom.png" },
-  { id: 200, n: "United States of America", img: "assets/sprites/flags/United States of America.png" },
-  { id: 201, n: "United States Virgin Islands", img: "assets/sprites/flags/United States Virgin Islands.png" },
-  { id: 202, n: "Uruguay", img: "assets/sprites/flags/Uruguay.png" },
-  { id: 203, n: "Uzbekistan", img: "assets/sprites/flags/Uzbekistan.png" },
-  { id: 204, n: "Vanuatu", img: "assets/sprites/flags/Vanuatu.png" },
-  { id: 205, n: "Vatican City", img: "assets/sprites/flags/Vatican City.png" },
-  { id: 206, n: "Venezuela", img: "assets/sprites/flags/Venezuela.png" },
-  { id: 207, n: "Vietnam", img: "assets/sprites/flags/Vietnam.png" },
-  { id: 208, n: "Wales", img: "assets/sprites/flags/Wales.png" },
-  { id: 209, n: "Yap State", img: "assets/sprites/flags/Yap State.png" },
-  { id: 210, n: "Yemen", img: "assets/sprites/flags/Yemen.png" },
-  { id: 211, n: "Zambia", img: "assets/sprites/flags/Zambia.png" },
-  { id: 212, n: "Zimbabwe", img: "assets/sprites/flags/Zimbabwe.png" },
+const GADGET_SPRITES = [
+  {
+    id: 1,
+    n: "Air Purifier",
+    img: "assets/sprites/gadgets/01-air-purifier.png",
+  },
+  { id: 2, n: "CCTV", img: "assets/sprites/gadgets/02-cctv.png" },
+  { id: 3, n: "CPU", img: "assets/sprites/gadgets/03-cpu.png" },
+  { id: 4, n: "Camera", img: "assets/sprites/gadgets/04-camera.png" },
+  {
+    id: 5,
+    n: "Desktop Speakers",
+    img: "assets/sprites/gadgets/05-desktop-speakers.png",
+  },
+  { id: 6, n: "Docking", img: "assets/sprites/gadgets/06-docking.png" },
+  { id: 7, n: "Drone", img: "assets/sprites/gadgets/07-drone.png" },
+  { id: 8, n: "Earbuds", img: "assets/sprites/gadgets/08-earbuds.png" },
+  { id: 9, n: "Floppy", img: "assets/sprites/gadgets/09-floppy.png" },
+  { id: 10, n: "GPU", img: "assets/sprites/gadgets/10-gpu.png" },
+  {
+    id: 11,
+    n: "Game Console 1",
+    img: "assets/sprites/gadgets/11-game-console-1.png",
+  },
+  {
+    id: 12,
+    n: "Game Console 2",
+    img: "assets/sprites/gadgets/12-game-console-2.png",
+  },
+  {
+    id: 13,
+    n: "Game Controller",
+    img: "assets/sprites/gadgets/13-game-controller.png",
+  },
+  { id: 14, n: "Headset", img: "assets/sprites/gadgets/14-headset.png" },
+  { id: 15, n: "Joystick", img: "assets/sprites/gadgets/15-joystick.png" },
+  { id: 16, n: "Keyboard", img: "assets/sprites/gadgets/16-keyboard.png" },
+  { id: 17, n: "Laptop", img: "assets/sprites/gadgets/17-laptop.png" },
+  {
+    id: 18,
+    n: "Mobile Phone 1",
+    img: "assets/sprites/gadgets/18-mobile-phone-1.png",
+  },
+  {
+    id: 19,
+    n: "Mobile Phone 2",
+    img: "assets/sprites/gadgets/19-mobile-phone-2.png",
+  },
+  { id: 20, n: "Monitor", img: "assets/sprites/gadgets/20-monitor.png" },
+  {
+    id: 21,
+    n: "Photo Frame",
+    img: "assets/sprites/gadgets/21-photo-frame.png",
+  },
+  { id: 22, n: "Powerbank", img: "assets/sprites/gadgets/22-powerbank.png" },
+  { id: 23, n: "Projector", img: "assets/sprites/gadgets/23-projector.png" },
+  { id: 24, n: "SD Card", img: "assets/sprites/gadgets/24-sd-card.png" },
+  {
+    id: 25,
+    n: "Smart Watch",
+    img: "assets/sprites/gadgets/25-smart-watch.png",
+  },
+  { id: 26, n: "Speaker", img: "assets/sprites/gadgets/26-speaker.png" },
+  { id: 27, n: "Tablet", img: "assets/sprites/gadgets/27-tablet.png" },
+  { id: 28, n: "Turntable", img: "assets/sprites/gadgets/28-turntable.png" },
+  { id: 29, n: "VR", img: "assets/sprites/gadgets/29-vr.png" },
+  { id: 30, n: "Widescreen", img: "assets/sprites/gadgets/30-widescreen.png" },
 ];
-// Legacy non-flag sprite sets removed for Flag Match World.
+const SPORTS_SPRITES = [
+  {
+    id: 1,
+    n: "American Football Helmet",
+    img: "assets/sprites/sports/01-american-football-helmet.png",
+  },
+  {
+    id: 2,
+    n: "American Football",
+    img: "assets/sprites/sports/02-american-football.png",
+  },
+  {
+    id: 3,
+    n: "Analog Timer",
+    img: "assets/sprites/sports/03-analog-timer.png",
+  },
+  { id: 4, n: "Basketball", img: "assets/sprites/sports/04-basketball.png" },
+  { id: 5, n: "Bicycle", img: "assets/sprites/sports/05-bicycle.png" },
+  {
+    id: 6,
+    n: "Bowling Pins",
+    img: "assets/sprites/sports/06-bowling-pins.png",
+  },
+  { id: 7, n: "Bowling", img: "assets/sprites/sports/07-bowling.png" },
+  { id: 8, n: "Boxing", img: "assets/sprites/sports/08-boxing.png" },
+  { id: 9, n: "Dart Board", img: "assets/sprites/sports/09-dart-board.png" },
+  { id: 10, n: "Dumbbell", img: "assets/sprites/sports/10-dumbbell.png" },
+  { id: 11, n: "F1", img: "assets/sprites/sports/11-f1.png" },
+  {
+    id: 12,
+    n: "Football Shoe",
+    img: "assets/sprites/sports/12-football-shoe.png",
+  },
+  { id: 13, n: "Football", img: "assets/sprites/sports/13-football.png" },
+  { id: 14, n: "Golf", img: "assets/sprites/sports/14-golf.png" },
+  { id: 15, n: "Kayak", img: "assets/sprites/sports/15-kayak.png" },
+  {
+    id: 16,
+    n: "Motorcross Bike",
+    img: "assets/sprites/sports/16-motorcross-bike.png",
+  },
+  { id: 17, n: "Parachute", img: "assets/sprites/sports/17-parachute.png" },
+  { id: 18, n: "Ping Pong", img: "assets/sprites/sports/18-ping-pong.png" },
+  { id: 19, n: "Podium", img: "assets/sprites/sports/19-podium.png" },
+  {
+    id: 20,
+    n: "Pommel Horse",
+    img: "assets/sprites/sports/20-pommel-horse.png",
+  },
+  { id: 21, n: "Rollerskate", img: "assets/sprites/sports/21-rollerskate.png" },
+  { id: 22, n: "Sailboat", img: "assets/sprites/sports/22-sailboat.png" },
+  { id: 23, n: "Scoreboard", img: "assets/sprites/sports/23-scoreboard.png" },
+  {
+    id: 24,
+    n: "Scuba Goggles",
+    img: "assets/sprites/sports/24-scuba-goggles.png",
+  },
+  { id: 25, n: "Shuttlecock", img: "assets/sprites/sports/25-shuttlecock.png" },
+  { id: 26, n: "Stadium", img: "assets/sprites/sports/26-stadium.png" },
+  { id: 27, n: "Tennis", img: "assets/sprites/sports/27-tennis.png" },
+  { id: 28, n: "Timer", img: "assets/sprites/sports/28-timer.png" },
+  { id: 29, n: "Trophy", img: "assets/sprites/sports/29-trophy.png" },
+  { id: 30, n: "Volleyball", img: "assets/sprites/sports/30-volleyball.png" },
+];
+const HOME_SPRITES = [
+  { id: 1, n: "Air Fryer", img: "assets/sprites/home/01-air-fryer.png" },
+  { id: 2, n: "Bath Tub", img: "assets/sprites/home/02-bath-tub.png" },
+  { id: 3, n: "Bed", img: "assets/sprites/home/03-bed.png" },
+  {
+    id: 4,
+    n: "Bluetooth Speaker",
+    img: "assets/sprites/home/04-bluetooth-speaker.png",
+  },
+  { id: 5, n: "Bookshelf", img: "assets/sprites/home/05-bookshelf.png" },
+  { id: 6, n: "Bunk Bed", img: "assets/sprites/home/06-bunk-bed.png" },
+  { id: 7, n: "Chandelier", img: "assets/sprites/home/07-chandelier.png" },
+  { id: 8, n: "Clock", img: "assets/sprites/home/08-clock.png" },
+  { id: 9, n: "Cloth Rack", img: "assets/sprites/home/09-cloth-rack.png" },
+  { id: 10, n: "Curtain", img: "assets/sprites/home/10-curtain.png" },
+  { id: 11, n: "Dining Chair", img: "assets/sprites/home/11-dining-chair.png" },
+  { id: 12, n: "Fan", img: "assets/sprites/home/12-fan.png" },
+  { id: 13, n: "Fridge", img: "assets/sprites/home/13-fridge.png" },
+  { id: 14, n: "Hair Dryer", img: "assets/sprites/home/14-hair-dryer.png" },
+  { id: 15, n: "Lounge Chair", img: "assets/sprites/home/15-lounge-chair.png" },
+  { id: 16, n: "Microwave", img: "assets/sprites/home/16-microwave.png" },
+  { id: 17, n: "PC", img: "assets/sprites/home/17-pc.png" },
+  { id: 18, n: "Phone", img: "assets/sprites/home/18-phone.png" },
+  { id: 19, n: "Radio", img: "assets/sprites/home/19-radio.png" },
+  {
+    id: 20,
+    n: "Sewing Machine",
+    img: "assets/sprites/home/20-sewing-machine.png",
+  },
+  { id: 21, n: "Sink", img: "assets/sprites/home/21-sink.png" },
+  { id: 22, n: "Sofa", img: "assets/sprites/home/22-sofa.png" },
+  { id: 23, n: "Stereo", img: "assets/sprites/home/23-stereo.png" },
+  { id: 24, n: "Stove", img: "assets/sprites/home/24-stove.png" },
+  { id: 25, n: "Toaster", img: "assets/sprites/home/25-toaster.png" },
+  { id: 26, n: "TV", img: "assets/sprites/home/26-tv.png" },
+  {
+    id: 27,
+    n: "Vacuum Cleaner",
+    img: "assets/sprites/home/27-vacuum-cleaner.png",
+  },
+  { id: 28, n: "Vase", img: "assets/sprites/home/28-vase.png" },
+  { id: 29, n: "Wardrobe", img: "assets/sprites/home/29-wardrobe.png" },
+  {
+    id: 30,
+    n: "Washing Machine",
+    img: "assets/sprites/home/30-washing-machine.png",
+  },
+];
+const FLAGS_SPRITES = [
+  { id: 1, n: "Argentina", img: "assets/sprites/flags/1-argentina.png" },
+  { id: 2, n: "Australia", img: "assets/sprites/flags/2-australia.png" },
+  { id: 3, n: "Barbados", img: "assets/sprites/flags/3-barbados.png" },
+  { id: 4, n: "Botswana", img: "assets/sprites/flags/4-botswana.png" },
+  { id: 5, n: "Brazil", img: "assets/sprites/flags/5-brazil.png" },
+  { id: 6, n: "Canada", img: "assets/sprites/flags/6-canada.png" },
+  { id: 7, n: "China", img: "assets/sprites/flags/7-china.png" },
+  { id: 8, n: "Czech", img: "assets/sprites/flags/8-czech.png" },
+  { id: 9, n: "Denmark", img: "assets/sprites/flags/9-denmark.png" },
+  { id: 10, n: "England", img: "assets/sprites/flags/10-england.png" },
+  { id: 11, n: "EU", img: "assets/sprites/flags/11-eu.png" },
+  { id: 12, n: "Finland", img: "assets/sprites/flags/12-finland.png" },
+  { id: 13, n: "France", img: "assets/sprites/flags/13-france.png" },
+  { id: 14, n: "Germany", img: "assets/sprites/flags/14-germany.png" },
+  { id: 15, n: "Greece", img: "assets/sprites/flags/15-greece.png" },
+  { id: 16, n: "Iceland", img: "assets/sprites/flags/16-iceland.png" },
+  { id: 17, n: "Italy", img: "assets/sprites/flags/17-italy.png" },
+  { id: 18, n: "Jamaica", img: "assets/sprites/flags/18-jamaica.png" },
+  { id: 19, n: "Japan", img: "assets/sprites/flags/19-japan.png" },
+  { id: 20, n: "North Macedonia", img: "assets/sprites/flags/20-north-macedonia.png" },
+  { id: 21, n: "Norway", img: "assets/sprites/flags/21-norway.png" },
+  { id: 22, n: "Qatar", img: "assets/sprites/flags/22-qatar.png" },
+  { id: 23, n: "Russia", img: "assets/sprites/flags/23-russia.png" },
+  { id: 24, n: "Saudi Arabia", img: "assets/sprites/flags/24-saudi-arabia.png" },
+  { id: 25, n: "Scotland", img: "assets/sprites/flags/25-scotland.png" },
+  { id: 26, n: "Singapore", img: "assets/sprites/flags/26-singapore.png" },
+  { id: 27, n: "Somalia", img: "assets/sprites/flags/27-somalia.png" },
+  { id: 28, n: "South Africa", img: "assets/sprites/flags/28-south-africa.png" },
+  { id: 29, n: "South Korea", img: "assets/sprites/flags/29-south-korea.png" },
+  { id: 30, n: "Sweden", img: "assets/sprites/flags/30-sweden.png" },
+  { id: 31, n: "Thailand", img: "assets/sprites/flags/31-thailand.png" },
+  { id: 32, n: "Turkey", img: "assets/sprites/flags/32-turkey.png" },
+  { id: 33, n: "UK", img: "assets/sprites/flags/33-uk.png" },
+  { id: 34, n: "USA", img: "assets/sprites/flags/34-usa.png" },
+  { id: 35, n: "Venezuela", img: "assets/sprites/flags/35-venezuela.png" },
+  { id: 36, n: "Vietnam", img: "assets/sprites/flags/36-vietnam.png" },
+];
+const BRAND_SPRITES = [
+  { id: 1, n: "Instagram", img: "assets/sprites/brands/01-instagram.png" },
+  { id: 2, n: "Kodak", img: "assets/sprites/brands/02-kodak.png" },
+  { id: 3, n: "Linux", img: "assets/sprites/brands/03-linux.png" },
+  { id: 4, n: "Maserati", img: "assets/sprites/brands/04-maserati.png" },
+  { id: 5, n: "McDonald's", img: "assets/sprites/brands/05-mcdonalds.png" },
+  { id: 6, n: "Microsoft", img: "assets/sprites/brands/06-microsoft.png" },
+  { id: 7, n: "MTV", img: "assets/sprites/brands/07-mtv.png" },
+  { id: 8, n: "Netflix", img: "assets/sprites/brands/08-netflix.png" },
+  { id: 9, n: "P&G", img: "assets/sprites/brands/09-pandg.png" },
+  { id: 10, n: "Pepsi", img: "assets/sprites/brands/10-pepsi.png" },
+  { id: 11, n: "Philips", img: "assets/sprites/brands/11-philips.png" },
+  { id: 12, n: "Pringles", img: "assets/sprites/brands/12-pringles.png" },
+  { id: 13, n: "Shell", img: "assets/sprites/brands/13-shell.png" },
+  { id: 14, n: "Starbucks", img: "assets/sprites/brands/14-starbucks.png" },
+  { id: 15, n: "Target", img: "assets/sprites/brands/15-target.png" },
+  { id: 16, n: "Uber", img: "assets/sprites/brands/16-uber.png" },
+  { id: 17, n: "Unilever", img: "assets/sprites/brands/17-unilever.png" },
+  { id: 18, n: "UPS", img: "assets/sprites/brands/18-ups.png" },
+  { id: 19, n: "Volkswagen", img: "assets/sprites/brands/19-volkswagen.png" },
+  { id: 20, n: "Yamaha", img: "assets/sprites/brands/20-yamaha.png" },
+  { id: 21, n: "YouTube", img: "assets/sprites/brands/21-youtube.png" },
+  { id: 22, n: "Adidas Original", img: "assets/sprites/brands/22-adidas-original.png" },
+  { id: 23, n: "Apple", img: "assets/sprites/brands/23-apple.png" },
+  { id: 24, n: "BMW", img: "assets/sprites/brands/24-bmw.png" },
+  { id: 25, n: "Caltex", img: "assets/sprites/brands/25-caltex.png" },
+  { id: 26, n: "ChatGPT", img: "assets/sprites/brands/26-chatgpt.png" },
+  { id: 27, n: "Donki", img: "assets/sprites/brands/27-donki.png" },
+  { id: 28, n: "Dairy Queen", img: "assets/sprites/brands/28-dq.png" },
+  { id: 29, n: "Facebook", img: "assets/sprites/brands/29-facebook.png" },
+  { id: 30, n: "Honda", img: "assets/sprites/brands/30-honda.png" },
+];
+const TOOLS_SPRITES = [
+  { id: 1, n: "Excavator", img: "assets/sprites/tools/01-excavator.png" },
+  { id: 2, n: "Forklift", img: "assets/sprites/tools/02-forklift.png" },
+  { id: 3, n: "Generator", img: "assets/sprites/tools/03-generator.png" },
+  { id: 4, n: "Glove", img: "assets/sprites/tools/04-glove.png" },
+  { id: 5, n: "Hammer", img: "assets/sprites/tools/05-hammer.png" },
+  { id: 6, n: "Hinge", img: "assets/sprites/tools/06-hinge.png" },
+  { id: 7, n: "Jackhammer", img: "assets/sprites/tools/07-jackhammer.png" },
+  { id: 8, n: "Ladder", img: "assets/sprites/tools/08-ladder.png" },
+  { id: 9, n: "Level", img: "assets/sprites/tools/09-level.png" },
+  { id: 10, n: "Nail Gun", img: "assets/sprites/tools/10-nail-gun.png" },
+  { id: 11, n: "Pile", img: "assets/sprites/tools/11-pile.png" },
+  { id: 12, n: "Plier", img: "assets/sprites/tools/12-plier.png" },
+  { id: 13, n: "Power Drill", img: "assets/sprites/tools/13-power-drill.png" },
+  { id: 14, n: "Safety Goggles", img: "assets/sprites/tools/14-safety-goggles.png" },
+  { id: 15, n: "Safety Helmet", img: "assets/sprites/tools/15-safety-helmet.png" },
+  { id: 16, n: "Screwdriver", img: "assets/sprites/tools/16-screwdriver.png" },
+  { id: 17, n: "Silicone Gun", img: "assets/sprites/tools/17-silicone-gun.png" },
+  { id: 18, n: "Tape Measure", img: "assets/sprites/tools/18-tape-measure.png" },
+  { id: 19, n: "Toolbox", img: "assets/sprites/tools/19-toolbox.png" },
+  { id: 20, n: "Tower Crane", img: "assets/sprites/tools/20-tower-crane.png" },
+  { id: 21, n: "US Socket", img: "assets/sprites/tools/21-us-socket.png" },
+  { id: 22, n: "Wrench", img: "assets/sprites/tools/22-wrench.png" },
+  { id: 23, n: "Blueprints", img: "assets/sprites/tools/23-blueprints.png" },
+  { id: 24, n: "Boots", img: "assets/sprites/tools/24-boots.png" },
+  { id: 25, n: "Bricks", img: "assets/sprites/tools/25-bricks.png" },
+  { id: 26, n: "Bulldozer", img: "assets/sprites/tools/26-bulldozer.png" },
+  { id: 27, n: "Cement Mixer", img: "assets/sprites/tools/27-cement-mixer.png" },
+  { id: 28, n: "Clamp", img: "assets/sprites/tools/28-clamp.png" },
+  { id: 29, n: "Dump Truck", img: "assets/sprites/tools/29-dump-truck.png" },
+  { id: 30, n: "European Socket", img: "assets/sprites/tools/30-european-socket.png" },
+];
+const TRAVEL_SPRITES = [
+  { id: 1, n: "Airplane", img: "assets/sprites/travel/01-airplane.png" },
+  { id: 2, n: "Shinkansen", img: "assets/sprites/travel/02-shinkansen.png" },
+  { id: 3, n: "Suitcase", img: "assets/sprites/travel/03-suitcase.png" },
+  { id: 4, n: "Backpack", img: "assets/sprites/travel/04-backpack.png" },
+  { id: 5, n: "Water Bottle", img: "assets/sprites/travel/05-water-bottle.png" },
+  { id: 6, n: "Sweater", img: "assets/sprites/travel/06-sweater.png" },
+  { id: 7, n: "Headphone", img: "assets/sprites/travel/07-headphone.png" },
+  { id: 8, n: "Sweatpant", img: "assets/sprites/travel/08-sweatpant.png" },
+  { id: 9, n: "Jacket", img: "assets/sprites/travel/09-jacket.png" },
+  { id: 10, n: "Toiletry Set", img: "assets/sprites/travel/10-toiletry-set.png" },
+  { id: 11, n: "Flip Flops", img: "assets/sprites/travel/11-flip-flops.png" },
+  { id: 12, n: "Diving Goggles", img: "assets/sprites/travel/12-diving-goggles.png" },
+  { id: 13, n: "Action Camera", img: "assets/sprites/travel/13-action-camera.png" },
+  { id: 14, n: "Surf Board", img: "assets/sprites/travel/14-surf-board.png" },
+  { id: 15, n: "DSLR Camera", img: "assets/sprites/travel/15-dslr-camera.png" },
+  { id: 16, n: "Beach Ball", img: "assets/sprites/travel/16-beach-ball.png" },
+  { id: 17, n: "Propeller Plane", img: "assets/sprites/travel/17-propeller-plane.png" },
+  { id: 18, n: "Passport", img: "assets/sprites/travel/18-passport.png" },
+  { id: 19, n: "Boarding Passes", img: "assets/sprites/travel/19-boarding-passes.png" },
+  { id: 20, n: "First Aid Set", img: "assets/sprites/travel/20-first-aid-set.png" },
+  { id: 21, n: "Universal Adaptor", img: "assets/sprites/travel/21-universal-adaptor.png" },
+  { id: 22, n: "Packaged Snacks", img: "assets/sprites/travel/22-packaged-snacks.png" },
+  { id: 23, n: "Aviator Sunglasses", img: "assets/sprites/travel/23-aviator-sunglasses.png" },
+  { id: 24, n: "Neck Pillow", img: "assets/sprites/travel/24-neck-pillow.png" },
+  { id: 25, n: "Yellow Cab", img: "assets/sprites/travel/25-yellow-cab.png" },
+  { id: 26, n: "TSA Lock", img: "assets/sprites/travel/26-tsa-lock.png" },
+  { id: 27, n: "Route 66 Sign", img: "assets/sprites/travel/27-route-66-sign.png" },
+  { id: 28, n: "Beach Bed", img: "assets/sprites/travel/28-beach-bed.png" },
+  { id: 29, n: "Disposable Camera", img: "assets/sprites/travel/29-disposable-camera.png" },
+  { id: 30, n: "Postcard", img: "assets/sprites/travel/30-postcard.png" },
+];
 const SPRITE_SETS = {
+  original: {
+    name: "POKEMON",
+    label: "Pokémon sprites",
+    sprites: SPRITES,
+    scale: 0.85,
+  },
+  brands: {
+    name: "BRANDS",
+    label: "Brand logo sprites",
+    sprites: BRAND_SPRITES,
+    scale: 1.12,
+  },
   flags: {
     name: "FLAGS",
     label: "World flag sprites",
     sprites: FLAGS_SPRITES,
     scale: 1,
   },
+  foodies: {
+    name: "FOODIES 1",
+    label: "Foodies 1 sprites",
+    sprites: [
+      { id: 1, n: "Beer", img: "assets/sprites/foodies/01-beer.png" },
+      { id: 2, n: "Bento", img: "assets/sprites/foodies/02-bento.png" },
+      {
+        id: 3,
+        n: "Boba Milk Tea",
+        img: "assets/sprites/foodies/03-boba-milk-tea.png",
+      },
+      { id: 4, n: "Burger", img: "assets/sprites/foodies/04-burger.png" },
+      { id: 5, n: "Cheese", img: "assets/sprites/foodies/05-cheese.png" },
+      {
+        id: 6,
+        n: "Chocolate Bar",
+        img: "assets/sprites/foodies/06-chocolate-bar.png",
+      },
+      { id: 7, n: "Coffee", img: "assets/sprites/foodies/07-coffee.png" },
+      { id: 8, n: "Cupcake", img: "assets/sprites/foodies/08-cupcake.png" },
+      { id: 9, n: "Custard", img: "assets/sprites/foodies/09-custard.png" },
+      { id: 10, n: "Donut", img: "assets/sprites/foodies/10-donut.png" },
+      {
+        id: 11,
+        n: "French Fries",
+        img: "assets/sprites/foodies/11-french-fries.png",
+      },
+      { id: 12, n: "Grape", img: "assets/sprites/foodies/12-grape.png" },
+      { id: 13, n: "Hotdog", img: "assets/sprites/foodies/13-hotdog.png" },
+      {
+        id: 14,
+        n: "Ice Cream",
+        img: "assets/sprites/foodies/14-ice-cream.png",
+      },
+      { id: 15, n: "Lollipop", img: "assets/sprites/foodies/15-lollipop.png" },
+      { id: 16, n: "Macaron", img: "assets/sprites/foodies/16-macaron.png" },
+      { id: 17, n: "Milk", img: "assets/sprites/foodies/17-milk.png" },
+      { id: 18, n: "Orange", img: "assets/sprites/foodies/18-orange.png" },
+      { id: 19, n: "Pizza", img: "assets/sprites/foodies/19-pizza.png" },
+      { id: 20, n: "Popcorn", img: "assets/sprites/foodies/20-popcorn.png" },
+      { id: 21, n: "Ramen", img: "assets/sprites/foodies/21-ramen.png" },
+      { id: 22, n: "Sandwich", img: "assets/sprites/foodies/22-sandwich.png" },
+      { id: 23, n: "Soda", img: "assets/sprites/foodies/23-soda.png" },
+      {
+        id: 24,
+        n: "Strawberry",
+        img: "assets/sprites/foodies/24-strawberry.png",
+      },
+      { id: 25, n: "Sushi", img: "assets/sprites/foodies/25-sushi.png" },
+      { id: 26, n: "Taco", img: "assets/sprites/foodies/26-taco.png" },
+      { id: 27, n: "Waffle", img: "assets/sprites/foodies/27-waffle.png" },
+      {
+        id: 28,
+        n: "Watermelon",
+        img: "assets/sprites/foodies/28-watermelon.png",
+      },
+      { id: 29, n: "Apple", img: "assets/sprites/foodies/29-apple.png" },
+      { id: 30, n: "Banana", img: "assets/sprites/foodies/30-banana.png" },
+    ],
+    scale: 1,
+  },
+  foodies2: {
+    name: "FOODIES 2",
+    label: "Foodies 2 sprites",
+    sprites: [
+      { id: 1, n: "BBQ Sauce", img: "assets/sprites/foodies2/01-bbq-sauce.png" },
+      { id: 2, n: "Beer Can", img: "assets/sprites/foodies2/02-beer-can.png" },
+      { id: 3, n: "Beer", img: "assets/sprites/foodies2/03-beer.png" },
+      { id: 4, n: "Blueberry Donut", img: "assets/sprites/foodies2/04-blueberry-donut.png" },
+      { id: 5, n: "Cake", img: "assets/sprites/foodies2/05-cake.png" },
+      { id: 6, n: "Canned Tuna", img: "assets/sprites/foodies2/06-canned-tuna.png" },
+      { id: 7, n: "Cheese Burger", img: "assets/sprites/foodies2/07-cheese-burger.png" },
+      { id: 8, n: "Chocolate Sundae", img: "assets/sprites/foodies2/08-chocolate-sundae.png" },
+      { id: 9, n: "Croissant", img: "assets/sprites/foodies2/09-croissant.png" },
+      { id: 10, n: "Cup Noodle", img: "assets/sprites/foodies2/10-cup-noodle.png" },
+      { id: 11, n: "Fortune Cookie", img: "assets/sprites/foodies2/11-fortune-cookie.png" },
+      { id: 12, n: "Grilled Chicken", img: "assets/sprites/foodies2/12-grilled-chicken.png" },
+      { id: 13, n: "Ice cream Bowl", img: "assets/sprites/foodies2/13-ice-cream-bowl.png" },
+      { id: 14, n: "Ice cream Cone", img: "assets/sprites/foodies2/14-ice-cream-cone.png" },
+      { id: 15, n: "Ketchup", img: "assets/sprites/foodies2/15-ketchup.png" },
+      { id: 16, n: "Lollipop", img: "assets/sprites/foodies2/16-lollipop.png" },
+      { id: 17, n: "Milk Shake", img: "assets/sprites/foodies2/17-milk-shake.png" },
+      { id: 18, n: "Mustard", img: "assets/sprites/foodies2/18-mustard.png" },
+      { id: 19, n: "Parma Ham", img: "assets/sprites/foodies2/19-parma-ham.png" },
+      { id: 20, n: "Pineapple", img: "assets/sprites/foodies2/20-pineapple.png" },
+      { id: 21, n: "Salad", img: "assets/sprites/foodies2/21-salad.png" },
+      { id: 22, n: "Soft Serve", img: "assets/sprites/foodies2/22-soft-serve.png" },
+      { id: 23, n: "Soup", img: "assets/sprites/foodies2/23-soup.png" },
+      { id: 24, n: "Strawberry Donut", img: "assets/sprites/foodies2/24-strawberry-donut.png" },
+      { id: 25, n: "Sunny Side Up", img: "assets/sprites/foodies2/25-sunny-side-up.png" },
+      { id: 26, n: "Sushi", img: "assets/sprites/foodies2/26-sushi.png" },
+      { id: 27, n: "Tempura", img: "assets/sprites/foodies2/27-tempura.png" },
+      { id: 28, n: "Tuna Sandwich", img: "assets/sprites/foodies2/28-tuna-sandwich.png" },
+      { id: 29, n: "Watermelon", img: "assets/sprites/foodies2/29-watermelon.png" },
+      { id: 30, n: "Yakiniku", img: "assets/sprites/foodies2/30-yakiniku.png" },
+    ],
+    scale: 1,
+  },
+  football: {
+    name: "FOOTBALL",
+    label: "Football club logo sprites",
+    sprites: [
+      { id: 1, n: "AC Milan", img: "assets/sprites/football/01-ac-milan.png" },
+      { id: 2, n: "Ajax Amsterdam", img: "assets/sprites/football/02-ajax-amsterdam.png" },
+      { id: 3, n: "Arsenal", img: "assets/sprites/football/03-arsenal.png" },
+      { id: 4, n: "Atalanta", img: "assets/sprites/football/04-atalanta.png" },
+      { id: 5, n: "Atletico Madrid", img: "assets/sprites/football/05-atletico-madrid.png" },
+      { id: 6, n: "Barcelona", img: "assets/sprites/football/06-barcelona.png" },
+      { id: 7, n: "Bayer Leverkusen", img: "assets/sprites/football/07-bayer-leverkusen.png" },
+      { id: 8, n: "Bayern Munich", img: "assets/sprites/football/08-bayern-munich.png" },
+      { id: 9, n: "Blackburn Rovers", img: "assets/sprites/football/09-blackburn-rovers.png" },
+      { id: 10, n: "Borussia Dortmund", img: "assets/sprites/football/10-borussia-dortmund.png" },
+      { id: 11, n: "Brentford", img: "assets/sprites/football/11-brentford.png" },
+      { id: 12, n: "Brighton", img: "assets/sprites/football/12-brighton.png" },
+      { id: 13, n: "Chelsea", img: "assets/sprites/football/13-chelsea.png" },
+      { id: 14, n: "Derby County", img: "assets/sprites/football/14-derby-county.png" },
+      { id: 15, n: "Everton", img: "assets/sprites/football/15-everton.png" },
+      { id: 16, n: "Inter Milan", img: "assets/sprites/football/16-inter-milan.png" },
+      { id: 17, n: "Juventus", img: "assets/sprites/football/17-juventus.png" },
+      { id: 18, n: "Leeds United", img: "assets/sprites/football/18-leeds-united.png" },
+      { id: 19, n: "Leicester City", img: "assets/sprites/football/19-leicester-city.png" },
+      { id: 20, n: "Liverpool", img: "assets/sprites/football/20-liverpool.png" },
+      { id: 21, n: "Manchester City", img: "assets/sprites/football/21-manchester-city.png" },
+      { id: 22, n: "Manchester United", img: "assets/sprites/football/22-manchester-united.png" },
+      { id: 23, n: "Marseille", img: "assets/sprites/football/23-marseille.png" },
+      { id: 24, n: "Middlesbrough", img: "assets/sprites/football/24-middlesbrough.png" },
+      { id: 25, n: "Napoli", img: "assets/sprites/football/25-napoli.png" },
+      { id: 26, n: "Newcastle United", img: "assets/sprites/football/26-newcastle-united.png" },
+      { id: 27, n: "Nottingham Forest", img: "assets/sprites/football/27-nottingham-forest.png" },
+      { id: 28, n: "Olympiacos", img: "assets/sprites/football/28-olympiacos.png" },
+      { id: 29, n: "Paris Saint-Germain", img: "assets/sprites/football/29-paris-saint-germain.png" },
+      { id: 30, n: "Rangers", img: "assets/sprites/football/30-rangers.png" },
+      { id: 31, n: "Real Madrid", img: "assets/sprites/football/31-real-madrid.png" },
+      { id: 32, n: "Salzburg", img: "assets/sprites/football/32-salzburg.png" },
+      { id: 33, n: "Tottenham Hotspur", img: "assets/sprites/football/33-tottenham-hotspur.png" },
+      { id: 34, n: "West Ham United", img: "assets/sprites/football/34-west-ham-united.png" },
+      { id: 35, n: "Wolverhampton Wanderers", img: "assets/sprites/football/35-wolverhampton-wanderers.png" },
+    ],
+    scale: 1.12,
+  },
+  gadgets: {
+    name: "GADGETS",
+    label: "Optimized gadget sprites",
+    sprites: GADGET_SPRITES,
+    scale: 1,
+  },
+  home: {
+    name: "HOME",
+    label: "Home sprites",
+    sprites: HOME_SPRITES,
+    scale: 1,
+  },
+  sports: {
+    name: "SPORTS",
+    label: "Optimized sports sprites",
+    sprites: SPORTS_SPRITES,
+    scale: 1.24,
+  },
+  tools: {
+    name: "TOOLS",
+    label: "Tools sprites",
+    sprites: TOOLS_SPRITES,
+    scale: 1,
+  },
+  travel: {
+    name: "TRAVEL",
+    label: "Travel item sprites",
+    sprites: TRAVEL_SPRITES,
+    scale: 1,
+  },
 };
-let currentSpriteSetId = "flags";
+let currentSpriteSetId = determineInitialSpriteSet();
 let entities = [];
 
 function buildEntities(setId) {
-  const set = SPRITE_SETS[setId] || SPRITE_SETS.flags;
+  const set = SPRITE_SETS[setId] || SPRITE_SETS.original;
   return set.sprites.map((e) => ({
     id: e.id,
     name: e.n,
@@ -753,7 +1034,7 @@ function buildEntities(setId) {
 }
 
 function applySpriteSet(setId, opts = {}) {
-  currentSpriteSetId = SPRITE_SETS[setId] ? setId : "flags";
+  currentSpriteSetId = SPRITE_SETS[setId] ? setId : "original";
   entities = buildEntities(currentSpriteSetId);
 
   // Expose the active tile set to CSS so each asset pack can be tuned
@@ -787,7 +1068,12 @@ function applySpriteSet(setId, opts = {}) {
 }
 
 function randomSpriteSetId(excludeId = null) {
-  return "flags";
+  const ids = Object.keys(SPRITE_SETS);
+  const pool = ids.length > 1 ? ids.filter((id) => id !== excludeId) : ids;
+  const pick = typeof randomIndex === "function"
+    ? randomIndex(pool.length)
+    : Math.floor(Math.random() * pool.length);
+  return pool[pick] || ids[0] || "original";
 }
 
 function applyQuickGameRandomSet() {
@@ -859,24 +1145,6 @@ function getLevelTime(lvl) {
 
 function formatScore(value) {
   return Number(value || 0).toLocaleString("en-US");
-}
-
-function setFmwButtonLabel(buttonOrId, label) {
-  const btn = typeof buttonOrId === "string" ? $(buttonOrId) : buttonOrId;
-  if (!btn) return;
-  const labelEl = btn.querySelector?.(".fmw-btn-label");
-  if (labelEl) labelEl.textContent = label;
-  else btn.textContent = label;
-}
-
-function hideOverlay(id) {
-  const el = $(id);
-  if (el) el.classList.add("hidden");
-}
-
-function showOverlay(id) {
-  const el = $(id);
-  if (el) el.classList.remove("hidden");
 }
 function setScoreDisplay() {
   // HUD displays the current level score only.
@@ -1101,12 +1369,14 @@ function updateAndGetBestScore(latestScore) {
 
 function isUsableSave(save) {
   if (!save) return false;
-  // FMW progress is level-checkpoint based: a save only represents the next
-  // unlocked level after a completed level. It never represents a partially
-  // played board. Older saves that still contain a board are accepted, but
-  // continue will ignore the board and create a fresh level start.
-  const savedLevel = Number(save.level);
-  return Number.isFinite(savedLevel) && savedLevel >= 1;
+  // Normal saves contain a serialized board. Fresh-level checkpoints are saved
+  // just after a level is completed; they intentionally generate a fresh board
+  // when continued so quitting/restarting the new level does not repeat the same
+  // tile placement.
+  if (!save.board && !save.freshLevelCheckpoint) return false;
+  const savedTime = Number(save.timeLeft);
+  if (!Number.isFinite(savedTime) || savedTime <= 1) return false;
+  return true;
 }
 
 function getLatestSavedSetId() {
@@ -1127,8 +1397,8 @@ function determineInitialSpriteSet() {
   migrateLegacySave();
   const latest = getLatestSavedSetId();
   if (latest) return latest;
-  const stored = localStorage.getItem(SPRITE_SET_KEY) || "flags";
-  return SPRITE_SETS[stored] ? stored : "flags";
+  const stored = localStorage.getItem(SPRITE_SET_KEY) || "original";
+  return SPRITE_SETS[stored] ? stored : "original";
 }
 
 function getSaveForSet(setId = currentSpriteSetId) {
@@ -1140,37 +1410,30 @@ function getSaveForSet(setId = currentSpriteSetId) {
 function saveGame(options = {}) {
   if (isQuickGame) return false;
   const saveMode = typeof options === "object" ? options : {};
-
-  // Do not save a partially played level. In FMW, saved progress is only a
-  // checkpoint created immediately after a level is completed. Continuing from
-  // this checkpoint always starts that level from the beginning with a new
-  // random tile layout.
-  if (!saveMode.freshLevelCheckpoint) return false;
-
   const slot = SPRITE_SETS[currentSaveSlotId]
     ? currentSaveSlotId
     : currentSpriteSetId;
   const save = {
-    version: 3,
+    version: 2,
     ts: Date.now(),
     level,
     score,
-    levelScore: 0,
-    timeLeft: TOTAL_TIME,
-    levelTotalTime: TOTAL_TIME,
+    levelScore,
+    timeLeft,
+    levelTotalTime,
     hintCount,
     shuffleCount,
-    comboCount: 0,
-    lastMatchAt: 0,
-    bestCombo: 0,
-    usedHintLvl: 0,
-    usedShuffLvl: 0,
+    comboCount,
+    lastMatchAt,
+    bestCombo,
+    usedHintLvl,
+    usedShuffLvl,
     strategyId: currentStrategy.id,
     theme: currentTheme,
     spriteSet: slot,
-    board: null,
+    board: serializeBoard(),
     scoreHistory,
-    freshLevelCheckpoint: true,
+    freshLevelCheckpoint: !!saveMode.freshLevelCheckpoint,
   };
   const saves = loadAllSaves();
   saves[slot] = save;
@@ -1220,7 +1483,7 @@ function refreshSaveSlot() {
   const slot = $("savedSlot");
   const resumeBtn = $("continueFromSaveBtn");
   const deleteBtn = $("deleteSaveBtn");
-  const setName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.flags)
+  const setName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.original)
     .name;
   refreshSpriteSavePills();
   if (!save) {
@@ -1263,7 +1526,6 @@ function returnToTitleAfterSave() {
   $("endQuickConfirmOverlay")?.classList.add("hidden");
   $("quitConfirmOverlay")?.classList.add("hidden");
   $("helperMessageOverlay")?.classList.add("hidden");
-  $("settingsOverlay")?.classList.add("hidden");
   appShell.classList.remove("paused");
   document.body.classList.remove("low-time");
   overlay.classList.remove("hidden");
@@ -1278,7 +1540,7 @@ function triggerSave(fromPause = false) {
   $("saveMsg").textContent = isQuickGame
     ? "Quick Game is a single-session mode and does not save progress."
     : ok
-      ? `Progress saved for ${(SPRITE_SETS[currentSaveSlotId] || SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.flags).name}.`
+      ? `Progress saved for ${(SPRITE_SETS[currentSaveSlotId] || SPRITE_SETS[currentSpriteSetId]).name}.`
       : "Save failed — localStorage may be unavailable.";
   pauseOverlay.classList.add("hidden");
   saveOverlay.classList.remove("hidden");
@@ -1288,35 +1550,34 @@ function triggerSave(fromPause = false) {
 
 function restoreGame(save) {
   // Keep the currently selected theme when continuing a saved game.
-  // Saved games restore only completed-level progress, not a half-played board.
-  // Every Continue starts the saved level from the beginning with full time and
-  // a newly randomized tile layout.
+  // Saved games still restore the sprite set/progress, but should not override
+  // the player's current theme choice from the startup screen.
   // applyTheme(save.theme || "arcade");
   applySpriteSet(save.spriteSet || "original");
   currentSaveSlotId = save.spriteSet || currentSpriteSetId;
   isQuickGame = false;
-
-  level = Math.max(1, Number(save.level) || 1);
-  score = Number.isFinite(save.score) ? save.score : 0;
-  levelScore = 0;
-  scoreHistory = Array.isArray(save.scoreHistory) ? save.scoreHistory : [];
-
-  levelTotalTime = TOTAL_TIME;
-  timeLeft = TOTAL_TIME;
-  timerWarned = false;
-
+  level = save.level;
+  score = save.score;
+  levelScore = save.levelScore || 0;
+  levelTotalTime = save.levelTotalTime || getLevelTime(level);
+  timeLeft = Math.min(save.timeLeft, levelTotalTime);
   hintCount = Number.isFinite(save.hintCount) ? save.hintCount : HINTS;
   shuffleCount = Number.isFinite(save.shuffleCount)
     ? save.shuffleCount
     : SHUFFLES;
-
-  resetLevelScoring();
-  currentStrategy = getStrategy(level);
-
-  // Always generate a fresh random board on Continue. This intentionally ignores
-  // serialized boards from older saves so the same saved level never resumes
-  // with the same tile positions.
-  createBoard();
+  comboCount = save.comboCount || 0;
+  lastMatchAt = save.lastMatchAt || 0;
+  bestCombo = save.bestCombo || 0;
+  usedHintLvl = save.usedHintLvl || 0;
+  usedShuffLvl = save.usedShuffLvl || 0;
+  scoreHistory = Array.isArray(save.scoreHistory) ? save.scoreHistory : [];
+  currentStrategy =
+    STRATEGIES.find((s) => s.id === save.strategyId) || STRATEGIES[0];
+  if (save.freshLevelCheckpoint) {
+    createBoard();
+  } else {
+    board = deserializeBoard(save.board);
+  }
 
   // Sync HUD
   levelEl.textContent = String(level).padStart(2, "0");
@@ -1334,7 +1595,7 @@ function restoreGame(save) {
 // Board generation should never depend only on sprite set + level number.
 // Every newly created board uses fresh entropy; saved games still restore the
 // serialized board directly through restoreGame(), bypassing createBoard().
-const RECENT_BOARD_SIGNATURE_KEY = "flagmatchworld_recent_board_sig_v1";
+const RECENT_BOARD_SIGNATURE_KEY = "pocketmatch_recent_board_sig_v1";
 
 function randomUnit() {
   try {
@@ -2018,14 +2279,14 @@ function showGameOver() {
   $("themePicker").classList.add("hidden");
 
   const rule = currentStrategy ? currentStrategy.name : "NORMAL";
-  const activeSetName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.flags).name;
+  const activeSetName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.original).name;
   const modeLabel = isQuickGame ? "QUICK PLAY" : String(rule).toUpperCase();
   const bestScore = updateAndGetBestScore(score);
 
   const goKicker = $("goKicker");
   if (goKicker) goKicker.textContent = isQuickGame ? "QUICK RUN ENDED" : "TIME LIMIT REACHED";
   const goTitle = $("goTitle");
-  if (goTitle) goTitle.textContent = "GAME OVER";
+  if (goTitle) goTitle.innerHTML = "Game<br /><em>Over</em>";
   const goHeroTag = $("goHeroTag");
   if (goHeroTag) goHeroTag.textContent = bestScore >= score ? "HIGH SCORE SAVED" : "RUN COMPLETE";
   const goLevelBadge = $("goLevelBadge");
@@ -2035,9 +2296,9 @@ function showGameOver() {
     goSummary.textContent = `${modeLabel} · ${String(activeSetName).toUpperCase()}`;
   }
   const goLevel = $("goLevel");
-  if (goLevel) goLevel.textContent = String(level);
+  if (goLevel) goLevel.textContent = `LV ${String(level).padStart(2, "0")}`;
   const goScore = $("goScore");
-  if (goScore) goScore.textContent = formatScore(score);
+  if (goScore) goScore.innerHTML = `${formatScore(score)}<span class="pause-unit">PTS</span>`;
   const goBestScore = $("goBestScore");
   if (goBestScore) goBestScore.textContent = `${formatScore(bestScore)} pts`;
   const goBestCombo = $("goBestCombo");
@@ -2046,12 +2307,6 @@ function showGameOver() {
   if (goPack) goPack.textContent = `Tile Pack · ${activeSetName}`;
   const goTimeSurvived = $("goTimeSurvived");
   if (goTimeSurvived) goTimeSurvived.textContent = formatTime(elapsed);
-  const goTilesRemaining = $("goTilesRemaining");
-  if (goTilesRemaining && board && board.length) {
-    let rem = 0;
-    for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) if (board[r] && board[r][c] && !board[r][c].removed) rem++;
-    goTilesRemaining.textContent = String(rem);
-  }
   const goMsg = $("goMessage");
   if (goMsg) {
     goMsg.textContent = isQuickGame
@@ -2059,9 +2314,9 @@ function showGameOver() {
       : "The clock ran out. Start a new run or head back to the start screen — your best score is safe.";
   }
   const goNew = $("gameOverNewGameBtn");
-  if (goNew) setFmwButtonLabel(goNew, "Retry");
+  if (goNew) goNew.textContent = isQuickGame ? "New Quick Game" : "New Game";
   const goQuit = $("gameOverQuitBtn");
-  if (goQuit) setFmwButtonLabel(goQuit, "Home");
+  if (goQuit) goQuit.textContent = "Back to Start";
   moveStatus.textContent = "GAME OVER";
   playUiAudio("gameOver");
   gameOverOverlay.classList.remove("hidden");
@@ -2116,7 +2371,7 @@ function updateBoardInfo() {
   }
   const n = countConnectablePairs();
   const matchText = `MATCHES: ${String(n).padStart(2, "0")}`;
-  const setName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.flags).name;
+  const setName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.original).name;
   if (boardInfoEl) {
     boardInfoEl.textContent = `${matchText}  ·  SET: ${setName}`;
   }
@@ -2263,7 +2518,7 @@ function showLevelComplete() {
 
   const nextSetName = isQuickGame
     ? "Random tile set"
-    : (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.flags).name;
+    : (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.original).name;
 
   scoreHistory.push({
     level: clearedLevel,
@@ -2287,10 +2542,6 @@ function showLevelComplete() {
   if (lcTotalScore) lcTotalScore.textContent = formatScore(score);
   const lcBestCombo = $("lcBestCombo");
   if (lcBestCombo) lcBestCombo.textContent = bestCombo > 1 ? `x${bestCombo}` : "—";
-  const lcTimeBonus = $("lcTimeBonus");
-  if (lcTimeBonus) lcTimeBonus.textContent = formatScore(Math.max(0, timeLeft) * 50);
-  const lcPerfectBonus = $("lcPerfectBonus");
-  if (lcPerfectBonus) lcPerfectBonus.textContent = perfect ? formatScore(perfect) : "0";
   renderScoreHistory(clearedLevel);
 
   showLevelClearBurst();
@@ -2305,7 +2556,7 @@ function showLevelComplete() {
   }
 
   const quitBtn = $("levelCompleteQuitBtn");
-  if (quitBtn) setFmwButtonLabel(quitBtn, isQuickGame ? "End Quick Game" : "Home");
+  if (quitBtn) quitBtn.textContent = isQuickGame ? "⌂ End Quick Game" : "⌂ Home";
   levelCompleteOverlay.classList.remove("hidden");
 }
 
@@ -2345,7 +2596,7 @@ function startNextLevel() {
   nextLevelReadyAfterComplete = false;
   paused = false;
   gameStarted = true;
-  const setName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.flags)
+  const setName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.original)
     .name;
   moveStatus.textContent = isQuickGame
     ? `QUICK GAME · ${setName} · LV ${level}`
@@ -2411,17 +2662,17 @@ function startGame(options = {}) {
   renderBoard();
   startTimer();
   moveStatus.textContent = isQuickGame
-    ? `QUICK GAME · ${(SPRITE_SETS[selectedSet] || SPRITE_SETS.flags).name}`
+    ? `QUICK GAME · ${(SPRITE_SETS[selectedSet] || SPRITE_SETS.original).name}`
     : "SYSTEM ONLINE";
 }
 
 function startNewGameFromTitle(force = false) {
   const existing = loadSave(currentSpriteSetId);
   if (existing && !force) {
-    const setName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.flags)
+    const setName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.original)
       .name;
     $("newGameConfirmMsg").textContent =
-      `Your current ${setName} progress will be reset. This cannot be undone.`;
+      `Starting a new ${setName} game will delete its saved progress.`;
     $("newGameConfirmOverlay").classList.remove("hidden");
     return;
   }
@@ -2455,7 +2706,7 @@ function continueFromSave() {
   sfx.level();
   playBgmIfAllowed();
   startTimer();
-  moveStatus.textContent = `CONTINUE  LV ${level} · NEW BOARD`;
+  moveStatus.textContent = `SAVE RESTORED  LV ${level}`;
 }
 
 function setupPauseModal() {
@@ -2478,17 +2729,17 @@ function setupPauseModal() {
 
   pauseOverlay.classList.toggle("quick-pause", isQuickGame);
   if (pauseActions) pauseActions.classList.toggle("quick-pause-actions", isQuickGame);
-  if (saveQuit) setFmwButtonLabel(saveQuit, "Home");
-  if (endQuick) setFmwButtonLabel(endQuick, "End Quick Game");
+  if (saveQuit) saveQuit.textContent = "Quit";
+  if (endQuick) endQuick.textContent = "End Quick Game";
 
   if (isQuickGame) {
-    if (title) { title.textContent = "PAUSED"; }
+    if (title) { title.innerHTML = "Quick<br /><em>Paused</em>"; }
     if (msg) msg.textContent = "Quick Game is single-session only. Continue the run or end it now.";
     setPauseBtnHidden(saveContinue, true);
     setPauseBtnHidden(saveQuit, true);
     setPauseBtnHidden(endQuick, false);
   } else {
-    if (title) { title.textContent = "PAUSED"; }
+    if (title) { title.innerHTML = "Take a<br /><em>break</em>"; }
     if (msg) msg.textContent = "The timer is stopped. If you quit now, this current level progress will not be saved.";
     setPauseBtnHidden(saveContinue, true);
     setPauseBtnHidden(saveQuit, false);
@@ -2511,7 +2762,7 @@ function setupPauseModal() {
   if (badgeEl) badgeEl.textContent = `LV ${level}`;
   const nameEl = $("pauseLevelName");
   if (nameEl) {
-    const setName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.flags).name;
+    const setName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.original).name;
     const ruleName = currentStrategy ? currentStrategy.name || "Normal" : "Normal";
     nameEl.textContent = `${setName} · ${ruleName}`;
   }
@@ -2648,11 +2899,9 @@ function newGameFromGameOver() {
   gameOverOverlay.classList.add("hidden");
   if (isQuickGame) {
     startQuickGame();
-    return;
+  } else {
+    startGame({ quick: false });
   }
-  // FMW Game Over uses Retry: restart the current level from the beginning
-  // with a fresh randomized board instead of sending the player back to LV 1.
-  restartCurrentLevel();
 }
 
 function quitFromGameOver() {
@@ -2970,43 +3219,6 @@ function _setGameSoundMuted(nextMuted) {
 if (_pauseSoundToggle) {
   _pauseSoundToggle.onclick = () => _setGameSoundMuted(!muted);
 }
-
-const restartFromPauseBtn = $("restartFromPauseBtn");
-if (restartFromPauseBtn) {
-  restartFromPauseBtn.onclick = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!gameStarted) return;
-    pauseOverlay.classList.add("hidden");
-    appShell.classList.remove("paused");
-    paused = false;
-    restartCurrentLevel();
-  };
-}
-const pauseSettingsBtn = $("pauseSettingsBtn");
-if (pauseSettingsBtn) {
-  pauseSettingsBtn.onclick = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const settingsOverlay = $("settingsOverlay");
-    if (settingsOverlay) { syncSettingsSwitches(); settingsOverlay.classList.remove("hidden"); }
-    else openCompactThemePicker();
-  };
-}
-const settingsBackBtn = $("settingsBackBtn");
-if (settingsBackBtn) settingsBackBtn.onclick = () => $("settingsOverlay")?.classList.add("hidden");
-const settingsOverlay = $("settingsOverlay");
-if (settingsOverlay) settingsOverlay.addEventListener("click", (e) => { if (e.target === settingsOverlay) settingsOverlay.classList.add("hidden"); });
-const settingsMusicBtn = $("settingsMusicBtn");
-function syncSettingsSwitches() {
-  $("settingsMusicSwitch")?.classList.toggle("is-on", !muted);
-  $("settingsSoundSwitch")?.classList.toggle("is-on", !muted);
-}
-if (settingsMusicBtn) settingsMusicBtn.onclick = () => { _setGameSoundMuted(!muted); syncSettingsSwitches(); };
-const settingsSoundBtn = $("settingsSoundBtn");
-if (settingsSoundBtn) settingsSoundBtn.onclick = () => { _setGameSoundMuted(!muted); syncSettingsSwitches(); };
-const settingsHapticsBtn = $("settingsHapticsBtn");
-if (settingsHapticsBtn) settingsHapticsBtn.onclick = () => $("settingsHapticsSwitch")?.classList.toggle("is-on");
 $("continueBtn").onclick = (e) => {
   e.preventDefault();
   e.stopPropagation();
@@ -3014,12 +3226,6 @@ $("continueBtn").onclick = (e) => {
   resumeGame();
 };
 $("nextLevelBtn").onclick = startNextLevel;
-const replayLevelBtn = $("replayLevelBtn");
-if (replayLevelBtn) replayLevelBtn.onclick = () => {
-  levelCompleteOverlay.classList.add("hidden");
-  nextLevelReadyAfterComplete = false;
-  startLevel(true);
-};
 $("levelCompleteQuitBtn").onclick = levelCompleteQuit;
 const levelCompleteCloseBtn = $("levelCompleteCloseBtn");
 if (levelCompleteCloseBtn) levelCompleteCloseBtn.onclick = levelCompleteQuit;
@@ -3433,36 +3639,376 @@ refreshSaveSlot(); // show saved game slot on start screen if one exists
   [0, 40, 80, 160, 320, 640, 1000, 1600].forEach(ms => setTimeout(scheduleFit, ms));
 })();
 
-// v3.7.2 — FMW startup and popup live-control hardening
-(function hardenFmwStartupAndPauseControls(){
-  function byId(id){ return (typeof $ === "function") ? $(id) : document.getElementById(id); }
-  const liveIds = [
-    "continueBtn","restartFromPauseBtn","pauseSettingsBtn","saveFromPauseBtn",
-    "nextLevelBtn","replayLevelBtn","levelCompleteQuitBtn",
-    "gameOverNewGameBtn","gameOverQuitBtn","settingsBackBtn",
-    "settingsMusicBtn","settingsSoundBtn","settingsHapticsBtn",
-    "continueFromSaveBtn","startBtn","quickGameBtn","startupSettingsBtn"
-  ];
-  document.querySelectorAll(".fmw-shell-bg,.fmw-startup-bg").forEach((el)=>{ el.style.pointerEvents = "none"; });
-  liveIds.forEach((id)=>{
-    const el = byId(id);
-    if (el) {
-      el.style.pointerEvents = "auto";
-      el.removeAttribute("disabled");
-    }
-  });
-  const startupSettingsBtn = byId("startupSettingsBtn");
-  if (startupSettingsBtn && !startupSettingsBtn.dataset.boundFmwSettings) {
-    startupSettingsBtn.dataset.boundFmwSettings = "1";
-    startupSettingsBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const settingsOverlay = byId("settingsOverlay");
-      if (settingsOverlay) {
-        if (typeof syncSettingsSwitches === "function") syncSettingsSwitches();
-        settingsOverlay.classList.remove("hidden");
-        settingsOverlay.setAttribute("aria-hidden", "false");
-      }
-    });
+// =========================================================
+// Flag Match World UI Flow v1 integration override
+// =========================================================
+(function fmwUiFlowV1(){
+  const FMW_MUSIC_KEY = "fmw_music_enabled_v1";
+  const FMW_SFX_KEY = "fmw_sfx_enabled_v1";
+  let fmwMusicEnabled = localStorage.getItem(FMW_MUSIC_KEY) !== "false";
+  let fmwSfxEnabled = localStorage.getItem(FMW_SFX_KEY) !== "false";
+  let fmwSettingsReturn = "startup";
+
+  function q(id){ return document.getElementById(id); }
+  function setHidden(id, hidden){ const el=q(id); if(el) el.classList.toggle('hidden', hidden); }
+  function setModalOpen(on){ document.body.classList.toggle('fmw-modal-open', !!on); }
+
+  // Force Flag Match World to use the flag set only.
+  try { applySpriteSet('flags', { silent:true }); currentSpriteSetId = 'flags'; currentSaveSlotId = 'flags'; } catch(e) {}
+
+  const oldWithAudio = withAudio;
+  withAudio = function(run){ if (!fmwSfxEnabled) return; return oldWithAudio(run); };
+  const oldPlayUiAudio = playUiAudio;
+  playUiAudio = function(name){ if (!fmwSfxEnabled) return; return oldPlayUiAudio(name); };
+  canPlayBgmNow = function(){ return fmwMusicEnabled && gameStarted && !paused && !document.hidden; };
+
+  function applySoundSettings(){
+    try { bgm.muted = !fmwMusicEnabled; if (!fmwMusicEnabled) bgm.pause(); else playBgmIfAllowed(); } catch(e) {}
+    try { Object.values(uiAudio).forEach(a => a.muted = !fmwSfxEnabled); } catch(e) {}
   }
+
+  function renderStartupMosaic(){
+    const el = q('fmwStartMosaic');
+    if (!el || typeof FLAGS_SPRITES === 'undefined') return;
+    const w = window.innerWidth || 1024;
+    const h = window.innerHeight || 768;
+    const cw = w > 1200 ? 72 : w > 760 ? 66 : 54;
+    const cols = Math.max(8, Math.ceil((w + 80) / cw));
+    const rows = Math.ceil((h + 120) / ((cw * 2 / 3) + 6)) + 3;
+    const count = cols * rows;
+    el.style.gridTemplateColumns = `repeat(${cols},1fr)`;
+    if (el.childElementCount === count) return;
+    el.innerHTML = '';
+    for (let i=0; i<count; i++){
+      const d = document.createElement('div');
+      d.className = 'fmw-start-flag';
+      const img = document.createElement('img');
+      img.alt = '';
+      img.loading = 'eager';
+      img.src = FLAGS_SPRITES[i % FLAGS_SPRITES.length].img;
+      d.appendChild(img);
+      el.appendChild(d);
+    }
+  }
+
+  function updateStartupSaveUi(){
+    const save = loadSave('flags');
+    const btn = q('continueFromSaveBtn');
+    const del = q('deleteSaveBtn');
+    if (btn){
+      btn.disabled = !save;
+      btn.classList.toggle('disabled', !save);
+      btn.textContent = save ? `Continue · Level ${String(save.level).padStart(2,'0')}` : 'Continue';
+    }
+    if (del) del.classList.toggle('hidden', !save);
+    const saveLevel = q('saveLevel'), saveScore = q('saveScore'), saveDate = q('saveDate');
+    if (saveLevel) saveLevel.textContent = save ? `Flags · LV ${String(save.level).padStart(2,'0')}` : 'Flags';
+    if (saveScore) saveScore.textContent = save ? `${formatScore(save.score)} pts` : 'No saved game';
+    if (saveDate) saveDate.textContent = save ? formatSaveDate(save.ts) : '—';
+  }
+
+  const oldRefreshSaveSlot = refreshSaveSlot;
+  refreshSaveSlot = function(){ try { oldRefreshSaveSlot(); } catch(e) {} updateStartupSaveUi(); };
+  refreshStartScreen = function(){ refreshSaveSlot(); };
+
+  startGame = function(options = {}){
+    const mode = typeof options === 'object' ? options : {};
+    const selectedSet = 'flags';
+    applySpriteSet(selectedSet);
+    isQuickGame = !!mode.quick;
+    currentSaveSlotId = isQuickGame ? null : selectedSet;
+    nextLevelReadyAfterComplete = false;
+    overlay.classList.add('hidden');
+    pauseOverlay.classList.add('hidden');
+    levelCompleteOverlay.classList.add('hidden');
+    gameOverOverlay.classList.add('hidden');
+    setHidden('settingsOverlay', true);
+    setHidden('restartConfirmOverlay', true);
+    setHidden('homeConfirmOverlay', true);
+    setModalOpen(false);
+    appShell.classList.remove('paused');
+    score = 0;
+    levelScore = 0;
+    scoreHistory = [];
+    level = 1;
+    resetLevelScoring();
+    currentStrategy = getStrategy(1);
+    levelTotalTime = isQuickGame ? TOTAL_TIME : getLevelTime(1);
+    timeLeft = levelTotalTime;
+    timerWarned = false;
+    hintCount = HINTS;
+    shuffleCount = isQuickGame ? HINTS : SHUFFLES;
+    paused = false;
+    gameStarted = true;
+    unlockAudio();
+    sfx.level();
+    applySoundSettings();
+    playBgmIfAllowed();
+    levelEl.textContent = '01';
+    setScoreDisplay();
+    updateHelperDisplay();
+    updateRuleTag();
+    updateTimer();
+    createBoard();
+    renderBoard();
+    startTimer();
+    moveStatus.textContent = isQuickGame ? 'QUICK GAME · FLAGS' : 'SYSTEM ONLINE';
+  };
+
+  startQuickGame = function(){ startGame({ quick:true }); };
+
+  startNewGameFromTitle = function(force = false){
+    currentSpriteSetId = 'flags';
+    const existing = loadSave('flags');
+    if (existing && !force){
+      const msg = q('newGameConfirmMsg');
+      if (msg) msg.innerHTML = 'Your saved progress will be deleted.<br>This cannot be undone.';
+      setHidden('newGameConfirmOverlay', false);
+      return;
+    }
+    if (existing) deleteSave('flags');
+    refreshStartScreen();
+    startGame({ quick:false });
+  };
+
+  continueFromSave = function(){
+    const save = loadSave('flags');
+    if (!save){ deleteSave('flags'); refreshStartScreen(); sfx.invalid(); return; }
+    overlay.classList.add('hidden');
+    gameOverOverlay.classList.add('hidden');
+    setModalOpen(false);
+    appShell.classList.remove('paused');
+    restoreGame(save);
+    nextLevelReadyAfterComplete = false;
+    timerWarned = false;
+    paused = false;
+    gameStarted = true;
+    unlockAudio();
+    sfx.level();
+    applySoundSettings();
+    playBgmIfAllowed();
+    startTimer();
+    moveStatus.textContent = `SAVE RESTORED  LV ${level}`;
+  };
+
+  const oldReturnToTitle = returnToTitleAfterSave;
+  returnToTitleAfterSave = function(){
+    oldReturnToTitle();
+    setHidden('settingsOverlay', true);
+    setHidden('restartConfirmOverlay', true);
+    setHidden('homeConfirmOverlay', true);
+    setModalOpen(false);
+    overlay.classList.remove('hidden');
+    refreshStartScreen();
+  };
+
+  setupPauseModal = function(){
+    const title = q('pauseTitle');
+    const msg = q('pauseMessage');
+    const restart = q('pauseRestartBtn');
+    if (title) title.textContent = isQuickGame ? 'QUICK GAME PAUSED' : 'PAUSED';
+    if (msg) msg.textContent = isQuickGame ? 'Quick Game is single-session only.' : 'The timer is stopped. Your saved progress remains safe.';
+    if (restart) restart.textContent = isQuickGame ? 'Restart Quick Game' : 'Restart Level';
+    const levelBadge = q('pauseLevelBadge');
+    if (levelBadge) levelBadge.textContent = isQuickGame ? 'Quick' : `LV ${level}`;
+    const live = q('pauseLiveScore');
+    if (live) live.textContent = formatScore(score || levelScore);
+    const combo = q('pauseBestCombo');
+    if (combo) combo.textContent = bestCombo > 0 ? `×${bestCombo}` : '—';
+  };
+
+  pauseGame = function(){
+    if (!gameStarted || paused) return;
+    paused = true;
+    clearInterval(timerId);
+    clearSel();
+    clearPath();
+    document.body.classList.remove('low-time');
+    appShell.classList.add('paused');
+    setupPauseModal();
+    pauseOverlay.classList.remove('hidden');
+    setModalOpen(true);
+    moveStatus.textContent = 'GAME PAUSED';
+    sfx.select();
+  };
+
+  const oldResumeGame = resumeGame;
+  resumeGame = function(){
+    oldResumeGame();
+    setModalOpen(false);
+    setHidden('settingsOverlay', true);
+    setHidden('restartConfirmOverlay', true);
+    setHidden('homeConfirmOverlay', true);
+  };
+
+  function openSettings(from){
+    fmwSettingsReturn = from;
+    if (from === 'pause') pauseOverlay.classList.add('hidden');
+    syncSettingsToggles();
+    setHidden('settingsOverlay', false);
+    setModalOpen(from === 'pause');
+  }
+
+  function syncSettingsToggles(){
+    const music = q('settingsMusicToggle');
+    const sfxT = q('settingsSfxToggle');
+    if (music){ music.classList.toggle('off', !fmwMusicEnabled); music.setAttribute('aria-pressed', fmwMusicEnabled ? 'true':'false'); }
+    if (sfxT){ sfxT.classList.toggle('off', !fmwSfxEnabled); sfxT.setAttribute('aria-pressed', fmwSfxEnabled ? 'true':'false'); }
+  }
+
+  function closeSettings(){
+    setHidden('settingsOverlay', true);
+    if (fmwSettingsReturn === 'pause' && gameStarted && paused){ setupPauseModal(); pauseOverlay.classList.remove('hidden'); setModalOpen(true); }
+    else setModalOpen(false);
+  }
+
+  function showRestartConfirm(){
+    if (!gameStarted) return;
+    pauseOverlay.classList.add('hidden');
+    const title = q('restartConfirmTitle');
+    const msg = q('restartConfirmMsg');
+    const btn = q('confirmRestartBtn');
+    if (title) title.textContent = isQuickGame ? 'RESTART QUICK GAME?' : 'RESTART LEVEL?';
+    if (msg) msg.innerHTML = isQuickGame ? 'Your current quick game session will be reset.' : 'Your current attempt will be reset.<br>Your saved progress will remain.';
+    if (btn) btn.textContent = isQuickGame ? 'Restart Quick Game' : 'Restart Level';
+    setHidden('restartConfirmOverlay', false);
+    setModalOpen(true);
+  }
+
+  function showHomeConfirm(){
+    if (!gameStarted) return;
+    pauseOverlay.classList.add('hidden');
+    const msg = q('homeConfirmMsg');
+    if (msg) msg.innerHTML = isQuickGame ? 'Your current quick game session will be lost.' : 'Your current unfinished attempt will be lost.<br>Your saved progress will remain.';
+    setHidden('homeConfirmOverlay', false);
+    setModalOpen(true);
+  }
+
+  function cancelConfirm(){
+    setHidden('restartConfirmOverlay', true);
+    setHidden('homeConfirmOverlay', true);
+    if (gameStarted && paused){ setupPauseModal(); pauseOverlay.classList.remove('hidden'); setModalOpen(true); }
+    else setModalOpen(false);
+  }
+
+  function confirmRestart(){
+    setHidden('restartConfirmOverlay', true);
+    setModalOpen(false);
+    if (isQuickGame) startQuickGame(); else restartCurrentLevel();
+  }
+
+  function confirmHome(){
+    setHidden('homeConfirmOverlay', true);
+    setModalOpen(false);
+    if (isQuickGame) endQuickGame(true); else quitCurrentGameWithoutSaving();
+  }
+
+  const oldRestart = restartCurrentLevel;
+  restartCurrentLevel = function(){
+    setHidden('restartConfirmOverlay', true);
+    pauseOverlay.classList.add('hidden');
+    setModalOpen(false);
+    oldRestart();
+  };
+
+  const oldShowLevelComplete = showLevelComplete;
+  showLevelComplete = function(){
+    oldShowLevelComplete();
+    setModalOpen(true);
+    const lcTitle = q('levelCompleteTitle');
+    if (lcTitle) lcTitle.textContent = isQuickGame ? 'QUICK GAME COMPLETE' : 'LEVEL COMPLETE';
+    const mainActions = q('mainCompleteActions');
+    const quickActions = q('quickCompleteActions');
+    if (mainActions) mainActions.classList.toggle('hidden', isQuickGame);
+    if (quickActions) quickActions.classList.toggle('hidden', !isQuickGame);
+    const last = scoreHistory[scoreHistory.length - 1] || {};
+    const match = q('lcMatchScore'); if (match) match.textContent = formatScore(last.matchComboScore || levelScore || 0);
+    const time = q('lcTimeBonus'); if (time) time.textContent = formatScore(last.timeBonus || 0);
+    const perf = q('lcPerfectBonus'); if (perf) perf.textContent = formatScore(last.perfectBonus || 0);
+    const total = q('lcTotalScore'); if (total) total.textContent = formatScore(isQuickGame ? (last.levelScore || levelScore) : score);
+    const combo = q('lcBestCombo'); if (combo) combo.textContent = bestCombo > 1 ? `×${bestCombo}` : '—';
+  };
+
+  const oldStartNextLevel = startNextLevel;
+  startNextLevel = function(){ setModalOpen(false); oldStartNextLevel(); };
+
+  function replayCompletedLevel(){
+    if (level > 1) level--;
+    nextLevelReadyAfterComplete = false;
+    levelCompleteOverlay.classList.add('hidden');
+    setModalOpen(false);
+    restartCurrentLevel();
+  }
+
+  levelCompleteQuit = function(){
+    levelCompleteOverlay.classList.add('hidden');
+    setModalOpen(false);
+    if (isQuickGame) endQuickGame(true);
+    else returnToTitleAfterSave();
+  };
+
+  const oldShowGameOver = showGameOver;
+  showGameOver = function(){
+    oldShowGameOver();
+    setModalOpen(true);
+    const goTitle = q('goTitle'); if (goTitle) goTitle.textContent = 'GAME OVER';
+    const goMsg = q('goMessage'); if (goMsg) goMsg.textContent = isQuickGame ? 'Quick Game ended.' : 'The clock ran out.';
+    const row = q('goLevelRow'); if (row) row.classList.toggle('hidden', isQuickGame);
+    const goLevel = q('goLevel'); if (goLevel) goLevel.textContent = `LV ${String(level).padStart(2,'0')}`;
+    const goScore = q('goScore'); if (goScore) goScore.textContent = formatScore(score);
+    const goCombo = q('goBestCombo'); if (goCombo) goCombo.textContent = bestCombo > 1 ? `×${bestCombo}` : '—';
+    const goTiles = q('goTilesRemaining');
+    if (goTiles && board && board.length){
+      let rem = 0;
+      for (let r=0;r<ROWS;r++) for (let c=0;c<COLS;c++) if (board[r] && board[r][c] && !board[r][c].removed) rem++;
+      goTiles.textContent = String(rem);
+    }
+    const retry = q('gameOverNewGameBtn'); if (retry) retry.textContent = isQuickGame ? 'New Quick Game' : 'Retry';
+    const home = q('gameOverQuitBtn'); if (home) home.textContent = 'Home';
+  };
+
+  newGameFromGameOver = function(){
+    gameOverOverlay.classList.add('hidden');
+    setModalOpen(false);
+    if (isQuickGame) startQuickGame(); else restartCurrentLevel();
+  };
+  quitFromGameOver = function(){ gameOverOverlay.classList.add('hidden'); setModalOpen(false); returnToTitleAfterSave(); };
+
+  // Rebind buttons after overriding functions.
+  const bind = (id, fn) => { const el=q(id); if (el) el.onclick = fn; };
+  bind('startBtn', () => startNewGameFromTitle(false));
+  bind('continueFromSaveBtn', continueFromSave);
+  bind('quickGameBtn', startQuickGame);
+  bind('startupSettingsBtn', () => openSettings('startup'));
+  bind('pauseBtn', pauseGame);
+  bind('continueBtn', (e) => { e.preventDefault(); e.stopPropagation(); resumeGame(); });
+  bind('pauseRestartBtn', showRestartConfirm);
+  bind('pauseSettingsBtn', () => openSettings('pause'));
+  bind('pauseHomeBtn', showHomeConfirm);
+  bind('settingsBackBtn', closeSettings);
+  bind('settingsMusicToggle', () => { fmwMusicEnabled = !fmwMusicEnabled; localStorage.setItem(FMW_MUSIC_KEY, String(fmwMusicEnabled)); applySoundSettings(); syncSettingsToggles(); });
+  bind('settingsSfxToggle', () => { fmwSfxEnabled = !fmwSfxEnabled; localStorage.setItem(FMW_SFX_KEY, String(fmwSfxEnabled)); applySoundSettings(); syncSettingsToggles(); });
+  bind('cancelRestartBtn', cancelConfirm);
+  bind('confirmRestartBtn', confirmRestart);
+  bind('cancelHomeBtn', cancelConfirm);
+  bind('confirmHomeBtn', confirmHome);
+  bind('cancelNewGameBtn', () => setHidden('newGameConfirmOverlay', true));
+  bind('confirmNewGameBtn', () => { setHidden('newGameConfirmOverlay', true); startNewGameFromTitle(true); });
+  bind('nextLevelBtn', startNextLevel);
+  bind('replayLevelBtn', replayCompletedLevel);
+  bind('levelCompleteQuitBtn', levelCompleteQuit);
+  bind('quickCompleteHomeBtn', levelCompleteQuit);
+  bind('newQuickFromCompleteBtn', startQuickGame);
+  bind('gameOverNewGameBtn', newGameFromGameOver);
+  bind('gameOverQuitBtn', quitFromGameOver);
+  bind('deleteSaveBtn', () => { deleteSave('flags'); refreshSaveSlot(); });
+
+  // Keep legacy mute buttons, if hidden, synced to sound effects.
+  bind('musicBtn', () => { fmwSfxEnabled = !fmwSfxEnabled; localStorage.setItem(FMW_SFX_KEY, String(fmwSfxEnabled)); applySoundSettings(); });
+
+  window.addEventListener('resize', renderStartupMosaic, { passive:true });
+  window.addEventListener('orientationchange', renderStartupMosaic, { passive:true });
+  renderStartupMosaic();
+  applySoundSettings();
+  refreshSaveSlot();
 })();
