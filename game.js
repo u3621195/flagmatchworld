@@ -3333,50 +3333,62 @@ refreshSaveSlot(); // show saved game slot on start screen if one exists
   };
 })();
 
-// FMW v5 cleanup hotfix: always start from the title screen on a fresh page load.
-// Some mobile browsers restore the previous DOM with the pause overlay visible.
-// This resets only the initial UI state; saved progress is still available via Continue.
-(function fmwForceTitleOnInitialLoad(){
-  function showTitleScreenCleanly(){
+// FMW v5 startup safety patch: always open on the Startup screen after a fresh page load.
+// iOS Safari/GitHub Pages can restore the previous DOM with Pause visible, and cached JS can keep stale handlers.
+// This patch force-resets only the visible UI state; saved progress remains available through Continue.
+(function fmwForceStartupOnInitialLoad(){
+  const POPUP_IDS = [
+    'pauseOverlay',
+    'levelCompleteOverlay',
+    'gameOverOverlay',
+    'settingsOverlay',
+    'restartConfirmOverlay',
+    'homeConfirmOverlay',
+    'newGameConfirmOverlay',
+    'helperMessageOverlay',
+    'themePicker'
+  ];
+
+  function setHidden(id, hidden){
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.toggle('hidden', !!hidden);
+    el.setAttribute('aria-hidden', hidden ? 'true' : 'false');
+    // Inline display avoids old restored CSS/layout state winning on iOS bfcache restore.
+    if (hidden) el.style.display = 'none';
+    else el.style.removeProperty('display');
+  }
+
+  function showStartupScreenCleanly(){
     try { clearInterval(timerId); } catch(e) {}
     try { gameStarted = false; paused = false; } catch(e) {}
-    const idsToHide = [
-      'pauseOverlay',
-      'levelCompleteOverlay',
-      'gameOverOverlay',
-      'settingsOverlay',
-      'restartConfirmOverlay',
-      'homeConfirmOverlay',
-      'newGameConfirmOverlay',
-      'helperMessageOverlay',
-      'themePicker'
-    ];
-    idsToHide.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) {
-        el.classList.add('hidden');
-        el.setAttribute('aria-hidden', 'true');
-      }
-    });
-    const title = document.getElementById('overlay');
-    if (title) {
-      title.classList.remove('hidden');
-      title.setAttribute('aria-hidden', 'false');
-    }
+    POPUP_IDS.forEach((id) => setHidden(id, true));
+    setHidden('overlay', false);
+
     const shell = document.querySelector('.app-shell');
     if (shell) shell.classList.remove('paused');
-    document.body.classList.remove('low-time', 'modal-open');
+    document.body.classList.remove('low-time', 'modal-open', 'fmw-modal-open');
+    document.documentElement.classList.remove('modal-open', 'fmw-modal-open');
+
     try { if (typeof refreshStartScreen === 'function') refreshStartScreen(); } catch(e) {}
     try { if (typeof renderStartupMosaic === 'function') renderStartupMosaic(); } catch(e) {}
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', showTitleScreenCleanly, { once: true });
-  } else {
-    showTitleScreenCleanly();
+  function bindStartupButtonsSafely(){
+    const byId = (id) => document.getElementById(id);
+    const bind = (id, fn) => { const el = byId(id); if (el) el.onclick = fn; };
+    bind('startBtn', (e) => { e.preventDefault(); e.stopPropagation(); if (typeof startNewGameFromTitle === 'function') startNewGameFromTitle(false); });
+    bind('quickGameBtn', (e) => { e.preventDefault(); e.stopPropagation(); if (typeof startQuickGame === 'function') startQuickGame(); });
+    bind('continueFromSaveBtn', (e) => { e.preventDefault(); e.stopPropagation(); if (typeof continueFromSave === 'function') continueFromSave(); });
+    bind('settingsBtn', (e) => { e.preventDefault(); e.stopPropagation(); const el = byId('settingsOverlay'); if (el) { setHidden('overlay', true); setHidden('settingsOverlay', false); document.body.classList.add('fmw-modal-open'); } });
+    bind('continueBtn', (e) => { e.preventDefault(); e.stopPropagation(); if (typeof resumeGame === 'function') resumeGame(); });
   }
 
-  window.addEventListener('pageshow', (event) => {
-    if (event.persisted && !gameStarted) showTitleScreenCleanly();
-  });
+  const run = () => { showStartupScreenCleanly(); bindStartupButtonsSafely(); };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run, { once: true });
+  else run();
+
+  // Repeat after other late init/fit routines and iOS page restore events.
+  [0, 50, 200, 600].forEach((ms) => setTimeout(run, ms));
+  window.addEventListener('pageshow', run);
 })();

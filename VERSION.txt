@@ -1,4 +1,5 @@
-Flag Match World v5 Cleanup Startup Fix
-- Removed beforecleanup backup files from final package.
-- Forced clean startup/title screen on fresh page load.
-- Hidden saved-progress popups no longer appear at launch.
+Flag Match World v5 - Startup/Button Cache Fix
+- Forces fresh page loads to Startup screen, not Pause.
+- Removes stale pause modal state restored by iOS Safari/GitHub Pages.
+- Adds cache-busting query strings for CSS/JS so deployed site loads the latest files.
+- Rebinds startup buttons safely after initial UI reset.
