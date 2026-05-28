@@ -1289,7 +1289,7 @@ const hintCountEl = $("hintCount"),
   shuffleCountEl = $("shuffleCount"),
   moveStatus = $("moveStatus");
 const boardInfoEl = $("boardInfo");
-const ruleTagEl = $("ruleTag");
+const movementIconEl = $("movementIcon");
 
 let board = [],
   selected = null,
@@ -2749,7 +2749,21 @@ function renderScoreHistory(latestLevel = null) {
 //  LEVEL MANAGEMENT
 // ─────────────────────────────────────────────
 function updateRuleTag() {
-  ruleTagEl.textContent = currentStrategy.name;
+  if (!movementIconEl) return;
+  const ruleName = currentStrategy ? currentStrategy.name : "NORMAL";
+  const ruleClassMap = {
+    "NORMAL": "movement-normal",
+    "BOTTOM": "movement-down",
+    "TOP": "movement-up",
+    "LEFT": "movement-left",
+    "RIGHT": "movement-right",
+    "X CENTER": "movement-xcenter",
+    "Y CENTER": "movement-ycenter",
+    "RANDOM": "movement-random"
+  };
+  movementIconEl.className = `movement-icon ${ruleClassMap[ruleName] || "movement-normal"}`;
+  movementIconEl.setAttribute("aria-label", `${ruleName.toLowerCase()} movement`);
+  movementIconEl.title = ruleName;
 }
 
 function showLevelComplete() {

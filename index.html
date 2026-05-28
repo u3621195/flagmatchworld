@@ -28,18 +28,15 @@
     </div>
   </div>
   <div class="hud-divider"></div>
-  <div class="hud-segment">
-    <div class="stat-group">
+  <div class="hud-segment level-segment">
+    <div class="stat-group level-rule-group">
       <span class="stat-label rule-label">LEVEL</span>
-      <span class="stat-value" id="level">01</span>
+      <span class="stat-value level-with-rule"><span id="level">01</span><span class="movement-icon movement-normal" id="movementIcon" aria-label="Normal movement"></span></span>
     </div>
   </div>
   <div class="hud-divider"></div>
-  <div class="hud-segment">
-    <div class="stat-group">
-      <span class="stat-label rule-label">RULE</span>
-      <span class="rule-badge" id="ruleTag">NORMAL</span>
-    </div>
+  <div class="hud-segment country-segment">
+    <span class="country-name-pill hud-country-pill" id="countryNamePill">SELECT A FLAG</span>
   </div>
   <div class="hud-divider"></div>
   <div class="hud-segment action-group">
@@ -87,7 +84,7 @@
 </div>
 <div class="board-header fmw-board-header">
 <span id="boardInfo">MATCHES: --</span>
-<span class="country-name-pill" id="countryNamePill">SELECT A FLAG</span>
+<span class="country-name-pill board-country-pill" aria-hidden="true">SELECT A FLAG</span>
 <span id="moveStatus">SYSTEM READY</span>
 </div>
 <div class="board-wrap">
@@ -154,11 +151,6 @@
     <h1 class="fmw-popup-title" id="pauseTitle">PAUSED</h1>
     <hr class="fmw-gold-rule">
     <p class="fmw-popup-message" id="pauseMessage">The timer is stopped.</p>
-    <div class="fmw-mini-panel">
-      <div><span>Level</span><strong id="pauseLevelBadge">LV 1</strong></div>
-      <div><span>Score</span><strong id="pauseLiveScore">0</strong></div>
-      <div><span>Best Combo</span><strong id="pauseBestCombo">—</strong></div>
-    </div>
     <div class="fmw-actions">
       <button class="fmw-btn fmw-btn-green" id="continueBtn" type="button">Resume</button>
       <button class="fmw-btn fmw-btn-teal" id="pauseRestartBtn" type="button">Restart Level</button>
