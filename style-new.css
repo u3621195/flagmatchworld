@@ -730,6 +730,16 @@ body.low-time .timer-text { animation: lowTimePulse .65s ease-in-out infinite al
   backdrop-filter: blur(14px) saturate(1.06) !important;
   overflow: hidden !important;
 }
+/* Must outrank the display:flex !important above when .hidden is present */
+#pauseOverlay.pause-overlay.hidden,
+#levelCompleteOverlay.hidden,
+#gameOverOverlay.hidden,
+#settingsOverlay.hidden,
+#restartConfirmOverlay.hidden,
+#homeConfirmOverlay.hidden,
+#newGameConfirmOverlay.hidden {
+  display: none !important;
+}
 
 /* ══════════════════════════════════════════════════════════════════
    LEVEL COMPLETE + GAME OVER — DESKTOP (default, wide layout)
