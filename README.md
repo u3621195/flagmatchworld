@@ -1,9 +1,34 @@
-# Pocket Match v3.6.5 - iPad Board Overflow Fix
+# Flag Match World v5.0
 
-This package updates the iPad/tablet landscape gameplay layout from v3.6.4.
+This package keeps the stable HTML/CSS Flag Match World game structure and real 3D flag sprites, while applying the useful gameplay-logic corrections inspired by the Google AI Studio version.
 
-Changes:
-- Fixes the iPad landscape issue where the tile board could overflow or be clipped at the bottom of the screen.
-- Adds a tablet-only visible-height and bottom-reserve guard so all tile rows remain inside the viewport.
-- Keeps iPhone and desktop layouts unchanged.
-- Updates cache-busting references to v=3.6.5.
+## Main fixes in this build
+
+- Main Game unique flags by level:
+  - Levels 1–8: 24 unique flags
+  - Levels 9–16: 30 unique flags
+  - Levels 17–24: 36 unique flags
+  - Levels 25–32: 42 unique flags
+  - Levels 33+: 48 unique flags max
+- Every board still uses 72 pairs / 144 tiles.
+- Duplicate pairs are distributed evenly across the selected unique flags.
+- Quick Game uses 48 unique flags, temporary 5 Hints + 5 Shuffles, and does not save progress.
+- Main Game starts with 5 Hints + 5 Shuffles.
+- Helper refill rules now follow the locked blueprint.
+- Movement pattern 6 collapses toward the vertical center column.
+- Movement pattern 7 collapses toward the horizontal center row.
+
+## QA helper
+
+Open the browser console and use:
+
+```js
+__fmwDebug.expectedUniqueFlagsForLevel(1)        // 24
+__fmwDebug.expectedUniqueFlagsForLevel(9)        // 30
+__fmwDebug.expectedUniqueFlagsForLevel(17)       // 36
+__fmwDebug.expectedUniqueFlagsForLevel(25)       // 42
+__fmwDebug.expectedUniqueFlagsForLevel(33)       // 48
+__fmwDebug.currentBoardUniqueFlags()             // current visible unique count
+__fmwDebug.helperInventory()                     // current hints/shuffles
+__fmwDebug.movementRuleForLevel(6)               // X CENTER
+```

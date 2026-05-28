@@ -1,3 +1,11 @@
-Flag Match World UI Flow Integration v1
-Based on Pocket Match v3.6.5 - iPad Board Overflow Fix
-Changes: Option C startup, simplified settings, responsive popup flow, main/quick game popup behavior.
+Flag Match World v5 - agreed startup and popup replacement
+Base: Flag_Match_World_v5_Google_AI_Structural_Merge.zip
+Changes: replaced startup page and all visible gameplay popups with the agreed Option C / Barlow UI; removed visible theme selector, haptics, How To Play; kept only flag sprites (212 files) and removed unused assets/ui folder.
+
+
+FMW v5 polish fixes:
+- Aligned level-complete score rows left/right.
+- Normalized Best Combo display to dash when there is no combo.
+- Removed HUD underlines below Matches, Time, and Score.
+- Added centered country-name pill below the timer bar.
+- Removed extra dark shadow line under Pause > Home.

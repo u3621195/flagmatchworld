@@ -5,13 +5,22 @@ const ROWS = 9,
   TIMER_STEP_PER_LOOP = 15,
   LEVEL_LOOP_SIZE = 8,
   HINTS = 5,
-  SHUFFLES = 10,
+  SHUFFLES = 5,
   MAX_HINTS = 10,
-  MAX_SHUFFLES = 15;
-const SAVE_KEY = "pocketmatch_save_v1"; // legacy single-slot save key
-const SAVES_KEY = "pocketmatch_saves_v2";
-const BEST_SCORES_KEY = "pocketmatch_best_scores_v1";
-const SPRITE_SET_KEY = "pocketmatch_sprite_set_v1";
+  MAX_SHUFFLES = 15,
+  QUICK_GAME_UNIQUE_FLAGS = 48;
+
+// Flag Match World locked progression:
+// Level 1-8   = 24 unique flags
+// Level 9-16  = 30 unique flags
+// Level 17-24 = 36 unique flags
+// Level 25-32 = 42 unique flags
+// Level 33+   = 48 unique flags max
+const MAIN_GAME_UNIQUE_FLAG_STEPS = [24, 30, 36, 42, 48];
+const SAVE_KEY = "fmw_save_v1"; // legacy single-slot save key
+const SAVES_KEY = "fmw_saves_v2";
+const BEST_SCORES_KEY = "fmw_best_scores_v1";
+const SPRITE_SET_KEY = "fmw_sprite_set_v1";
 let audioCtx = null,
   muted = false,
   timerWarned = false;
@@ -171,30 +180,29 @@ const sfx = {
 //  THEME SYSTEM
 // ─────────────────────────────────────────────
 const THEMES = [
-  { id: "neon-night", name: "NEON NIGHT" },
-  { id: "cyber-blue", name: "CYBER BLUE" },
-  { id: "arcade-purple", name: "SUNSET ARCADE" },
-  { id: "soft-sky", name: "SOFT SKY" },
-  { id: "candy-pop", name: "CANDY POP" },
-  { id: "mint-fresh", name: "MINT FRESH" },
+  { id: "emerald", name: "EMERALD GREEN" },
+  { id: "classic-blue", name: "CLASSIC BLUE" },
+  { id: "dark-navy", name: "DARK NAVY" },
+  { id: "royal-purple", name: "ROYAL PURPLE" },
+  { id: "burgundy-red", name: "BURGUNDY RED" },
 ];
 const THEME_ALIASES = {
-  arcade: "neon-night",
-  ocean: "cyber-blue",
-  obsidian: "arcade-purple",
-  cyber: "cyber-blue",
-  amethyst: "arcade-purple",
+  "neon-night": "emerald",
+  "cyber-blue": "classic-blue",
+  "arcade-purple": "royal-purple",
+  "soft-sky": "classic-blue",
+  "candy-pop": "burgundy-red",
+  "mint-fresh": "emerald",
 };
-const THEME_STORAGE_KEY = "pocketMatchTheme";
-let currentTheme = "neon-night";
+const THEME_STORAGE_KEY = "fmwTheme";
+let currentTheme = "emerald";
 
 const THEME_SWATCHES = {
-  "neon-night": ["#060915", "#37e8ff", "#ff4fd8", "#a7ef3a"],
-  "cyber-blue": ["#020610", "#25c8ff", "#6aa8ff", "#8af3ff"],
-  "arcade-purple": ["#241128", "#ff8a4d", "#ffd05d", "#ff5f72"],
-  "soft-sky": ["#f7fbff", "#3c8cff", "#69c7ff", "#ffd45d"],
-  "candy-pop": ["#fffaf4", "#ff73b7", "#52d8ff", "#ffd66d"],
-  "mint-fresh": ["#f7fffb", "#2acb8f", "#28a9ff", "#ffd96a"],
+  "emerald": ["#061c19", "#0f8f62", "#60d783", "#d9bb63"],
+  "classic-blue": ["#06162c", "#1676ff", "#65c7ff", "#e4c96a"],
+  "dark-navy": ["#030812", "#10284d", "#79b7ff", "#d9bb63"],
+  "royal-purple": ["#160824", "#7132c8", "#cc79ff", "#e4c96a"],
+  "burgundy-red": ["#24070c", "#9f2438", "#ff7080", "#e4c96a"],
 };
 
 function getThemeMeta(id) {
@@ -210,7 +218,7 @@ function updateCompactThemeUi(id) {
   if (pillName) pillName.textContent = meta.name;
   if (pillSwatches) {
     pillSwatches.innerHTML = "";
-    (THEME_SWATCHES[themeId] || THEME_SWATCHES["neon-night"]).forEach((color) => {
+    (THEME_SWATCHES[themeId] || THEME_SWATCHES["emerald"]).forEach((color) => {
       const dot = document.createElement("i");
       dot.style.background = color;
       pillSwatches.appendChild(dot);
@@ -254,7 +262,7 @@ function pathColors() {
 
 function normalizeThemeId(id) {
   const normalized = THEME_ALIASES[id] || id || "neon-night";
-  return THEMES.some((theme) => theme.id === normalized) ? normalized : "neon-night";
+  return THEMES.some((theme) => theme.id === normalized) ? normalized : "emerald";
 }
 
 function applyTheme(id, persist = true) {
@@ -291,8 +299,8 @@ const STRATEGIES = [
   { id: 2, name: "TOP", label: "Rise to top" },
   { id: 3, name: "LEFT", label: "Slide to left" },
   { id: 4, name: "RIGHT", label: "Slide to right" },
-  { id: 5, name: "LEFT+RIGHT", label: "Push left/right halves outward" },
-  { id: 6, name: "TOP+BOTTOM", label: "Push top/bottom sections outward" },
+  { id: 5, name: "X CENTER", label: "Collapse toward vertical center" },
+  { id: 6, name: "Y CENTER", label: "Collapse toward horizontal center" },
   { id: 7, name: "RANDOM", label: "Random movement after each match" },
 ];
 const RANDOM_MOVEMENT_IDS = [1, 2, 3, 4, 5, 6];
@@ -334,7 +342,9 @@ function applyMovement(strategy) {
     for (let r = 0; r < ROWS; r++) {
       const left = board[r].slice(0, mid);
       const right = board[r].slice(mid);
-      board[r] = [...compactLine(left, 0), ...compactLine(right, 1)];
+      // Collapse toward the vertical center column:
+      // left half slides right, right half slides left.
+      board[r] = [...compactLine(left, 1), ...compactLine(right, 0)];
     }
   }
   function applyTopBottom() {
@@ -345,8 +355,8 @@ function applyMovement(strategy) {
       for (let r = 0; r < mid; r++) top.push(board[r][c]);
       const center = board[mid][c];
       for (let r = mid + 1; r < ROWS; r++) bottom.push(board[r][c]);
-      const newTop = compactLine(top, 0); // rows 1–4 move TOP
-      const newBottom = compactLine(bottom, 1); // rows 6–9 move BOTTOM
+      const newTop = compactLine(top, 1); // top section slides down toward center
+      const newBottom = compactLine(bottom, 0); // bottom section slides up toward center
       for (let r = 0; r < mid; r++) board[r][c] = newTop[r];
       board[mid][c] = center; // row 5 stays as neutral center row
       for (let r = mid + 1; r < ROWS; r++)
@@ -697,42 +707,218 @@ const HOME_SPRITES = [
   },
 ];
 const FLAGS_SPRITES = [
-  { id: 1, n: "Argentina", img: "assets/sprites/flags/1-argentina.png" },
-  { id: 2, n: "Australia", img: "assets/sprites/flags/2-australia.png" },
-  { id: 3, n: "Barbados", img: "assets/sprites/flags/3-barbados.png" },
-  { id: 4, n: "Botswana", img: "assets/sprites/flags/4-botswana.png" },
-  { id: 5, n: "Brazil", img: "assets/sprites/flags/5-brazil.png" },
-  { id: 6, n: "Canada", img: "assets/sprites/flags/6-canada.png" },
-  { id: 7, n: "China", img: "assets/sprites/flags/7-china.png" },
-  { id: 8, n: "Czech", img: "assets/sprites/flags/8-czech.png" },
-  { id: 9, n: "Denmark", img: "assets/sprites/flags/9-denmark.png" },
-  { id: 10, n: "England", img: "assets/sprites/flags/10-england.png" },
-  { id: 11, n: "EU", img: "assets/sprites/flags/11-eu.png" },
-  { id: 12, n: "Finland", img: "assets/sprites/flags/12-finland.png" },
-  { id: 13, n: "France", img: "assets/sprites/flags/13-france.png" },
-  { id: 14, n: "Germany", img: "assets/sprites/flags/14-germany.png" },
-  { id: 15, n: "Greece", img: "assets/sprites/flags/15-greece.png" },
-  { id: 16, n: "Iceland", img: "assets/sprites/flags/16-iceland.png" },
-  { id: 17, n: "Italy", img: "assets/sprites/flags/17-italy.png" },
-  { id: 18, n: "Jamaica", img: "assets/sprites/flags/18-jamaica.png" },
-  { id: 19, n: "Japan", img: "assets/sprites/flags/19-japan.png" },
-  { id: 20, n: "North Macedonia", img: "assets/sprites/flags/20-north-macedonia.png" },
-  { id: 21, n: "Norway", img: "assets/sprites/flags/21-norway.png" },
-  { id: 22, n: "Qatar", img: "assets/sprites/flags/22-qatar.png" },
-  { id: 23, n: "Russia", img: "assets/sprites/flags/23-russia.png" },
-  { id: 24, n: "Saudi Arabia", img: "assets/sprites/flags/24-saudi-arabia.png" },
-  { id: 25, n: "Scotland", img: "assets/sprites/flags/25-scotland.png" },
-  { id: 26, n: "Singapore", img: "assets/sprites/flags/26-singapore.png" },
-  { id: 27, n: "Somalia", img: "assets/sprites/flags/27-somalia.png" },
-  { id: 28, n: "South Africa", img: "assets/sprites/flags/28-south-africa.png" },
-  { id: 29, n: "South Korea", img: "assets/sprites/flags/29-south-korea.png" },
-  { id: 30, n: "Sweden", img: "assets/sprites/flags/30-sweden.png" },
-  { id: 31, n: "Thailand", img: "assets/sprites/flags/31-thailand.png" },
-  { id: 32, n: "Turkey", img: "assets/sprites/flags/32-turkey.png" },
-  { id: 33, n: "UK", img: "assets/sprites/flags/33-uk.png" },
-  { id: 34, n: "USA", img: "assets/sprites/flags/34-usa.png" },
-  { id: 35, n: "Venezuela", img: "assets/sprites/flags/35-venezuela.png" },
-  { id: 36, n: "Vietnam", img: "assets/sprites/flags/36-vietnam.png" },
+  { id: 1, n: "Afghanistan", img: "assets/sprites/flags/001-afghanistan.png" },
+  { id: 2, n: "Albania", img: "assets/sprites/flags/002-albania.png" },
+  { id: 3, n: "Algeria", img: "assets/sprites/flags/003-algeria.png" },
+  { id: 4, n: "Andorra", img: "assets/sprites/flags/004-andorra.png" },
+  { id: 5, n: "Angola", img: "assets/sprites/flags/005-angola.png" },
+  { id: 6, n: "Antigua", img: "assets/sprites/flags/006-antigua-and-barbuda.png" },
+  { id: 7, n: "Argentina", img: "assets/sprites/flags/007-argentina.png" },
+  { id: 8, n: "Armenia", img: "assets/sprites/flags/008-armenia.png" },
+  { id: 9, n: "Aruba", img: "assets/sprites/flags/009-aruba.png" },
+  { id: 10, n: "Australia", img: "assets/sprites/flags/010-australia.png" },
+  { id: 11, n: "Austria", img: "assets/sprites/flags/011-austria.png" },
+  { id: 12, n: "Azerbaijan", img: "assets/sprites/flags/012-azerbaijan.png" },
+  { id: 13, n: "Bahrain", img: "assets/sprites/flags/013-bahrain.png" },
+  { id: 14, n: "Bangladesh", img: "assets/sprites/flags/014-bangladesh.png" },
+  { id: 15, n: "Barbados", img: "assets/sprites/flags/015-barbados.png" },
+  { id: 16, n: "Belarus", img: "assets/sprites/flags/016-belarus.png" },
+  { id: 17, n: "Belgium", img: "assets/sprites/flags/017-belgium.png" },
+  { id: 18, n: "Belize", img: "assets/sprites/flags/018-belize.png" },
+  { id: 19, n: "Benin", img: "assets/sprites/flags/019-benin.png" },
+  { id: 20, n: "Bhutan", img: "assets/sprites/flags/020-bhutan.png" },
+  { id: 21, n: "Bolivia", img: "assets/sprites/flags/021-bolivia.png" },
+  { id: 22, n: "Bosnia", img: "assets/sprites/flags/022-bosnia-and-herzegovina.png" },
+  { id: 23, n: "Botswana", img: "assets/sprites/flags/023-botswana.png" },
+  { id: 24, n: "Brazil", img: "assets/sprites/flags/024-brazil.png" },
+  { id: 25, n: "Brunei", img: "assets/sprites/flags/025-brunei.png" },
+  { id: 26, n: "Bulgaria", img: "assets/sprites/flags/026-bulgaria.png" },
+  { id: 27, n: "Burkina Faso", img: "assets/sprites/flags/027-burkina-faso.png" },
+  { id: 28, n: "Burundi", img: "assets/sprites/flags/028-burundi.png" },
+  { id: 29, n: "Cambodia", img: "assets/sprites/flags/029-cambodia.png" },
+  { id: 30, n: "Cameroon", img: "assets/sprites/flags/030-cameroon.png" },
+  { id: 31, n: "Canada", img: "assets/sprites/flags/031-canada.png" },
+  { id: 32, n: "Cape Verde", img: "assets/sprites/flags/032-cape-verde.png" },
+  { id: 33, n: "Central African Republic", img: "assets/sprites/flags/033-central-african-republic.png" },
+  { id: 34, n: "Chad", img: "assets/sprites/flags/034-chad.png" },
+  { id: 35, n: "Chile", img: "assets/sprites/flags/035-chile.png" },
+  { id: 36, n: "China", img: "assets/sprites/flags/036-china.png" },
+  { id: 37, n: "Chuuk State", img: "assets/sprites/flags/037-chuuk-state.png" },
+  { id: 38, n: "Colombia", img: "assets/sprites/flags/038-colombia.png" },
+  { id: 39, n: "Comoros", img: "assets/sprites/flags/039-comoros.png" },
+  { id: 40, n: "Costa Rica", img: "assets/sprites/flags/040-costa-rica.png" },
+  { id: 41, n: "Croatia", img: "assets/sprites/flags/041-croatia.png" },
+  { id: 42, n: "Cuba", img: "assets/sprites/flags/042-cuba.png" },
+  { id: 43, n: "Curacao", img: "assets/sprites/flags/043-curacao.png" },
+  { id: 44, n: "Cyprus", img: "assets/sprites/flags/044-cyprus.png" },
+  { id: 45, n: "Czechia", img: "assets/sprites/flags/045-czech-republic.png" },
+  { id: 46, n: "DR Congo", img: "assets/sprites/flags/046-democratic-republic-of-the-congo.png" },
+  { id: 47, n: "Denmark", img: "assets/sprites/flags/047-denmark.png" },
+  { id: 48, n: "Djibouti", img: "assets/sprites/flags/048-djibouti.png" },
+  { id: 49, n: "Dominica", img: "assets/sprites/flags/049-dominica.png" },
+  { id: 50, n: "Dominican Republic", img: "assets/sprites/flags/050-dominican-republic.png" },
+  { id: 51, n: "Ecuador", img: "assets/sprites/flags/051-ecuador.png" },
+  { id: 52, n: "Egypt", img: "assets/sprites/flags/052-egypt.png" },
+  { id: 53, n: "El Salvador", img: "assets/sprites/flags/053-el-salvador.png" },
+  { id: 54, n: "England", img: "assets/sprites/flags/054-england.png" },
+  { id: 55, n: "Equatorial Guinea", img: "assets/sprites/flags/055-equatorial-guinea.png" },
+  { id: 56, n: "Eritrea", img: "assets/sprites/flags/056-eritrea.png" },
+  { id: 57, n: "Estonia", img: "assets/sprites/flags/057-estonia.png" },
+  { id: 58, n: "Eswatini", img: "assets/sprites/flags/058-eswatini.png" },
+  { id: 59, n: "Ethiopia", img: "assets/sprites/flags/059-ethiopia.png" },
+  { id: 60, n: "Faroe Islands", img: "assets/sprites/flags/060-faroe-islands.png" },
+  { id: 61, n: "Federated States Of Micronesia", img: "assets/sprites/flags/061-federated-states-of-micronesia.png" },
+  { id: 62, n: "Fiji", img: "assets/sprites/flags/062-fiji.png" },
+  { id: 63, n: "Finland", img: "assets/sprites/flags/063-finland.png" },
+  { id: 64, n: "France", img: "assets/sprites/flags/064-france.png" },
+  { id: 65, n: "Gabon", img: "assets/sprites/flags/065-gabon.png" },
+  { id: 66, n: "Georgia", img: "assets/sprites/flags/066-georgia.png" },
+  { id: 67, n: "Germany", img: "assets/sprites/flags/067-germany.png" },
+  { id: 68, n: "Ghana", img: "assets/sprites/flags/068-ghana.png" },
+  { id: 69, n: "Greece", img: "assets/sprites/flags/069-greece.png" },
+  { id: 70, n: "Greenland", img: "assets/sprites/flags/070-greenland.png" },
+  { id: 71, n: "Grenada", img: "assets/sprites/flags/071-grenada.png" },
+  { id: 72, n: "Guam", img: "assets/sprites/flags/072-guam.png" },
+  { id: 73, n: "Guatemala", img: "assets/sprites/flags/073-guatemala.png" },
+  { id: 74, n: "Guinea Bissau", img: "assets/sprites/flags/074-guinea-bissau.png" },
+  { id: 75, n: "Guinea", img: "assets/sprites/flags/075-guinea.png" },
+  { id: 76, n: "Guyana", img: "assets/sprites/flags/076-guyana.png" },
+  { id: 77, n: "Haiti", img: "assets/sprites/flags/077-haiti.png" },
+  { id: 78, n: "Honduras", img: "assets/sprites/flags/078-honduras.png" },
+  { id: 79, n: "Hungary", img: "assets/sprites/flags/079-hungary.png" },
+  { id: 80, n: "Iceland", img: "assets/sprites/flags/080-iceland.png" },
+  { id: 81, n: "India", img: "assets/sprites/flags/081-india.png" },
+  { id: 82, n: "Indonesia", img: "assets/sprites/flags/082-indonesia.png" },
+  { id: 83, n: "Iran", img: "assets/sprites/flags/083-iran.png" },
+  { id: 84, n: "Iraq", img: "assets/sprites/flags/084-iraq.png" },
+  { id: 85, n: "Israel", img: "assets/sprites/flags/085-israel.png" },
+  { id: 86, n: "Italy", img: "assets/sprites/flags/086-italy.png" },
+  { id: 87, n: "Ivory Coast", img: "assets/sprites/flags/087-ivory-coast.png" },
+  { id: 88, n: "Jamaica", img: "assets/sprites/flags/088-jamaica.png" },
+  { id: 89, n: "Japan", img: "assets/sprites/flags/089-japan.png" },
+  { id: 90, n: "Jordan", img: "assets/sprites/flags/090-jordan.png" },
+  { id: 91, n: "Kazakhstan", img: "assets/sprites/flags/091-kazakhstan.png" },
+  { id: 92, n: "Kenya", img: "assets/sprites/flags/092-kenya.png" },
+  { id: 93, n: "Kiribati", img: "assets/sprites/flags/093-kiribati.png" },
+  { id: 94, n: "Kosovo", img: "assets/sprites/flags/094-kosovo.png" },
+  { id: 95, n: "Kosrae", img: "assets/sprites/flags/095-kosrae.png" },
+  { id: 96, n: "Kuwait", img: "assets/sprites/flags/096-kuwait.png" },
+  { id: 97, n: "Kyrgyzstan", img: "assets/sprites/flags/097-kyrgyzstan.png" },
+  { id: 98, n: "Laos", img: "assets/sprites/flags/098-laos.png" },
+  { id: 99, n: "Latvia", img: "assets/sprites/flags/099-latvia.png" },
+  { id: 100, n: "Lebanon", img: "assets/sprites/flags/100-lebanon.png" },
+  { id: 101, n: "Lesotho", img: "assets/sprites/flags/101-lesotho.png" },
+  { id: 102, n: "Liberia", img: "assets/sprites/flags/102-liberia.png" },
+  { id: 103, n: "Libya", img: "assets/sprites/flags/103-libya.png" },
+  { id: 104, n: "Liechtenstein", img: "assets/sprites/flags/104-liechtenstein.png" },
+  { id: 105, n: "Lithuania", img: "assets/sprites/flags/105-lithuania.png" },
+  { id: 106, n: "Luxembourg", img: "assets/sprites/flags/106-luxembourg.png" },
+  { id: 107, n: "Madagascar", img: "assets/sprites/flags/107-madagascar.png" },
+  { id: 108, n: "Malawi", img: "assets/sprites/flags/108-malawi.png" },
+  { id: 109, n: "Malaysia", img: "assets/sprites/flags/109-malaysia.png" },
+  { id: 110, n: "Maldives", img: "assets/sprites/flags/110-maldives.png" },
+  { id: 111, n: "Mali", img: "assets/sprites/flags/111-mali.png" },
+  { id: 112, n: "Malta", img: "assets/sprites/flags/112-malta.png" },
+  { id: 113, n: "Marshall Islands", img: "assets/sprites/flags/113-marshall-islands.png" },
+  { id: 114, n: "Mauritania", img: "assets/sprites/flags/114-mauritania.png" },
+  { id: 115, n: "Mauritius", img: "assets/sprites/flags/115-mauritius.png" },
+  { id: 116, n: "Mexico", img: "assets/sprites/flags/116-mexico.png" },
+  { id: 117, n: "Moldova", img: "assets/sprites/flags/117-moldova.png" },
+  { id: 118, n: "Monaco", img: "assets/sprites/flags/118-monaco.png" },
+  { id: 119, n: "Mongolia", img: "assets/sprites/flags/119-mongolia.png" },
+  { id: 120, n: "Montenegro", img: "assets/sprites/flags/120-montenegro.png" },
+  { id: 121, n: "Morocco", img: "assets/sprites/flags/121-morocco.png" },
+  { id: 122, n: "Mozambique", img: "assets/sprites/flags/122-mozambique.png" },
+  { id: 123, n: "Myanmar", img: "assets/sprites/flags/123-myanmar.png" },
+  { id: 124, n: "Namibia", img: "assets/sprites/flags/124-namibia.png" },
+  { id: 125, n: "Nauru", img: "assets/sprites/flags/125-nauru.png" },
+  { id: 126, n: "Nepal", img: "assets/sprites/flags/126-nepal.png" },
+  { id: 127, n: "Netherlands", img: "assets/sprites/flags/127-netherlands.png" },
+  { id: 128, n: "New Zealand", img: "assets/sprites/flags/128-new-zealand.png" },
+  { id: 129, n: "Nicaragua", img: "assets/sprites/flags/129-nicaragua.png" },
+  { id: 130, n: "Niger", img: "assets/sprites/flags/130-niger.png" },
+  { id: 131, n: "Nigeria", img: "assets/sprites/flags/131-nigeria.png" },
+  { id: 132, n: "North Korea", img: "assets/sprites/flags/132-north-korea.png" },
+  { id: 133, n: "N. Macedonia", img: "assets/sprites/flags/133-north-macedonia.png" },
+  { id: 134, n: "Norway", img: "assets/sprites/flags/134-norway.png" },
+  { id: 135, n: "Oman", img: "assets/sprites/flags/135-oman.png" },
+  { id: 136, n: "Pakistan", img: "assets/sprites/flags/136-pakistan.png" },
+  { id: 137, n: "Palau", img: "assets/sprites/flags/137-palau.png" },
+  { id: 138, n: "Palestine", img: "assets/sprites/flags/138-palestine.png" },
+  { id: 139, n: "Panama", img: "assets/sprites/flags/139-panama.png" },
+  { id: 140, n: "Papua New Guinea", img: "assets/sprites/flags/140-papua-new-guinea.png" },
+  { id: 141, n: "Paraguay", img: "assets/sprites/flags/141-paraguay.png" },
+  { id: 142, n: "Peru", img: "assets/sprites/flags/142-peru.png" },
+  { id: 143, n: "Philippines", img: "assets/sprites/flags/143-philippines.png" },
+  { id: 144, n: "Pohnpei State", img: "assets/sprites/flags/144-pohnpei-state.png" },
+  { id: 145, n: "Poland", img: "assets/sprites/flags/145-poland.png" },
+  { id: 146, n: "Portugal", img: "assets/sprites/flags/146-portugal.png" },
+  { id: 147, n: "Puerto Rico", img: "assets/sprites/flags/147-puerto-rico.png" },
+  { id: 148, n: "Qatar", img: "assets/sprites/flags/148-qatar.png" },
+  { id: 149, n: "Republic Of Ireland", img: "assets/sprites/flags/149-republic-of-ireland.png" },
+  { id: 150, n: "Congo", img: "assets/sprites/flags/150-republic-of-the-congo.png" },
+  { id: 151, n: "Republika Srpska", img: "assets/sprites/flags/151-republika-srpska.png" },
+  { id: 152, n: "Romania", img: "assets/sprites/flags/152-romania.png" },
+  { id: 153, n: "Russia", img: "assets/sprites/flags/153-russia.png" },
+  { id: 154, n: "Rwanda", img: "assets/sprites/flags/154-rwanda.png" },
+  { id: 155, n: "Saint Kitts And Nevis", img: "assets/sprites/flags/155-saint-kitts-and-nevis.png" },
+  { id: 156, n: "Saint Lucia", img: "assets/sprites/flags/156-saint-lucia.png" },
+  { id: 157, n: "St Vincent", img: "assets/sprites/flags/157-saint-vincent-and-the-grenadines.png" },
+  { id: 158, n: "Samoa", img: "assets/sprites/flags/158-samoa.png" },
+  { id: 159, n: "San Marino", img: "assets/sprites/flags/159-san-marino.png" },
+  { id: 160, n: "Saudi Arabia", img: "assets/sprites/flags/160-saudi-arabia.png" },
+  { id: 161, n: "Scotland", img: "assets/sprites/flags/161-scotland.png" },
+  { id: 162, n: "Senegal", img: "assets/sprites/flags/162-senegal.png" },
+  { id: 163, n: "Serbia", img: "assets/sprites/flags/163-serbia.png" },
+  { id: 164, n: "Seychelles", img: "assets/sprites/flags/164-seychelles.png" },
+  { id: 165, n: "Sierra Leone", img: "assets/sprites/flags/165-sierra-leone.png" },
+  { id: 166, n: "Singapore", img: "assets/sprites/flags/166-singapore.png" },
+  { id: 167, n: "Sint Maarten", img: "assets/sprites/flags/167-sint-maarten.png" },
+  { id: 168, n: "Slovakia", img: "assets/sprites/flags/168-slovakia.png" },
+  { id: 169, n: "Slovenia", img: "assets/sprites/flags/169-slovenia.png" },
+  { id: 170, n: "Solomon Islands", img: "assets/sprites/flags/170-solomon-islands.png" },
+  { id: 171, n: "Somalia", img: "assets/sprites/flags/171-somalia.png" },
+  { id: 172, n: "South Africa", img: "assets/sprites/flags/172-south-africa.png" },
+  { id: 173, n: "South Korea", img: "assets/sprites/flags/173-south-korea.png" },
+  { id: 174, n: "South Sudan", img: "assets/sprites/flags/174-south-sudan.png" },
+  { id: 175, n: "Spain", img: "assets/sprites/flags/175-spain.png" },
+  { id: 176, n: "Sri Lanka", img: "assets/sprites/flags/176-sri-lanka.png" },
+  { id: 177, n: "Sudan", img: "assets/sprites/flags/177-sudan.png" },
+  { id: 178, n: "Suriname", img: "assets/sprites/flags/178-suriname.png" },
+  { id: 179, n: "Sweden", img: "assets/sprites/flags/179-sweden.png" },
+  { id: 180, n: "Switzerland", img: "assets/sprites/flags/180-switzerland.png" },
+  { id: 181, n: "Syria", img: "assets/sprites/flags/181-syria.png" },
+  { id: 182, n: "Sao Tome And Principe", img: "assets/sprites/flags/182-sao-tome-and-principe.png" },
+  { id: 183, n: "Tajikistan", img: "assets/sprites/flags/183-tajikistan.png" },
+  { id: 184, n: "Tanzania", img: "assets/sprites/flags/184-tanzania.png" },
+  { id: 185, n: "Thailand", img: "assets/sprites/flags/185-thailand.png" },
+  { id: 186, n: "The Bahamas", img: "assets/sprites/flags/186-the-bahamas.png" },
+  { id: 187, n: "The Gambia", img: "assets/sprites/flags/187-the-gambia.png" },
+  { id: 188, n: "Timor Leste", img: "assets/sprites/flags/188-timor-leste.png" },
+  { id: 189, n: "Togo", img: "assets/sprites/flags/189-togo.png" },
+  { id: 190, n: "Tonga", img: "assets/sprites/flags/190-tonga.png" },
+  { id: 191, n: "Trinidad", img: "assets/sprites/flags/191-trinidad-and-tobago.png" },
+  { id: 192, n: "Tunisia", img: "assets/sprites/flags/192-tunisia.png" },
+  { id: 193, n: "Turkey", img: "assets/sprites/flags/193-turkey.png" },
+  { id: 194, n: "Turkmenistan", img: "assets/sprites/flags/194-turkmenistan.png" },
+  { id: 195, n: "Tuvalu", img: "assets/sprites/flags/195-tuvalu.png" },
+  { id: 196, n: "Uganda", img: "assets/sprites/flags/196-uganda.png" },
+  { id: 197, n: "Ukraine", img: "assets/sprites/flags/197-ukraine.png" },
+  { id: 198, n: "UAE", img: "assets/sprites/flags/198-united-arab-emirates.png" },
+  { id: 199, n: "UK", img: "assets/sprites/flags/199-united-kingdom.png" },
+  { id: 200, n: "USA", img: "assets/sprites/flags/200-united-states-of-america.png" },
+  { id: 201, n: "United States Virgin Islands", img: "assets/sprites/flags/201-united-states-virgin-islands.png" },
+  { id: 202, n: "Uruguay", img: "assets/sprites/flags/202-uruguay.png" },
+  { id: 203, n: "Uzbekistan", img: "assets/sprites/flags/203-uzbekistan.png" },
+  { id: 204, n: "Vanuatu", img: "assets/sprites/flags/204-vanuatu.png" },
+  { id: 205, n: "Vatican City", img: "assets/sprites/flags/205-vatican-city.png" },
+  { id: 206, n: "Venezuela", img: "assets/sprites/flags/206-venezuela.png" },
+  { id: 207, n: "Vietnam", img: "assets/sprites/flags/207-vietnam.png" },
+  { id: 208, n: "Wales", img: "assets/sprites/flags/208-wales.png" },
+  { id: 209, n: "Yap State", img: "assets/sprites/flags/209-yap-state.png" },
+  { id: 210, n: "Yemen", img: "assets/sprites/flags/210-yemen.png" },
+  { id: 211, n: "Zambia", img: "assets/sprites/flags/211-zambia.png" },
+  { id: 212, n: "Zimbabwe", img: "assets/sprites/flags/212-zimbabwe.png" }
 ];
 const BRAND_SPRITES = [
   { id: 1, n: "Instagram", img: "assets/sprites/brands/01-instagram.png" },
@@ -1024,7 +1210,7 @@ let currentSpriteSetId = determineInitialSpriteSet();
 let entities = [];
 
 function buildEntities(setId) {
-  const set = SPRITE_SETS[setId] || SPRITE_SETS.original;
+  const set = SPRITE_SETS[setId] || SPRITE_SETS.flags;
   return set.sprites.map((e) => ({
     id: e.id,
     name: e.n,
@@ -1034,7 +1220,7 @@ function buildEntities(setId) {
 }
 
 function applySpriteSet(setId, opts = {}) {
-  currentSpriteSetId = SPRITE_SETS[setId] ? setId : "original";
+  currentSpriteSetId = "flags";
   entities = buildEntities(currentSpriteSetId);
 
   // Expose the active tile set to CSS so each asset pack can be tuned
@@ -1068,12 +1254,7 @@ function applySpriteSet(setId, opts = {}) {
 }
 
 function randomSpriteSetId(excludeId = null) {
-  const ids = Object.keys(SPRITE_SETS);
-  const pool = ids.length > 1 ? ids.filter((id) => id !== excludeId) : ids;
-  const pick = typeof randomIndex === "function"
-    ? randomIndex(pool.length)
-    : Math.floor(Math.random() * pool.length);
-  return pool[pick] || ids[0] || "original";
+  return "flags";
 }
 
 function applyQuickGameRandomSet() {
@@ -1143,6 +1324,19 @@ function getLevelTime(lvl) {
   return Math.max(MIN_TOTAL_TIME, TOTAL_TIME - reduction);
 }
 
+function getMainGameUniqueFlagCount(lvl) {
+  const safeLevel = Math.max(1, Number(lvl) || 1);
+  const stepIndex = Math.min(
+    MAIN_GAME_UNIQUE_FLAG_STEPS.length - 1,
+    Math.floor((safeLevel - 1) / LEVEL_LOOP_SIZE)
+  );
+  return MAIN_GAME_UNIQUE_FLAG_STEPS[stepIndex];
+}
+
+function getBoardUniqueFlagCount(lvl) {
+  return isQuickGame ? QUICK_GAME_UNIQUE_FLAGS : getMainGameUniqueFlagCount(lvl);
+}
+
 function formatScore(value) {
   return Number(value || 0).toLocaleString("en-US");
 }
@@ -1158,14 +1352,33 @@ function updateHelperDisplay() {
   hintCountEl.textContent = formatHelperCount(hintCount);
   shuffleCountEl.textContent = formatHelperCount(shuffleCount);
 }
-function refillHelpersAfterClearedLevel(clearedLevel) {
+function refillHelpersAfterClearedLevel(clearedLevel, perfectClear = false) {
+  let changed = false;
+
+  // Locked FMW helper refill rules:
+  // - Complete every 3 levels: +1 Hint
+  // - Complete every 5 levels: +1 Shuffle
+  // - Complete each 8-level movement cycle: +2 Hints +1 Shuffle
+  // - Perfect clear / no helper used: +1 Hint
   if (clearedLevel > 0 && clearedLevel % 3 === 0) {
     hintCount = Math.min(MAX_HINTS, hintCount + 1);
-    shuffleCount = Math.min(MAX_SHUFFLES, shuffleCount + 2);
-    updateHelperDisplay();
-    return true;
+    changed = true;
   }
-  return false;
+  if (clearedLevel > 0 && clearedLevel % 5 === 0) {
+    shuffleCount = Math.min(MAX_SHUFFLES, shuffleCount + 1);
+    changed = true;
+  }
+  if (clearedLevel > 0 && clearedLevel % LEVEL_LOOP_SIZE === 0) {
+    hintCount = Math.min(MAX_HINTS, hintCount + 2);
+    shuffleCount = Math.min(MAX_SHUFFLES, shuffleCount + 1);
+    changed = true;
+  }
+  if (perfectClear) {
+    hintCount = Math.min(MAX_HINTS, hintCount + 1);
+    changed = true;
+  }
+  if (changed) updateHelperDisplay();
+  return changed;
 }
 applySpriteSet(currentSpriteSetId);
 let bgm = new Audio("assets/audio/background-music.mp3");
@@ -1380,25 +1593,14 @@ function isUsableSave(save) {
 }
 
 function getLatestSavedSetId() {
-  const saves = loadAllSaves();
-  let latestId = null,
-    latestTs = -1;
-  Object.keys(SPRITE_SETS).forEach((id) => {
-    const s = saves[id];
-    if (isUsableSave(s) && s.ts && s.ts > latestTs) {
-      latestTs = s.ts;
-      latestId = id;
-    }
-  });
-  return latestId;
+  return getSaveForSet("flags") ? "flags" : null;
 }
 
 function determineInitialSpriteSet() {
   migrateLegacySave();
   const latest = getLatestSavedSetId();
   if (latest) return latest;
-  const stored = localStorage.getItem(SPRITE_SET_KEY) || "original";
-  return SPRITE_SETS[stored] ? stored : "original";
+  return "flags";
 }
 
 function getSaveForSet(setId = currentSpriteSetId) {
@@ -1483,7 +1685,7 @@ function refreshSaveSlot() {
   const slot = $("savedSlot");
   const resumeBtn = $("continueFromSaveBtn");
   const deleteBtn = $("deleteSaveBtn");
-  const setName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.original)
+  const setName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.flags)
     .name;
   refreshSpriteSavePills();
   if (!save) {
@@ -1656,26 +1858,36 @@ function getRecentBoardSignature() {
   return readRecentBoardSignatures()[recentBoardSignatureKey()] || null;
 }
 
-function buildRandomPairPool(sourceEntities, pairCount) {
+function buildRandomPairPool(sourceEntities, pairCount, uniqueCount = pairCount) {
   const pool = [];
-  let bag = [];
 
   if (!Array.isArray(sourceEntities) || sourceEntities.length === 0) {
     return pool;
   }
 
-  while (pool.length < pairCount) {
-    // Refill with a newly shuffled full set so every character gets a fair turn.
-    // If extra pairs are needed after complete rounds, the extra characters are random,
-    // not always the first items in the sprite list.
-    if (bag.length === 0) {
-      bag = shuf([...sourceEntities]);
+  const limitedUniqueCount = Math.max(
+    1,
+    Math.min(uniqueCount, pairCount, sourceEntities.length)
+  );
+
+  // First choose exactly the required number of unique flags for this level.
+  // Then distribute the 72 pairs as evenly as possible across that selected set.
+  // Example: level 1 uses 24 flags × 3 pairs each = 72 pairs.
+  const selectedEntities = shuf([...sourceEntities]).slice(0, limitedUniqueCount);
+  const basePairsPerFlag = Math.floor(pairCount / selectedEntities.length);
+  const extraPairs = pairCount % selectedEntities.length;
+  const extraIndexes = new Set(
+    shuf([...selectedEntities.keys()]).slice(0, extraPairs)
+  );
+
+  selectedEntities.forEach((entity, index) => {
+    const repeats = basePairsPerFlag + (extraIndexes.has(index) ? 1 : 0);
+    for (let i = 0; i < repeats; i++) {
+      pool.push(entity);
     }
+  });
 
-    pool.push(bag.pop());
-  }
-
-  return pool;
+  return shuf(pool);
 }
 
 function createBoard() {
@@ -1688,7 +1900,8 @@ function createBoard() {
   // sprite set + level in the current session. This is mostly a guard; with
   // crypto randomness the repeat chance is already extremely small.
   for (let attempt = 0; attempt < 8; attempt++) {
-    const selectedPairs = buildRandomPairPool(entities, pairCount);
+    const uniqueFlagCount = getBoardUniqueFlagCount(level);
+    const selectedPairs = buildRandomPairPool(entities, pairCount, uniqueFlagCount);
     values = [];
 
     selectedPairs.forEach((entity) => {
@@ -1710,6 +1923,29 @@ function createBoard() {
     board.push(row);
   }
 }
+
+
+// Small QA helper for browser console checks during development.
+// Example: __fmwDebug.expectedUniqueFlagsForLevel(1) -> 24
+//          __fmwDebug.currentBoardUniqueFlags() -> current visible unique flag count
+window.__fmwDebug = {
+  expectedUniqueFlagsForLevel: getMainGameUniqueFlagCount,
+  expectedBoardUniqueFlagsForLevel: (lvl, quick = false) =>
+    quick ? QUICK_GAME_UNIQUE_FLAGS : getMainGameUniqueFlagCount(lvl),
+  currentBoardUniqueFlags: () => {
+    try {
+      return new Set(
+        board.flat()
+          .filter((tile) => tile && !tile.removed && tile.entity)
+          .map((tile) => tile.entity.id),
+      ).size;
+    } catch (e) {
+      return 0;
+    }
+  },
+  helperInventory: () => ({ hints: hintCount, shuffles: shuffleCount }),
+  movementRuleForLevel: (lvl) => getStrategy(lvl).name,
+};
 
 function renderBoard() {
   boardEl.innerHTML = "";
@@ -1906,6 +2142,18 @@ function clearSel() {
   selected = null;
 }
 
+function setSelectedCountryName(name) {
+  const pill = $("countryNamePill");
+  if (!pill) return;
+  const clean = String(name || "").trim();
+  pill.textContent = clean ? clean.toUpperCase() : "SELECT A FLAG";
+  pill.classList.toggle("active", !!clean);
+}
+
+function resetSelectedCountryName() {
+  setSelectedCountryName("");
+}
+
 // ─────────────────────────────────────────────
 //  SCORING HELPERS
 // ─────────────────────────────────────────────
@@ -2064,6 +2312,7 @@ function resetLevelScoring() {
   bestCombo = 0;
   usedHintLvl = 0;
   usedShuffLvl = 0;
+  try { resetSelectedCountryName(); } catch(e) {}
 }
 
 // ─────────────────────────────────────────────
@@ -2077,17 +2326,20 @@ function clickTile(r, c, el) {
     selected = { r, c, el };
     el.classList.add("selected");
     sfx.select();
+    setSelectedCountryName(board[r][c].entity.name);
     moveStatus.textContent = board[r][c].entity.name.toUpperCase();
     return;
   }
   if (selected.r === r && selected.c === c) {
     clearSel();
+    resetSelectedCountryName();
     sfx.select();
     moveStatus.textContent = "SELECTION CLEARED";
     return;
   }
   let a = selected,
     b = { r, c, el };
+  setSelectedCountryName(board[b.r][b.c].entity.name);
   if (board[a.r][a.c].entity.id === board[b.r][b.c].entity.id) {
     let p = path(a, b);
     if (p) {
@@ -2109,6 +2361,7 @@ function clickTile(r, c, el) {
       levelScore += pts;
       setScoreDisplay();
       showMatchFeedback(a, b, pts, isComboMatch);
+      setTimeout(resetSelectedCountryName, 350);
       moveStatus.textContent =
         isComboMatch
           ? `COMBO x${comboCount}  +${formatScore(pts)}`
@@ -2279,7 +2532,7 @@ function showGameOver() {
   $("themePicker").classList.add("hidden");
 
   const rule = currentStrategy ? currentStrategy.name : "NORMAL";
-  const activeSetName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.original).name;
+  const activeSetName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.flags).name;
   const modeLabel = isQuickGame ? "QUICK PLAY" : String(rule).toUpperCase();
   const bestScore = updateAndGetBestScore(score);
 
@@ -2371,7 +2624,7 @@ function updateBoardInfo() {
   }
   const n = countConnectablePairs();
   const matchText = `MATCHES: ${String(n).padStart(2, "0")}`;
-  const setName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.original).name;
+  const setName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.flags).name;
   if (boardInfoEl) {
     boardInfoEl.textContent = `${matchText}  ·  SET: ${setName}`;
   }
@@ -2518,7 +2771,7 @@ function showLevelComplete() {
 
   const nextSetName = isQuickGame
     ? "Random tile set"
-    : (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.original).name;
+    : (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.flags).name;
 
   scoreHistory.push({
     level: clearedLevel,
@@ -2548,7 +2801,7 @@ function showLevelComplete() {
   playUiAudio("levelComplete");
 
   if (!isQuickGame) {
-    prepareNextLevelState();
+    prepareNextLevelState(perfect > 0);
     saveGame({ freshLevelCheckpoint: true });
     refreshSpriteSavePills();
     nextLevelReadyAfterComplete = true;
@@ -2560,13 +2813,13 @@ function showLevelComplete() {
   levelCompleteOverlay.classList.remove("hidden");
 }
 
-function prepareNextLevelState() {
+function prepareNextLevelState(perfectClear = false) {
   const clearedLevel = level;
   level++;
   levelScore = 0;
   setScoreDisplay();
   resetLevelScoring();
-  refillHelpersAfterClearedLevel(clearedLevel);
+  refillHelpersAfterClearedLevel(clearedLevel, perfectClear);
   if (isQuickGame) applyQuickGameRandomSet();
   currentStrategy = getStrategy(level);
   levelEl.textContent = String(level).padStart(2, "0");
@@ -2587,7 +2840,7 @@ function startNextLevel() {
   $("quitConfirmOverlay")?.classList.add("hidden");
   $("helperMessageOverlay")?.classList.add("hidden");
   if (!nextLevelReadyAfterComplete) {
-    prepareNextLevelState();
+    prepareNextLevelState(false);
     if (!isQuickGame) {
       saveGame({ freshLevelCheckpoint: true });
       refreshSpriteSavePills();
@@ -2596,7 +2849,7 @@ function startNextLevel() {
   nextLevelReadyAfterComplete = false;
   paused = false;
   gameStarted = true;
-  const setName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.original)
+  const setName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.flags)
     .name;
   moveStatus.textContent = isQuickGame
     ? `QUICK GAME · ${setName} · LV ${level}`
@@ -2611,7 +2864,7 @@ function levelCompleteQuit() {
     return;
   }
   if (!nextLevelReadyAfterComplete) {
-    prepareNextLevelState();
+    prepareNextLevelState(false);
   }
   nextLevelReadyAfterComplete = false;
   saveGame({ freshLevelCheckpoint: true });
@@ -2662,14 +2915,14 @@ function startGame(options = {}) {
   renderBoard();
   startTimer();
   moveStatus.textContent = isQuickGame
-    ? `QUICK GAME · ${(SPRITE_SETS[selectedSet] || SPRITE_SETS.original).name}`
+    ? `QUICK GAME · ${(SPRITE_SETS[selectedSet] || SPRITE_SETS.flags).name}`
     : "SYSTEM ONLINE";
 }
 
 function startNewGameFromTitle(force = false) {
   const existing = loadSave(currentSpriteSetId);
   if (existing && !force) {
-    const setName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.original)
+    const setName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.flags)
       .name;
     $("newGameConfirmMsg").textContent =
       `Starting a new ${setName} game will delete its saved progress.`;
@@ -2762,7 +3015,7 @@ function setupPauseModal() {
   if (badgeEl) badgeEl.textContent = `LV ${level}`;
   const nameEl = $("pauseLevelName");
   if (nameEl) {
-    const setName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.original).name;
+    const setName = (SPRITE_SETS[currentSpriteSetId] || SPRITE_SETS.flags).name;
     const ruleName = currentStrategy ? currentStrategy.name || "Normal" : "Normal";
     nameEl.textContent = `${setName} · ${ruleName}`;
   }
@@ -3215,6 +3468,7 @@ function _setGameSoundMuted(nextMuted) {
   if (topSoundBtn) topSoundBtn.textContent = muted ? "×" : "♪";
   if (!muted) playBgmIfAllowed();
   _syncPauseToggleState();
+  if (typeof syncSettingsToggles === "function") syncSettingsToggles();
 }
 if (_pauseSoundToggle) {
   _pauseSoundToggle.onclick = () => _setGameSoundMuted(!muted);
@@ -3243,6 +3497,40 @@ $("musicBtn").onclick = () => {
   $("musicBtn").textContent = muted ? "×" : "♪";
   if (!muted) playBgmIfAllowed();
 };
+
+
+// Flag Match World fresh settings + pause bindings
+const settingsBtn = $("settingsBtn");
+const settingsOverlay = $("settingsOverlay");
+const settingsBackBtn = $("settingsBackBtn");
+const pauseSettingsBtn = $("pauseSettingsBtn");
+const pauseRestartBtn = $("pauseRestartBtn");
+const pauseHomeBtn = $("pauseHomeBtn");
+const settingsMusicToggle = $("settingsMusicToggle");
+const settingsSoundToggle = $("settingsSoundToggle");
+const settingsHapticsToggle = $("settingsHapticsToggle");
+function openSettingsOverlay(){
+  if (!settingsOverlay) return;
+  settingsOverlay.classList.remove("hidden");
+  settingsOverlay.setAttribute("aria-hidden", "false");
+}
+function closeSettingsOverlay(){
+  if (!settingsOverlay) return;
+  settingsOverlay.classList.add("hidden");
+  settingsOverlay.setAttribute("aria-hidden", "true");
+}
+if (settingsBtn) settingsBtn.onclick = openSettingsOverlay;
+if (pauseSettingsBtn) pauseSettingsBtn.onclick = openSettingsOverlay;
+if (settingsBackBtn) settingsBackBtn.onclick = closeSettingsOverlay;
+if (settingsOverlay) settingsOverlay.addEventListener("click", (e)=>{ if(e.target===settingsOverlay) closeSettingsOverlay(); });
+if (pauseRestartBtn) pauseRestartBtn.onclick = (e)=>{ e.preventDefault(); e.stopPropagation(); pauseOverlay.classList.add("hidden"); appShell.classList.remove("paused"); restartCurrentLevel(); };
+if (pauseHomeBtn) pauseHomeBtn.onclick = (e)=>{ e.preventDefault(); e.stopPropagation(); confirmQuitGame(); };
+function syncSettingsToggles(){
+  [settingsMusicToggle, settingsSoundToggle].forEach(btn=>{ if(btn) btn.setAttribute("aria-pressed", muted ? "false" : "true"); });
+}
+if (settingsMusicToggle) settingsMusicToggle.onclick = ()=>{ _setGameSoundMuted(!muted); syncSettingsToggles(); };
+if (settingsSoundToggle) settingsSoundToggle.onclick = ()=>{ _setGameSoundMuted(!muted); syncSettingsToggles(); };
+if (settingsHapticsToggle) settingsHapticsToggle.onclick = ()=>{ const on=settingsHapticsToggle.getAttribute("aria-pressed")!=="true"; settingsHapticsToggle.setAttribute("aria-pressed", on?"true":"false"); };
 
 // Save buttons
 const quickSaveBtn = $("saveBtn");
@@ -3639,376 +3927,181 @@ refreshSaveSlot(); // show saved game slot on start screen if one exists
   [0, 40, 80, 160, 320, 640, 1000, 1600].forEach(ms => setTimeout(scheduleFit, ms));
 })();
 
+
 // =========================================================
-// Flag Match World UI Flow v1 integration override
+// Flag Match World v5 - agreed startup/popup behavior override
 // =========================================================
-(function fmwUiFlowV1(){
-  const FMW_MUSIC_KEY = "fmw_music_enabled_v1";
-  const FMW_SFX_KEY = "fmw_sfx_enabled_v1";
+(function fmwV5AgreedUi(){
+  const FMW_MUSIC_KEY = "fmw_music_enabled_v5";
+  const FMW_SFX_KEY = "fmw_sfx_enabled_v5";
   let fmwMusicEnabled = localStorage.getItem(FMW_MUSIC_KEY) !== "false";
   let fmwSfxEnabled = localStorage.getItem(FMW_SFX_KEY) !== "false";
   let fmwSettingsReturn = "startup";
+  const q = (id) => document.getElementById(id);
+  const hide = (id, hidden=true) => { const el=q(id); if(el) el.classList.toggle('hidden', hidden); };
+  const modalOpen = (on) => document.body.classList.toggle('fmw-modal-open', !!on);
 
-  function q(id){ return document.getElementById(id); }
-  function setHidden(id, hidden){ const el=q(id); if(el) el.classList.toggle('hidden', hidden); }
-  function setModalOpen(on){ document.body.classList.toggle('fmw-modal-open', !!on); }
+  try { applySpriteSet('flags', {silent:true}); currentSpriteSetId='flags'; currentSaveSlotId='flags'; } catch(e) {}
 
-  // Force Flag Match World to use the flag set only.
-  try { applySpriteSet('flags', { silent:true }); currentSpriteSetId = 'flags'; currentSaveSlotId = 'flags'; } catch(e) {}
-
-  const oldWithAudio = withAudio;
-  withAudio = function(run){ if (!fmwSfxEnabled) return; return oldWithAudio(run); };
-  const oldPlayUiAudio = playUiAudio;
-  playUiAudio = function(name){ if (!fmwSfxEnabled) return; return oldPlayUiAudio(name); };
-  canPlayBgmNow = function(){ return fmwMusicEnabled && gameStarted && !paused && !document.hidden; };
+  const oldWithAudio = typeof withAudio === 'function' ? withAudio : null;
+  if (oldWithAudio) withAudio = function(run){ if(!fmwSfxEnabled) return; return oldWithAudio(run); };
+  const oldPlayUiAudio = typeof playUiAudio === 'function' ? playUiAudio : null;
+  if (oldPlayUiAudio) playUiAudio = function(name){ if(!fmwSfxEnabled) return; return oldPlayUiAudio(name); };
+  if (typeof canPlayBgmNow === 'function') canPlayBgmNow = function(){ return fmwMusicEnabled && gameStarted && !paused && !document.hidden; };
 
   function applySoundSettings(){
-    try { bgm.muted = !fmwMusicEnabled; if (!fmwMusicEnabled) bgm.pause(); else playBgmIfAllowed(); } catch(e) {}
-    try { Object.values(uiAudio).forEach(a => a.muted = !fmwSfxEnabled); } catch(e) {}
+    try { bgm.muted = !fmwMusicEnabled || muted; if(!fmwMusicEnabled) bgm.pause(); else playBgmIfAllowed(); } catch(e) {}
+    try { Object.values(uiAudio).forEach(a => a.muted = !fmwSfxEnabled || muted); } catch(e) {}
   }
-
-  function renderStartupMosaic(){
-    const el = q('fmwStartMosaic');
-    if (!el || typeof FLAGS_SPRITES === 'undefined') return;
-    const w = window.innerWidth || 1024;
-    const h = window.innerHeight || 768;
-    const cw = w > 1200 ? 72 : w > 760 ? 66 : 54;
-    const cols = Math.max(8, Math.ceil((w + 80) / cw));
-    const rows = Math.ceil((h + 120) / ((cw * 2 / 3) + 6)) + 3;
-    const count = cols * rows;
-    el.style.gridTemplateColumns = `repeat(${cols},1fr)`;
-    if (el.childElementCount === count) return;
-    el.innerHTML = '';
-    for (let i=0; i<count; i++){
-      const d = document.createElement('div');
-      d.className = 'fmw-start-flag';
-      const img = document.createElement('img');
-      img.alt = '';
-      img.loading = 'eager';
-      img.src = FLAGS_SPRITES[i % FLAGS_SPRITES.length].img;
-      d.appendChild(img);
-      el.appendChild(d);
-    }
-  }
-
-  function updateStartupSaveUi(){
-    const save = loadSave('flags');
-    const btn = q('continueFromSaveBtn');
-    const del = q('deleteSaveBtn');
-    if (btn){
-      btn.disabled = !save;
-      btn.classList.toggle('disabled', !save);
-      btn.textContent = save ? `Continue · Level ${String(save.level).padStart(2,'0')}` : 'Continue';
-    }
-    if (del) del.classList.toggle('hidden', !save);
-    const saveLevel = q('saveLevel'), saveScore = q('saveScore'), saveDate = q('saveDate');
-    if (saveLevel) saveLevel.textContent = save ? `Flags · LV ${String(save.level).padStart(2,'0')}` : 'Flags';
-    if (saveScore) saveScore.textContent = save ? `${formatScore(save.score)} pts` : 'No saved game';
-    if (saveDate) saveDate.textContent = save ? formatSaveDate(save.ts) : '—';
-  }
-
-  const oldRefreshSaveSlot = refreshSaveSlot;
-  refreshSaveSlot = function(){ try { oldRefreshSaveSlot(); } catch(e) {} updateStartupSaveUi(); };
-  refreshStartScreen = function(){ refreshSaveSlot(); };
-
-  startGame = function(options = {}){
-    const mode = typeof options === 'object' ? options : {};
-    const selectedSet = 'flags';
-    applySpriteSet(selectedSet);
-    isQuickGame = !!mode.quick;
-    currentSaveSlotId = isQuickGame ? null : selectedSet;
-    nextLevelReadyAfterComplete = false;
-    overlay.classList.add('hidden');
-    pauseOverlay.classList.add('hidden');
-    levelCompleteOverlay.classList.add('hidden');
-    gameOverOverlay.classList.add('hidden');
-    setHidden('settingsOverlay', true);
-    setHidden('restartConfirmOverlay', true);
-    setHidden('homeConfirmOverlay', true);
-    setModalOpen(false);
-    appShell.classList.remove('paused');
-    score = 0;
-    levelScore = 0;
-    scoreHistory = [];
-    level = 1;
-    resetLevelScoring();
-    currentStrategy = getStrategy(1);
-    levelTotalTime = isQuickGame ? TOTAL_TIME : getLevelTime(1);
-    timeLeft = levelTotalTime;
-    timerWarned = false;
-    hintCount = HINTS;
-    shuffleCount = isQuickGame ? HINTS : SHUFFLES;
-    paused = false;
-    gameStarted = true;
-    unlockAudio();
-    sfx.level();
-    applySoundSettings();
-    playBgmIfAllowed();
-    levelEl.textContent = '01';
-    setScoreDisplay();
-    updateHelperDisplay();
-    updateRuleTag();
-    updateTimer();
-    createBoard();
-    renderBoard();
-    startTimer();
-    moveStatus.textContent = isQuickGame ? 'QUICK GAME · FLAGS' : 'SYSTEM ONLINE';
-  };
-
-  startQuickGame = function(){ startGame({ quick:true }); };
-
-  startNewGameFromTitle = function(force = false){
-    currentSpriteSetId = 'flags';
-    const existing = loadSave('flags');
-    if (existing && !force){
-      const msg = q('newGameConfirmMsg');
-      if (msg) msg.innerHTML = 'Your saved progress will be deleted.<br>This cannot be undone.';
-      setHidden('newGameConfirmOverlay', false);
-      return;
-    }
-    if (existing) deleteSave('flags');
-    refreshStartScreen();
-    startGame({ quick:false });
-  };
-
-  continueFromSave = function(){
-    const save = loadSave('flags');
-    if (!save){ deleteSave('flags'); refreshStartScreen(); sfx.invalid(); return; }
-    overlay.classList.add('hidden');
-    gameOverOverlay.classList.add('hidden');
-    setModalOpen(false);
-    appShell.classList.remove('paused');
-    restoreGame(save);
-    nextLevelReadyAfterComplete = false;
-    timerWarned = false;
-    paused = false;
-    gameStarted = true;
-    unlockAudio();
-    sfx.level();
-    applySoundSettings();
-    playBgmIfAllowed();
-    startTimer();
-    moveStatus.textContent = `SAVE RESTORED  LV ${level}`;
-  };
-
-  const oldReturnToTitle = returnToTitleAfterSave;
-  returnToTitleAfterSave = function(){
-    oldReturnToTitle();
-    setHidden('settingsOverlay', true);
-    setHidden('restartConfirmOverlay', true);
-    setHidden('homeConfirmOverlay', true);
-    setModalOpen(false);
-    overlay.classList.remove('hidden');
-    refreshStartScreen();
-  };
-
-  setupPauseModal = function(){
-    const title = q('pauseTitle');
-    const msg = q('pauseMessage');
-    const restart = q('pauseRestartBtn');
-    if (title) title.textContent = isQuickGame ? 'QUICK GAME PAUSED' : 'PAUSED';
-    if (msg) msg.textContent = isQuickGame ? 'Quick Game is single-session only.' : 'The timer is stopped. Your saved progress remains safe.';
-    if (restart) restart.textContent = isQuickGame ? 'Restart Quick Game' : 'Restart Level';
-    const levelBadge = q('pauseLevelBadge');
-    if (levelBadge) levelBadge.textContent = isQuickGame ? 'Quick' : `LV ${level}`;
-    const live = q('pauseLiveScore');
-    if (live) live.textContent = formatScore(score || levelScore);
-    const combo = q('pauseBestCombo');
-    if (combo) combo.textContent = bestCombo > 0 ? `×${bestCombo}` : '—';
-  };
-
-  pauseGame = function(){
-    if (!gameStarted || paused) return;
-    paused = true;
-    clearInterval(timerId);
-    clearSel();
-    clearPath();
-    document.body.classList.remove('low-time');
-    appShell.classList.add('paused');
-    setupPauseModal();
-    pauseOverlay.classList.remove('hidden');
-    setModalOpen(true);
-    moveStatus.textContent = 'GAME PAUSED';
-    sfx.select();
-  };
-
-  const oldResumeGame = resumeGame;
-  resumeGame = function(){
-    oldResumeGame();
-    setModalOpen(false);
-    setHidden('settingsOverlay', true);
-    setHidden('restartConfirmOverlay', true);
-    setHidden('homeConfirmOverlay', true);
-  };
-
-  function openSettings(from){
-    fmwSettingsReturn = from;
-    if (from === 'pause') pauseOverlay.classList.add('hidden');
-    syncSettingsToggles();
-    setHidden('settingsOverlay', false);
-    setModalOpen(from === 'pause');
-  }
-
   function syncSettingsToggles(){
-    const music = q('settingsMusicToggle');
-    const sfxT = q('settingsSfxToggle');
-    if (music){ music.classList.toggle('off', !fmwMusicEnabled); music.setAttribute('aria-pressed', fmwMusicEnabled ? 'true':'false'); }
-    if (sfxT){ sfxT.classList.toggle('off', !fmwSfxEnabled); sfxT.setAttribute('aria-pressed', fmwSfxEnabled ? 'true':'false'); }
+    const music=q('settingsMusicToggle'), sound=q('settingsSoundToggle');
+    if(music){ music.classList.toggle('off', !fmwMusicEnabled); music.setAttribute('aria-pressed', fmwMusicEnabled?'true':'false'); }
+    if(sound){ sound.classList.toggle('off', !fmwSfxEnabled); sound.setAttribute('aria-pressed', fmwSfxEnabled?'true':'false'); }
   }
-
-  function closeSettings(){
-    setHidden('settingsOverlay', true);
-    if (fmwSettingsReturn === 'pause' && gameStarted && paused){ setupPauseModal(); pauseOverlay.classList.remove('hidden'); setModalOpen(true); }
-    else setModalOpen(false);
+  function renderStartupMosaic(){
+    const el=q('fmwStartMosaic'); if(!el || typeof FLAGS_SPRITES === 'undefined') return;
+    const w=window.innerWidth||1024, h=window.innerHeight||768;
+    const cw=w>1200?72:w>760?66:54;
+    const cols=Math.max(8,Math.ceil((w+80)/cw));
+    const rows=Math.ceil((h+120)/((cw*2/3)+6))+3;
+    const count=cols*rows; el.style.gridTemplateColumns=`repeat(${cols},1fr)`;
+    if(el.childElementCount===count) return;
+    el.innerHTML='';
+    for(let i=0;i<count;i++){
+      const d=document.createElement('div'); d.className='fmw-start-flag';
+      const img=document.createElement('img'); img.alt=''; img.loading='eager'; img.src=FLAGS_SPRITES[i%FLAGS_SPRITES.length].img;
+      d.appendChild(img); el.appendChild(d);
+    }
   }
-
-  function showRestartConfirm(){
-    if (!gameStarted) return;
-    pauseOverlay.classList.add('hidden');
-    const title = q('restartConfirmTitle');
-    const msg = q('restartConfirmMsg');
-    const btn = q('confirmRestartBtn');
-    if (title) title.textContent = isQuickGame ? 'RESTART QUICK GAME?' : 'RESTART LEVEL?';
-    if (msg) msg.innerHTML = isQuickGame ? 'Your current quick game session will be reset.' : 'Your current attempt will be reset.<br>Your saved progress will remain.';
-    if (btn) btn.textContent = isQuickGame ? 'Restart Quick Game' : 'Restart Level';
-    setHidden('restartConfirmOverlay', false);
-    setModalOpen(true);
+  function updateStartupSaveUi(){
+    const save=loadSave('flags');
+    const btn=q('continueFromSaveBtn');
+    if(btn){ btn.disabled=!save; btn.classList.toggle('disabled', !save); btn.textContent=save?`Continue · Level ${String(save.level).padStart(2,'0')}`:'Continue'; }
+    const sl=q('saveLevel'), ss=q('saveScore'), sd=q('saveDate'), del=q('deleteSaveBtn');
+    if(sl) sl.textContent=save?`Flags · LV ${String(save.level).padStart(2,'0')}`:'Flags';
+    if(ss) ss.textContent=save?`${formatScore(save.score)} pts`:'No saved game';
+    if(sd) sd.textContent=save?formatSaveDate(save.ts):'—';
+    if(del) del.classList.add('hidden');
   }
+  const oldRefreshSaveSlot = typeof refreshSaveSlot==='function' ? refreshSaveSlot : null;
+  refreshSaveSlot = function(){ try{ if(oldRefreshSaveSlot) oldRefreshSaveSlot(); }catch(e){} updateStartupSaveUi(); };
+  refreshStartScreen = function(){ refreshSaveSlot(); renderStartupMosaic(); };
 
-  function showHomeConfirm(){
-    if (!gameStarted) return;
-    pauseOverlay.classList.add('hidden');
-    const msg = q('homeConfirmMsg');
-    if (msg) msg.innerHTML = isQuickGame ? 'Your current quick game session will be lost.' : 'Your current unfinished attempt will be lost.<br>Your saved progress will remain.';
-    setHidden('homeConfirmOverlay', false);
-    setModalOpen(true);
-  }
-
-  function cancelConfirm(){
-    setHidden('restartConfirmOverlay', true);
-    setHidden('homeConfirmOverlay', true);
-    if (gameStarted && paused){ setupPauseModal(); pauseOverlay.classList.remove('hidden'); setModalOpen(true); }
-    else setModalOpen(false);
-  }
-
-  function confirmRestart(){
-    setHidden('restartConfirmOverlay', true);
-    setModalOpen(false);
-    if (isQuickGame) startQuickGame(); else restartCurrentLevel();
-  }
-
-  function confirmHome(){
-    setHidden('homeConfirmOverlay', true);
-    setModalOpen(false);
-    if (isQuickGame) endQuickGame(true); else quitCurrentGameWithoutSaving();
-  }
-
-  const oldRestart = restartCurrentLevel;
-  restartCurrentLevel = function(){
-    setHidden('restartConfirmOverlay', true);
-    pauseOverlay.classList.add('hidden');
-    setModalOpen(false);
-    oldRestart();
+  const oldStartGame = startGame;
+  startGame = function(options={}){
+    try { hide('settingsOverlay'); hide('restartConfirmOverlay'); hide('homeConfirmOverlay'); hide('newGameConfirmOverlay'); modalOpen(false); } catch(e) {}
+    oldStartGame({ ...(typeof options==='object'?options:{}), randomSet:false });
+    try { applySpriteSet('flags',{silent:true}); currentSpriteSetId='flags'; if(!isQuickGame) currentSaveSlotId='flags'; } catch(e) {}
+    applySoundSettings();
   };
+  startQuickGame = function(){ startGame({quick:true, randomSet:false}); };
+  startNewGameFromTitle = function(force=false){
+    currentSpriteSetId='flags';
+    const existing=loadSave('flags');
+    if(existing && !force){ const msg=q('newGameConfirmMsg'); if(msg) msg.innerHTML='Your saved progress will be deleted.<br>This cannot be undone.'; hide('newGameConfirmOverlay', false); modalOpen(true); return; }
+    if(existing) deleteSave('flags');
+    refreshStartScreen();
+    startGame({quick:false});
+  };
+  const oldContinueFromSave = continueFromSave;
+  continueFromSave = function(){
+    currentSpriteSetId='flags'; currentSaveSlotId='flags';
+    const save=loadSave('flags');
+    if(!save){ deleteSave('flags'); refreshStartScreen(); try{sfx.invalid();}catch(e){} return; }
+    oldContinueFromSave(); applySoundSettings();
+  };
+  function setupPauseCopy(){
+    const title=q('pauseTitle'), msg=q('pauseMessage'), restart=q('pauseRestartBtn');
+    if(title) title.textContent=isQuickGame?'QUICK GAME PAUSED':'PAUSED';
+    if(msg) msg.textContent=isQuickGame?'Quick Game is single-session only.':'The timer is stopped. Your saved progress remains safe.';
+    if(restart) restart.textContent=isQuickGame?'Restart Quick Game':'Restart Level';
+    const lvl=q('pauseLevelBadge'); if(lvl) lvl.textContent=isQuickGame?'Quick':`LV ${level}`;
+    const live=q('pauseLiveScore'); if(live) live.textContent=formatScore(score||levelScore||0);
+    const combo=q('pauseBestCombo'); if(combo) combo.textContent=bestCombo>1?`×${bestCombo}`:'—';
+  }
+  pauseGame = function(){
+    if(!gameStarted || paused) return;
+    paused=true; clearInterval(timerId); clearSel(); clearPath(); document.body.classList.remove('low-time'); appShell.classList.add('paused');
+    setupPauseCopy(); hide('pauseOverlay',false); modalOpen(true); moveStatus.textContent='GAME PAUSED'; try{sfx.select();}catch(e){}
+  };
+  const oldResumeGame = resumeGame;
+  resumeGame = function(){ hide('settingsOverlay'); hide('restartConfirmOverlay'); hide('homeConfirmOverlay'); modalOpen(false); oldResumeGame(); };
+  function openSettings(from='startup'){
+    fmwSettingsReturn=from; syncSettingsToggles(); if(from==='pause') hide('pauseOverlay'); hide('settingsOverlay',false); modalOpen(true);
+  }
+  function closeSettings(){ hide('settingsOverlay'); if(fmwSettingsReturn==='pause' && gameStarted && paused){ setupPauseCopy(); hide('pauseOverlay',false); modalOpen(true); } else modalOpen(false); }
+  function showRestartConfirm(){
+    hide('pauseOverlay');
+    const t=q('restartConfirmTitle'), m=q('restartConfirmMsg'), b=q('confirmRestartBtn');
+    if(t) t.textContent=isQuickGame?'RESTART QUICK GAME?':'RESTART LEVEL?';
+    if(m) m.innerHTML=isQuickGame?'Your current quick game session will be reset.':'Your current attempt will be reset.<br>Your saved progress will remain.';
+    if(b) b.textContent=isQuickGame?'Restart Quick Game':'Restart Level';
+    hide('restartConfirmOverlay',false); modalOpen(true);
+  }
+  function showHomeConfirm(){
+    hide('pauseOverlay');
+    const m=q('homeConfirmMsg'); if(m) m.innerHTML=isQuickGame?'Your current quick game session will be lost.':'Your current unfinished attempt will be lost.<br>Your saved progress will remain.';
+    hide('homeConfirmOverlay',false); modalOpen(true);
+  }
+  function cancelConfirm(){ hide('restartConfirmOverlay'); hide('homeConfirmOverlay'); if(gameStarted && paused){ setupPauseCopy(); hide('pauseOverlay',false); modalOpen(true); } else modalOpen(false); }
+  function confirmRestart(){ hide('restartConfirmOverlay'); modalOpen(false); if(isQuickGame) startQuickGame(); else restartCurrentLevel(); }
+  function confirmHome(){ hide('homeConfirmOverlay'); modalOpen(false); if(isQuickGame) endQuickGame(true); else quitCurrentGameWithoutSaving(); }
 
   const oldShowLevelComplete = showLevelComplete;
   showLevelComplete = function(){
-    oldShowLevelComplete();
-    setModalOpen(true);
-    const lcTitle = q('levelCompleteTitle');
-    if (lcTitle) lcTitle.textContent = isQuickGame ? 'QUICK GAME COMPLETE' : 'LEVEL COMPLETE';
-    const mainActions = q('mainCompleteActions');
-    const quickActions = q('quickCompleteActions');
-    if (mainActions) mainActions.classList.toggle('hidden', isQuickGame);
-    if (quickActions) quickActions.classList.toggle('hidden', !isQuickGame);
-    const last = scoreHistory[scoreHistory.length - 1] || {};
-    const match = q('lcMatchScore'); if (match) match.textContent = formatScore(last.matchComboScore || levelScore || 0);
-    const time = q('lcTimeBonus'); if (time) time.textContent = formatScore(last.timeBonus || 0);
-    const perf = q('lcPerfectBonus'); if (perf) perf.textContent = formatScore(last.perfectBonus || 0);
-    const total = q('lcTotalScore'); if (total) total.textContent = formatScore(isQuickGame ? (last.levelScore || levelScore) : score);
-    const combo = q('lcBestCombo'); if (combo) combo.textContent = bestCombo > 1 ? `×${bestCombo}` : '—';
+    oldShowLevelComplete(); modalOpen(true);
+    const title=q('levelCompleteTitle'); if(title) title.textContent=isQuickGame?'QUICK GAME COMPLETE':'LEVEL COMPLETE';
+    const main=q('mainCompleteActions'), quick=q('quickCompleteActions'); if(main) main.classList.toggle('hidden', isQuickGame); if(quick) quick.classList.toggle('hidden', !isQuickGame);
+    const last=scoreHistory[scoreHistory.length-1]||{};
+    const match=q('lcMatchScore'); if(match) match.textContent=formatScore(last.matchComboScore||levelScore||0);
+    const time=q('lcTimeBonus'); if(time) time.textContent=formatScore(last.timeBonus||0);
+    const perf=q('lcPerfectBonus'); if(perf) perf.textContent=formatScore(last.perfectBonus||0);
+    const total=q('lcTotalScore'); if(total) total.textContent=formatScore(isQuickGame?(last.levelScore||levelScore):score);
+    const combo=q('lcBestCombo'); if(combo) combo.textContent=bestCombo>1?`×${bestCombo}`:'—';
   };
-
   const oldStartNextLevel = startNextLevel;
-  startNextLevel = function(){ setModalOpen(false); oldStartNextLevel(); };
-
-  function replayCompletedLevel(){
-    if (level > 1) level--;
-    nextLevelReadyAfterComplete = false;
-    levelCompleteOverlay.classList.add('hidden');
-    setModalOpen(false);
-    restartCurrentLevel();
-  }
-
-  levelCompleteQuit = function(){
-    levelCompleteOverlay.classList.add('hidden');
-    setModalOpen(false);
-    if (isQuickGame) endQuickGame(true);
-    else returnToTitleAfterSave();
-  };
-
+  startNextLevel = function(){ modalOpen(false); oldStartNextLevel(); };
+  function replayCompletedLevel(){ if(level>1) level--; nextLevelReadyAfterComplete=false; hide('levelCompleteOverlay'); modalOpen(false); restartCurrentLevel(); }
+  levelCompleteQuit = function(){ hide('levelCompleteOverlay'); modalOpen(false); if(isQuickGame) endQuickGame(true); else returnToTitleAfterSave(); };
   const oldShowGameOver = showGameOver;
   showGameOver = function(){
-    oldShowGameOver();
-    setModalOpen(true);
-    const goTitle = q('goTitle'); if (goTitle) goTitle.textContent = 'GAME OVER';
-    const goMsg = q('goMessage'); if (goMsg) goMsg.textContent = isQuickGame ? 'Quick Game ended.' : 'The clock ran out.';
-    const row = q('goLevelRow'); if (row) row.classList.toggle('hidden', isQuickGame);
-    const goLevel = q('goLevel'); if (goLevel) goLevel.textContent = `LV ${String(level).padStart(2,'0')}`;
-    const goScore = q('goScore'); if (goScore) goScore.textContent = formatScore(score);
-    const goCombo = q('goBestCombo'); if (goCombo) goCombo.textContent = bestCombo > 1 ? `×${bestCombo}` : '—';
-    const goTiles = q('goTilesRemaining');
-    if (goTiles && board && board.length){
-      let rem = 0;
-      for (let r=0;r<ROWS;r++) for (let c=0;c<COLS;c++) if (board[r] && board[r][c] && !board[r][c].removed) rem++;
-      goTiles.textContent = String(rem);
-    }
-    const retry = q('gameOverNewGameBtn'); if (retry) retry.textContent = isQuickGame ? 'New Quick Game' : 'Retry';
-    const home = q('gameOverQuitBtn'); if (home) home.textContent = 'Home';
+    oldShowGameOver(); modalOpen(true);
+    const title=q('goTitle'); if(title) title.textContent='GAME OVER';
+    const msg=q('goMessage'); if(msg) msg.textContent=isQuickGame?'Quick Game ended.':'The clock ran out.';
+    const row=q('goLevelRow'); if(row) row.classList.toggle('hidden', isQuickGame);
+    const lvl=q('goLevel'); if(lvl) lvl.textContent=`LV ${String(level).padStart(2,'0')}`;
+    const sc=q('goScore'); if(sc) sc.textContent=formatScore(score);
+    const combo=q('goBestCombo'); if(combo) combo.textContent=bestCombo>1?`×${bestCombo}`:'—';
+    const tiles=q('goTilesRemaining'); if(tiles && board){ let rem=0; for(let r=0;r<ROWS;r++) for(let c=0;c<COLS;c++) if(board[r]&&board[r][c]&&!board[r][c].removed) rem++; tiles.textContent=String(rem); }
+    const retry=q('gameOverNewGameBtn'); if(retry) retry.textContent=isQuickGame?'New Quick Game':'Retry';
+    const home=q('gameOverQuitBtn'); if(home) home.textContent='Home';
   };
+  newGameFromGameOver = function(){ hide('gameOverOverlay'); modalOpen(false); if(isQuickGame) startQuickGame(); else restartCurrentLevel(); };
+  quitFromGameOver = function(){ hide('gameOverOverlay'); modalOpen(false); returnToTitleAfterSave(); };
+  const oldReturnToTitle = returnToTitleAfterSave;
+  returnToTitleAfterSave = function(){ oldReturnToTitle(); hide('settingsOverlay'); hide('restartConfirmOverlay'); hide('homeConfirmOverlay'); modalOpen(false); refreshStartScreen(); };
 
-  newGameFromGameOver = function(){
-    gameOverOverlay.classList.add('hidden');
-    setModalOpen(false);
-    if (isQuickGame) startQuickGame(); else restartCurrentLevel();
+  const bind=(id,fn)=>{ const el=q(id); if(el) el.onclick=fn; };
+  bind('startBtn',()=>startNewGameFromTitle(false)); bind('continueFromSaveBtn',continueFromSave); bind('quickGameBtn',startQuickGame); bind('settingsBtn',()=>openSettings('startup'));
+  bind('pauseBtn',pauseGame); bind('continueBtn',(e)=>{e.preventDefault();e.stopPropagation();resumeGame();}); bind('pauseRestartBtn',showRestartConfirm); bind('pauseSettingsBtn',()=>openSettings('pause')); bind('pauseHomeBtn',showHomeConfirm);
+  bind('settingsBackBtn',closeSettings); bind('settingsMusicToggle',()=>{fmwMusicEnabled=!fmwMusicEnabled; localStorage.setItem(FMW_MUSIC_KEY,String(fmwMusicEnabled)); applySoundSettings(); syncSettingsToggles();}); bind('settingsSoundToggle',()=>{fmwSfxEnabled=!fmwSfxEnabled; localStorage.setItem(FMW_SFX_KEY,String(fmwSfxEnabled)); applySoundSettings(); syncSettingsToggles();});
+  bind('cancelRestartBtn',cancelConfirm); bind('confirmRestartBtn',confirmRestart); bind('cancelHomeBtn',cancelConfirm); bind('confirmHomeBtn',confirmHome); bind('cancelNewGameBtn',()=>{hide('newGameConfirmOverlay'); modalOpen(false);}); bind('confirmNewGameBtn',()=>{hide('newGameConfirmOverlay'); modalOpen(false); startNewGameFromTitle(true);});
+  bind('nextLevelBtn',startNextLevel); bind('replayLevelBtn',replayCompletedLevel); bind('levelCompleteQuitBtn',levelCompleteQuit); bind('quickCompleteHomeBtn',levelCompleteQuit); bind('newQuickFromCompleteBtn',startQuickGame); bind('gameOverNewGameBtn',newGameFromGameOver); bind('gameOverQuitBtn',quitFromGameOver);
+  window.addEventListener('resize', renderStartupMosaic, {passive:true}); window.addEventListener('orientationchange', renderStartupMosaic, {passive:true});
+  renderStartupMosaic(); applySoundSettings(); refreshStartScreen(); syncSettingsToggles();
+})();
+
+
+// FMW v5 visual/data polish patch: keep Best Combo display consistent.
+(function fmwNormalizeBestComboDisplay(){
+  const oldShowLevelCompleteFinal = showLevelComplete;
+  showLevelComplete = function(){
+    oldShowLevelCompleteFinal();
+    const comboEl = $("lcBestCombo");
+    if (comboEl) comboEl.textContent = bestCombo > 1 ? `×${bestCombo}` : "—";
+    setTimeout(() => {
+      const again = $("lcBestCombo");
+      if (again) again.textContent = bestCombo > 1 ? `×${bestCombo}` : "—";
+    }, 0);
   };
-  quitFromGameOver = function(){ gameOverOverlay.classList.add('hidden'); setModalOpen(false); returnToTitleAfterSave(); };
-
-  // Rebind buttons after overriding functions.
-  const bind = (id, fn) => { const el=q(id); if (el) el.onclick = fn; };
-  bind('startBtn', () => startNewGameFromTitle(false));
-  bind('continueFromSaveBtn', continueFromSave);
-  bind('quickGameBtn', startQuickGame);
-  bind('startupSettingsBtn', () => openSettings('startup'));
-  bind('pauseBtn', pauseGame);
-  bind('continueBtn', (e) => { e.preventDefault(); e.stopPropagation(); resumeGame(); });
-  bind('pauseRestartBtn', showRestartConfirm);
-  bind('pauseSettingsBtn', () => openSettings('pause'));
-  bind('pauseHomeBtn', showHomeConfirm);
-  bind('settingsBackBtn', closeSettings);
-  bind('settingsMusicToggle', () => { fmwMusicEnabled = !fmwMusicEnabled; localStorage.setItem(FMW_MUSIC_KEY, String(fmwMusicEnabled)); applySoundSettings(); syncSettingsToggles(); });
-  bind('settingsSfxToggle', () => { fmwSfxEnabled = !fmwSfxEnabled; localStorage.setItem(FMW_SFX_KEY, String(fmwSfxEnabled)); applySoundSettings(); syncSettingsToggles(); });
-  bind('cancelRestartBtn', cancelConfirm);
-  bind('confirmRestartBtn', confirmRestart);
-  bind('cancelHomeBtn', cancelConfirm);
-  bind('confirmHomeBtn', confirmHome);
-  bind('cancelNewGameBtn', () => setHidden('newGameConfirmOverlay', true));
-  bind('confirmNewGameBtn', () => { setHidden('newGameConfirmOverlay', true); startNewGameFromTitle(true); });
-  bind('nextLevelBtn', startNextLevel);
-  bind('replayLevelBtn', replayCompletedLevel);
-  bind('levelCompleteQuitBtn', levelCompleteQuit);
-  bind('quickCompleteHomeBtn', levelCompleteQuit);
-  bind('newQuickFromCompleteBtn', startQuickGame);
-  bind('gameOverNewGameBtn', newGameFromGameOver);
-  bind('gameOverQuitBtn', quitFromGameOver);
-  bind('deleteSaveBtn', () => { deleteSave('flags'); refreshSaveSlot(); });
-
-  // Keep legacy mute buttons, if hidden, synced to sound effects.
-  bind('musicBtn', () => { fmwSfxEnabled = !fmwSfxEnabled; localStorage.setItem(FMW_SFX_KEY, String(fmwSfxEnabled)); applySoundSettings(); });
-
-  window.addEventListener('resize', renderStartupMosaic, { passive:true });
-  window.addEventListener('orientationchange', renderStartupMosaic, { passive:true });
-  renderStartupMosaic();
-  applySoundSettings();
-  refreshSaveSlot();
 })();

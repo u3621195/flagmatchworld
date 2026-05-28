@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
 
-<link href="style-new.css?v=fmw-ui-flow-v1" rel="stylesheet"/>
+<link href="style-new.css?v=fmw-v5-ui-fixes" rel="stylesheet"/>
 
 
 </head>
@@ -85,8 +85,9 @@
 <div aria-hidden="true" class="board-time-meter">
 <div class="board-time-bar" id="boardTimerBar"></div>
 </div>
-<div class="board-header">
+<div class="board-header fmw-board-header">
 <span id="boardInfo">MATCHES: --</span>
+<span class="country-name-pill" id="countryNamePill">SELECT A FLAG</span>
 <span id="moveStatus">SYSTEM READY</span>
 </div>
 <div class="board-wrap">
@@ -97,46 +98,11 @@
 </main>
 </div>
 
-<div class="theme-picker hidden" id="themePicker" aria-hidden="true">
-<div class="theme-picker-label">Select Theme</div>
-<div class="theme-option active" data-theme="neon-night"><span class="theme-name">NEON NIGHT</span></div>
-<div class="theme-option" data-theme="cyber-blue"><span class="theme-name">CYBER BLUE</span></div>
-<div class="theme-option" data-theme="arcade-purple"><span class="theme-name">SUNSET ARCADE</span></div>
-<div class="theme-option" data-theme="soft-sky"><span class="theme-name">SOFT SKY</span></div>
-<div class="theme-option" data-theme="candy-pop"><span class="theme-name">CANDY POP</span></div>
-<div class="theme-option" data-theme="mint-fresh"><span class="theme-name">MINT FRESH</span></div>
-</div>
-<div class="theme-picker-overlay hidden" id="themePickerOverlay" aria-hidden="true">
-  <div class="theme-picker-panel" role="dialog" aria-modal="true" aria-labelledby="themePickerTitle">
-    <div class="theme-picker-handle" aria-hidden="true"></div>
-    <button class="theme-picker-close" id="themePickerClose" type="button" aria-label="Close theme picker">×</button>
-    <h2 id="themePickerTitle">Choose Theme</h2>
-    <div class="theme-picker-grid" id="themePickerGrid">
-      <button class="theme-picker-card theme-option active" data-theme="neon-night" type="button">
-        <span class="theme-card-swatch"><i style="background:#060915"></i><i style="background:#37e8ff"></i><i style="background:#ff4fd8"></i></span><span class="theme-card-name">Neon Night</span>
-      </button>
-      <button class="theme-picker-card theme-option" data-theme="cyber-blue" type="button">
-        <span class="theme-card-swatch"><i style="background:#020610"></i><i style="background:#25c8ff"></i><i style="background:#6aa8ff"></i></span><span class="theme-card-name">Cyber Blue</span>
-      </button>
-      <button class="theme-picker-card theme-option" data-theme="arcade-purple" type="button">
-        <span class="theme-card-swatch"><i style="background:#241128"></i><i style="background:#ff8a4d"></i><i style="background:#ffd05d"></i></span><span class="theme-card-name">Sunset Arcade</span>
-      </button>
-      <button class="theme-picker-card theme-option" data-theme="soft-sky" type="button">
-        <span class="theme-card-swatch"><i style="background:#f7fbff"></i><i style="background:#3c8cff"></i><i style="background:#ffd45d"></i></span><span class="theme-card-name">Soft Sky</span>
-      </button>
-      <button class="theme-picker-card theme-option" data-theme="candy-pop" type="button">
-        <span class="theme-card-swatch"><i style="background:#fffaf4"></i><i style="background:#ff73b7"></i><i style="background:#52d8ff"></i></span><span class="theme-card-name">Candy Pop</span>
-      </button>
-      <button class="theme-picker-card theme-option" data-theme="mint-fresh" type="button">
-        <span class="theme-card-swatch"><i style="background:#f7fffb"></i><i style="background:#2acb8f"></i><i style="background:#28a9ff"></i></span><span class="theme-card-name">Mint Fresh</span>
-      </button>
-    </div>
-  </div>
-</div>
+<div class="theme-picker hidden" id="themePicker" aria-hidden="true"></div>
 <section class="overlay" id="overlay">
   <div class="fmw-start-bg" id="fmwStartMosaic" aria-hidden="true"></div>
   <div class="fmw-start-vignette" aria-hidden="true"></div>
-  <div class="fmw-start-card">
+  <div class="fmw-start-card-v2">
     <span class="fmw-start-globe" aria-hidden="true">🌍</span>
     <div class="fmw-start-title">FLAG MATCH</div>
     <div class="fmw-start-world">World</div>
@@ -146,7 +112,7 @@
       <button class="fmw-btn fmw-btn-green" id="continueFromSaveBtn" type="button">Continue</button>
       <button class="fmw-btn fmw-btn-teal" id="startBtn" type="button">New Game</button>
       <button class="fmw-btn fmw-btn-teal" id="quickGameBtn" type="button">Quick Game</button>
-      <button class="fmw-btn fmw-btn-teal" id="startupSettingsBtn" type="button">Settings</button>
+      <button class="fmw-btn fmw-btn-teal" id="settingsBtn" type="button">Settings</button>
     </div>
     <div class="fmw-save-line" id="savedSlot">
       <span id="saveLevel">Flags</span>
@@ -189,7 +155,7 @@
     <hr class="fmw-gold-rule">
     <p class="fmw-popup-message" id="pauseMessage">The timer is stopped.</p>
     <div class="fmw-mini-panel">
-      <div><span>Level</span><strong id="pauseLevelBadge">1</strong></div>
+      <div><span>Level</span><strong id="pauseLevelBadge">LV 1</strong></div>
       <div><span>Score</span><strong id="pauseLiveScore">0</strong></div>
       <div><span>Best Combo</span><strong id="pauseBestCombo">—</strong></div>
     </div>
@@ -203,7 +169,7 @@
     <button class="hidden" id="saveFromPauseBtn" type="button"></button>
     <button class="hidden" id="endQuickGameBtn" type="button"></button>
     <button class="hidden" id="pauseSoundToggle" type="button"></button>
-    <span class="hidden" id="pauseLevelName"></span><span class="hidden" id="pauseElapsed"></span><span class="hidden" id="pausePairsLeft"></span><span class="hidden" id="pauseHintsLeft"></span>
+    <span class="hidden" id="pausePairsLeft"></span><span class="hidden" id="pauseHintsLeft"></span><span class="hidden" id="pauseElapsed"></span><span class="hidden" id="pauseLevelName"></span>
   </div>
 </section>
 <section class="overlay score-summary-overlay hidden fmw-popup-overlay" id="levelCompleteOverlay">
@@ -229,7 +195,8 @@
       <button class="fmw-btn fmw-btn-teal" id="quickCompleteHomeBtn" type="button">Home</button>
     </div>
     <button class="hidden" id="levelCompleteCloseBtn" type="button"></button>
-    <span class="hidden" id="lcLevelScore"></span><div class="hidden" id="scoreHistoryScroll"><table><tbody id="scoreHistoryBody"></tbody></table></div>
+    <span class="hidden" id="lcLevelScore"></span>
+    <div class="hidden" id="scoreHistoryScroll"><table><tbody id="scoreHistoryBody"></tbody></table></div>
   </div>
 </section>
 <section class="overlay rc-overlay rc-overlay--danger hidden fmw-popup-overlay" id="gameOverOverlay">
@@ -244,19 +211,19 @@
       <div class="fmw-score-row"><span>Tiles Remaining</span><strong id="goTilesRemaining">—</strong></div>
     </div>
     <div class="fmw-actions two">
-      <button class="fmw-btn fmw-btn-teal" id="gameOverQuitBtn" type="button">Home</button>
       <button class="fmw-btn fmw-btn-green" id="gameOverNewGameBtn" type="button">Retry</button>
+      <button class="fmw-btn fmw-btn-teal" id="gameOverQuitBtn" type="button">Home</button>
     </div>
     <span class="hidden" id="goKicker"></span><span class="hidden" id="goHeroTag"></span><span class="hidden" id="goLevelBadge"></span><span class="hidden" id="goSummary"></span><span class="hidden" id="goBestScore"></span><span class="hidden" id="goTimeSurvived"></span><span class="hidden" id="goPack"></span>
   </div>
 </section>
-<section class="overlay hidden fmw-popup-overlay" id="settingsOverlay">
-  <div class="fmw-popup-card fmw-settings-card">
+<section class="overlay hidden fmw-settings-overlay fmw-popup-overlay" id="settingsOverlay" aria-hidden="true">
+  <div class="fmw-popup-card fmw-settings-card" role="dialog" aria-label="Settings">
     <h1 class="fmw-popup-title">SETTINGS</h1>
     <hr class="fmw-gold-rule">
     <div class="fmw-settings-panel">
       <div class="fmw-setting-row"><span>Music</span><button class="fmw-toggle" id="settingsMusicToggle" type="button" aria-pressed="true"><span></span></button></div>
-      <div class="fmw-setting-row"><span>Sound Effects</span><button class="fmw-toggle" id="settingsSfxToggle" type="button" aria-pressed="true"><span></span></button></div>
+      <div class="fmw-setting-row"><span>Sound Effects</span><button class="fmw-toggle" id="settingsSoundToggle" type="button" aria-pressed="true"><span></span></button></div>
     </div>
     <div class="fmw-actions"><button class="fmw-btn fmw-btn-teal" id="settingsBackBtn" type="button">Back</button></div>
   </div>
@@ -265,7 +232,7 @@
   <div class="fmw-popup-card fmw-confirm-card">
     <h1 class="fmw-popup-title" id="restartConfirmTitle">RESTART LEVEL?</h1>
     <hr class="fmw-gold-rule">
-    <p class="fmw-popup-message" id="restartConfirmMsg">Your current attempt will be reset.</p>
+    <p class="fmw-popup-message" id="restartConfirmMsg">Your current attempt will be reset.<br>Your saved progress will remain.</p>
     <div class="fmw-actions two">
       <button class="fmw-btn fmw-btn-teal" id="cancelRestartBtn" type="button">Cancel</button>
       <button class="fmw-btn fmw-btn-red" id="confirmRestartBtn" type="button">Restart Level</button>
@@ -276,7 +243,7 @@
   <div class="fmw-popup-card fmw-confirm-card">
     <h1 class="fmw-popup-title">RETURN TO HOME?</h1>
     <hr class="fmw-gold-rule">
-    <p class="fmw-popup-message" id="homeConfirmMsg">Your current unfinished attempt will be lost.</p>
+    <p class="fmw-popup-message" id="homeConfirmMsg">Your current unfinished attempt will be lost.<br>Your saved progress will remain.</p>
     <div class="fmw-actions two">
       <button class="fmw-btn fmw-btn-teal" id="cancelHomeBtn" type="button">Cancel</button>
       <button class="fmw-btn fmw-btn-red" id="confirmHomeBtn" type="button">Home</button>
@@ -326,6 +293,6 @@
 </div>
 </section>
 <div aria-hidden="true" class="combo-layer" id="comboLayer"></div>
-<script src="game.js?v=fmw-ui-flow-v1"></script>
+<script src="game.js?v=fmw-v5-ui-fixes"></script>
 </body>
 </html>
