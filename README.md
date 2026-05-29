@@ -32,3 +32,9 @@ __fmwDebug.currentBoardUniqueFlags()             // current visible unique count
 __fmwDebug.helperInventory()                     // current hints/shuffles
 __fmwDebug.movementRuleForLevel(6)               // X CENTER
 ```
+
+
+Version: v5.5 HUD Final Cleanup
+- Removes legacy HINT/SHUFFLE pseudo text.
+- Hides old movement rule icon from HUD.
+- Locks HUD grid spacing to prevent timer/helper overlap.

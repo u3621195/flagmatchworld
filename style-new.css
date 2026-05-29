@@ -8645,3 +8645,423 @@ body.critical-time .board-time-pill {
   .hud-pause-btn { --hud-button-size: 46px; }
   .hud-pause-btn { --hud-button-size: 50px; }
 }
+
+/* =========================================================
+   FMW v5.3 HUD reflow — timer back in HUD + full-width bar
+   ========================================================= */
+#game-area .hud-bar,
+.topbar.hud-bar {
+  height: clamp(52px, 8.8dvh, 68px) !important;
+  padding: 0 clamp(12px, 1.5vw, 18px) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: clamp(10px, 1.4vw, 18px) !important;
+  background: linear-gradient(180deg, rgba(12,20,48,.78), rgba(5,10,28,.62)) !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+.hud-left-zone {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: clamp(16px, 2.4vw, 34px) !important;
+  padding-right: clamp(8px, 1.2vw, 16px) !important;
+}
+.hud-pill-wrap {
+  flex: 0 0 clamp(260px, 31vw, 520px) !important;
+  width: clamp(260px, 31vw, 520px) !important;
+  max-width: clamp(260px, 31vw, 520px) !important;
+  min-width: clamp(220px, 28vw, 330px) !important;
+  padding: 0 !important;
+}
+.hud-country-pill {
+  height: clamp(38px, 6.2dvh, 48px) !important;
+  border-radius: 999px !important;
+  font-size: clamp(15px, 2.0dvh, 19px) !important;
+  letter-spacing: .12em !important;
+  padding: 0 clamp(14px, 1.4vw, 22px) !important;
+}
+.hud-divider-v,
+.hud-desktop-div {
+  display: none !important;
+}
+.hud-stat-block {
+  min-width: clamp(66px, 5.4vw, 92px) !important;
+  padding: 0 !important;
+  align-items: center !important;
+  gap: clamp(2px, .5dvh, 4px) !important;
+}
+.hud-stat-lbl {
+  font-size: clamp(8px, 1.45dvh, 11px) !important;
+  letter-spacing: .16em !important;
+}
+.hud-stat-val {
+  font-size: clamp(24px, 4.7dvh, 34px) !important;
+}
+.hud-stat-time .hud-stat-lbl { color: rgba(240,201,106,.68) !important; }
+.hud-stat-time .hud-stat-val {
+  color: #ffffff !important;
+  text-shadow: 0 0 12px rgba(69,214,255,.28) !important;
+  font-variant-numeric: tabular-nums !important;
+  letter-spacing: .04em !important;
+}
+.hud-right-zone {
+  flex: 0 0 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: clamp(8px, 1.0vw, 12px) !important;
+  padding: 0 !important;
+  border-left: 0 !important;
+}
+.hud-action-btn,
+.hud-pause-btn {
+  width: clamp(44px, 6.8dvh, 56px) !important;
+  height: clamp(44px, 6.8dvh, 56px) !important;
+  min-width: clamp(44px, 6.8dvh, 56px) !important;
+  max-width: clamp(44px, 6.8dvh, 56px) !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 999px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  gap: 0 !important;
+}
+.hud-pause-btn {
+  width: clamp(48px, 7.4dvh, 60px) !important;
+  height: clamp(48px, 7.4dvh, 60px) !important;
+  min-width: clamp(48px, 7.4dvh, 60px) !important;
+  max-width: clamp(48px, 7.4dvh, 60px) !important;
+}
+.hud-action-btn i,
+.hud-pause-btn i {
+  font-size: clamp(18px, 3.1dvh, 24px) !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+}
+.hud-btn-lbl,
+.hud-action-btn .hud-btn-lbl,
+.btn-hint .hud-btn-lbl,
+.btn-shuffle .hud-btn-lbl {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+.hud-badge {
+  top: -6px !important;
+  right: -6px !important;
+  z-index: 4 !important;
+}
+.board-time-meter {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  height: clamp(8px, 1.6dvh, 12px) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: #05070d !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  overflow: hidden !important;
+  box-shadow: inset 0 1px 4px rgba(0,0,0,.92), 0 0 0 1px rgba(255,255,255,.04) !important;
+}
+.board-time-meter::before { display: none !important; content: none !important; }
+.board-time-bar,
+#boardTimerBar {
+  display: block !important;
+  height: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  border-radius: 999px !important;
+  background: linear-gradient(90deg, #21f2b2, #45d6ff) !important;
+  box-shadow: 0 0 10px rgba(69,214,255,.30) !important;
+}
+.board-time-pill { display: none !important; }
+body.low-time .hud-stat-time .hud-stat-val { color: #fff3c4 !important; text-shadow: 0 0 14px rgba(255,209,102,.34) !important; }
+body.critical-time .hud-stat-time .hud-stat-val { color: #ffe1e1 !important; animation: lowTimePulse .5s ease-in-out infinite alternate !important; }
+body.low-time .board-time-bar,
+body.low-time #boardTimerBar { background: linear-gradient(90deg, #ffd166, #ff8a3d) !important; }
+body.critical-time .board-time-bar,
+body.critical-time #boardTimerBar { background: linear-gradient(90deg, #ff365f, #ff1c1c) !important; }
+
+@media (max-width: 1024px) {
+  #game-area .hud-bar,
+  .topbar.hud-bar {
+    height: clamp(48px, 12dvh, 58px) !important;
+    padding: 0 clamp(8px, 1.5vw, 12px) !important;
+    gap: clamp(6px, 1vw, 10px) !important;
+  }
+  .hud-left-zone {
+    gap: clamp(9px, 1.7vw, 18px) !important;
+  }
+  .hud-pill-wrap {
+    flex-basis: clamp(190px, 30vw, 300px) !important;
+    width: clamp(190px, 30vw, 300px) !important;
+    max-width: clamp(190px, 30vw, 300px) !important;
+    min-width: clamp(170px, 28vw, 220px) !important;
+  }
+  .hud-country-pill {
+    height: clamp(34px, 8.8dvh, 42px) !important;
+    font-size: clamp(12px, 3.0dvh, 16px) !important;
+  }
+  .hud-stat-block { min-width: clamp(48px, 7vw, 72px) !important; }
+  .hud-stat-lbl { font-size: clamp(7px, 1.9dvh, 9px) !important; }
+  .hud-stat-val { font-size: clamp(18px, 5.0dvh, 26px) !important; }
+  .hud-action-btn { width: clamp(36px, 9.2dvh, 46px) !important; height: clamp(36px, 9.2dvh, 46px) !important; min-width: clamp(36px, 9.2dvh, 46px) !important; max-width: clamp(36px, 9.2dvh, 46px) !important; }
+  .hud-pause-btn { width: clamp(40px, 9.8dvh, 50px) !important; height: clamp(40px, 9.8dvh, 50px) !important; min-width: clamp(40px, 9.8dvh, 50px) !important; max-width: clamp(40px, 9.8dvh, 50px) !important; }
+  .hud-action-btn i, .hud-pause-btn i { font-size: clamp(15px, 4.0dvh, 20px) !important; }
+  .hud-right-zone { gap: clamp(5px, .8vw, 8px) !important; }
+}
+
+/* =========================================================
+   FMW v5.4 HUD cleanup — remove helper text, remove stray right icon,
+   prevent timer/helper overlap, and balance the full HUD width.
+   ========================================================= */
+#hintBtn::before,
+#hintBtn::after,
+#shuffleBtn::before,
+#shuffleBtn::after,
+.hud-action-btn::before,
+.hud-action-btn::after,
+.btn-hint::before,
+.btn-hint::after,
+.btn-shuffle::before,
+.btn-shuffle::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Hard-hide old/legacy HUD buttons that can be resurrected by older rules. */
+#themeBtn,
+#musicBtn,
+#soundBtn,
+.topbar #themeBtn,
+.topbar #musicBtn,
+.topbar #soundBtn,
+.hud-bar #themeBtn,
+.hud-bar #musicBtn,
+.hud-bar #soundBtn {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  left: -9999px !important;
+}
+
+#game-area .hud-bar,
+.topbar.hud-bar {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: center !important;
+  column-gap: clamp(12px, 1.6vw, 22px) !important;
+  overflow: visible !important;
+}
+
+.hud-left-zone {
+  min-width: 0 !important;
+  width: 100% !important;
+  display: grid !important;
+  grid-template-columns: minmax(220px, 36%) minmax(58px, .42fr) minmax(58px, .42fr) minmax(92px, .65fr) !important;
+  align-items: center !important;
+  column-gap: clamp(18px, 2.5vw, 42px) !important;
+  padding-right: 0 !important;
+}
+
+.hud-pill-wrap {
+  grid-column: 1 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  flex: none !important;
+}
+
+.hud-country-pill {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.hud-stat-matches { grid-column: 2 !important; }
+.hud-stat-score { grid-column: 3 !important; }
+.hud-stat-time { grid-column: 4 !important; }
+
+.hud-stat-block {
+  min-width: 0 !important;
+  width: auto !important;
+}
+
+.hud-stat-time {
+  min-width: clamp(86px, 7vw, 122px) !important;
+}
+
+.hud-right-zone {
+  min-width: max-content !important;
+  flex: none !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: clamp(9px, 1vw, 14px) !important;
+  overflow: visible !important;
+}
+
+.hud-action-btn,
+.hud-pause-btn {
+  position: relative !important;
+  overflow: visible !important;
+  flex: 0 0 auto !important;
+}
+
+.hud-action-btn {
+  width: clamp(44px, 6.5dvh, 54px) !important;
+  height: clamp(44px, 6.5dvh, 54px) !important;
+  min-width: clamp(44px, 6.5dvh, 54px) !important;
+  max-width: clamp(44px, 6.5dvh, 54px) !important;
+}
+
+.hud-pause-btn {
+  width: clamp(50px, 7.4dvh, 62px) !important;
+  height: clamp(50px, 7.4dvh, 62px) !important;
+  min-width: clamp(50px, 7.4dvh, 62px) !important;
+  max-width: clamp(50px, 7.4dvh, 62px) !important;
+}
+
+.hud-action-btn i,
+.hud-pause-btn i {
+  display: block !important;
+  position: static !important;
+}
+
+.board-time-meter {
+  width: 100% !important;
+  margin-top: 0 !important;
+}
+
+@media (max-width: 1024px) {
+  #game-area .hud-bar,
+  .topbar.hud-bar {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    column-gap: clamp(8px, 1.1vw, 14px) !important;
+  }
+
+  .hud-left-zone {
+    grid-template-columns: minmax(170px, 33%) minmax(44px, .36fr) minmax(44px, .36fr) minmax(76px, .58fr) !important;
+    column-gap: clamp(10px, 1.5vw, 22px) !important;
+  }
+
+  .hud-stat-time {
+    min-width: clamp(74px, 9vw, 100px) !important;
+  }
+
+  .hud-right-zone {
+    gap: clamp(6px, .8vw, 10px) !important;
+  }
+
+  .hud-action-btn {
+    width: clamp(38px, 8.6dvh, 46px) !important;
+    height: clamp(38px, 8.6dvh, 46px) !important;
+    min-width: clamp(38px, 8.6dvh, 46px) !important;
+    max-width: clamp(38px, 8.6dvh, 46px) !important;
+  }
+
+  .hud-pause-btn {
+    width: clamp(44px, 9.4dvh, 52px) !important;
+    height: clamp(44px, 9.4dvh, 52px) !important;
+    min-width: clamp(44px, 9.4dvh, 52px) !important;
+    max-width: clamp(44px, 9.4dvh, 52px) !important;
+  }
+
+  .hud-badge {
+    top: -5px !important;
+    right: -5px !important;
+  }
+}
+
+
+/* =========================================================
+   FMW v5.5 final HUD cleanup — legacy helper text and movement
+   rule icon removed; HUD spacing locked to avoid overlap.
+   ========================================================= */
+#hintBtn::before,
+#hintBtn::after,
+#shuffleBtn::before,
+#shuffleBtn::after,
+.hud-action-btn::before,
+.hud-action-btn::after,
+.btn-hint::before,
+.btn-hint::after,
+.btn-shuffle::before,
+.btn-shuffle::after {
+  content: "" !important;
+  display: none !important;
+  visibility: hidden !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+#movementIcon,
+.movement-icon,
+.topbar .movement-icon,
+.hud-bar .movement-icon {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  position: absolute !important;
+  left: -9999px !important;
+  pointer-events: none !important;
+}
+
+/* Keep the stat area and action area separated so TIME never collides with HINT. */
+#game-area .hud-bar,
+.topbar.hud-bar {
+  grid-template-columns: minmax(0, 1fr) max-content !important;
+  column-gap: clamp(18px, 2vw, 34px) !important;
+}
+.hud-left-zone {
+  grid-template-columns: minmax(240px, 38%) minmax(62px, .42fr) minmax(62px, .42fr) minmax(110px, .7fr) !important;
+  column-gap: clamp(20px, 2.7vw, 46px) !important;
+  overflow: hidden !important;
+}
+.hud-stat-time {
+  min-width: clamp(104px, 7.6vw, 136px) !important;
+  padding-right: clamp(4px, .7vw, 10px) !important;
+}
+.hud-right-zone {
+  isolation: isolate !important;
+  min-width: max-content !important;
+  padding-left: clamp(4px, .8vw, 12px) !important;
+}
+
+@media (max-width: 1024px) {
+  #game-area .hud-bar,
+  .topbar.hud-bar {
+    column-gap: clamp(12px, 1.5vw, 22px) !important;
+  }
+  .hud-left-zone {
+    grid-template-columns: minmax(165px, 32%) minmax(46px, .36fr) minmax(46px, .36fr) minmax(86px, .62fr) !important;
+    column-gap: clamp(12px, 1.7vw, 24px) !important;
+  }
+  .hud-stat-time {
+    min-width: clamp(84px, 10vw, 108px) !important;
+  }
+}

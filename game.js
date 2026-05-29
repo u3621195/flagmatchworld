@@ -2521,7 +2521,7 @@ function updateTimer() {
   timerText.textContent = `${m}:${s}`;
   const pct = Math.max(0, (timeLeft / levelTotalTime) * 100);
   if (timerBar) timerBar.style.width = `${pct}%`;
-  if (boardTimerBar) boardTimerBar.style.width = `calc((100% - var(--timer-pill-w, 82px) - var(--timer-pill-gap, 8px)) * ${pct / 100})`;
+  if (boardTimerBar) boardTimerBar.style.width = `${pct}%`;
   document.body.classList.toggle(
     "low-time",
     timeLeft <= 60 && gameStarted && !paused,

@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <!-- Fonts loaded locally via @font-face in style-new.css -->
 
-<link href="style-new.css?v=fmw-v5-ui-fixes" rel="stylesheet"/>
+<link href="style-new.css?v=fmw-v5-4-hud-cleanup" rel="stylesheet"/>
 
 
 </head>
@@ -39,6 +39,10 @@
       <span class="hud-stat-lbl">SCORE</span>
       <span class="hud-stat-val" id="score">0</span>
     </div>
+    <div class="hud-stat-block hud-stat-time">
+      <span class="hud-stat-lbl">TIME</span>
+      <span class="hud-stat-val" id="timerText">08:00</span>
+    </div>
   </div>
 
   <!-- RIGHT ZONE: HINT · SHUFFLE · PAUSE -->
@@ -46,12 +50,10 @@
     <button class="hud-action-btn btn-hint" id="hintBtn" aria-label="Hint">
       <div class="hud-badge" id="hintCount">05</div>
       <i class="fa-regular fa-lightbulb"></i>
-      <span class="hud-btn-lbl">HINT</span>
     </button>
     <button class="hud-action-btn btn-shuffle" id="shuffleBtn" aria-label="Shuffle">
       <div class="hud-badge" id="shuffleCount">05</div>
       <i class="fa-solid fa-shuffle"></i>
-      <span class="hud-btn-lbl">SHUFFLE</span>
     </button>
     <div class="hud-desktop-div"></div>
     <button class="hud-pause-btn" id="pauseBtn" aria-label="Pause" title="Pause">
@@ -73,7 +75,6 @@
 </header>
 <div class="board-time-meter">
   <div class="board-time-bar" id="boardTimerBar"></div>
-  <span class="board-time-pill" id="timerText">08:00</span>
 </div>
 <div class="board-header fmw-board-header">
 <span id="boardInfo">MATCHES: --</span>
