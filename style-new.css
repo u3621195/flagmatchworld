@@ -9134,3 +9134,221 @@ body.critical-time #boardTimerBar { background: linear-gradient(90deg, #ff365f, 
     --fmw-hud-btn-size: clamp(38px, 8.6dvh, 46px);
   }
 }
+
+/* =========================================================
+   FMW v5.7 iPhone polish fixes
+   - same bevel treatment for Hint / Shuffle / Pause on iPhone
+   - prevent HUD stat/country clipping in short landscape screens
+   - fit startup screen inside iPhone landscape without overflow
+   ========================================================= */
+
+/* 1) Make the three HUD buttons structurally identical. */
+#game-area .hud-bar .hud-action-btn,
+#game-area .hud-bar .hud-pause-btn,
+.topbar.hud-bar .hud-action-btn,
+.topbar.hud-bar .hud-pause-btn {
+  --fmw-hud-btn-size: clamp(44px, 6.5dvh, 54px) !important;
+  width: var(--fmw-hud-btn-size) !important;
+  height: var(--fmw-hud-btn-size) !important;
+  min-width: var(--fmw-hud-btn-size) !important;
+  max-width: var(--fmw-hud-btn-size) !important;
+  aspect-ratio: 1 / 1 !important;
+  flex: 0 0 var(--fmw-hud-btn-size) !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  overflow: visible !important;
+  border: 1px solid rgba(154,196,255,.46) !important;
+  background:
+    radial-gradient(circle at 34% 23%, rgba(255,255,255,.34) 0%, rgba(255,255,255,.11) 23%, rgba(255,255,255,0) 43%),
+    linear-gradient(145deg, rgba(78,105,207,.95) 0%, rgba(30,50,130,.96) 54%, rgba(10,22,74,.98) 100%) !important;
+  box-shadow:
+    inset 0 2px 3px rgba(255,255,255,.24),
+    inset 0 -7px 12px rgba(0,0,0,.34),
+    0 3px 0 rgba(0,0,0,.38),
+    0 8px 16px rgba(0,0,0,.26),
+    0 0 14px rgba(73,119,255,.22) !important;
+}
+
+/* Keep Pause differentiated by icon only, not button body. */
+#game-area .hud-bar .hud-pause-btn,
+.topbar.hud-bar .hud-pause-btn {
+  background:
+    radial-gradient(circle at 34% 23%, rgba(255,255,255,.34) 0%, rgba(255,255,255,.11) 23%, rgba(255,255,255,0) 43%),
+    linear-gradient(145deg, rgba(78,105,207,.95) 0%, rgba(30,50,130,.96) 54%, rgba(10,22,74,.98) 100%) !important;
+  box-shadow:
+    inset 0 2px 3px rgba(255,255,255,.24),
+    inset 0 -7px 12px rgba(0,0,0,.34),
+    0 3px 0 rgba(0,0,0,.38),
+    0 8px 16px rgba(0,0,0,.26),
+    0 0 14px rgba(73,119,255,.22) !important;
+}
+
+#game-area .hud-bar .hud-action-btn i,
+#game-area .hud-bar .hud-pause-btn i,
+.topbar.hud-bar .hud-action-btn i,
+.topbar.hud-bar .hud-pause-btn i {
+  font-size: clamp(17px, 3.7dvh, 21px) !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  color: #ffe36e !important;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,.38)) !important;
+}
+#game-area .hud-bar .hud-pause-btn i,
+.topbar.hud-bar .hud-pause-btn i {
+  color: #ffffff !important;
+}
+
+/* 2) HUD clipping fix: stat text must fit inside the row on iPhone landscape. */
+@media (orientation: landscape) and (max-height: 560px) {
+  #game-area .hud-bar,
+  .topbar.hud-bar {
+    height: clamp(58px, 14.2dvh, 66px) !important;
+    min-height: clamp(58px, 14.2dvh, 66px) !important;
+    padding: 0 clamp(9px, 1.6vw, 14px) !important;
+    align-items: center !important;
+    overflow: visible !important;
+    column-gap: clamp(10px, 1.3vw, 18px) !important;
+  }
+  .hud-left-zone {
+    overflow: visible !important;
+    align-items: center !important;
+    grid-template-columns: minmax(150px, 32%) minmax(42px, .32fr) minmax(46px, .34fr) minmax(82px, .52fr) !important;
+    column-gap: clamp(9px, 1.35vw, 18px) !important;
+  }
+  .hud-pill-wrap,
+  .hud-country-pill,
+  .hud-stat-block,
+  .hud-stat-lbl,
+  .hud-stat-val,
+  .hud-stat-time,
+  .hud-stat-time .hud-stat-val {
+    overflow: visible !important;
+  }
+  .hud-country-pill {
+    height: clamp(36px, 9.2dvh, 42px) !important;
+    line-height: 1 !important;
+    padding: 0 clamp(10px, 1.4vw, 14px) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: clamp(12px, 3.0dvh, 16px) !important;
+  }
+  .hud-stat-block {
+    min-height: 46px !important;
+    height: 46px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 1px !important;
+    padding: 0 !important;
+  }
+  .hud-stat-lbl {
+    font-size: clamp(7px, 2.0dvh, 9px) !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+  }
+  .hud-stat-val {
+    font-size: clamp(20px, 5.2dvh, 28px) !important;
+    line-height: .95 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .hud-stat-time {
+    min-width: clamp(86px, 10vw, 112px) !important;
+  }
+  .hud-right-zone {
+    gap: clamp(7px, .9vw, 10px) !important;
+    align-items: center !important;
+    overflow: visible !important;
+  }
+  #game-area .hud-bar .hud-action-btn,
+  #game-area .hud-bar .hud-pause-btn,
+  .topbar.hud-bar .hud-action-btn,
+  .topbar.hud-bar .hud-pause-btn {
+    --fmw-hud-btn-size: clamp(39px, 9.5dvh, 46px) !important;
+  }
+  .hud-badge {
+    top: -5px !important;
+    right: -5px !important;
+    width: clamp(17px, 4.2dvh, 22px) !important;
+    height: clamp(17px, 4.2dvh, 22px) !important;
+    font-size: clamp(9px, 2.4dvh, 11px) !important;
+    line-height: 1 !important;
+  }
+}
+
+/* 3) Startup landscape fit: compress the real v5 start card, not old prototype classes. */
+@media (orientation: landscape) and (max-height: 560px) {
+  #overlay:not(.hidden) {
+    width: 100dvw !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    padding: max(4px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) max(4px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left)) !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+  #overlay .fmw-start-card-v2 {
+    width: min(430px, 56dvw) !important;
+    max-width: min(430px, 56dvw) !important;
+    max-height: calc(100dvh - 12px) !important;
+    padding: clamp(10px, 2.2dvh, 14px) clamp(18px, 3dvh, 24px) clamp(12px, 2.4dvh, 16px) !important;
+    border-radius: clamp(18px, 4.4dvh, 24px) !important;
+    transform: none !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+  .fmw-logo-wrap {
+    max-width: clamp(210px, 34dvh, 280px) !important;
+    margin: 0 auto clamp(3px, .7dvh, 6px) !important;
+  }
+  .fmw-logo-img {
+    max-height: clamp(96px, 28dvh, 140px) !important;
+    width: auto !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    object-fit: contain !important;
+  }
+  .fmw-start-sub-pill {
+    margin-top: clamp(2px, .5dvh, 5px) !important;
+    padding: clamp(4px, .9dvh, 5px) clamp(12px, 2.5dvh, 18px) !important;
+    font-size: clamp(9px, 2.2dvh, 11px) !important;
+    letter-spacing: .15em !important;
+  }
+  .fmw-gold-rule {
+    margin: clamp(7px, 1.5dvh, 10px) 0 !important;
+  }
+  .fmw-menu-stack {
+    margin-top: clamp(9px, 1.9dvh, 12px) !important;
+    gap: clamp(7px, 1.5dvh, 9px) !important;
+  }
+  .fmw-btn {
+    min-height: clamp(34px, 8.2dvh, 42px) !important;
+    height: clamp(34px, 8.2dvh, 42px) !important;
+    border-radius: clamp(12px, 3dvh, 16px) !important;
+    font-size: clamp(13px, 3.1dvh, 16px) !important;
+    letter-spacing: .07em !important;
+  }
+  .fmw-save-line {
+    margin-top: clamp(7px, 1.4dvh, 10px) !important;
+    font-size: clamp(10px, 2.4dvh, 12px) !important;
+    line-height: 1 !important;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 430px) {
+  #overlay .fmw-start-card-v2 {
+    width: min(390px, 54dvw) !important;
+    max-width: min(390px, 54dvw) !important;
+    padding: 8px 18px 10px !important;
+  }
+  .fmw-logo-wrap { max-width: clamp(185px, 30dvh, 235px) !important; }
+  .fmw-logo-img { max-height: clamp(78px, 25dvh, 112px) !important; }
+  .fmw-start-sub-pill { padding: 3px 12px !important; font-size: 9px !important; }
+  .fmw-gold-rule { margin: 6px 0 !important; }
+  .fmw-menu-stack { margin-top: 7px !important; gap: 6px !important; }
+  .fmw-btn { min-height: 32px !important; height: 32px !important; font-size: 13px !important; border-radius: 12px !important; }
+  .fmw-save-line { margin-top: 6px !important; font-size: 10px !important; }
+}
