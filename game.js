@@ -68,6 +68,7 @@ function unlockAudio() {
   },
 );
 
+let audioResuming = false;
 function withAudio(run) {
   if (muted) return;
   let ac;
@@ -82,10 +83,21 @@ function withAudio(run) {
       run(ac);
     } catch (e) {}
   };
-  if (ac.state === "suspended") {
-    ac.resume().then(play).catch(play);
-  } else {
+  if (ac.state === "running") {
     play();
+  } else if (!audioResuming) {
+    // Guard against overlapping resume() calls — on iOS Safari, firing
+    // multiple resume() calls simultaneously (e.g. the 5 tone() calls in
+    // sfx.match()) can silently drop callbacks, causing the match sound to
+    // go missing. Only one resume is allowed at a time; extra tones that
+    // arrive mid-resume are dropped rather than risk corrupting the chain.
+    audioResuming = true;
+    ac.resume().then(() => {
+      audioResuming = false;
+      play();
+    }).catch(() => {
+      audioResuming = false;
+    });
   }
 }
 
