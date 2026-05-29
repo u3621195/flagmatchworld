@@ -8329,3 +8329,2795 @@ html, body {
     max-height:22vh !important;
   }
 }
+
+/* =========================================================
+   FMW v5.2.1 — Warm Champagne flag tile face
+   Goal: lighten the tile surface for better flag clarity while
+   preserving a dark emerald frame so it still matches the HUD,
+   board, popups, and startup logo tone.
+   ========================================================= */
+.tile,
+body[data-sprite-set="flags"] .tile {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.04)),
+    linear-gradient(180deg, #f4ecd3 0%, #eadcb5 52%, #d8c99d 100%) !important;
+  border-color: rgba(217,187,99,.34) !important;
+  box-shadow:
+    inset 0 0 0 3px rgba(2,23,20,.78),
+    inset 0 1px 0 rgba(255,255,255,.46),
+    0 6px 14px rgba(0,0,0,.28) !important;
+}
+body[data-sprite-set="flags"] .tile::before,
+.tile::before {
+  content:"";
+  position:absolute;
+  inset:3px;
+  border-radius:calc(var(--tile-radius) - 3px);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,0) 34%),
+    linear-gradient(180deg, rgba(255,255,255,0), rgba(0,0,0,.06));
+  box-shadow:
+    inset 0 1px rgba(255,255,255,.20),
+    inset 0 -8px 18px rgba(0,0,0,.08);
+  pointer-events:none;
+  z-index:1;
+}
+.tile img,
+.tile .entity-sprite,
+body[data-sprite-set="flags"] .tile img,
+body[data-sprite-set="flags"] .tile .entity-sprite {
+  position:relative;
+  z-index:2;
+}
+
+
+/* =========================================================
+   FMW v5.2.2 — iPhone-first HUD layout refinement
+   Layout follows the cleaner structure:
+   left = status, center = selected country, right = actions.
+   Helper badges may float, but button bodies stay inside the HUD.
+   ========================================================= */
+.iphone-priority-hud {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(210px, 30vw) minmax(0, 1fr) !important;
+  align-items: center !important;
+  gap: 0 !important;
+  overflow: visible !important;
+}
+
+.iphone-priority-hud .hud-status-cluster,
+.iphone-priority-hud .hud-action-cluster {
+  height: 100% !important;
+  min-width: 0 !important;
+  display: flex !important;
+  align-items: stretch !important;
+}
+
+.iphone-priority-hud .hud-status-cluster {
+  justify-self: start !important;
+  justify-content: flex-start !important;
+  max-width: 100% !important;
+}
+
+.iphone-priority-hud .hud-action-cluster {
+  justify-self: end !important;
+  justify-content: flex-end !important;
+  overflow: visible !important;
+}
+
+.iphone-priority-hud .country-segment {
+  justify-self: center !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.iphone-priority-hud .country-name-pill {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Shared HUD segment reset for the new grouped structure */
+.iphone-priority-hud .hud-segment {
+  min-width: 0 !important;
+  height: 100% !important;
+}
+
+.iphone-priority-hud .hud-divider {
+  flex: 0 0 1px !important;
+  width: 1px !important;
+  min-width: 1px !important;
+  height: 72% !important;
+  align-self: center !important;
+  background: rgba(232,194,101,.18) !important;
+}
+
+/* iPhone landscape: compact status blocks, centered country, tidy action bodies */
+@media (orientation: landscape) and (max-height: 560px) {
+  .iphone-priority-hud {
+    grid-template-columns: minmax(315px, 1fr) minmax(210px, 31vw) minmax(182px, 1fr) !important;
+    min-height: var(--hud-h) !important;
+    overflow: visible !important;
+  }
+
+  .iphone-priority-hud .hud-status-cluster {
+    flex: 0 1 auto !important;
+  }
+
+  .iphone-priority-hud .hud-status-cluster .hud-segment {
+    flex: 0 0 auto !important;
+    padding: 0 clamp(5px, .8vw, 10px) !important;
+    border-left: 0 !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.014)) !important;
+  }
+
+  .iphone-priority-hud .level-segment { width: clamp(50px, 6.5vw, 72px) !important; }
+  .iphone-priority-hud .matches-segment { width: clamp(58px, 7.2vw, 82px) !important; }
+  .iphone-priority-hud .time-segment { width: clamp(78px, 9.4vw, 112px) !important; }
+  .iphone-priority-hud .score-segment { width: clamp(82px, 10.2vw, 122px) !important; }
+
+  .iphone-priority-hud .stat-group {
+    gap: clamp(1px, .28dvh, 2px) !important;
+  }
+
+  .iphone-priority-hud .stat-label {
+    font-size: clamp(6px, 1.45dvh, 8px) !important;
+    letter-spacing: .18em !important;
+    line-height: 1 !important;
+  }
+
+  .iphone-priority-hud .stat-value {
+    font-size: clamp(15px, 4.7dvh, 27px) !important;
+    line-height: .96 !important;
+    white-space: nowrap !important;
+  }
+
+  .iphone-priority-hud .level-with-rule {
+    gap: clamp(3px, .65dvh, 6px) !important;
+  }
+
+  .iphone-priority-hud .movement-icon {
+    transform: scale(.72) !important;
+    transform-origin: center !important;
+  }
+
+  .iphone-priority-hud .country-segment {
+    padding: 0 clamp(7px, 1.1vw, 13px) !important;
+    background: transparent !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+  }
+
+  .iphone-priority-hud .country-name-pill {
+    height: clamp(30px, 7.2dvh, 42px) !important;
+    min-height: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 clamp(14px, 2.5vw, 28px) !important;
+    border-radius: clamp(12px, 2.65dvh, 18px) !important;
+    background:
+      radial-gradient(120% 140% at 50% -20%, rgba(232,194,101,.14), transparent 48%),
+      linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.012)),
+      rgba(2, 20, 18, .62) !important;
+    border: 1px solid rgba(232,194,101,.34) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.11),
+      0 0 13px rgba(232,194,101,.08) !important;
+    color: #fff3cf !important;
+    font-size: clamp(14px, 3.55dvh, 21px) !important;
+    letter-spacing: .16em !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  .iphone-priority-hud .hud-action-cluster {
+    gap: clamp(6px, .9vw, 10px) !important;
+    align-items: center !important;
+    padding-right: clamp(4px, .75vw, 8px) !important;
+  }
+
+  .iphone-priority-hud .action-group {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: clamp(6px, .85vw, 10px) !important;
+    height: 100% !important;
+    overflow: visible !important;
+    background: transparent !important;
+    border-left: 0 !important;
+    padding: 0 !important;
+  }
+
+  .iphone-priority-hud .action-btn {
+    position: relative !important;
+    width: clamp(42px, 5.8vw, 62px) !important;
+    height: clamp(34px, 7.5dvh, 44px) !important;
+    min-height: 0 !important;
+    max-height: calc(var(--hud-h) - 8px) !important;
+    align-self: center !important;
+    padding: clamp(2px, .48dvh, 3px) clamp(5px, .7vw, 7px) !important;
+    border-radius: clamp(10px, 2.25dvh, 14px) !important;
+    overflow: visible !important;
+  }
+
+  .iphone-priority-hud .action-btn i {
+    font-size: clamp(14px, 3.15dvh, 18px) !important;
+    line-height: 1 !important;
+  }
+
+  .iphone-priority-hud .action-btn span {
+    font-size: clamp(6px, 1.35dvh, 8px) !important;
+    line-height: 1 !important;
+    letter-spacing: .08em !important;
+    margin-top: clamp(1px, .22dvh, 2px) !important;
+  }
+
+  .iphone-priority-hud .notification-dot {
+    width: clamp(18px, 3.3dvh, 24px) !important;
+    height: clamp(18px, 3.3dvh, 24px) !important;
+    min-width: clamp(18px, 3.3dvh, 24px) !important;
+    top: clamp(-10px, -1.75dvh, -7px) !important;
+    right: clamp(-7px, -1.1vw, -4px) !important;
+    font-size: clamp(8px, 1.75dvh, 11px) !important;
+    line-height: 1 !important;
+    z-index: 12 !important;
+  }
+
+  .iphone-priority-hud .pause-segment {
+    width: clamp(44px, 6.1vw, 64px) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: transparent !important;
+    border-left: 0 !important;
+    padding: 0 !important;
+  }
+
+  .iphone-priority-hud .pause-btn-new {
+    width: clamp(38px, 5.45vw, 56px) !important;
+    height: clamp(34px, 7.5dvh, 44px) !important;
+    min-height: 0 !important;
+    max-height: calc(var(--hud-h) - 8px) !important;
+    border-radius: clamp(12px, 2.7dvh, 18px) !important;
+    align-self: center !important;
+  }
+}
+
+/* Very narrow iPhone landscape fallback: abbreviate labels instead of reducing readability */
+@media (orientation: landscape) and (max-height: 430px) {
+  .iphone-priority-hud {
+    grid-template-columns: minmax(286px, 1fr) minmax(190px, 30vw) minmax(170px, 1fr) !important;
+  }
+  .iphone-priority-hud .level-segment { width: 48px !important; }
+  .iphone-priority-hud .matches-segment { width: 56px !important; }
+  .iphone-priority-hud .time-segment { width: 74px !important; }
+  .iphone-priority-hud .score-segment { width: 78px !important; }
+  .iphone-priority-hud .level-segment .stat-label { font-size: 0 !important; letter-spacing: 0 !important; }
+  .iphone-priority-hud .level-segment .stat-label::after { content: "LV"; font-size: 7px; letter-spacing: .16em; }
+  .iphone-priority-hud .matches-segment .stat-label { font-size: 0 !important; letter-spacing: 0 !important; }
+  .iphone-priority-hud .matches-segment .stat-label::after { content: "MATCH"; font-size: 7px; letter-spacing: .12em; }
+}
+
+
+/* =========================================================
+   FMW v5.2.3 — iPhone HUD score-space and country-width tune
+   - Country plate is narrowed so it no longer dominates the HUD.
+   - Score panel reserves enough width for larger values with commas.
+   ========================================================= */
+@media (orientation: landscape) and (max-height: 560px) {
+  .iphone-priority-hud {
+    grid-template-columns:
+      minmax(372px, 1.18fr)
+      clamp(210px, 24vw, 286px)
+      minmax(178px, .82fr) !important;
+  }
+
+  .iphone-priority-hud .country-segment {
+    max-width: clamp(210px, 24vw, 286px) !important;
+    justify-self: center !important;
+  }
+
+  .iphone-priority-hud .country-name-pill {
+    width: 100% !important;
+    max-width: clamp(210px, 24vw, 286px) !important;
+    padding-left: clamp(12px, 1.8vw, 22px) !important;
+    padding-right: clamp(12px, 1.8vw, 22px) !important;
+  }
+
+  .iphone-priority-hud .score-segment {
+    width: clamp(104px, 12.4vw, 148px) !important;
+    flex-shrink: 0 !important;
+  }
+
+  .iphone-priority-hud .score-val {
+    max-width: 100% !important;
+    min-width: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: clamp(2px, .35vw, 5px) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: clip !important;
+    font-size: clamp(15px, 4.35dvh, 24px) !important;
+    letter-spacing: .01em !important;
+    font-variant-numeric: tabular-nums !important;
+  }
+
+  .iphone-priority-hud .score-val i {
+    flex: 0 0 auto !important;
+    font-size: .76em !important;
+  }
+
+  .iphone-priority-hud .score-val #score {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: clip !important;
+    white-space: nowrap !important;
+  }
+}
+
+/* Very narrow iPhone: preserve score first, then reduce country plate. */
+@media (orientation: landscape) and (max-height: 430px) {
+  .iphone-priority-hud {
+    grid-template-columns:
+      minmax(338px, 1.22fr)
+      clamp(180px, 22vw, 238px)
+      minmax(166px, .78fr) !important;
+  }
+
+  .iphone-priority-hud .country-segment,
+  .iphone-priority-hud .country-name-pill {
+    max-width: clamp(180px, 22vw, 238px) !important;
+  }
+
+  .iphone-priority-hud .score-segment {
+    width: clamp(98px, 12vw, 132px) !important;
+  }
+
+  .iphone-priority-hud .score-val {
+    font-size: clamp(14px, 4.05dvh, 22px) !important;
+  }
+}
+
+/* Wider phones / browser previews: allow score to grow without stretching the country plate. */
+@media (orientation: landscape) and (min-height: 561px) and (max-width: 1200px) {
+  .iphone-priority-hud {
+    grid-template-columns:
+      minmax(390px, 1.2fr)
+      clamp(230px, 24vw, 300px)
+      minmax(190px, .82fr) !important;
+  }
+
+  .iphone-priority-hud .country-segment,
+  .iphone-priority-hud .country-name-pill {
+    max-width: clamp(230px, 24vw, 300px) !important;
+  }
+
+  .iphone-priority-hud .score-segment {
+    width: clamp(112px, 12vw, 156px) !important;
+    flex-shrink: 0 !important;
+  }
+}
+
+
+/* =========================================================
+   FMW v5.2.6 — Stable iPhone HUD fixed fields
+   Base: v5.2.3. This avoids the v5.2.5 hard-lock regression.
+   Fixes:
+   - Stable fixed widths for Time and Score.
+   - No duplicated LEVEL/LV or MATCHES/MATCH pseudo labels.
+   - Country plate remains narrower.
+   - Board sizing and tile layout are untouched.
+   ========================================================= */
+
+/* Safety cleanup: remove old pseudo label fallback that caused duplicated labels. */
+.iphone-priority-hud .level-segment .stat-label::after,
+.iphone-priority-hud .matches-segment .stat-label::after,
+.iphone-priority-hud .time-segment .stat-label::after,
+.iphone-priority-hud .score-segment .stat-label::after {
+  content: none !important;
+  display: none !important;
+}
+
+.iphone-priority-hud .level-segment .stat-label,
+.iphone-priority-hud .matches-segment .stat-label,
+.iphone-priority-hud .time-segment .stat-label,
+.iphone-priority-hud .score-segment .stat-label {
+  font-size: clamp(6px, 1.45dvh, 8px) !important;
+  letter-spacing: .16em !important;
+}
+
+/* iPhone landscape: fixed status/action widths, but keep the existing HUD structure. */
+@media (orientation: landscape) and (max-height: 560px) {
+  .iphone-priority-hud {
+    --fmw-level-w: 52px;
+    --fmw-matches-w: 66px;
+    --fmw-time-w: 90px;
+    --fmw-score-w: 126px;
+    --fmw-country-w: clamp(205px, 23vw, 270px);
+    --fmw-helper-w: 54px;
+    --fmw-shuffle-w: 60px;
+    --fmw-pause-w: 52px;
+    --fmw-gap-main: clamp(8px, 1.45vw, 16px);
+    --fmw-gap-action: clamp(6px, .9vw, 9px);
+
+    display: grid !important;
+    grid-template-columns:
+      calc(var(--fmw-level-w) + var(--fmw-matches-w) + var(--fmw-time-w) + var(--fmw-score-w) + 3px)
+      var(--fmw-country-w)
+      calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-pause-w) + (var(--fmw-gap-action) * 2)) !important;
+    column-gap: var(--fmw-gap-main) !important;
+    justify-content: center !important;
+    align-items: center !important;
+    overflow: visible !important;
+  }
+
+  .iphone-priority-hud .hud-status-cluster {
+    width: calc(var(--fmw-level-w) + var(--fmw-matches-w) + var(--fmw-time-w) + var(--fmw-score-w) + 3px) !important;
+    min-width: calc(var(--fmw-level-w) + var(--fmw-matches-w) + var(--fmw-time-w) + var(--fmw-score-w) + 3px) !important;
+    max-width: calc(var(--fmw-level-w) + var(--fmw-matches-w) + var(--fmw-time-w) + var(--fmw-score-w) + 3px) !important;
+    flex: 0 0 auto !important;
+    justify-self: start !important;
+    display: flex !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+  }
+
+  .iphone-priority-hud .level-segment {
+    width: var(--fmw-level-w) !important;
+    min-width: var(--fmw-level-w) !important;
+    max-width: var(--fmw-level-w) !important;
+    flex: 0 0 var(--fmw-level-w) !important;
+  }
+
+  .iphone-priority-hud .matches-segment {
+    width: var(--fmw-matches-w) !important;
+    min-width: var(--fmw-matches-w) !important;
+    max-width: var(--fmw-matches-w) !important;
+    flex: 0 0 var(--fmw-matches-w) !important;
+  }
+
+  .iphone-priority-hud .time-segment {
+    width: var(--fmw-time-w) !important;
+    min-width: var(--fmw-time-w) !important;
+    max-width: var(--fmw-time-w) !important;
+    flex: 0 0 var(--fmw-time-w) !important;
+  }
+
+  .iphone-priority-hud .score-segment {
+    width: var(--fmw-score-w) !important;
+    min-width: var(--fmw-score-w) !important;
+    max-width: var(--fmw-score-w) !important;
+    flex: 0 0 var(--fmw-score-w) !important;
+  }
+
+  .iphone-priority-hud .country-segment {
+    width: var(--fmw-country-w) !important;
+    min-width: var(--fmw-country-w) !important;
+    max-width: var(--fmw-country-w) !important;
+    flex: 0 0 var(--fmw-country-w) !important;
+    justify-self: center !important;
+  }
+
+  .iphone-priority-hud .country-name-pill {
+    width: var(--fmw-country-w) !important;
+    min-width: var(--fmw-country-w) !important;
+    max-width: var(--fmw-country-w) !important;
+    box-sizing: border-box !important;
+  }
+
+  .iphone-priority-hud .hud-action-cluster {
+    width: calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-pause-w) + (var(--fmw-gap-action) * 2)) !important;
+    min-width: calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-pause-w) + (var(--fmw-gap-action) * 2)) !important;
+    max-width: calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-pause-w) + (var(--fmw-gap-action) * 2)) !important;
+    flex: 0 0 auto !important;
+    justify-self: end !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: var(--fmw-gap-action) !important;
+    padding: 0 !important;
+  }
+
+  .iphone-priority-hud .action-group {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: var(--fmw-gap-action) !important;
+    width: calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-gap-action)) !important;
+    min-width: calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-gap-action)) !important;
+    max-width: calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-gap-action)) !important;
+    flex: 0 0 calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-gap-action)) !important;
+  }
+
+  .iphone-priority-hud .btn-hint {
+    width: var(--fmw-helper-w) !important;
+    min-width: var(--fmw-helper-w) !important;
+    max-width: var(--fmw-helper-w) !important;
+    flex: 0 0 var(--fmw-helper-w) !important;
+  }
+
+  .iphone-priority-hud .btn-shuffle {
+    width: var(--fmw-shuffle-w) !important;
+    min-width: var(--fmw-shuffle-w) !important;
+    max-width: var(--fmw-shuffle-w) !important;
+    flex: 0 0 var(--fmw-shuffle-w) !important;
+  }
+
+  .iphone-priority-hud .pause-segment {
+    width: var(--fmw-pause-w) !important;
+    min-width: var(--fmw-pause-w) !important;
+    max-width: var(--fmw-pause-w) !important;
+    flex: 0 0 var(--fmw-pause-w) !important;
+  }
+
+  .iphone-priority-hud .pause-btn-new {
+    width: calc(var(--fmw-pause-w) - 4px) !important;
+    min-width: calc(var(--fmw-pause-w) - 4px) !important;
+    max-width: calc(var(--fmw-pause-w) - 4px) !important;
+  }
+
+  .iphone-priority-hud .stat-group,
+  .iphone-priority-hud .stat-value,
+  .iphone-priority-hud .time-val,
+  .iphone-priority-hud .score-val,
+  .iphone-priority-hud .level-with-rule,
+  .iphone-priority-hud .match-val {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .iphone-priority-hud .time-val,
+  .iphone-priority-hud .score-val {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    font-variant-numeric: tabular-nums !important;
+    font-feature-settings: "tnum" 1, "lnum" 1 !important;
+  }
+
+  .iphone-priority-hud #timerText {
+    display: inline-block !important;
+    width: 4.6ch !important;
+    min-width: 4.6ch !important;
+    max-width: 4.6ch !important;
+    text-align: left !important;
+  }
+
+  .iphone-priority-hud #score {
+    display: inline-block !important;
+    width: 6.3ch !important;
+    min-width: 6.3ch !important;
+    max-width: 6.3ch !important;
+    text-align: right !important;
+    white-space: nowrap !important;
+  }
+}
+
+/* Very short / narrow iPhone fallback: fixed smaller constants, no pseudo label changes. */
+@media (orientation: landscape) and (max-height: 430px) {
+  .iphone-priority-hud {
+    --fmw-level-w: 48px;
+    --fmw-matches-w: 58px;
+    --fmw-time-w: 82px;
+    --fmw-score-w: 112px;
+    --fmw-country-w: clamp(178px, 22vw, 220px);
+    --fmw-helper-w: 48px;
+    --fmw-shuffle-w: 54px;
+    --fmw-pause-w: 46px;
+    --fmw-gap-main: clamp(6px, 1vw, 11px);
+    --fmw-gap-action: 6px;
+  }
+
+  .iphone-priority-hud .stat-label {
+    font-size: 7px !important;
+    letter-spacing: .12em !important;
+  }
+
+  .iphone-priority-hud .score-val {
+    font-size: clamp(13px, 3.7dvh, 20px) !important;
+  }
+}
+
+
+/* =========================================================
+   FMW v5.2.7 — iPhone cleanup pass
+   - Restore warm champagne tile faces.
+   - Make pause button perfectly round.
+   - Push hint/shuffle/pause cluster farther right.
+   - Hard-disable pseudo-label duplication on iPhone HUD.
+   - Keep fixed status widths without altering board layout.
+   ========================================================= */
+
+/* Absolute cleanup for duplicate tiny labels on the custom iPhone HUD */
+.iphone-priority-hud .stat-label::before,
+.iphone-priority-hud .stat-label::after,
+.iphone-priority-hud .rule-label::before,
+.iphone-priority-hud .rule-label::after,
+.iphone-priority-hud .hud-muted-label::before,
+.iphone-priority-hud .hud-muted-label::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Re-assert warm champagne tile faces over later theme rules */
+#game-area .tile,
+#game-board .tile,
+body[data-sprite-set="flags"] .tile,
+.tile {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.04)),
+    linear-gradient(180deg, #f4ecd3 0%, #eadcb5 52%, #d8c99d 100%) !important;
+  border-color: rgba(217,187,99,.34) !important;
+  box-shadow:
+    inset 0 0 0 3px rgba(2,23,20,.78),
+    inset 0 1px 0 rgba(255,255,255,.46),
+    0 6px 14px rgba(0,0,0,.28) !important;
+}
+#game-area .tile::before,
+#game-board .tile::before,
+body[data-sprite-set="flags"] .tile::before,
+.tile::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 3px !important;
+  border-radius: calc(var(--tile-radius) - 3px) !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,0) 34%),
+    linear-gradient(180deg, rgba(255,255,255,0), rgba(0,0,0,.06)) !important;
+  box-shadow:
+    inset 0 1px rgba(255,255,255,.20),
+    inset 0 -8px 18px rgba(0,0,0,.08) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+#game-area .tile img,
+#game-area .tile .entity-sprite,
+#game-board .tile img,
+#game-board .tile .entity-sprite,
+.tile img,
+.tile .entity-sprite {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+@media (orientation: landscape) and (max-height: 560px) {
+  .iphone-priority-hud {
+    --fmw-level-w: 52px;
+    --fmw-matches-w: 66px;
+    --fmw-time-w: 90px;
+    --fmw-score-w: 126px;
+    --fmw-country-w: clamp(205px, 22vw, 260px);
+    --fmw-helper-w: 54px;
+    --fmw-shuffle-w: 60px;
+    --fmw-pause-w: 54px;
+    --fmw-main-gap: 8px;
+    --fmw-action-gap: 8px;
+
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns:
+      calc(var(--fmw-level-w) + var(--fmw-matches-w) + var(--fmw-time-w) + var(--fmw-score-w) + 3px)
+      minmax(0, 1fr)
+      calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-pause-w) + (var(--fmw-action-gap) * 2)) !important;
+    column-gap: var(--fmw-main-gap) !important;
+    justify-content: stretch !important;
+    align-items: center !important;
+  }
+
+  .iphone-priority-hud .hud-status-cluster {
+    width: calc(var(--fmw-level-w) + var(--fmw-matches-w) + var(--fmw-time-w) + var(--fmw-score-w) + 3px) !important;
+    min-width: calc(var(--fmw-level-w) + var(--fmw-matches-w) + var(--fmw-time-w) + var(--fmw-score-w) + 3px) !important;
+    max-width: calc(var(--fmw-level-w) + var(--fmw-matches-w) + var(--fmw-time-w) + var(--fmw-score-w) + 3px) !important;
+    justify-self: start !important;
+    flex: 0 0 auto !important;
+  }
+
+  .iphone-priority-hud .level-segment {
+    width: var(--fmw-level-w) !important;
+    min-width: var(--fmw-level-w) !important;
+    max-width: var(--fmw-level-w) !important;
+    flex: 0 0 var(--fmw-level-w) !important;
+  }
+  .iphone-priority-hud .matches-segment {
+    width: var(--fmw-matches-w) !important;
+    min-width: var(--fmw-matches-w) !important;
+    max-width: var(--fmw-matches-w) !important;
+    flex: 0 0 var(--fmw-matches-w) !important;
+  }
+  .iphone-priority-hud .time-segment {
+    width: var(--fmw-time-w) !important;
+    min-width: var(--fmw-time-w) !important;
+    max-width: var(--fmw-time-w) !important;
+    flex: 0 0 var(--fmw-time-w) !important;
+  }
+  .iphone-priority-hud .score-segment {
+    width: var(--fmw-score-w) !important;
+    min-width: var(--fmw-score-w) !important;
+    max-width: var(--fmw-score-w) !important;
+    flex: 0 0 var(--fmw-score-w) !important;
+  }
+
+  .iphone-priority-hud .country-segment {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    justify-self: stretch !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+  }
+
+  .iphone-priority-hud .country-name-pill {
+    width: var(--fmw-country-w) !important;
+    min-width: var(--fmw-country-w) !important;
+    max-width: var(--fmw-country-w) !important;
+  }
+
+  .iphone-priority-hud .hud-action-cluster {
+    width: calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-pause-w) + (var(--fmw-action-gap) * 2)) !important;
+    min-width: calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-pause-w) + (var(--fmw-action-gap) * 2)) !important;
+    max-width: calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-pause-w) + (var(--fmw-action-gap) * 2)) !important;
+    justify-self: end !important;
+    margin-left: auto !important;
+    padding-right: 2px !important;
+    gap: var(--fmw-action-gap) !important;
+  }
+
+  .iphone-priority-hud .action-group {
+    width: calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-action-gap)) !important;
+    min-width: calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-action-gap)) !important;
+    max-width: calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-action-gap)) !important;
+    gap: var(--fmw-action-gap) !important;
+  }
+
+  .iphone-priority-hud .btn-hint {
+    width: var(--fmw-helper-w) !important;
+    min-width: var(--fmw-helper-w) !important;
+    max-width: var(--fmw-helper-w) !important;
+    flex: 0 0 var(--fmw-helper-w) !important;
+  }
+  .iphone-priority-hud .btn-shuffle {
+    width: var(--fmw-shuffle-w) !important;
+    min-width: var(--fmw-shuffle-w) !important;
+    max-width: var(--fmw-shuffle-w) !important;
+    flex: 0 0 var(--fmw-shuffle-w) !important;
+  }
+
+  .iphone-priority-hud .pause-segment {
+    width: var(--fmw-pause-w) !important;
+    min-width: var(--fmw-pause-w) !important;
+    max-width: var(--fmw-pause-w) !important;
+    flex: 0 0 var(--fmw-pause-w) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .iphone-priority-hud .pause-btn-new {
+    width: var(--fmw-pause-w) !important;
+    min-width: var(--fmw-pause-w) !important;
+    max-width: var(--fmw-pause-w) !important;
+    height: var(--fmw-pause-w) !important;
+    min-height: var(--fmw-pause-w) !important;
+    max-height: var(--fmw-pause-w) !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .iphone-priority-hud .time-val,
+  .iphone-priority-hud .score-val {
+    font-variant-numeric: tabular-nums !important;
+    font-feature-settings: "tnum" 1, "lnum" 1 !important;
+    white-space: nowrap !important;
+  }
+
+  .iphone-priority-hud #timerText {
+    display: inline-block !important;
+    width: 4.6ch !important;
+    min-width: 4.6ch !important;
+    max-width: 4.6ch !important;
+    text-align: left !important;
+  }
+
+  .iphone-priority-hud #score {
+    display: inline-block !important;
+    width: 6.3ch !important;
+    min-width: 6.3ch !important;
+    max-width: 6.3ch !important;
+    text-align: right !important;
+  }
+}
+
+/* Small iPhone landscape adjustment */
+@media (orientation: landscape) and (max-height: 430px) {
+  .iphone-priority-hud {
+    --fmw-level-w: 48px;
+    --fmw-matches-w: 58px;
+    --fmw-time-w: 82px;
+    --fmw-score-w: 114px;
+    --fmw-country-w: clamp(180px, 22vw, 220px);
+    --fmw-helper-w: 48px;
+    --fmw-shuffle-w: 54px;
+    --fmw-pause-w: 48px;
+    --fmw-main-gap: 6px;
+    --fmw-action-gap: 6px;
+  }
+}
+
+
+/* =========================================================
+   FMW v5.4 — Two-layer compact HUD
+   Layout: country display + tiny level/rule on the left; Matches,
+   Score, Hint, Shuffle, and Pause span the full HUD height on the right.
+   Timer uses the bar only. Buttons keep true shapes on every device.
+   ========================================================= */
+html, body { overflow: hidden !important; }
+
+/* Reduce HUD height while keeping the board as large as possible. */
+:root {
+  --fmw-v54-hud-h: clamp(46px, 10dvh, 54px);
+  --fmw-v54-meter-h: clamp(5px, 1.25dvh, 7px);
+  --hud-h: var(--fmw-v54-hud-h) !important;
+  --meter-h: var(--fmw-v54-meter-h) !important;
+}
+
+/* Universal v5.4 HUD grid */
+.topbar.fmw-v54-hud {
+  height: var(--fmw-v54-hud-h) !important;
+  min-height: var(--fmw-v54-hud-h) !important;
+  max-height: var(--fmw-v54-hud-h) !important;
+  width: 100% !important;
+  display: grid !important;
+  grid-template-columns:
+    minmax(260px, 1fr)
+    clamp(70px, 8.3vw, 112px)
+    clamp(104px, 12.2vw, 168px)
+    var(--fmw-v54-btn-size)
+    var(--fmw-v54-btn-size)
+    var(--fmw-v54-pause-size) !important;
+  gap: clamp(6px, .9vw, 12px) !important;
+  align-items: stretch !important;
+  padding: clamp(4px, .8dvh, 7px) clamp(7px, 1.2vw, 14px) !important;
+  border: 1px solid rgba(232,194,101,.32) !important;
+  border-radius: clamp(14px, 3.2dvh, 22px) !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.015)),
+    rgba(3,32,27,.82) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.12),
+    inset 0 -1px 0 rgba(0,0,0,.24),
+    0 0 17px rgba(0,0,0,.32) !important;
+  overflow: visible !important;
+}
+
+.fmw-v54-hud { --fmw-v54-btn-size: calc(var(--fmw-v54-hud-h) - clamp(9px, 1.65dvh, 13px)); --fmw-v54-pause-size: var(--fmw-v54-btn-size); }
+
+.fmw-v54-left {
+  min-width: 0 !important;
+  height: 100% !important;
+  display: grid !important;
+  grid-template-rows: 1fr auto !important;
+  gap: clamp(2px, .36dvh, 4px) !important;
+  align-content: stretch !important;
+}
+
+.fmw-v54-country {
+  min-width: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 clamp(10px, 2vw, 24px) !important;
+  border: 1px solid rgba(232,194,101,.36) !important;
+  border-radius: clamp(10px, 2.3dvh, 16px) !important;
+  background:
+    radial-gradient(120% 140% at 50% -35%, rgba(232,194,101,.13), transparent 52%),
+    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.012)),
+    rgba(2, 24, 21, .72) !important;
+  color: #fff3cf !important;
+  font-family: "Paytone One", "Barlow Condensed", sans-serif !important;
+  font-size: clamp(13px, 3.25dvh, 18px) !important;
+  line-height: 1 !important;
+  letter-spacing: .13em !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.10), 0 0 12px rgba(232,194,101,.08) !important;
+}
+
+.fmw-v54-level-rule {
+  min-height: clamp(9px, 2.1dvh, 13px) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: .35em !important;
+  padding-left: clamp(5px, .85vw, 10px) !important;
+  color: rgba(236,232,200,.72) !important;
+  font-size: clamp(7px, 1.8dvh, 10px) !important;
+  line-height: 1 !important;
+  letter-spacing: .08em !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  text-transform: uppercase !important;
+}
+.fmw-v54-level-rule #level { color: #fff3cf !important; font-weight: 900 !important; }
+.fmw-v54-level-rule .movement-icon { display: none !important; }
+
+.fmw-v54-stat {
+  height: 100% !important;
+  min-width: 0 !important;
+  display: grid !important;
+  grid-template-rows: auto 1fr !important;
+  align-items: center !important;
+  justify-items: center !important;
+  padding: clamp(4px, .75dvh, 6px) clamp(5px, .9vw, 9px) !important;
+  border: 1px solid rgba(232,194,101,.24) !important;
+  border-radius: clamp(9px, 2.1dvh, 14px) !important;
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.016)), rgba(3,32,27,.70) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.09) !important;
+  overflow: hidden !important;
+}
+.fmw-v54-stat-label {
+  color: rgba(236,232,200,.72) !important;
+  font-size: clamp(6px, 1.55dvh, 8px) !important;
+  line-height: 1 !important;
+  letter-spacing: .18em !important;
+  font-weight: 900 !important;
+}
+.fmw-v54-stat-value {
+  width: 100% !important;
+  min-width: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: clamp(2px, .4vw, 5px) !important;
+  color: #fff3cf !important;
+  font-family: "Paytone One", "Barlow Condensed", sans-serif !important;
+  font-size: clamp(18px, 5.1dvh, 28px) !important;
+  line-height: 1 !important;
+  font-variant-numeric: tabular-nums !important;
+  font-feature-settings: "tnum" 1, "lnum" 1 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+}
+.fmw-v54-score .fmw-v54-stat-value { color:#e8c265 !important; }
+.fmw-v54-score #score { display:inline-block !important; min-width: 5.4ch !important; text-align:right !important; }
+.fmw-v54-score i { flex:0 0 auto !important; font-size:.78em !important; }
+
+/* Shape rule: square means square, circle means circle, on every device. */
+.fmw-v54-square-btn,
+.fmw-v54-pause-btn {
+  width: var(--fmw-v54-btn-size) !important;
+  height: var(--fmw-v54-btn-size) !important;
+  min-width: var(--fmw-v54-btn-size) !important;
+  min-height: var(--fmw-v54-btn-size) !important;
+  max-width: var(--fmw-v54-btn-size) !important;
+  max-height: var(--fmw-v54-btn-size) !important;
+  aspect-ratio: 1 / 1 !important;
+  align-self: center !important;
+  justify-self: center !important;
+  box-sizing: border-box !important;
+  padding: 0 !important;
+}
+.fmw-v54-square-btn {
+  border-radius: clamp(9px, 2.2dvh, 14px) !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap: clamp(1px, .25dvh, 2px) !important;
+  overflow: visible !important;
+}
+.fmw-v54-square-btn i { font-size: clamp(14px, 3.1dvh, 18px) !important; line-height:1 !important; }
+.fmw-v54-square-btn span { font-size: clamp(5px, 1.25dvh, 7px) !important; line-height:1 !important; letter-spacing:.08em !important; }
+.fmw-v54-pause-btn {
+  width: var(--fmw-v54-pause-size) !important;
+  height: var(--fmw-v54-pause-size) !important;
+  min-width: var(--fmw-v54-pause-size) !important;
+  min-height: var(--fmw-v54-pause-size) !important;
+  max-width: var(--fmw-v54-pause-size) !important;
+  max-height: var(--fmw-v54-pause-size) !important;
+  border-radius: 50% !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  overflow:hidden !important;
+}
+.fmw-v54-pause-btn i { font-size: clamp(14px, 3.1dvh, 18px) !important; line-height:1 !important; }
+.fmw-v54-hud .notification-dot {
+  width: clamp(17px, 3.15dvh, 22px) !important;
+  height: clamp(17px, 3.15dvh, 22px) !important;
+  min-width: clamp(17px, 3.15dvh, 22px) !important;
+  top: clamp(-9px, -1.65dvh, -6px) !important;
+  right: clamp(-7px, -1vw, -4px) !important;
+  font-size: clamp(8px, 1.75dvh, 10px) !important;
+  z-index: 20 !important;
+}
+
+.board-time-meter { height: var(--fmw-v54-meter-h) !important; min-height: var(--fmw-v54-meter-h) !important; }
+.board-header.fmw-board-header { display: none !important; }
+
+/* Restore warm champagne flag tile surfaces as final layer. */
+.tile,
+body[data-sprite-set="flags"] .tile {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.04)),
+    linear-gradient(180deg, #f4ecd3 0%, #eadcb5 52%, #d8c99d 100%) !important;
+  border-color: rgba(217,187,99,.34) !important;
+  box-shadow:
+    inset 0 0 0 3px rgba(2,23,20,.78),
+    inset 0 1px 0 rgba(255,255,255,.46),
+    0 6px 14px rgba(0,0,0,.28) !important;
+}
+.tile::before,
+body[data-sprite-set="flags"] .tile::before {
+  content:"" !important;
+  position:absolute !important;
+  inset:3px !important;
+  border-radius:calc(var(--tile-radius) - 3px) !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,0) 34%),
+    linear-gradient(180deg, rgba(255,255,255,0), rgba(0,0,0,.06)) !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.20), inset 0 -8px 18px rgba(0,0,0,.08) !important;
+  pointer-events:none !important;
+  z-index:1 !important;
+}
+.tile img,
+.tile .entity-sprite,
+body[data-sprite-set="flags"] .tile img,
+body[data-sprite-set="flags"] .tile .entity-sprite { position:relative !important; z-index:2 !important; }
+
+/* Compact iPhone landscape: preserve board height. */
+@media (orientation: landscape) and (max-height: 560px) {
+  :root {
+    --fmw-v54-hud-h: clamp(44px, 9.4dvh, 50px);
+    --fmw-v54-meter-h: clamp(5px, 1.15dvh, 6px);
+  }
+  .topbar.fmw-v54-hud {
+    grid-template-columns:
+      minmax(230px, 1fr)
+      clamp(58px, 7.4vw, 78px)
+      clamp(82px, 10.6vw, 116px)
+      var(--fmw-v54-btn-size)
+      var(--fmw-v54-btn-size)
+      var(--fmw-v54-pause-size) !important;
+    gap: clamp(5px, .72vw, 9px) !important;
+    padding: clamp(3px, .62dvh, 5px) clamp(6px, .95vw, 10px) !important;
+  }
+  .fmw-v54-country { font-size: clamp(12px, 3.05dvh, 16px) !important; letter-spacing:.12em !important; }
+  .fmw-v54-level-rule { font-size: clamp(6px, 1.55dvh, 8px) !important; min-height: clamp(8px, 1.8dvh, 10px) !important; }
+  .fmw-v54-stat-value { font-size: clamp(16px, 4.5dvh, 23px) !important; }
+  .fmw-v54-score #score { min-width: 5.1ch !important; }
+}
+
+/* Desktop / iPad landscape: same layout, larger but still shape-locked. */
+@media (orientation: landscape) and (min-height: 561px) {
+  :root {
+    --fmw-v54-hud-h: clamp(56px, 7.2dvh, 68px);
+    --fmw-v54-meter-h: clamp(6px, .9dvh, 8px);
+  }
+  .topbar.fmw-v54-hud {
+    grid-template-columns:
+      minmax(360px, 1fr)
+      clamp(90px, 8vw, 126px)
+      clamp(135px, 11vw, 190px)
+      var(--fmw-v54-btn-size)
+      var(--fmw-v54-btn-size)
+      var(--fmw-v54-pause-size) !important;
+  }
+}
+
+/* =========================================================
+   v5.4.1 — Screenshot-layout rebuild
+   Goal: match the user's specified placement exactly in spirit:
+   left two-layer block (country + tiny level/rule), then fixed-position
+   Matches, Score, Hint, Shuffle, Pause to the right.
+   Desktop and iPhone use their own locked placements.
+   ========================================================= */
+
+/* Shared hard reset for the v5.4 HUD layout */
+.topbar.fmw-v54-hud {
+  justify-content: stretch !important;
+  align-content: center !important;
+}
+.topbar.fmw-v54-hud > * {
+  position: relative !important;
+}
+.fmw-v54-left { justify-self: stretch !important; align-self: stretch !important; }
+.fmw-v54-matches { justify-self: stretch !important; }
+.fmw-v54-score { justify-self: stretch !important; }
+.fmw-v54-square-btn, .fmw-v54-pause-btn { justify-self: center !important; align-self: center !important; }
+.fmw-v54-country {
+  justify-content: flex-start !important;
+  text-align: left !important;
+  padding-left: clamp(14px, 2vw, 22px) !important;
+}
+.fmw-v54-level-rule {
+  justify-content: flex-start !important;
+  padding-left: clamp(10px, 1.4vw, 16px) !important;
+  font-size: clamp(6px, 1.35dvh, 9px) !important;
+  letter-spacing: .04em !important;
+  text-transform: none !important;
+}
+.fmw-v54-stat {
+  justify-items: start !important;
+  align-content: center !important;
+  padding-left: clamp(8px, 1vw, 12px) !important;
+  padding-right: clamp(8px, 1vw, 12px) !important;
+}
+.fmw-v54-stat-label {
+  text-align: left !important;
+  width: 100% !important;
+}
+.fmw-v54-stat-value {
+  justify-content: flex-end !important;
+  text-align: right !important;
+}
+.fmw-v54-matches .fmw-v54-stat-value,
+.fmw-v54-score .fmw-v54-stat-value { width: 100% !important; }
+.fmw-v54-score i { display:none !important; }
+.fmw-v54-score #score { min-width: 0 !important; }
+
+/* Desktop / larger layouts */
+@media (orientation: landscape) and (min-height: 561px) {
+  :root {
+    --fmw-v54-hud-h: clamp(58px, 7dvh, 72px);
+  }
+  .topbar.fmw-v54-hud {
+    grid-template-columns:
+      minmax(360px, 1fr)
+      112px
+      150px
+      58px
+      58px
+      62px !important;
+    gap: 10px !important;
+    padding: 6px 14px !important;
+  }
+  .fmw-v54-left {
+    grid-template-rows: minmax(0, 1fr) auto !important;
+    gap: 4px !important;
+  }
+  .fmw-v54-country {
+    font-size: clamp(16px, 2dvh, 20px) !important;
+    border-radius: 18px !important;
+  }
+  .fmw-v54-level-rule {
+    min-height: 10px !important;
+    font-size: clamp(8px, 1dvh, 10px) !important;
+  }
+  .fmw-v54-stat-label {
+    font-size: 8px !important;
+    letter-spacing: .14em !important;
+  }
+  .fmw-v54-stat-value {
+    font-size: clamp(24px, 3.2dvh, 34px) !important;
+  }
+  .fmw-v54-square-btn,
+  .fmw-v54-pause-btn {
+    width: 52px !important;
+    height: 52px !important;
+    min-width: 52px !important;
+    min-height: 52px !important;
+    max-width: 52px !important;
+    max-height: 52px !important;
+  }
+  .fmw-v54-pause-btn {
+    width: 56px !important;
+    height: 56px !important;
+    min-width: 56px !important;
+    min-height: 56px !important;
+    max-width: 56px !important;
+    max-height: 56px !important;
+  }
+}
+
+/* iPhone compact landscape */
+@media (orientation: landscape) and (max-height: 560px) {
+  :root {
+    --fmw-v54-hud-h: clamp(44px, 8.6dvh, 50px);
+  }
+  .topbar.fmw-v54-hud {
+    grid-template-columns:
+      minmax(190px, 1fr)
+      66px
+      102px
+      42px
+      42px
+      46px !important;
+    gap: 5px !important;
+    padding: 4px 8px !important;
+  }
+  .fmw-v54-left {
+    gap: 2px !important;
+  }
+  .fmw-v54-country {
+    padding-left: 12px !important;
+    font-size: clamp(11px, 2.45dvh, 14px) !important;
+    letter-spacing: .08em !important;
+    border-radius: 12px !important;
+  }
+  .fmw-v54-level-rule {
+    padding-left: 8px !important;
+    min-height: 8px !important;
+    font-size: clamp(5px, 1.1dvh, 7px) !important;
+    letter-spacing: .02em !important;
+  }
+  .fmw-v54-stat {
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+  }
+  .fmw-v54-stat-label {
+    font-size: 6px !important;
+    letter-spacing: .12em !important;
+  }
+  .fmw-v54-stat-value {
+    font-size: clamp(15px, 3.8dvh, 21px) !important;
+  }
+  .fmw-v54-square-btn,
+  .fmw-v54-pause-btn {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    max-width: 38px !important;
+    max-height: 38px !important;
+  }
+  .fmw-v54-square-btn i,
+  .fmw-v54-pause-btn i {
+    font-size: 14px !important;
+  }
+  .fmw-v54-square-btn span {
+    font-size: 5px !important;
+  }
+  .fmw-v54-pause-btn {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    min-height: 42px !important;
+    max-width: 42px !important;
+    max-height: 42px !important;
+  }
+  .fmw-v54-hud .notification-dot {
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    font-size: 8px !important;
+    top: -7px !important;
+    right: -5px !important;
+  }
+}
+
+
+/* =========================================================
+   v5.4.2 — Fixed-position HUD, based on user's screenshot
+   No fluid grid movement. Each HUD element has a locked placement.
+   Desktop and iPhone have their own coordinates.
+   ========================================================= */
+
+/* The HUD shell becomes a coordinate canvas. */
+.topbar.fmw-v54-hud {
+  position: relative !important;
+  display: block !important;
+  overflow: visible !important;
+  box-sizing: border-box !important;
+}
+
+/* Every direct HUD item is positioned explicitly. */
+.topbar.fmw-v54-hud > .fmw-v54-left,
+.topbar.fmw-v54-hud > .fmw-v54-matches,
+.topbar.fmw-v54-hud > .fmw-v54-score,
+.topbar.fmw-v54-hud > #hintBtn,
+.topbar.fmw-v54-hud > #shuffleBtn,
+.topbar.fmw-v54-hud > #pauseBtn {
+  position: absolute !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Left two-layer area */
+.fmw-v54-left {
+  display: grid !important;
+  grid-template-rows: 1fr auto !important;
+  gap: 3px !important;
+  min-width: 0 !important;
+}
+
+.fmw-v54-country {
+  width: 100% !important;
+  height: 100% !important;
+  box-sizing: border-box !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+.fmw-v54-level-rule {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  opacity: .78 !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  padding-left: 8px !important;
+}
+
+/* Fixed stats */
+.fmw-v54-stat {
+  box-sizing: border-box !important;
+  display: grid !important;
+  grid-template-rows: auto 1fr !important;
+  justify-items: stretch !important;
+  align-items: center !important;
+  text-align: left !important;
+}
+
+.fmw-v54-stat-label {
+  width: 100% !important;
+  text-align: left !important;
+}
+
+.fmw-v54-stat-value {
+  width: 100% !important;
+  justify-content: flex-end !important;
+  text-align: right !important;
+}
+
+.fmw-v54-score i { display: none !important; }
+.fmw-v54-score #score {
+  min-width: 0 !important;
+  width: 100% !important;
+  text-align: right !important;
+}
+
+/* Shape rules remain absolute: square stays square, pause stays circle. */
+.fmw-v54-square-btn,
+.fmw-v54-pause-btn {
+  aspect-ratio: 1 / 1 !important;
+  box-sizing: border-box !important;
+  padding: 0 !important;
+}
+
+.fmw-v54-pause-btn {
+  border-radius: 50% !important;
+}
+
+/* Desktop / wide landscape placement */
+@media (orientation: landscape) and (min-height: 561px) {
+  :root {
+    --fmw-v542-hud-h: 66px;
+    --fmw-v542-pad-x: 14px;
+    --fmw-v542-pad-y: 7px;
+    --fmw-v542-gap: 10px;
+    --fmw-v542-country-w: 46%;
+    --fmw-v542-matches-w: 96px;
+    --fmw-v542-score-w: 148px;
+    --fmw-v542-btn: 52px;
+    --fmw-v542-pause: 58px;
+    --fmw-v54-hud-h: var(--fmw-v542-hud-h);
+  }
+
+  .topbar.fmw-v54-hud {
+    height: var(--fmw-v542-hud-h) !important;
+    min-height: var(--fmw-v542-hud-h) !important;
+    max-height: var(--fmw-v542-hud-h) !important;
+    padding: 0 !important;
+  }
+
+  .topbar.fmw-v54-hud > .fmw-v54-left {
+    left: var(--fmw-v542-pad-x) !important;
+    top: var(--fmw-v542-pad-y) !important;
+    width: var(--fmw-v542-country-w) !important;
+    height: calc(var(--fmw-v542-hud-h) - (var(--fmw-v542-pad-y) * 2)) !important;
+  }
+
+  .topbar.fmw-v54-hud > .fmw-v54-matches {
+    left: calc(var(--fmw-v542-pad-x) + var(--fmw-v542-country-w) + var(--fmw-v542-gap)) !important;
+    top: var(--fmw-v542-pad-y) !important;
+    width: var(--fmw-v542-matches-w) !important;
+    height: calc(var(--fmw-v542-hud-h) - (var(--fmw-v542-pad-y) * 2)) !important;
+  }
+
+  .topbar.fmw-v54-hud > .fmw-v54-score {
+    left: calc(var(--fmw-v542-pad-x) + var(--fmw-v542-country-w) + var(--fmw-v542-gap) + var(--fmw-v542-matches-w) + var(--fmw-v542-gap)) !important;
+    top: var(--fmw-v542-pad-y) !important;
+    width: var(--fmw-v542-score-w) !important;
+    height: calc(var(--fmw-v542-hud-h) - (var(--fmw-v542-pad-y) * 2)) !important;
+  }
+
+  .topbar.fmw-v54-hud > #hintBtn {
+    left: calc(var(--fmw-v542-pad-x) + var(--fmw-v542-country-w) + var(--fmw-v542-gap) + var(--fmw-v542-matches-w) + var(--fmw-v542-gap) + var(--fmw-v542-score-w) + var(--fmw-v542-gap)) !important;
+    top: calc((var(--fmw-v542-hud-h) - var(--fmw-v542-btn)) / 2) !important;
+    width: var(--fmw-v542-btn) !important;
+    height: var(--fmw-v542-btn) !important;
+    min-width: var(--fmw-v542-btn) !important;
+    min-height: var(--fmw-v542-btn) !important;
+    max-width: var(--fmw-v542-btn) !important;
+    max-height: var(--fmw-v542-btn) !important;
+  }
+
+  .topbar.fmw-v54-hud > #shuffleBtn {
+    left: calc(var(--fmw-v542-pad-x) + var(--fmw-v542-country-w) + var(--fmw-v542-gap) + var(--fmw-v542-matches-w) + var(--fmw-v542-gap) + var(--fmw-v542-score-w) + var(--fmw-v542-gap) + var(--fmw-v542-btn) + var(--fmw-v542-gap)) !important;
+    top: calc((var(--fmw-v542-hud-h) - var(--fmw-v542-btn)) / 2) !important;
+    width: var(--fmw-v542-btn) !important;
+    height: var(--fmw-v542-btn) !important;
+    min-width: var(--fmw-v542-btn) !important;
+    min-height: var(--fmw-v542-btn) !important;
+    max-width: var(--fmw-v542-btn) !important;
+    max-height: var(--fmw-v542-btn) !important;
+  }
+
+  .topbar.fmw-v54-hud > #pauseBtn {
+    left: calc(var(--fmw-v542-pad-x) + var(--fmw-v542-country-w) + var(--fmw-v542-gap) + var(--fmw-v542-matches-w) + var(--fmw-v542-gap) + var(--fmw-v542-score-w) + var(--fmw-v542-gap) + var(--fmw-v542-btn) + var(--fmw-v542-gap) + var(--fmw-v542-btn) + var(--fmw-v542-gap)) !important;
+    top: calc((var(--fmw-v542-hud-h) - var(--fmw-v542-pause)) / 2) !important;
+    width: var(--fmw-v542-pause) !important;
+    height: var(--fmw-v542-pause) !important;
+    min-width: var(--fmw-v542-pause) !important;
+    min-height: var(--fmw-v542-pause) !important;
+    max-width: var(--fmw-v542-pause) !important;
+    max-height: var(--fmw-v542-pause) !important;
+  }
+
+  .fmw-v54-country {
+    font-size: clamp(16px, 2.05dvh, 20px) !important;
+    letter-spacing: .12em !important;
+  }
+  .fmw-v54-level-rule { font-size: 9px !important; min-height: 11px !important; }
+  .fmw-v54-stat-label { font-size: 8px !important; }
+  .fmw-v54-stat-value { font-size: clamp(26px, 3.4dvh, 34px) !important; }
+}
+
+/* iPhone / compact landscape placement */
+@media (orientation: landscape) and (max-height: 560px) {
+  :root {
+    --fmw-v542-hud-h: 48px;
+    --fmw-v542-pad-x: 8px;
+    --fmw-v542-pad-y: 4px;
+    --fmw-v542-gap: 5px;
+    --fmw-v542-country-w: 40%;
+    --fmw-v542-matches-w: 48px;
+    --fmw-v542-score-w: 66px;
+    --fmw-v542-btn: 34px;
+    --fmw-v542-pause: 40px;
+    --fmw-v54-hud-h: var(--fmw-v542-hud-h);
+  }
+
+  .topbar.fmw-v54-hud {
+    height: var(--fmw-v542-hud-h) !important;
+    min-height: var(--fmw-v542-hud-h) !important;
+    max-height: var(--fmw-v542-hud-h) !important;
+    padding: 0 !important;
+  }
+
+  .topbar.fmw-v54-hud > .fmw-v54-left {
+    left: var(--fmw-v542-pad-x) !important;
+    top: var(--fmw-v542-pad-y) !important;
+    width: var(--fmw-v542-country-w) !important;
+    height: calc(var(--fmw-v542-hud-h) - (var(--fmw-v542-pad-y) * 2)) !important;
+  }
+
+  .topbar.fmw-v54-hud > .fmw-v54-matches {
+    left: calc(var(--fmw-v542-pad-x) + var(--fmw-v542-country-w) + var(--fmw-v542-gap)) !important;
+    top: var(--fmw-v542-pad-y) !important;
+    width: var(--fmw-v542-matches-w) !important;
+    height: calc(var(--fmw-v542-hud-h) - (var(--fmw-v542-pad-y) * 2)) !important;
+  }
+
+  .topbar.fmw-v54-hud > .fmw-v54-score {
+    left: calc(var(--fmw-v542-pad-x) + var(--fmw-v542-country-w) + var(--fmw-v542-gap) + var(--fmw-v542-matches-w) + var(--fmw-v542-gap)) !important;
+    top: var(--fmw-v542-pad-y) !important;
+    width: var(--fmw-v542-score-w) !important;
+    height: calc(var(--fmw-v542-hud-h) - (var(--fmw-v542-pad-y) * 2)) !important;
+  }
+
+  .topbar.fmw-v54-hud > #hintBtn {
+    left: calc(var(--fmw-v542-pad-x) + var(--fmw-v542-country-w) + var(--fmw-v542-gap) + var(--fmw-v542-matches-w) + var(--fmw-v542-gap) + var(--fmw-v542-score-w) + var(--fmw-v542-gap)) !important;
+    top: calc((var(--fmw-v542-hud-h) - var(--fmw-v542-btn)) / 2) !important;
+    width: var(--fmw-v542-btn) !important;
+    height: var(--fmw-v542-btn) !important;
+    min-width: var(--fmw-v542-btn) !important;
+    min-height: var(--fmw-v542-btn) !important;
+    max-width: var(--fmw-v542-btn) !important;
+    max-height: var(--fmw-v542-btn) !important;
+  }
+
+  .topbar.fmw-v54-hud > #shuffleBtn {
+    left: calc(var(--fmw-v542-pad-x) + var(--fmw-v542-country-w) + var(--fmw-v542-gap) + var(--fmw-v542-matches-w) + var(--fmw-v542-gap) + var(--fmw-v542-score-w) + var(--fmw-v542-gap) + var(--fmw-v542-btn) + var(--fmw-v542-gap)) !important;
+    top: calc((var(--fmw-v542-hud-h) - var(--fmw-v542-btn)) / 2) !important;
+    width: var(--fmw-v542-btn) !important;
+    height: var(--fmw-v542-btn) !important;
+    min-width: var(--fmw-v542-btn) !important;
+    min-height: var(--fmw-v542-btn) !important;
+    max-width: var(--fmw-v542-btn) !important;
+    max-height: var(--fmw-v542-btn) !important;
+  }
+
+  .topbar.fmw-v54-hud > #pauseBtn {
+    left: calc(var(--fmw-v542-pad-x) + var(--fmw-v542-country-w) + var(--fmw-v542-gap) + var(--fmw-v542-matches-w) + var(--fmw-v542-gap) + var(--fmw-v542-score-w) + var(--fmw-v542-gap) + var(--fmw-v542-btn) + var(--fmw-v542-gap) + var(--fmw-v542-btn) + var(--fmw-v542-gap)) !important;
+    top: calc((var(--fmw-v542-hud-h) - var(--fmw-v542-pause)) / 2) !important;
+    width: var(--fmw-v542-pause) !important;
+    height: var(--fmw-v542-pause) !important;
+    min-width: var(--fmw-v542-pause) !important;
+    min-height: var(--fmw-v542-pause) !important;
+    max-width: var(--fmw-v542-pause) !important;
+    max-height: var(--fmw-v542-pause) !important;
+  }
+
+  .fmw-v54-country {
+    font-size: clamp(10px, 2.45dvh, 13px) !important;
+    letter-spacing: .08em !important;
+    border-radius: 11px !important;
+  }
+  .fmw-v54-level-rule {
+    font-size: clamp(5px, 1.1dvh, 7px) !important;
+    min-height: 8px !important;
+    padding-left: 6px !important;
+  }
+  .fmw-v54-stat {
+    padding: 3px 4px !important;
+  }
+  .fmw-v54-stat-label {
+    font-size: 5px !important;
+    letter-spacing: .08em !important;
+  }
+  .fmw-v54-stat-value {
+    font-size: clamp(13px, 3.55dvh, 19px) !important;
+  }
+  .fmw-v54-square-btn i,
+  .fmw-v54-pause-btn i { font-size: 13px !important; }
+  .fmw-v54-square-btn span { font-size: 4.5px !important; }
+  .fmw-v54-hud .notification-dot {
+    width: 15px !important;
+    height: 15px !important;
+    min-width: 15px !important;
+    font-size: 7px !important;
+    top: -6px !important;
+    right: -4px !important;
+  }
+}
+
+/* Protect board/tile visual consistency */
+.tile,
+body[data-sprite-set="flags"] .tile {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.04)),
+    linear-gradient(180deg, #f4ecd3 0%, #eadcb5 52%, #d8c99d 100%) !important;
+}
+
+
+/* =========================================================
+   v5.5 — PROFESSIONAL HUD RESET
+   This is the final layout authority for gameplay HUD.
+   It intentionally overrides all previous v5.4.x HUD experiments.
+
+   UX rules:
+   - Board frame is the master container.
+   - HUD width equals board width.
+   - Desktop/iPad and iPhone use separate fixed slot maps.
+   - Only the country panel is flexible.
+   - Matches and Score are fixed stat blocks.
+   - Hint and Shuffle are true squares.
+   - Pause is a true circle.
+   - Level/Rule is tiny reference text only.
+   - No numeric time in HUD; timer bar only.
+   ========================================================= */
+
+/* Make sizing predictable and remove earlier layout side effects. */
+.fmw-v54-hud,
+.fmw-v54-hud * {
+  box-sizing: border-box !important;
+}
+
+.topbar.fmw-v54-hud {
+  position: relative !important;
+  inset: auto !important;
+  width: 100% !important;
+  margin: 0 !important;
+  display: grid !important;
+  align-items: center !important;
+  justify-content: stretch !important;
+  overflow: visible !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.065), rgba(255,255,255,.012)),
+    rgba(3,32,27,.84) !important;
+  border: 1px solid rgba(232,194,101,.34) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.14),
+    inset 0 -1px 0 rgba(0,0,0,.26),
+    0 8px 22px rgba(0,0,0,.18) !important;
+}
+
+/* Cancel every absolute-position override from v5.4.2. */
+.topbar.fmw-v54-hud > .fmw-v54-left,
+.topbar.fmw-v54-hud > .fmw-v54-matches,
+.topbar.fmw-v54-hud > .fmw-v54-score,
+.topbar.fmw-v54-hud > #hintBtn,
+.topbar.fmw-v54-hud > #shuffleBtn,
+.topbar.fmw-v54-hud > #pauseBtn {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+}
+
+/* Left information panel */
+.fmw-v54-left {
+  width: 100% !important;
+  height: 100% !important;
+  display: grid !important;
+  grid-template-rows: minmax(0, 1fr) auto !important;
+  align-items: stretch !important;
+  align-self: stretch !important;
+  gap: 3px !important;
+  min-width: 0 !important;
+}
+
+.fmw-v54-country {
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  text-align: center !important;
+  border: 1px solid rgba(232,194,101,.36) !important;
+  background:
+    radial-gradient(120% 150% at 50% -45%, rgba(232,194,101,.16), transparent 50%),
+    linear-gradient(180deg, rgba(255,255,255,.052), rgba(255,255,255,.012)),
+    rgba(2,24,21,.72) !important;
+  color: #fff3cf !important;
+  font-family: "Paytone One", "Barlow Condensed", sans-serif !important;
+  text-transform: uppercase !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.11),
+    0 0 10px rgba(232,194,101,.06) !important;
+}
+
+.fmw-v54-level-rule {
+  width: 100% !important;
+  min-width: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  color: rgba(236,232,200,.72) !important;
+  text-transform: none !important;
+  font-weight: 700 !important;
+}
+.fmw-v54-level-rule #level {
+  color: #fff3cf !important;
+  font-weight: 900 !important;
+}
+.fmw-v54-level-rule .movement-icon {
+  display: none !important;
+}
+
+/* Stat blocks */
+.fmw-v54-stat {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  align-self: stretch !important;
+  display: grid !important;
+  grid-template-rows: auto 1fr !important;
+  align-items: center !important;
+  justify-items: stretch !important;
+  border: 1px solid rgba(232,194,101,.25) !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.014)),
+    rgba(3,32,27,.70) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.09) !important;
+  overflow: hidden !important;
+}
+
+.fmw-v54-stat-label {
+  display: block !important;
+  width: 100% !important;
+  color: rgba(236,232,200,.70) !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  text-align: left !important;
+  text-transform: uppercase !important;
+}
+
+.fmw-v54-stat-value {
+  width: 100% !important;
+  min-width: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  color: #fff3cf !important;
+  font-family: "Paytone One", "Barlow Condensed", sans-serif !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  font-variant-numeric: tabular-nums !important;
+  font-feature-settings: "tnum" 1, "lnum" 1 !important;
+}
+.fmw-v54-score .fmw-v54-stat-value {
+  color: #e8c265 !important;
+}
+.fmw-v54-score i {
+  display: none !important;
+}
+.fmw-v54-score #score {
+  min-width: 0 !important;
+  width: 100% !important;
+  text-align: right !important;
+}
+
+/* Button shape system */
+.fmw-v54-square-btn,
+.fmw-v54-pause-btn {
+  aspect-ratio: 1 / 1 !important;
+  align-self: center !important;
+  justify-self: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  flex: none !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+}
+
+.fmw-v54-square-btn {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: visible !important;
+}
+
+.fmw-v54-pause-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+}
+
+.fmw-v54-square-btn span {
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+.fmw-v54-hud .notification-dot {
+  border-radius: 50% !important;
+  z-index: 30 !important;
+}
+
+/* Timer bar aligned with board/HUD width. */
+.board-time-meter {
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Desktop / iPad placement map */
+@media (orientation: landscape) and (min-height: 561px) {
+  :root {
+    --fmw-v55-hud-h: 64px;
+    --fmw-v55-pad-x: 12px;
+    --fmw-v55-pad-y: 6px;
+    --fmw-v55-gap: 10px;
+    --fmw-v55-matches-w: 96px;
+    --fmw-v55-score-w: 150px;
+    --fmw-v55-btn: 52px;
+    --fmw-v55-pause: 58px;
+    --fmw-v54-hud-h: var(--fmw-v55-hud-h);
+    --hud-h: var(--fmw-v55-hud-h) !important;
+  }
+
+  .topbar.fmw-v54-hud {
+    height: var(--fmw-v55-hud-h) !important;
+    min-height: var(--fmw-v55-hud-h) !important;
+    max-height: var(--fmw-v55-hud-h) !important;
+    padding: var(--fmw-v55-pad-y) var(--fmw-v55-pad-x) !important;
+    gap: var(--fmw-v55-gap) !important;
+    grid-template-columns:
+      minmax(380px, 1fr)
+      var(--fmw-v55-matches-w)
+      var(--fmw-v55-score-w)
+      var(--fmw-v55-btn)
+      var(--fmw-v55-btn)
+      var(--fmw-v55-pause) !important;
+    border-radius: 22px !important;
+  }
+
+  .fmw-v54-country {
+    padding: 0 18px !important;
+    border-radius: 16px !important;
+    font-size: 19px !important;
+    letter-spacing: .12em !important;
+  }
+  .fmw-v54-level-rule {
+    height: 12px !important;
+    padding-left: 10px !important;
+    font-size: 9px !important;
+    letter-spacing: .02em !important;
+  }
+
+  .fmw-v54-stat {
+    padding: 6px 10px !important;
+    border-radius: 14px !important;
+  }
+  .fmw-v54-stat-label {
+    font-size: 8px !important;
+    letter-spacing: .13em !important;
+  }
+  .fmw-v54-stat-value {
+    font-size: 31px !important;
+  }
+
+  .fmw-v54-square-btn {
+    width: var(--fmw-v55-btn) !important;
+    height: var(--fmw-v55-btn) !important;
+    min-width: var(--fmw-v55-btn) !important;
+    min-height: var(--fmw-v55-btn) !important;
+    max-width: var(--fmw-v55-btn) !important;
+    max-height: var(--fmw-v55-btn) !important;
+    border-radius: 14px !important;
+  }
+  .fmw-v54-pause-btn {
+    width: var(--fmw-v55-pause) !important;
+    height: var(--fmw-v55-pause) !important;
+    min-width: var(--fmw-v55-pause) !important;
+    min-height: var(--fmw-v55-pause) !important;
+    max-width: var(--fmw-v55-pause) !important;
+    max-height: var(--fmw-v55-pause) !important;
+  }
+  .fmw-v54-square-btn i,
+  .fmw-v54-pause-btn i {
+    font-size: 18px !important;
+  }
+  .fmw-v54-square-btn span {
+    font-size: 7px !important;
+    letter-spacing: .07em !important;
+  }
+  .fmw-v54-hud .notification-dot {
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    top: -7px !important;
+    right: -6px !important;
+    font-size: 10px !important;
+  }
+}
+
+/* iPhone / compact landscape placement map */
+@media (orientation: landscape) and (max-height: 560px) {
+  :root {
+    --fmw-v55-hud-h: 46px;
+    --fmw-v55-pad-x: 7px;
+    --fmw-v55-pad-y: 4px;
+    --fmw-v55-gap: 5px;
+    --fmw-v55-matches-w: 52px;
+    --fmw-v55-score-w: 76px;
+    --fmw-v55-btn: 34px;
+    --fmw-v55-pause: 40px;
+    --fmw-v54-hud-h: var(--fmw-v55-hud-h);
+    --hud-h: var(--fmw-v55-hud-h) !important;
+  }
+
+  .topbar.fmw-v54-hud {
+    height: var(--fmw-v55-hud-h) !important;
+    min-height: var(--fmw-v55-hud-h) !important;
+    max-height: var(--fmw-v55-hud-h) !important;
+    padding: var(--fmw-v55-pad-y) var(--fmw-v55-pad-x) !important;
+    gap: var(--fmw-v55-gap) !important;
+    grid-template-columns:
+      minmax(0, 1fr)
+      var(--fmw-v55-matches-w)
+      var(--fmw-v55-score-w)
+      var(--fmw-v55-btn)
+      var(--fmw-v55-btn)
+      var(--fmw-v55-pause) !important;
+    border-radius: 17px !important;
+  }
+
+  .fmw-v54-left {
+    gap: 2px !important;
+  }
+  .fmw-v54-country {
+    padding: 0 10px !important;
+    border-radius: 11px !important;
+    font-size: 12px !important;
+    letter-spacing: .08em !important;
+  }
+  .fmw-v54-level-rule {
+    height: 8px !important;
+    padding-left: 6px !important;
+    font-size: 6px !important;
+    letter-spacing: 0 !important;
+  }
+
+  .fmw-v54-stat {
+    padding: 3px 5px !important;
+    border-radius: 10px !important;
+  }
+  .fmw-v54-stat-label {
+    font-size: 5px !important;
+    letter-spacing: .07em !important;
+  }
+  .fmw-v54-stat-value {
+    font-size: 18px !important;
+  }
+
+  .fmw-v54-square-btn {
+    width: var(--fmw-v55-btn) !important;
+    height: var(--fmw-v55-btn) !important;
+    min-width: var(--fmw-v55-btn) !important;
+    min-height: var(--fmw-v55-btn) !important;
+    max-width: var(--fmw-v55-btn) !important;
+    max-height: var(--fmw-v55-btn) !important;
+    border-radius: 9px !important;
+  }
+  .fmw-v54-pause-btn {
+    width: var(--fmw-v55-pause) !important;
+    height: var(--fmw-v55-pause) !important;
+    min-width: var(--fmw-v55-pause) !important;
+    min-height: var(--fmw-v55-pause) !important;
+    max-width: var(--fmw-v55-pause) !important;
+    max-height: var(--fmw-v55-pause) !important;
+  }
+  .fmw-v54-square-btn i,
+  .fmw-v54-pause-btn i {
+    font-size: 13px !important;
+  }
+  .fmw-v54-square-btn span {
+    font-size: 4.8px !important;
+    letter-spacing: .04em !important;
+  }
+  .fmw-v54-hud .notification-dot {
+    width: 15px !important;
+    height: 15px !important;
+    min-width: 15px !important;
+    top: -6px !important;
+    right: -4px !important;
+    font-size: 7px !important;
+  }
+}
+
+/* Very narrow landscape fallback: hide helper button labels only, keep shapes. */
+@media (orientation: landscape) and (max-width: 780px) {
+  :root {
+    --fmw-v55-matches-w: 48px;
+    --fmw-v55-score-w: 68px;
+    --fmw-v55-btn: 32px;
+    --fmw-v55-pause: 38px;
+    --fmw-v55-gap: 4px;
+  }
+  .fmw-v54-square-btn span {
+    display: none !important;
+  }
+  .fmw-v54-country {
+    font-size: 11px !important;
+  }
+}
+
+/* Tile surface protection. */
+.tile,
+body[data-sprite-set="flags"] .tile {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.04)),
+    linear-gradient(180deg, #f4ecd3 0%, #eadcb5 52%, #d8c99d 100%) !important;
+  border-color: rgba(217,187,99,.34) !important;
+}
+
+
+/* =========================================================
+   v5.5.1 — Fixed composition HUD map
+   This overrides v5.5's flexible country panel.
+   The HUD content no longer stretches across the whole board.
+   Elements use a fixed professional composition with a trailing spacer.
+   ========================================================= */
+
+.topbar.fmw-v54-hud {
+  display: grid !important;
+  align-items: center !important;
+  justify-content: stretch !important;
+}
+
+.topbar.fmw-v54-hud > .fmw-v54-left,
+.topbar.fmw-v54-hud > .fmw-v54-matches,
+.topbar.fmw-v54-hud > .fmw-v54-score,
+.topbar.fmw-v54-hud > #hintBtn,
+.topbar.fmw-v54-hud > #shuffleBtn,
+.topbar.fmw-v54-hud > #pauseBtn {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  margin: 0 !important;
+}
+
+.fmw-v54-left { grid-column: 1 !important; }
+.fmw-v54-matches { grid-column: 2 !important; }
+.fmw-v54-score { grid-column: 3 !important; }
+#hintBtn.fmw-v54-square-btn { grid-column: 4 !important; }
+#shuffleBtn.fmw-v54-square-btn { grid-column: 5 !important; }
+#pauseBtn.fmw-v54-pause-btn { grid-column: 6 !important; }
+
+.fmw-v54-country {
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+.fmw-v54-level-rule {
+  justify-content: flex-start !important;
+  text-align: left !important;
+  opacity: .72 !important;
+}
+
+/* Large desktop / iPad: fixed composition, not stretched */
+@media (orientation: landscape) and (min-height: 561px) {
+  :root {
+    --fmw-v55-hud-h: 62px;
+    --fmw-v55-country-w: 420px;
+    --fmw-v55-matches-w: 78px;
+    --fmw-v55-score-w: 124px;
+    --fmw-v55-btn: 48px;
+    --fmw-v55-pause: 52px;
+    --fmw-v55-gap: 8px;
+    --hud-h: var(--fmw-v55-hud-h) !important;
+    --fmw-v54-hud-h: var(--fmw-v55-hud-h);
+  }
+
+  .topbar.fmw-v54-hud {
+    height: var(--fmw-v55-hud-h) !important;
+    min-height: var(--fmw-v55-hud-h) !important;
+    max-height: var(--fmw-v55-hud-h) !important;
+    padding: 6px 12px !important;
+    gap: var(--fmw-v55-gap) !important;
+    grid-template-columns:
+      var(--fmw-v55-country-w)
+      var(--fmw-v55-matches-w)
+      var(--fmw-v55-score-w)
+      var(--fmw-v55-btn)
+      var(--fmw-v55-btn)
+      var(--fmw-v55-pause)
+      minmax(0, 1fr) !important;
+    border-radius: 20px !important;
+  }
+
+  .fmw-v54-left {
+    width: var(--fmw-v55-country-w) !important;
+    min-width: var(--fmw-v55-country-w) !important;
+    max-width: var(--fmw-v55-country-w) !important;
+  }
+
+  .fmw-v54-country {
+    border-radius: 14px !important;
+    font-size: 17px !important;
+    letter-spacing: .13em !important;
+    padding: 0 16px !important;
+  }
+
+  .fmw-v54-level-rule {
+    height: 11px !important;
+    min-height: 11px !important;
+    padding-left: 8px !important;
+    font-size: 8px !important;
+    line-height: 1 !important;
+  }
+
+  .fmw-v54-stat {
+    padding: 5px 8px !important;
+    border-radius: 12px !important;
+  }
+
+  .fmw-v54-stat-label {
+    font-size: 7px !important;
+    letter-spacing: .10em !important;
+  }
+
+  .fmw-v54-stat-value {
+    font-size: 27px !important;
+  }
+
+  .fmw-v54-square-btn {
+    width: var(--fmw-v55-btn) !important;
+    height: var(--fmw-v55-btn) !important;
+    min-width: var(--fmw-v55-btn) !important;
+    min-height: var(--fmw-v55-btn) !important;
+    max-width: var(--fmw-v55-btn) !important;
+    max-height: var(--fmw-v55-btn) !important;
+    border-radius: 12px !important;
+  }
+
+  .fmw-v54-pause-btn {
+    width: var(--fmw-v55-pause) !important;
+    height: var(--fmw-v55-pause) !important;
+    min-width: var(--fmw-v55-pause) !important;
+    min-height: var(--fmw-v55-pause) !important;
+    max-width: var(--fmw-v55-pause) !important;
+    max-height: var(--fmw-v55-pause) !important;
+    border-radius: 50% !important;
+  }
+
+  .fmw-v54-square-btn i,
+  .fmw-v54-pause-btn i {
+    font-size: 17px !important;
+  }
+
+  .fmw-v54-square-btn span {
+    font-size: 6px !important;
+    letter-spacing: .05em !important;
+  }
+
+  .fmw-v54-hud .notification-dot {
+    width: 18px !important;
+    height: 18px !important;
+    min-width: 18px !important;
+    top: -6px !important;
+    right: -5px !important;
+    font-size: 9px !important;
+  }
+}
+
+/* Medium desktop / shorter browser windows */
+@media (orientation: landscape) and (min-height: 561px) and (max-width: 1300px) {
+  :root {
+    --fmw-v55-country-w: 360px;
+    --fmw-v55-matches-w: 72px;
+    --fmw-v55-score-w: 112px;
+    --fmw-v55-btn: 44px;
+    --fmw-v55-pause: 48px;
+    --fmw-v55-gap: 7px;
+  }
+
+  .fmw-v54-country {
+    font-size: 15px !important;
+  }
+  .fmw-v54-stat-value {
+    font-size: 24px !important;
+  }
+}
+
+/* iPhone / compact landscape: separate fixed composition */
+@media (orientation: landscape) and (max-height: 560px) {
+  :root {
+    --fmw-v55-hud-h: 46px;
+    --fmw-v55-country-w: clamp(230px, 41vw, 340px);
+    --fmw-v55-matches-w: 52px;
+    --fmw-v55-score-w: 72px;
+    --fmw-v55-btn: 34px;
+    --fmw-v55-pause: 40px;
+    --fmw-v55-gap: 5px;
+    --hud-h: var(--fmw-v55-hud-h) !important;
+    --fmw-v54-hud-h: var(--fmw-v55-hud-h);
+  }
+
+  .topbar.fmw-v54-hud {
+    height: var(--fmw-v55-hud-h) !important;
+    min-height: var(--fmw-v55-hud-h) !important;
+    max-height: var(--fmw-v55-hud-h) !important;
+    padding: 4px 7px !important;
+    gap: var(--fmw-v55-gap) !important;
+    grid-template-columns:
+      var(--fmw-v55-country-w)
+      var(--fmw-v55-matches-w)
+      var(--fmw-v55-score-w)
+      var(--fmw-v55-btn)
+      var(--fmw-v55-btn)
+      var(--fmw-v55-pause)
+      minmax(0, 1fr) !important;
+    border-radius: 16px !important;
+  }
+
+  .fmw-v54-left {
+    width: var(--fmw-v55-country-w) !important;
+    min-width: var(--fmw-v55-country-w) !important;
+    max-width: var(--fmw-v55-country-w) !important;
+    gap: 2px !important;
+  }
+
+  .fmw-v54-country {
+    border-radius: 10px !important;
+    font-size: 12px !important;
+    letter-spacing: .08em !important;
+    padding: 0 9px !important;
+  }
+
+  .fmw-v54-level-rule {
+    height: 8px !important;
+    min-height: 8px !important;
+    padding-left: 5px !important;
+    font-size: 5.8px !important;
+    line-height: 1 !important;
+  }
+
+  .fmw-v54-stat {
+    padding: 3px 4px !important;
+    border-radius: 9px !important;
+  }
+
+  .fmw-v54-stat-label {
+    font-size: 5px !important;
+    letter-spacing: .05em !important;
+  }
+
+  .fmw-v54-stat-value {
+    font-size: 18px !important;
+  }
+
+  .fmw-v54-square-btn {
+    width: var(--fmw-v55-btn) !important;
+    height: var(--fmw-v55-btn) !important;
+    min-width: var(--fmw-v55-btn) !important;
+    min-height: var(--fmw-v55-btn) !important;
+    max-width: var(--fmw-v55-btn) !important;
+    max-height: var(--fmw-v55-btn) !important;
+    border-radius: 9px !important;
+  }
+
+  .fmw-v54-pause-btn {
+    width: var(--fmw-v55-pause) !important;
+    height: var(--fmw-v55-pause) !important;
+    min-width: var(--fmw-v55-pause) !important;
+    min-height: var(--fmw-v55-pause) !important;
+    max-width: var(--fmw-v55-pause) !important;
+    max-height: var(--fmw-v55-pause) !important;
+    border-radius: 50% !important;
+  }
+
+  .fmw-v54-square-btn i,
+  .fmw-v54-pause-btn i {
+    font-size: 13px !important;
+  }
+
+  .fmw-v54-square-btn span {
+    font-size: 4.5px !important;
+    letter-spacing: .02em !important;
+  }
+
+  .fmw-v54-hud .notification-dot {
+    width: 15px !important;
+    height: 15px !important;
+    min-width: 15px !important;
+    top: -6px !important;
+    right: -4px !important;
+    font-size: 7px !important;
+  }
+}
+
+/* Extremely narrow iPhone: icons only, still fixed positions and shapes. */
+@media (orientation: landscape) and (max-width: 760px) {
+  :root {
+    --fmw-v55-country-w: clamp(190px, 37vw, 260px);
+    --fmw-v55-matches-w: 46px;
+    --fmw-v55-score-w: 62px;
+    --fmw-v55-btn: 32px;
+    --fmw-v55-pause: 38px;
+    --fmw-v55-gap: 4px;
+  }
+
+  .fmw-v54-square-btn span {
+    display: none !important;
+  }
+
+  .fmw-v54-country {
+    font-size: 10.5px !important;
+  }
+}
+
+/* Keep tile face consistent. */
+.tile,
+body[data-sprite-set="flags"] .tile {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.04)),
+    linear-gradient(180deg, #f4ecd3 0%, #eadcb5 52%, #d8c99d 100%) !important;
+}
+
+
+/* =========================================================
+   v5.6 — REFERENCE-ARTWORK HUD RESET
+   This is the final authority for the gameplay HUD.
+
+   Design rule:
+   The iPhone artwork is the master composition. Larger screens scale the
+   same composition; they do not reinterpret it.
+
+   Layout:
+   [Country + tiny Level/Rule] [Matches] [Score] [Hint] [Shuffle] [Pause]
+
+   Important:
+   - No outer long pill border/background.
+   - Individual HUD elements define the layout.
+   - Columns use locked proportions across the full board width.
+   - Hint/Shuffle are square.
+   - Pause is circular.
+   ========================================================= */
+
+/* Remove previous HUD shell look and all old placement side effects. */
+.topbar.fmw-v54-hud {
+  position: relative !important;
+  display: grid !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  align-items: start !important;
+  justify-content: stretch !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+}
+
+.topbar.fmw-v54-hud > .fmw-v54-left,
+.topbar.fmw-v54-hud > .fmw-v54-matches,
+.topbar.fmw-v54-hud > .fmw-v54-score,
+.topbar.fmw-v54-hud > #hintBtn,
+.topbar.fmw-v54-hud > #shuffleBtn,
+.topbar.fmw-v54-hud > #pauseBtn {
+  position: relative !important;
+  inset: auto !important;
+  left: auto !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  margin: 0 !important;
+  transform: none !important;
+  box-sizing: border-box !important;
+}
+
+/* Explicit grid order. */
+.topbar.fmw-v54-hud > .fmw-v54-left { grid-column: 1 !important; }
+.topbar.fmw-v54-hud > .fmw-v54-matches { grid-column: 2 !important; }
+.topbar.fmw-v54-hud > .fmw-v54-score { grid-column: 3 !important; }
+.topbar.fmw-v54-hud > #hintBtn { grid-column: 4 !important; }
+.topbar.fmw-v54-hud > #shuffleBtn { grid-column: 5 !important; }
+.topbar.fmw-v54-hud > #pauseBtn { grid-column: 6 !important; }
+
+/* Left information block follows the artwork: large country panel + tiny rule line. */
+.fmw-v54-left {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  display: grid !important;
+  grid-template-rows: minmax(0, 1fr) auto !important;
+  align-self: stretch !important;
+  align-items: stretch !important;
+}
+
+.fmw-v54-country {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  box-sizing: border-box !important;
+  font-family: "Paytone One", "Barlow Condensed", sans-serif !important;
+  text-transform: uppercase !important;
+  color: #fff8df !important;
+  background:
+    linear-gradient(180deg, rgba(83, 214, 127, .96), rgba(24, 141, 76, .96)) !important;
+  border: 1px solid rgba(201, 245, 176, .46) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.30),
+    inset 0 -3px 8px rgba(0,0,0,.22),
+    0 2px 7px rgba(0,0,0,.25) !important;
+}
+
+.fmw-v54-level-rule {
+  width: 100% !important;
+  min-width: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  box-sizing: border-box !important;
+  color: rgba(255, 246, 208, .88) !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+  opacity: .95 !important;
+}
+.fmw-v54-level-rule #level {
+  color: #fff6cf !important;
+  font-weight: 900 !important;
+}
+.fmw-v54-level-rule .movement-icon {
+  display: inline-block !important;
+  opacity: .9 !important;
+  transform: scale(.46) !important;
+  transform-origin: center !important;
+}
+
+/* Stat cards follow artwork proportions. */
+.fmw-v54-stat {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  display: grid !important;
+  grid-template-rows: auto 1fr !important;
+  align-items: center !important;
+  justify-items: stretch !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  background:
+    linear-gradient(180deg, rgba(35, 123, 164, .95), rgba(16, 88, 126, .98)) !important;
+  border: 1px solid rgba(124, 203, 232, .42) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.22),
+    inset 0 -3px 8px rgba(0,0,0,.24),
+    0 2px 7px rgba(0,0,0,.25) !important;
+}
+
+.fmw-v54-stat-label {
+  width: 100% !important;
+  display: block !important;
+  text-align: left !important;
+  color: rgba(255,255,255,.83) !important;
+  line-height: 1 !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+}
+
+.fmw-v54-stat-value {
+  width: 100% !important;
+  min-width: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  text-align: right !important;
+  color: #fff8df !important;
+  font-family: "Paytone One", "Barlow Condensed", sans-serif !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  font-variant-numeric: tabular-nums !important;
+  font-feature-settings: "tnum" 1, "lnum" 1 !important;
+}
+
+.fmw-v54-score .fmw-v54-stat-value {
+  color: #fff8df !important;
+}
+.fmw-v54-score i {
+  display: none !important;
+}
+.fmw-v54-score #score {
+  min-width: 0 !important;
+  width: 100% !important;
+  text-align: right !important;
+}
+
+/* Buttons: true square / true circle on every device. */
+.fmw-v54-square-btn,
+.fmw-v54-pause-btn {
+  position: relative !important;
+  align-self: start !important;
+  justify-self: center !important;
+  aspect-ratio: 1 / 1 !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  transform: none !important;
+}
+
+.fmw-v54-square-btn {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background:
+    linear-gradient(180deg, rgba(93, 176, 232, .96), rgba(47, 117, 184, .96)) !important;
+  border: 1px solid rgba(174, 225, 255, .45) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.25),
+    inset 0 -3px 8px rgba(0,0,0,.22),
+    0 2px 7px rgba(0,0,0,.25) !important;
+  overflow: visible !important;
+}
+
+.fmw-v54-square-btn i,
+.fmw-v54-pause-btn i {
+  line-height: 1 !important;
+}
+
+.fmw-v54-square-btn span {
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  font-weight: 900 !important;
+}
+
+.fmw-v54-pause-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  background:
+    linear-gradient(180deg, rgba(245, 204, 95, .98), rgba(183, 132, 45, .98)) !important;
+  border: 1px solid rgba(255, 235, 166, .55) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.28),
+    inset 0 -5px 10px rgba(0,0,0,.23),
+    0 2px 8px rgba(0,0,0,.28) !important;
+}
+
+.fmw-v54-hud .notification-dot {
+  border-radius: 50% !important;
+  z-index: 20 !important;
+}
+
+/* Timer bar has the same visual relationship as the artwork. */
+.board-time-meter {
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Desktop/iPad: same artwork composition scaled up. */
+@media (orientation: landscape) and (min-height: 561px) {
+  :root {
+    --fmw-v56-hud-h: 68px;
+    --fmw-v56-hud-gap: 10px;
+    --fmw-v56-top-h: 46px;
+    --fmw-v56-level-h: 13px;
+    --fmw-v56-btn: 52px;
+    --fmw-v56-pause: 58px;
+    --hud-h: var(--fmw-v56-hud-h) !important;
+    --fmw-v54-hud-h: var(--fmw-v56-hud-h) !important;
+  }
+
+  .topbar.fmw-v54-hud {
+    height: var(--fmw-v56-hud-h) !important;
+    min-height: var(--fmw-v56-hud-h) !important;
+    max-height: var(--fmw-v56-hud-h) !important;
+    padding: 6px 0 0 0 !important;
+    gap: var(--fmw-v56-hud-gap) !important;
+    grid-template-columns:
+      46fr
+      9fr
+      15fr
+      6fr
+      6fr
+      7fr !important;
+  }
+
+  .fmw-v54-left {
+    grid-template-rows: var(--fmw-v56-top-h) var(--fmw-v56-level-h) !important;
+    gap: 3px !important;
+  }
+
+  .fmw-v54-country {
+    height: var(--fmw-v56-top-h) !important;
+    border-radius: 16px !important;
+    padding: 0 18px !important;
+    font-size: clamp(17px, 2.05dvh, 22px) !important;
+    letter-spacing: .095em !important;
+  }
+
+  .fmw-v54-level-rule {
+    height: var(--fmw-v56-level-h) !important;
+    min-height: var(--fmw-v56-level-h) !important;
+    padding-left: 10px !important;
+    font-size: 10px !important;
+    line-height: 1 !important;
+  }
+
+  .fmw-v54-stat {
+    height: var(--fmw-v56-top-h) !important;
+    min-height: var(--fmw-v56-top-h) !important;
+    max-height: var(--fmw-v56-top-h) !important;
+    border-radius: 12px !important;
+    padding: 6px 10px !important;
+  }
+
+  .fmw-v54-stat-label {
+    font-size: 8px !important;
+    letter-spacing: .10em !important;
+  }
+
+  .fmw-v54-stat-value {
+    font-size: clamp(26px, 3.25dvh, 36px) !important;
+  }
+
+  .fmw-v54-square-btn {
+    width: var(--fmw-v56-btn) !important;
+    height: var(--fmw-v56-btn) !important;
+    min-width: var(--fmw-v56-btn) !important;
+    min-height: var(--fmw-v56-btn) !important;
+    max-width: var(--fmw-v56-btn) !important;
+    max-height: var(--fmw-v56-btn) !important;
+    border-radius: 13px !important;
+  }
+
+  .fmw-v54-pause-btn {
+    width: var(--fmw-v56-pause) !important;
+    height: var(--fmw-v56-pause) !important;
+    min-width: var(--fmw-v56-pause) !important;
+    min-height: var(--fmw-v56-pause) !important;
+    max-width: var(--fmw-v56-pause) !important;
+    max-height: var(--fmw-v56-pause) !important;
+  }
+
+  .fmw-v54-square-btn i,
+  .fmw-v54-pause-btn i {
+    font-size: 18px !important;
+  }
+
+  .fmw-v54-square-btn span {
+    font-size: 7px !important;
+    letter-spacing: .06em !important;
+    margin-top: 3px !important;
+  }
+
+  .fmw-v54-hud .notification-dot {
+    width: 21px !important;
+    height: 21px !important;
+    min-width: 21px !important;
+    top: -7px !important;
+    right: -6px !important;
+    font-size: 10px !important;
+  }
+}
+
+/* iPhone compact landscape: master reference. */
+@media (orientation: landscape) and (max-height: 560px) {
+  :root {
+    --fmw-v56-hud-h: 52px;
+    --fmw-v56-hud-gap: 7px;
+    --fmw-v56-top-h: 36px;
+    --fmw-v56-level-h: 10px;
+    --fmw-v56-btn: 40px;
+    --fmw-v56-pause: 46px;
+    --hud-h: var(--fmw-v56-hud-h) !important;
+    --fmw-v54-hud-h: var(--fmw-v56-hud-h) !important;
+  }
+
+  .topbar.fmw-v54-hud {
+    height: var(--fmw-v56-hud-h) !important;
+    min-height: var(--fmw-v56-hud-h) !important;
+    max-height: var(--fmw-v56-hud-h) !important;
+    padding: 5px 0 0 0 !important;
+    gap: var(--fmw-v56-hud-gap) !important;
+    grid-template-columns:
+      46fr
+      9fr
+      15fr
+      6fr
+      6fr
+      7fr !important;
+  }
+
+  .fmw-v54-left {
+    grid-template-rows: var(--fmw-v56-top-h) var(--fmw-v56-level-h) !important;
+    gap: 2px !important;
+  }
+
+  .fmw-v54-country {
+    height: var(--fmw-v56-top-h) !important;
+    border-radius: 12px !important;
+    padding: 0 10px !important;
+    font-size: clamp(12px, 3.05dvh, 16px) !important;
+    letter-spacing: .075em !important;
+  }
+
+  .fmw-v54-level-rule {
+    height: var(--fmw-v56-level-h) !important;
+    min-height: var(--fmw-v56-level-h) !important;
+    padding-left: 6px !important;
+    font-size: clamp(5.5px, 1.35dvh, 7px) !important;
+    line-height: 1 !important;
+  }
+
+  .fmw-v54-stat {
+    height: var(--fmw-v56-top-h) !important;
+    min-height: var(--fmw-v56-top-h) !important;
+    max-height: var(--fmw-v56-top-h) !important;
+    border-radius: 9px !important;
+    padding: 4px 6px !important;
+  }
+
+  .fmw-v54-stat-label {
+    font-size: clamp(4.8px, 1.15dvh, 6px) !important;
+    letter-spacing: .055em !important;
+  }
+
+  .fmw-v54-stat-value {
+    font-size: clamp(16px, 4.2dvh, 23px) !important;
+  }
+
+  .fmw-v54-square-btn {
+    width: var(--fmw-v56-btn) !important;
+    height: var(--fmw-v56-btn) !important;
+    min-width: var(--fmw-v56-btn) !important;
+    min-height: var(--fmw-v56-btn) !important;
+    max-width: var(--fmw-v56-btn) !important;
+    max-height: var(--fmw-v56-btn) !important;
+    border-radius: 10px !important;
+  }
+
+  .fmw-v54-pause-btn {
+    width: var(--fmw-v56-pause) !important;
+    height: var(--fmw-v56-pause) !important;
+    min-width: var(--fmw-v56-pause) !important;
+    min-height: var(--fmw-v56-pause) !important;
+    max-width: var(--fmw-v56-pause) !important;
+    max-height: var(--fmw-v56-pause) !important;
+  }
+
+  .fmw-v54-square-btn i,
+  .fmw-v54-pause-btn i {
+    font-size: 15px !important;
+  }
+
+  .fmw-v54-square-btn span {
+    font-size: 5px !important;
+    letter-spacing: .025em !important;
+    margin-top: 2px !important;
+  }
+
+  .fmw-v54-hud .notification-dot {
+    width: 17px !important;
+    height: 17px !important;
+    min-width: 17px !important;
+    top: -6px !important;
+    right: -5px !important;
+    font-size: 8px !important;
+  }
+}
+
+/* Very small iPhone safety: preserve shapes and hide helper labels only if necessary. */
+@media (orientation: landscape) and (max-width: 760px) {
+  :root {
+    --fmw-v56-hud-gap: 5px;
+    --fmw-v56-btn: 36px;
+    --fmw-v56-pause: 42px;
+  }
+
+  .fmw-v54-square-btn span {
+    display: none !important;
+  }
+
+  .fmw-v54-country {
+    font-size: 11px !important;
+  }
+}
+
+/* Keep the board visual consistent. */
+.tile,
+body[data-sprite-set="flags"] .tile {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.04)),
+    linear-gradient(180deg, #f4ecd3 0%, #eadcb5 52%, #d8c99d 100%) !important;
+  border-color: rgba(217,187,99,.34) !important;
+}

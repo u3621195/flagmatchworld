@@ -1302,6 +1302,7 @@ const hintCountEl = $("hintCount"),
   moveStatus = $("moveStatus");
 const boardInfoEl = $("boardInfo");
 const movementIconEl = $("movementIcon");
+const ruleTextEl = $("ruleText");
 
 let board = [],
   selected = null,
@@ -2761,7 +2762,6 @@ function renderScoreHistory(latestLevel = null) {
 //  LEVEL MANAGEMENT
 // ─────────────────────────────────────────────
 function updateRuleTag() {
-  if (!movementIconEl) return;
   const ruleName = currentStrategy ? currentStrategy.name : "NORMAL";
   const ruleClassMap = {
     "NORMAL": "movement-normal",
@@ -2773,9 +2773,22 @@ function updateRuleTag() {
     "Y CENTER": "movement-ycenter",
     "RANDOM": "movement-random"
   };
-  movementIconEl.className = `movement-icon ${ruleClassMap[ruleName] || "movement-normal"}`;
-  movementIconEl.setAttribute("aria-label", `${ruleName.toLowerCase()} movement`);
-  movementIconEl.title = ruleName;
+  const ruleShortText = {
+    "NORMAL": "Static board",
+    "BOTTOM": "Tiles move down",
+    "TOP": "Tiles move up",
+    "LEFT": "Tiles slide left",
+    "RIGHT": "Tiles slide right",
+    "X CENTER": "Collapse to center column",
+    "Y CENTER": "Collapse to center row",
+    "RANDOM": "Random movement"
+  };
+  if (movementIconEl) {
+    movementIconEl.className = `movement-icon ${ruleClassMap[ruleName] || "movement-normal"}`;
+    movementIconEl.setAttribute("aria-label", `${ruleName.toLowerCase()} movement`);
+    movementIconEl.title = ruleName;
+  }
+  if (ruleTextEl) ruleTextEl.textContent = ruleShortText[ruleName] || "Static board";
 }
 
 function showLevelComplete() {

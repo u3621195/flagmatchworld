@@ -2,3 +2,25 @@ Flag Match World v5.1.1 - Compact Level HUD + Restored Board Size
 Baseline: Flag_Match_World_v5_UI_Replaced_Fixes.zip
 
 Flag Match World v5.2 - PNG logo startup and unified emerald/gold visual tone.
+
+- v5.2.1: Updated tile surfaces to warm champagne with a dark emerald frame for improved flag contrast and better logo/theme consistency.
+
+- v5.2.2: Rebuilt the iPhone HUD into a left status cluster, centered country-name plate, and right action cluster. Moved Time and Score to the left, reduced Hint/Shuffle button bodies so they fit inside the HUD, and kept floating count badges.
+
+- v5.2.3: Narrowed the centered country-name pill and reserved more space for Score on iPhone HUD, including larger comma-formatted scores.
+
+- v5.2.6: Rebased fixed-width HUD work on v5.2.3 and removed the v5.2.5 grid regression that duplicated labels and altered the iPhone display. Time and Score keep stable widths without changing the board layout.
+
+- v5.2.7: Restored warm champagne tile faces, made the iPhone pause button perfectly round, pushed the helper/pause cluster farther right, and hard-disabled duplicated pseudo labels on the iPhone HUD.
+
+- v5.4: Rebuilt HUD as a compact two-layer layout. Country + tiny Level/Rule on the left; Matches, Score, Hint, Shuffle, and Pause span both layers. Removed numeric Time from HUD and kept timer bar only. Enforced square helper buttons and circular Pause across all devices. Restored warm champagne tile faces.
+
+- v5.4.1: Rebuilt HUD placement to follow the screenshot layout more closely: left country + tiny level\/rule block, then fixed-position Matches, Score, Hint, Shuffle, Pause. Separate locked placements for desktop and iPhone.
+
+- v5.4.2: Rebuilt the HUD as an absolute fixed-position layout. Desktop and iPhone use separate locked coordinates matching the provided screenshot concept, with country/level on the left and Matches, Score, Hint, Shuffle, Pause fixed after it.
+
+- v5.5: Professional HUD reset. Removed absolute-position HUD behavior and rebuilt the HUD as a board-frame-aligned fixed-slot layout with separate desktop/iPad and iPhone placement maps. Country panel is the only flexible region; Matches, Score, Hint, Shuffle, and Pause are fixed slots. Square/circle shape rules are enforced.
+
+- v5.5.1: Reworked HUD into a fixed composition map instead of letting the country panel stretch across the whole board. Desktop/iPad and iPhone use separate fixed-width slot maps with a trailing spacer.
+
+- v5.6: Reference-artwork HUD reset. Uses the iPhone design artwork as the master composition, with proportional columns across the board width: country, matches, score, hint, shuffle, pause. Removed the outer HUD capsule and made individual HUD blocks carry the design.

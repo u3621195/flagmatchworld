@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <!-- Fonts loaded locally via @font-face in style-new.css -->
 
-<link href="style-new.css?v=fmw-v5-2-logo-unified" rel="stylesheet"/>
+<link href="style-new.css?v=fmw-v5-6-reference-artwork" rel="stylesheet"/>
 
 
 </head>
@@ -20,60 +20,44 @@
 <main class="game-area" id="game-area">
 <div class="board-frame">
 
-<header class="topbar hud-bar">
-  <div class="hud-segment">
-    <div class="stat-group">
-      <span class="stat-label">MATCHES</span>
-      <span class="stat-value underlined match-val" id="iphoneTopMatches">--</span>
+<header class="topbar hud-bar fmw-v54-hud">
+  <div class="fmw-v54-left">
+    <div class="fmw-v54-country" id="countryNamePill">SELECT A FLAG</div>
+    <div class="fmw-v54-level-rule" id="levelRuleText">
+      LEVEL <span id="level">01</span> · <span id="ruleText">Static board</span>
+      <span class="movement-icon movement-normal" id="movementIcon" aria-label="Normal movement" aria-hidden="true"></span>
     </div>
   </div>
-  <div class="hud-divider"></div>
-  <div class="hud-segment level-segment">
-    <div class="stat-group level-rule-group">
-      <span class="stat-label rule-label">LEVEL</span>
-      <span class="stat-value level-with-rule"><span id="level">01</span><span class="movement-icon movement-normal" id="movementIcon" aria-label="Normal movement"></span></span>
-    </div>
+
+  <div class="fmw-v54-stat fmw-v54-matches">
+    <span class="fmw-v54-stat-label">MATCHES</span>
+    <span class="fmw-v54-stat-value" id="iphoneTopMatches">--</span>
   </div>
-  <div class="hud-divider"></div>
-  <div class="hud-segment country-segment">
-    <span class="country-name-pill hud-country-pill" id="countryNamePill">SELECT A FLAG</span>
+
+  <div class="fmw-v54-stat fmw-v54-score">
+    <span class="fmw-v54-stat-label">SCORE</span>
+    <span class="fmw-v54-stat-value"><i class="fa-regular fa-star"></i><span id="score">0</span></span>
   </div>
-  <div class="hud-divider"></div>
-  <div class="hud-segment action-group">
-    <button class="action-btn btn-hint" id="hintBtn">
-      <div class="notification-dot" id="hintCount">05</div>
-      <i class="fa-regular fa-lightbulb"></i>
-      <span>HINT</span>
-    </button>
-    <button class="action-btn btn-shuffle" id="shuffleBtn">
-      <div class="notification-dot" id="shuffleCount">05</div>
-      <i class="fa-solid fa-shuffle"></i>
-      <span>SHUFFLE</span>
-    </button>
-  </div>
-  <div class="hud-divider"></div>
-  <div class="hud-segment">
-    <div class="stat-group">
-      <span class="stat-label hud-muted-label">TIME</span>
-      <span class="stat-value time-val underlined"><i class="fa-regular fa-clock"></i> <span id="timerText">08:00</span></span>
-    </div>
-  </div>
-  <div class="hud-divider"></div>
-  <div class="hud-segment">
-    <div class="stat-group">
-      <span class="stat-label hud-muted-label">SCORE</span>
-      <span class="stat-value score-val underlined"><i class="fa-regular fa-star"></i> <span id="score">0</span></span>
-    </div>
-  </div>
-  <div class="hud-divider"></div>
-  <div class="hud-segment pause-segment">
-    <button class="pause-btn-new" id="pauseBtn" aria-label="Pause" title="Pause">
-      <i class="fa-solid fa-pause"></i>
-    </button>
-  </div>
-  
+
+  <button class="action-btn btn-hint fmw-v54-square-btn" id="hintBtn" aria-label="Hint" title="Hint">
+    <div class="notification-dot" id="hintCount">05</div>
+    <i class="fa-regular fa-lightbulb"></i>
+    <span>HINT</span>
+  </button>
+
+  <button class="action-btn btn-shuffle fmw-v54-square-btn" id="shuffleBtn" aria-label="Shuffle" title="Shuffle">
+    <div class="notification-dot" id="shuffleCount">05</div>
+    <i class="fa-solid fa-shuffle"></i>
+    <span>SHUFFLE</span>
+  </button>
+
+  <button class="pause-btn-new fmw-v54-pause-btn" id="pauseBtn" aria-label="Pause" title="Pause">
+    <i class="fa-solid fa-pause"></i>
+  </button>
+
   <div style="display:none;" aria-hidden="true">
     <div id="timerBar"></div>
+    <span id="timerText">08:00</span>
     <strong id="iphoneMatchesCount">--</strong>
     <button id="themeBtn"></button>
     <button id="musicBtn"></button>
