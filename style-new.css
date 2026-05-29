@@ -9065,3 +9065,72 @@ body.critical-time #boardTimerBar { background: linear-gradient(90deg, #ff365f, 
     min-width: clamp(84px, 10vw, 108px) !important;
   }
 }
+
+/* =========================================================
+   FMW v5.6 tiny HUD button adjustment — equal sizes + bevel
+   ========================================================= */
+#game-area .hud-bar .hud-action-btn,
+#game-area .hud-bar .hud-pause-btn,
+.topbar.hud-bar .hud-action-btn,
+.topbar.hud-bar .hud-pause-btn {
+  --fmw-hud-btn-size: clamp(44px, 6.5dvh, 54px);
+  width: var(--fmw-hud-btn-size) !important;
+  height: var(--fmw-hud-btn-size) !important;
+  min-width: var(--fmw-hud-btn-size) !important;
+  max-width: var(--fmw-hud-btn-size) !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  border: 1px solid rgba(154, 196, 255, 0.42) !important;
+  background:
+    radial-gradient(circle at 34% 24%, rgba(255,255,255,.30) 0%, rgba(255,255,255,.10) 22%, rgba(255,255,255,0) 42%),
+    linear-gradient(145deg, rgba(75,101,202,.92) 0%, rgba(31,50,129,.95) 52%, rgba(12,22,72,.98) 100%) !important;
+  box-shadow:
+    inset 0 2px 3px rgba(255,255,255,.22),
+    inset 0 -7px 12px rgba(0,0,0,.32),
+    0 3px 0 rgba(0,0,0,.38),
+    0 8px 16px rgba(0,0,0,.26),
+    0 0 14px rgba(73, 119, 255, .22) !important;
+  transform: translateZ(0) !important;
+}
+
+#game-area .hud-bar .hud-action-btn:active,
+#game-area .hud-bar .hud-pause-btn:active,
+.topbar.hud-bar .hud-action-btn:active,
+.topbar.hud-bar .hud-pause-btn:active {
+  transform: translateY(1px) !important;
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,.16),
+    inset 0 -4px 8px rgba(0,0,0,.36),
+    0 1px 0 rgba(0,0,0,.40),
+    0 5px 11px rgba(0,0,0,.22) !important;
+}
+
+#game-area .hud-bar .hud-pause-btn,
+.topbar.hud-bar .hud-pause-btn {
+  background:
+    radial-gradient(circle at 34% 24%, rgba(255,255,255,.38) 0%, rgba(255,255,255,.14) 24%, rgba(255,255,255,0) 45%),
+    linear-gradient(145deg, rgba(94,216,255,.96) 0%, rgba(176,102,232,.96) 74%, rgba(216,78,199,.98) 100%) !important;
+  box-shadow:
+    inset 0 2px 3px rgba(255,255,255,.28),
+    inset 0 -7px 12px rgba(74,20,105,.28),
+    0 3px 0 rgba(0,0,0,.38),
+    0 8px 16px rgba(0,0,0,.26),
+    0 0 15px rgba(139, 214, 255, .22) !important;
+}
+
+#game-area .hud-bar .hud-action-btn i,
+#game-area .hud-bar .hud-pause-btn i,
+.topbar.hud-bar .hud-action-btn i,
+.topbar.hud-bar .hud-pause-btn i {
+  font-size: clamp(17px, 3.7dvh, 21px) !important;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,.35)) !important;
+}
+
+@media (max-width: 1024px) {
+  #game-area .hud-bar .hud-action-btn,
+  #game-area .hud-bar .hud-pause-btn,
+  .topbar.hud-bar .hud-action-btn,
+  .topbar.hud-bar .hud-pause-btn {
+    --fmw-hud-btn-size: clamp(38px, 8.6dvh, 46px);
+  }
+}
