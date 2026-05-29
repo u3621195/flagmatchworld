@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <!-- Fonts loaded locally via @font-face in style-new.css -->
 
-<link href="style-new.css?v=fmw-v5-7-user-reference-hud" rel="stylesheet"/>
+<link href="style-new.css?v=fmw-v5-ui-fixes" rel="stylesheet"/>
 
 
 </head>
@@ -20,44 +20,53 @@
 <main class="game-area" id="game-area">
 <div class="board-frame">
 
-<header class="topbar hud-bar fmw-v54-hud">
-  <div class="fmw-v54-left">
-    <div class="fmw-v54-country" id="countryNamePill">SELECT A FLAG</div>
-    <div class="fmw-v54-level-rule" id="levelRuleText">
-      LEVEL <span id="level">01</span> · <span id="ruleText">Static board</span>
-      <span class="movement-icon movement-normal" id="movementIcon" aria-label="Normal movement" aria-hidden="true"></span>
+<header class="topbar hud-bar">
+
+  <!-- LEFT ZONE: country pill + stats -->
+  <div class="hud-left-zone">
+    <!-- Country name pill — takes all available left space -->
+    <div class="hud-pill-wrap">
+      <span class="hud-country-pill" id="countryNamePill">SELECT A FLAG</span>
+    </div>
+    <div class="hud-divider-v"></div>
+    <!-- Stats -->
+    <div class="hud-stat-block hud-stat-matches">
+      <span class="hud-stat-lbl">MATCHES</span>
+      <span class="hud-stat-val" id="iphoneTopMatches">--</span>
+    </div>
+    <div class="hud-divider-v"></div>
+    <div class="hud-stat-block hud-stat-score">
+      <span class="hud-stat-lbl">SCORE</span>
+      <span class="hud-stat-val" id="score">0</span>
     </div>
   </div>
 
-  <div class="fmw-v54-stat fmw-v54-matches">
-    <span class="fmw-v54-stat-label">MATCHES</span>
-    <span class="fmw-v54-stat-value" id="iphoneTopMatches">--</span>
+  <!-- RIGHT ZONE: HINT · SHUFFLE · PAUSE -->
+  <div class="hud-right-zone">
+    <button class="hud-action-btn btn-hint" id="hintBtn" aria-label="Hint">
+      <div class="hud-badge" id="hintCount">05</div>
+      <i class="fa-regular fa-lightbulb"></i>
+      <span class="hud-btn-lbl">HINT</span>
+    </button>
+    <button class="hud-action-btn btn-shuffle" id="shuffleBtn" aria-label="Shuffle">
+      <div class="hud-badge" id="shuffleCount">05</div>
+      <i class="fa-solid fa-shuffle"></i>
+      <span class="hud-btn-lbl">SHUFFLE</span>
+    </button>
+    <div class="hud-desktop-div"></div>
+    <button class="hud-pause-btn" id="pauseBtn" aria-label="Pause" title="Pause">
+      <i class="fa-solid fa-pause"></i>
+    </button>
   </div>
 
-  <div class="fmw-v54-stat fmw-v54-score">
-    <span class="fmw-v54-stat-label">SCORE</span>
-    <span class="fmw-v54-stat-value"><i class="fa-regular fa-star"></i><span id="score">0</span></span>
-  </div>
+  <!-- Hidden legacy timer/level elements for JS compatibility -->
+  <span style="display:none" id="timerText">08:00</span>
+  <span style="display:none" id="level">01</span>
+  <span style="display:none" class="movement-icon movement-normal" id="movementIcon"></span>
 
-  <button class="action-btn btn-hint fmw-v54-square-btn" id="hintBtn" aria-label="Hint" title="Hint">
-    <div class="notification-dot" id="hintCount">05</div>
-    <i class="fa-regular fa-lightbulb"></i>
-    <span>HINT</span>
-  </button>
-
-  <button class="action-btn btn-shuffle fmw-v54-square-btn" id="shuffleBtn" aria-label="Shuffle" title="Shuffle">
-    <div class="notification-dot" id="shuffleCount">05</div>
-    <i class="fa-solid fa-shuffle"></i>
-    <span>SHUFFLE</span>
-  </button>
-
-  <button class="pause-btn-new fmw-v54-pause-btn" id="pauseBtn" aria-label="Pause" title="Pause">
-    <i class="fa-solid fa-pause"></i>
-  </button>
-
+  <!-- Hidden legacy elements kept for JS compatibility -->
   <div style="display:none;" aria-hidden="true">
     <div id="timerBar"></div>
-    <span id="timerText">08:00</span>
     <strong id="iphoneMatchesCount">--</strong>
     <button id="themeBtn"></button>
     <button id="musicBtn"></button>
@@ -85,7 +94,7 @@
   <div class="fmw-start-vignette" aria-hidden="true"></div>
   <div class="fmw-start-card-v2">
     <div class="fmw-logo-wrap" aria-label="Flag Match World">
-      <img class="fmw-start-logo" src="assets/ui/flag-match-world-logo.png" alt="Flag Match World">
+      <img src="assets/images/logo.png" alt="Flag Match World" class="fmw-logo-img">
     </div>
     <div class="fmw-start-sub-pill">MATCH FLAGS ACROSS THE GLOBE</div>
     <hr class="fmw-gold-rule">
@@ -113,6 +122,32 @@
     <div class="fmw-actions two">
       <button class="fmw-btn fmw-btn-teal" id="cancelNewGameBtn" type="button">Cancel</button>
       <button class="fmw-btn fmw-btn-red" id="confirmNewGameBtn" type="button">Start New Game</button>
+    </div>
+  </div>
+</section>
+
+<!-- Level Start Popup — shown on fresh level start only, timer starts after OK -->
+<section class="overlay hidden fmw-popup-overlay" id="levelStartOverlay" aria-hidden="true">
+  <div class="fmw-popup-card fmw-levelstart-card">
+    <div class="fmw-levelstart-header">
+      <span class="fmw-levelstart-label">Level</span>
+      <span class="fmw-levelstart-num" id="levelStartNum">01</span>
+    </div>
+    <hr class="fmw-gold-rule">
+    <div class="fmw-levelstart-rule-wrap">
+      <span class="fmw-levelstart-rule-label">Movement Rule</span>
+      <div class="fmw-levelstart-rule-panel">
+        <div class="fmw-levelstart-icon-box">
+          <span class="movement-icon movement-normal fmw-levelstart-icon" id="levelStartIcon" aria-hidden="true"></span>
+        </div>
+        <div class="fmw-levelstart-rule-info">
+          <div class="fmw-levelstart-rule-name" id="levelStartRuleName">Normal</div>
+          <div class="fmw-levelstart-rule-desc" id="levelStartRuleDesc">Tiles stay in place after a match.</div>
+        </div>
+      </div>
+    </div>
+    <div class="fmw-actions">
+      <button class="fmw-btn fmw-btn-green" id="levelStartOkBtn" type="button">Let's Go!</button>
     </div>
   </div>
 </section>
@@ -269,6 +304,6 @@
 </div>
 </section>
 <div aria-hidden="true" class="combo-layer" id="comboLayer"></div>
-<script src="game.js?v=fmw-v5-2-logo-unified"></script>
+<script src="game.js?v=fmw-v5-ui-fixes"></script>
 </body>
 </html>

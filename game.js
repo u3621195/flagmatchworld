@@ -306,14 +306,14 @@ document.addEventListener("click", (e) => {
 //  8=RANDOM, then repeats from NORMAL.
 // ─────────────────────────────────────────────
 const STRATEGIES = [
-  { id: 0, name: "NORMAL", label: "No movement" },
-  { id: 1, name: "BOTTOM", label: "Fall to bottom" },
-  { id: 2, name: "TOP", label: "Rise to top" },
-  { id: 3, name: "LEFT", label: "Slide to left" },
-  { id: 4, name: "RIGHT", label: "Slide to right" },
-  { id: 5, name: "X CENTER", label: "Collapse toward vertical center" },
-  { id: 6, name: "Y CENTER", label: "Collapse toward horizontal center" },
-  { id: 7, name: "RANDOM", label: "Random movement after each match" },
+  { id: 0, name: "NORMAL",   label: "No movement",                        iconClass: "movement-normal",  desc: "Tiles stay in place after a match." },
+  { id: 1, name: "BOTTOM",   label: "Fall to bottom",                     iconClass: "movement-down",    desc: "After each match, remaining tiles fall to the bottom." },
+  { id: 2, name: "TOP",      label: "Rise to top",                        iconClass: "movement-up",      desc: "After each match, remaining tiles rise to the top." },
+  { id: 3, name: "LEFT",     label: "Slide to left",                      iconClass: "movement-left",    desc: "After each match, remaining tiles slide to the left." },
+  { id: 4, name: "RIGHT",    label: "Slide to right",                     iconClass: "movement-right",   desc: "After each match, remaining tiles slide to the right." },
+  { id: 5, name: "X CENTER", label: "Collapse toward vertical center",    iconClass: "movement-xcenter", desc: "Tiles collapse inward toward the vertical centre line." },
+  { id: 6, name: "Y CENTER", label: "Collapse toward horizontal center",  iconClass: "movement-ycenter", desc: "Tiles collapse inward toward the horizontal centre line." },
+  { id: 7, name: "RANDOM",   label: "Random movement after each match",   iconClass: "movement-random",  desc: "Direction changes randomly after every match. Stay sharp!" },
 ];
 const RANDOM_MOVEMENT_IDS = [1, 2, 3, 4, 5, 6];
 
@@ -1302,7 +1302,6 @@ const hintCountEl = $("hintCount"),
   moveStatus = $("moveStatus");
 const boardInfoEl = $("boardInfo");
 const movementIconEl = $("movementIcon");
-const ruleTextEl = $("ruleText");
 
 let board = [],
   selected = null,
@@ -1364,6 +1363,11 @@ function formatHelperCount(n) {
 function updateHelperDisplay() {
   hintCountEl.textContent = formatHelperCount(hintCount);
   shuffleCountEl.textContent = formatHelperCount(shuffleCount);
+  // Toggle empty/dimmed state on buttons when count hits 0
+  const hintBtn = $("hintBtn");
+  const shuffleBtn = $("shuffleBtn");
+  if (hintBtn) hintBtn.classList.toggle("empty", hintCount <= 0);
+  if (shuffleBtn) shuffleBtn.classList.toggle("empty", shuffleCount <= 0);
 }
 function refillHelpersAfterClearedLevel(clearedLevel, perfectClear = false) {
   let changed = false;
@@ -2161,6 +2165,18 @@ function setSelectedCountryName(name) {
   const clean = String(name || "").trim();
   pill.textContent = clean ? clean.toUpperCase() : "SELECT A FLAG";
   pill.classList.toggle("active", !!clean);
+  pill.classList.toggle("has-selection", !!clean);
+  // Shrink font for very long names
+  if (clean.length > 22) {
+    pill.style.fontSize = "clamp(9px, 1.1vw, 11px)";
+    pill.style.letterSpacing = ".04em";
+  } else if (clean.length > 16) {
+    pill.style.fontSize = "clamp(10px, 1.3vw, 12px)";
+    pill.style.letterSpacing = ".06em";
+  } else {
+    pill.style.fontSize = "";
+    pill.style.letterSpacing = "";
+  }
 }
 
 function resetSelectedCountryName() {
@@ -2510,6 +2526,10 @@ function updateTimer() {
     "low-time",
     timeLeft <= 60 && gameStarted && !paused,
   );
+  document.body.classList.toggle(
+    "critical-time",
+    timeLeft <= 15 && gameStarted && !paused,
+  );
   if (timeLeft === 60 && !timerWarned) {
     timerWarned = true;
     sfx.warn();
@@ -2762,6 +2782,7 @@ function renderScoreHistory(latestLevel = null) {
 //  LEVEL MANAGEMENT
 // ─────────────────────────────────────────────
 function updateRuleTag() {
+  if (!movementIconEl) return;
   const ruleName = currentStrategy ? currentStrategy.name : "NORMAL";
   const ruleClassMap = {
     "NORMAL": "movement-normal",
@@ -2773,22 +2794,9 @@ function updateRuleTag() {
     "Y CENTER": "movement-ycenter",
     "RANDOM": "movement-random"
   };
-  const ruleShortText = {
-    "NORMAL": "Static board",
-    "BOTTOM": "Tiles move down",
-    "TOP": "Tiles move up",
-    "LEFT": "Tiles slide left",
-    "RIGHT": "Tiles slide right",
-    "X CENTER": "Collapse to center column",
-    "Y CENTER": "Collapse to center row",
-    "RANDOM": "Random movement"
-  };
-  if (movementIconEl) {
-    movementIconEl.className = `movement-icon ${ruleClassMap[ruleName] || "movement-normal"}`;
-    movementIconEl.setAttribute("aria-label", `${ruleName.toLowerCase()} movement`);
-    movementIconEl.title = ruleName;
-  }
-  if (ruleTextEl) ruleTextEl.textContent = ruleShortText[ruleName] || "Static board";
+  movementIconEl.className = `movement-icon ${ruleClassMap[ruleName] || "movement-normal"}`;
+  movementIconEl.setAttribute("aria-label", `${ruleName.toLowerCase()} movement`);
+  movementIconEl.title = ruleName;
 }
 
 function showLevelComplete() {
@@ -2893,7 +2901,14 @@ function startNextLevel() {
   moveStatus.textContent = isQuickGame
     ? `QUICK GAME · ${setName} · LV ${level}`
     : `LV ${level}  ·  ${currentStrategy.name}`;
-  startTimer();
+  // Show level start popup — timer deferred until OK
+  if (!isQuickGame) {
+    showLevelStartPopup(level, currentStrategy, () => {
+      startTimer();
+    });
+  } else {
+    startTimer();
+  }
 }
 
 function levelCompleteQuit() {
@@ -2914,6 +2929,52 @@ function levelCompleteQuit() {
 // ─────────────────────────────────────────────
 //  GAME LIFECYCLE
 // ─────────────────────────────────────────────
+
+// ─────────────────────────────────────────────
+//  LEVEL START POPUP
+//  Shows on fresh level start only.
+//  Timer begins only after player taps OK.
+// ─────────────────────────────────────────────
+let levelStartPending = false; // tracks if timer is held pending OK
+
+function showLevelStartPopup(levelNum, strategy, onOk) {
+  const overlay = $("levelStartOverlay");
+  if (!overlay) { onOk(); return; } // fallback if element missing
+
+  // Populate content
+  const numEl   = $("levelStartNum");
+  const iconEl  = $("levelStartIcon");
+  const nameEl  = $("levelStartRuleName");
+  const descEl  = $("levelStartRuleDesc");
+  const okBtn   = $("levelStartOkBtn");
+
+  if (numEl)  numEl.textContent  = String(levelNum).padStart(2, "0");
+  if (nameEl) nameEl.textContent = strategy.name;
+  if (descEl) descEl.textContent = strategy.desc || strategy.label;
+
+  // Update icon class
+  if (iconEl) {
+    iconEl.className = "movement-icon fmw-levelstart-icon " + (strategy.iconClass || "movement-normal");
+  }
+
+  // Show overlay
+  overlay.classList.remove("hidden");
+  overlay.setAttribute("aria-hidden", "false");
+
+  // OK button
+  function handleOk(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    okBtn.removeEventListener("click", handleOk);
+    overlay.classList.add("hidden");
+    overlay.setAttribute("aria-hidden", "true");
+    levelStartPending = false;
+    onOk();
+  }
+  okBtn.addEventListener("click", handleOk);
+  levelStartPending = true;
+}
+
 function startGame(options = {}) {
   const mode = typeof options === "object" ? options : {};
   const selectedSet = mode.randomSet
@@ -2952,10 +3013,16 @@ function startGame(options = {}) {
   updateTimer();
   createBoard();
   renderBoard();
-  startTimer();
-  moveStatus.textContent = isQuickGame
-    ? `QUICK GAME · ${(SPRITE_SETS[selectedSet] || SPRITE_SETS.flags).name}`
-    : "SYSTEM ONLINE";
+  // Show level start popup — timer starts only after OK
+  if (!isQuickGame) {
+    showLevelStartPopup(level, currentStrategy, () => {
+      startTimer();
+      moveStatus.textContent = "SYSTEM ONLINE";
+    });
+  } else {
+    startTimer();
+    moveStatus.textContent = `QUICK GAME · ${(SPRITE_SETS[selectedSet] || SPRITE_SETS.flags).name}`;
+  }
 }
 
 function startNewGameFromTitle(force = false) {

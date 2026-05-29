@@ -30,29 +30,29 @@
 
 :root {
   color-scheme: dark;
-  --screen-1: #070b1f;
-  --screen-2: #111944;
-  --screen-3: #2b145f;
-  --frame-1: #16224f;
-  --frame-2: #0c1230;
-  --frame-edge: rgba(114, 219, 255, .32);
+  --screen-1: #060818;
+  --screen-2: #0c1438;
+  --screen-3: #182060;
+  --frame-1: #101a4a;
+  --frame-2: #080e2e;
+  --frame-edge: rgba(245,200,66,.32);
   --frame-inner: rgba(255,255,255,.08);
-  --hud-bg: rgba(10, 16, 42, .82);
-  --hud-bg-2: rgba(21, 31, 72, .88);
-  --hud-border: rgba(126, 224, 255, .20);
-  --hud-label: #8ea4d7;
+  --hud-bg: rgba(6, 12, 38, .88);
+  --hud-bg-2: rgba(10, 20, 58, .92);
+  --hud-border: rgba(245,200,66,.22);
+  --hud-label: #8898c8;
   --hud-value: #ffffff;
-  --accent-cyan: #3fe4ff;
-  --accent-pink: #ff4fd8;
-  --accent-yellow: #ffd166;
+  --accent-cyan: #f5c842;
+  --accent-pink: #e8a020;
+  --accent-yellow: #f5c842;
   --accent-red: #ff4e6a;
-  --tile-bg: #f7faff;
-  --tile-bg-2: #eef5ff;
-  --tile-edge: #d9e6f8;
-  --tile-shadow: rgba(5, 10, 24, .28);
-  --path-line: #ff4fd8;
+  --tile-bg: #eef2ff;
+  --tile-bg-2: #e4ecff;
+  --tile-edge: #b8c8f0;
+  --tile-shadow: rgba(4, 8, 28, .28);
+  --path-line: #f5c842;
   --path-core: #ffffff;
-  --path-halo: rgba(255, 79, 216, .35);
+  --path-halo: rgba(245,200,66,.40);
   --outer-gap: max(6px, env(safe-area-inset-left));
   --frame-pad: clamp(6px, 1.65dvh, 11px);
   --hud-h: clamp(38px, 10.6dvh, 52px);
@@ -2843,7 +2843,7 @@ html[data-theme="neon-night"] {
   --tile-bg-2: #eef5ff;
   --tile-edge: #dce8fb;
   --tile-shadow: rgba(5, 10, 24, .24);
-  --board-well: rgba(3, 8, 24, .46);
+  --board-well: rgba(4, 8, 24, .55);
   --timer-gradient: linear-gradient(90deg, #ff3c6a, #ff8648, #ffd766);
   --path-line: var(--accent-pink);
   --path-core: #ffffff;
@@ -2881,7 +2881,7 @@ html[data-theme="cyber-blue"] {
   --tile-edge: #d6e8fb;
   --tile-shadow: rgba(5, 12, 24, .24);
   --board-well: rgba(2, 10, 24, .48);
-  --timer-gradient: linear-gradient(90deg, #188dff, #25d4ff, #8af3ff);
+  --timer-gradient: linear-gradient(90deg, #c89010, #f5c842, #f0e080);
   --path-line: #25c8ff;
   --path-core: #ffffff;
   --path-halo: rgba(37, 200, 255, .38);
@@ -5161,32 +5161,32 @@ html[data-theme="mint-fresh"] {
      allowing the colors to follow the selected game theme. */
     :root,
   html[data-theme="neon-night"] {
-    --final-hud-bar-bg: rgba(6, 17, 33, 0.65);
-    --final-hud-bar-border: #184b73;
-    --final-hud-bar-shadow: inset 0 0 20px rgba(24, 75, 115, 0.4), 0 0 15px rgba(0,0,0,0.5);
-    --final-hud-divider: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
-    --final-hud-label: #64d1d9;
-    --final-hud-muted-label: #7b8d9e;
-    --final-hud-rule-label: #4a90e2;
+    --final-hud-bar-bg: rgba(6, 10, 32, 0.88);
+    --final-hud-bar-border: #2a4090;
+    --final-hud-bar-shadow: inset 0 0 20px rgba(42, 64, 144, 0.4), 0 0 15px rgba(0,0,0,0.5);
+    --final-hud-divider: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(245,200,66,0.25) 50%, rgba(255,255,255,0) 100%);
+    --final-hud-label: #f5c842;
+    --final-hud-muted-label: #8898c8;
+    --final-hud-rule-label: #f5c842;
     --final-hud-value: #ffffff;
-    --final-hud-match-line: #64d1d9;
-    --final-hud-match-line-shadow: 0 0 5px #64d1d9;
-    --final-hud-rule-bg: rgba(16, 74, 110, 0.3);
-    --final-hud-rule-border: #4a90e2;
-    --final-hud-rule-text: #4a90e2;
-    --final-hud-hint-bg: linear-gradient(180deg, #104a6e 0%, #082d47 100%);
-    --final-hud-hint-shadow: inset 0 0 10px rgba(100, 209, 217, 0.3);
-    --final-hud-hint-icon: #64d1d9;
-    --final-hud-hint-badge-bg: #72ddea;
-    --final-hud-shuffle-bg: linear-gradient(180deg, #1a4282 0%, #0d214a 100%);
-    --final-hud-shuffle-shadow: inset 0 0 10px rgba(74, 144, 226, 0.3);
-    --final-hud-shuffle-icon: #4a90e2;
-    --final-hud-shuffle-badge-bg: #67a9ff;
-    --final-hud-badge-text: #061121;
-    --final-hud-pause-border: #64d1d9;
-    --final-hud-pause-bg: linear-gradient(180deg, #124163 0%, #071f33 100%);
+    --final-hud-match-line: #f5c842;
+    --final-hud-match-line-shadow: 0 0 6px rgba(245,200,66,.6);
+    --final-hud-rule-bg: rgba(40, 60, 140, 0.3);
+    --final-hud-rule-border: #f5c842;
+    --final-hud-rule-text: #f5c842;
+    --final-hud-hint-bg: linear-gradient(180deg, #2a4a9a 0%, #142258 100%);
+    --final-hud-hint-shadow: inset 0 0 10px rgba(245, 200, 66, 0.2);
+    --final-hud-hint-icon: #f5c842;
+    --final-hud-hint-badge-bg: #f5c842;
+    --final-hud-shuffle-bg: linear-gradient(180deg, #1a3488 0%, #0e1a50 100%);
+    --final-hud-shuffle-shadow: inset 0 0 10px rgba(245, 200, 66, 0.2);
+    --final-hud-shuffle-icon: #f5c842;
+    --final-hud-shuffle-badge-bg: #f5c842;
+    --final-hud-badge-text: #060818;
+    --final-hud-pause-border: #f5c842;
+    --final-hud-pause-bg: linear-gradient(180deg, #1e3470 0%, #0c1438 100%);
     --final-hud-pause-color: #ffffff;
-    --final-hud-pause-shadow: 0 0 15px rgba(100, 209, 217, 0.2), inset 0 0 10px rgba(100, 209, 217, 0.4);
+    --final-hud-pause-shadow: 0 0 15px rgba(245, 200, 66, 0.2), inset 0 0 10px rgba(245, 200, 66, 0.15);
   }
 
   html[data-theme="cyber-blue"] {
@@ -6534,7 +6534,7 @@ body.pm-tablet-landscape .board-wrap {
    Flag Match World — Fresh UI reset
    Generated artwork removed: CSS-only emerald/world mood.
    ========================================================= */
-html[data-theme="emerald"], html[data-theme="classic-blue"], html[data-theme="dark-navy"], html[data-theme="royal-purple"], html[data-theme="burgundy-red"] {
+html[data-theme="emerald"], html[data-theme="classic-blue"], html[data-theme="dark-navy"], html[data-theme="midnight-blue"], html[data-theme="royal-purple"], html[data-theme="burgundy-red"] {
   --screen-1:#03110f; --screen-2:#06221d; --screen-3:#020706;
   --accent:#44d879; --accent-2:#0f8f62; --gold:#d9bb63; --gold-2:#fff0a6;
   --glass:rgba(3,37,31,.82); --glass-2:rgba(9,75,62,.72); --line:rgba(223,202,129,.58);
@@ -7470,24 +7470,24 @@ body[data-sprite-set="flags"] .tile img { position:relative; z-index:0; }
    ========================================================= */
 :root{
   --fmw-font:'Barlow Condensed',system-ui,sans-serif;
-  --fmw-bg:#041e1a; --fmw-panel:rgba(4,44,38,.92); --fmw-gold:#f0c96a; --fmw-gold-dim:rgba(240,201,106,.55);
-  --fmw-head:#faf0d8; --fmw-body:#d8ede6; --fmw-dim:rgba(216,237,230,.60);
-  --fmw-green:#0e9e56; --fmw-green2:#0b7d43; --fmw-teal:#0a6e7e; --fmw-teal2:#085666; --fmw-red:#b83a2a; --fmw-red2:#8f2b1e;
+  --fmw-bg:#060818; --fmw-panel:rgba(8,16,48,.94); --fmw-gold:#f5c842; --fmw-gold-dim:rgba(245,200,66,.55);
+  --fmw-head:#dde8ff; --fmw-body:#9ab0d8; --fmw-dim:rgba(154,176,216,.55);
+  --fmw-green:#1a8ae0; --fmw-green2:#1268b0; --fmw-teal:#1050a8; --fmw-teal2:#0c3a80; --fmw-red:#c03828; --fmw-red2:#902a1e;
 }
 body{font-family:var(--fmw-font)!important;} .theme-picker,.theme-picker-overlay,.fmw-start-pills,.delete-save-btn{display:none!important;}
 #overlay{background:transparent!important;display:flex;align-items:center;justify-content:center;}
 .fmw-start-bg{position:absolute;inset:-40px;display:grid;gap:6px;align-content:start;transform:scale(1.02);opacity:.92;filter:saturate(1.02);z-index:0;}
-.fmw-start-flag{aspect-ratio:3/2;border-radius:6px;overflow:hidden;background:#071714;box-shadow:0 0 0 2px rgba(0,0,0,.78),0 6px 12px rgba(0,0,0,.42)}
-.fmw-start-flag img{width:100%;height:100%;object-fit:cover;display:block}.fmw-start-vignette{position:absolute;inset:0;background:radial-gradient(circle at 50% 42%,rgba(0,0,0,.06),rgba(0,0,0,.58) 64%,rgba(0,0,0,.9)),linear-gradient(180deg,rgba(0,0,0,.42),rgba(0,0,0,.18) 30%,rgba(0,0,0,.42));z-index:1;}
+.fmw-start-flag{aspect-ratio:3/2;border-radius:6px;overflow:hidden;background:#060818;box-shadow:0 0 0 2px rgba(0,0,0,.78),0 6px 12px rgba(0,0,0,.42)}
+.fmw-start-flag img{width:100%;height:100%;object-fit:cover;display:block}.fmw-start-vignette{position:absolute;inset:0;background:radial-gradient(circle at 50% 42%,rgba(8,16,60,.06),rgba(4,8,28,.62) 64%,rgba(2,4,18,.92)),linear-gradient(180deg,rgba(4,8,28,.45),rgba(4,8,28,.18) 30%,rgba(4,8,28,.45));z-index:1;}
 .fmw-start-card-v2,.fmw-popup-card{background:var(--fmw-panel);border:1.5px solid var(--fmw-gold-dim);border-radius:28px;box-shadow:0 32px 80px rgba(0,0,0,.65),inset 0 1px 0 rgba(240,201,106,.12);backdrop-filter:blur(8px);position:relative;overflow:hidden;}
 .fmw-start-card-v2{z-index:2;width:min(520px,88vw);padding:38px 36px 42px;text-align:center;}
-.fmw-start-card-v2:before,.fmw-popup-card:before{content:'';position:absolute;top:0;left:12%;right:12%;height:1.5px;background:linear-gradient(90deg,transparent,rgba(240,201,106,.6) 40%,rgba(255,255,255,.2) 60%,transparent);border-radius:2px;pointer-events:none;}
-.fmw-start-globe{font-size:clamp(88px,12vw,140px);line-height:1;display:block;filter:drop-shadow(0 0 20px rgba(0,220,130,.48)) drop-shadow(0 0 50px rgba(0,220,130,.22));animation:fmwFloatGlobe 4s ease-in-out infinite;margin:0 auto 8px;}
+.fmw-start-card-v2:before,.fmw-popup-card:before{content:'';position:absolute;top:0;left:12%;right:12%;height:1.5px;background:linear-gradient(90deg,transparent,rgba(245,200,66,.65) 40%,rgba(255,255,255,.2) 60%,transparent);border-radius:2px;pointer-events:none;}
+.fmw-start-globe{font-size:clamp(88px,12vw,140px);line-height:1;display:block;filter:drop-shadow(0 0 20px rgba(245,200,66,.45)) drop-shadow(0 0 50px rgba(245,200,66,.20));animation:fmwFloatGlobe 4s ease-in-out infinite;margin:0 auto 8px;}
 .fmw-start-title{font-family:"Paytone One",sans-serif;font-size:clamp(44px,6.8vw,86px);font-weight:400;letter-spacing:.02em;color:var(--fmw-head);line-height:.95;text-shadow:0 3px 0 rgba(0,0,0,.6),0 0 28px rgba(255,255,255,.08);text-transform:uppercase;}
 
 .fmw-gold-rule{height:1px;border:0;background:linear-gradient(90deg,transparent,var(--fmw-gold-dim) 30%,var(--fmw-gold-dim) 70%,transparent);margin:18px 0;}.fmw-menu-stack,.fmw-actions{display:grid;gap:13px}.fmw-menu-stack{margin-top:26px}.fmw-actions.two{grid-template-columns:1fr 1fr;}
-.fmw-btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;border:0;border-radius:18px;font-family:var(--fmw-font);font-size:clamp(17px,1.8vw,22px);font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.35);transition:filter .14s,transform .08s,opacity .2s;position:relative;overflow:hidden;cursor:pointer;}.fmw-btn:after{content:'';position:absolute;inset:0 0 auto 0;height:40%;background:linear-gradient(rgba(255,255,255,.14),transparent);border-radius:inherit;pointer-events:none}.fmw-btn:active{transform:translateY(2px);filter:brightness(.94)}.fmw-btn:hover{filter:brightness(1.07)}.fmw-btn:disabled,.fmw-btn.disabled{cursor:not-allowed;color:rgba(255,255,255,.48);background:linear-gradient(180deg,#5c6865 0%,#3f4b49 55%,#2b3432 100%)!important;box-shadow:0 6px 0 rgba(0,0,0,.3),0 10px 24px rgba(0,0,0,.22)!important;opacity:.72;}.fmw-btn-green{background:linear-gradient(180deg,#18c468 0%,var(--fmw-green) 55%,var(--fmw-green2) 100%);box-shadow:0 6px 0 rgba(0,0,0,.3),0 10px 24px rgba(0,0,0,.28),0 0 22px rgba(0,220,120,.15)}.fmw-btn-teal{background:linear-gradient(180deg,#1192a8 0%,var(--fmw-teal) 55%,var(--fmw-teal2) 100%);box-shadow:0 6px 0 rgba(0,0,0,.3),0 10px 24px rgba(0,0,0,.28)}.fmw-btn-red{background:linear-gradient(180deg,#d44832 0%,var(--fmw-red) 55%,var(--fmw-red2) 100%);box-shadow:0 6px 0 rgba(0,0,0,.3),0 10px 24px rgba(0,0,0,.28)}
-.fmw-save-line{margin-top:18px;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--fmw-dim);font-size:14px;letter-spacing:.04em}.fmw-save-sep{opacity:.45}.fmw-popup-overlay{display:flex!important;align-items:center;justify-content:center;background:rgba(0,0,0,.48)!important;backdrop-filter:blur(2px)}.fmw-popup-overlay.hidden{display:none!important}.fmw-popup-card{width:min(640px,92vw);padding:28px 30px 30px;max-height:calc(100dvh - 32px);display:flex;flex-direction:column;overflow:hidden}.fmw-confirm-card,#restartConfirmOverlay .fmw-popup-card,#homeConfirmOverlay .fmw-popup-card{width:min(580px,92vw)}.fmw-pause-card{width:min(580px,92vw)}.fmw-settings-card{width:min(540px,92vw)}.fmw-gameover-card{width:min(620px,92vw)}.fmw-popup-title{font-family:var(--fmw-font);font-size:clamp(32px,4.5vw,58px);font-weight:800;letter-spacing:.05em;color:var(--fmw-gold);text-align:center;line-height:1;text-shadow:0 2px 0 rgba(0,0,0,.5),0 0 24px rgba(240,201,106,.22)}.fmw-popup-title.danger{color:#ff9080;text-shadow:0 2px 0 rgba(0,0,0,.5),0 0 24px rgba(255,80,50,.2)}.fmw-popup-message{color:var(--fmw-body);font-size:clamp(18px,2.2vw,28px);line-height:1.32;text-align:center;margin:10px 0 18px}.fmw-score-panel,.fmw-settings-panel,.fmw-mini-panel{background:rgba(0,0,0,.22);border:1px solid rgba(240,201,106,.3);border-radius:20px;padding:6px 18px;margin:14px 0;min-height:0}.fmw-mini-panel{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center}.fmw-mini-panel span{display:block;color:var(--fmw-dim);font-size:13px;text-transform:uppercase;letter-spacing:.08em}.fmw-mini-panel strong{display:block;color:var(--fmw-head);font-size:24px}.fmw-score-row,.fmw-setting-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:11px 2px;border-bottom:1px solid rgba(255,255,255,.07);font-size:clamp(17px,2vw,26px)}.fmw-score-row:last-child,.fmw-setting-row:last-child{border-bottom:0}.fmw-score-row span,.fmw-setting-row span{color:var(--fmw-body);opacity:.92}.fmw-score-row strong{font-weight:700;color:var(--fmw-head)}.fmw-total-row{display:grid;grid-template-columns:1fr auto;align-items:center;padding:13px 2px 4px;border-top:1.5px solid var(--fmw-gold-dim);font-size:clamp(26px,3.2vw,44px);font-weight:800;color:var(--fmw-gold);margin-top:6px}.fmw-toggle{width:72px;height:38px;border:0;border-radius:999px;background:linear-gradient(#68c94a,#4aa832);position:relative;box-shadow:inset 0 -3px 0 rgba(0,0,0,.2),0 4px 10px rgba(0,0,0,.2);cursor:pointer}.fmw-toggle span{position:absolute;top:4px;right:4px;width:30px;height:30px;border-radius:50%;background:#f5ede0;box-shadow:0 3px 8px rgba(0,0,0,.28);transition:all .18s}.fmw-toggle.off{background:linear-gradient(#6e7774,#44504d)}.fmw-toggle.off span{right:38px;background:#d7dbd7}@keyframes fmwFloatGlobe{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-9px) rotate(5deg)}}
+.fmw-btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;border:0;border-radius:18px;font-family:var(--fmw-font);font-size:clamp(17px,1.8vw,22px);font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.35);transition:filter .14s,transform .08s,opacity .2s;position:relative;overflow:hidden;cursor:pointer;}.fmw-btn:after{content:'';position:absolute;inset:0 0 auto 0;height:40%;background:linear-gradient(rgba(255,255,255,.14),transparent);border-radius:inherit;pointer-events:none}.fmw-btn:active{transform:translateY(2px);filter:brightness(.94)}.fmw-btn:hover{filter:brightness(1.07)}.fmw-btn:disabled,.fmw-btn.disabled{cursor:not-allowed;color:rgba(255,255,255,.48);background:linear-gradient(180deg,#5c6865 0%,#3f4b49 55%,#2b3432 100%)!important;box-shadow:0 6px 0 rgba(0,0,0,.3),0 10px 24px rgba(0,0,0,.22)!important;opacity:.72;}.fmw-btn-green{background:linear-gradient(180deg,#d4a010 0%,#b07808 55%,#8a5c04 100%);box-shadow:0 6px 0 rgba(0,0,0,.3),0 10px 24px rgba(0,0,0,.28),0 0 22px rgba(245,200,66,.2)}.fmw-btn-teal{background:linear-gradient(180deg,#1a3a8a 0%,var(--fmw-teal) 55%,var(--fmw-teal2) 100%);box-shadow:0 6px 0 rgba(0,0,0,.3),0 10px 24px rgba(0,0,0,.28)}.fmw-btn-red{background:linear-gradient(180deg,#d44832 0%,var(--fmw-red) 55%,var(--fmw-red2) 100%);box-shadow:0 6px 0 rgba(0,0,0,.3),0 10px 24px rgba(0,0,0,.28)}
+.fmw-save-line{margin-top:18px;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--fmw-dim);font-size:14px;letter-spacing:.04em}.fmw-save-sep{opacity:.45}.fmw-popup-overlay{display:flex!important;align-items:center;justify-content:center;background:rgba(0,0,0,.48)!important;backdrop-filter:blur(2px)}.fmw-popup-overlay.hidden{display:none!important}.fmw-popup-card{width:min(640px,92vw);padding:28px 30px 30px;max-height:calc(100dvh - 32px);display:flex;flex-direction:column;overflow:hidden}.fmw-confirm-card,#restartConfirmOverlay .fmw-popup-card,#homeConfirmOverlay .fmw-popup-card{width:min(580px,92vw)}.fmw-pause-card{width:min(580px,92vw)}.fmw-settings-card{width:min(540px,92vw)}.fmw-gameover-card{width:min(620px,92vw)}.fmw-popup-title{font-family:var(--fmw-font);font-size:clamp(32px,4.5vw,58px);font-weight:800;letter-spacing:.05em;color:var(--fmw-gold);text-align:center;line-height:1;text-shadow:0 2px 0 rgba(0,0,0,.5),0 0 24px rgba(240,201,106,.22)}.fmw-popup-title.danger{color:#ff9080;text-shadow:0 2px 0 rgba(0,0,0,.5),0 0 24px rgba(255,80,50,.2)}.fmw-popup-message{color:var(--fmw-body);font-size:clamp(18px,2.2vw,28px);line-height:1.32;text-align:center;margin:10px 0 18px}.fmw-score-panel,.fmw-settings-panel,.fmw-mini-panel{background:rgba(4,8,28,.30);border:1px solid rgba(245,200,66,.28);border-radius:20px;padding:6px 18px;margin:14px 0;min-height:0}.fmw-mini-panel{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center}.fmw-mini-panel span{display:block;color:var(--fmw-dim);font-size:13px;text-transform:uppercase;letter-spacing:.08em}.fmw-mini-panel strong{display:block;color:var(--fmw-head);font-size:24px}.fmw-score-row,.fmw-setting-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:11px 2px;border-bottom:1px solid rgba(255,255,255,.07);font-size:clamp(17px,2vw,26px)}.fmw-score-row:last-child,.fmw-setting-row:last-child{border-bottom:0}.fmw-score-row span,.fmw-setting-row span{color:var(--fmw-body);opacity:.92}.fmw-score-row strong{font-weight:700;color:var(--fmw-head)}.fmw-total-row{display:grid;grid-template-columns:1fr auto;align-items:center;padding:13px 2px 4px;border-top:1.5px solid var(--fmw-gold-dim);font-size:clamp(26px,3.2vw,44px);font-weight:800;color:var(--fmw-gold);margin-top:6px}.fmw-toggle{width:72px;height:38px;border:0;border-radius:999px;background:linear-gradient(#68c94a,#4aa832);position:relative;box-shadow:inset 0 -3px 0 rgba(0,0,0,.2),0 4px 10px rgba(0,0,0,.2);cursor:pointer}.fmw-toggle span{position:absolute;top:4px;right:4px;width:30px;height:30px;border-radius:50%;background:#f5ede0;box-shadow:0 3px 8px rgba(0,0,0,.28);transition:all .18s}.fmw-toggle.off{background:linear-gradient(#6e7774,#44504d)}.fmw-toggle.off span{right:38px;background:#d7dbd7}@keyframes fmwFloatGlobe{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-9px) rotate(5deg)}}
 @media (orientation:landscape) and (max-height:560px){.fmw-popup-card{padding:18px 24px!important;border-radius:24px!important}.fmw-popup-title{font-size:clamp(28px,8vh,42px)!important}.fmw-gold-rule{margin:10px 0 12px!important}.fmw-popup-message{font-size:clamp(16px,4vh,22px)!important;margin:6px 0 12px!important;line-height:1.25!important}.fmw-score-panel,.fmw-settings-panel,.fmw-mini-panel{margin:8px 0 12px!important;padding:4px 14px!important}.fmw-score-row,.fmw-setting-row{padding:6px 2px!important;font-size:clamp(16px,4vh,22px)!important}.fmw-total-row{padding:8px 2px 2px!important;font-size:clamp(22px,5.5vh,34px)!important}.fmw-btn{min-height:44px!important;font-size:clamp(15px,3.4vh,18px)!important;border-radius:14px!important}.fmw-actions{gap:9px!important}.fmw-start-card-v2{padding:20px 28px 24px!important;width:min(520px,72vw)!important}.fmw-start-globe{font-size:clamp(58px,15vh,90px)!important;margin-bottom:2px!important}.fmw-start-title{font-size:clamp(34px,8vh,58px)!important}.fmw-start-world{font-size:clamp(32px,7vh,50px)!important}.fmw-menu-stack{margin-top:14px!important;gap:10px!important}}
 @media (max-width:760px){.fmw-start-card-v2{width:min(94vw,520px)!important;padding:26px 20px 30px!important}.fmw-popup-card{width:96vw!important;padding:22px 18px 24px!important;border-radius:24px!important}.fmw-actions.two{grid-template-columns:1fr!important}.fmw-mini-panel{grid-template-columns:1fr!important}.fmw-save-line{font-size:12px;flex-wrap:wrap}}
 
@@ -7670,12 +7670,12 @@ body{font-family:var(--fmw-font)!important;} .theme-picker,.theme-picker-overlay
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h14M13 7l5 5-5 5' fill='none' stroke='black' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
 }
 #game-area .hud-bar .movement-xcenter {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cline x1='12' y1='3' x2='12' y2='21' stroke='black' stroke-width='1.4' stroke-dasharray='2.5 2'/%3E%3Cpath d='M2 12h7.5M7 9l2.5 3-2.5 3M22 12h-7.5M17 9l-2.5 3 2.5 3' fill='none' stroke='black' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cline x1='12' y1='3' x2='12' y2='21' stroke='black' stroke-width='1.4' stroke-dasharray='2.5 2'/%3E%3Cpath d='M2 12h7.5M7 9l2.5 3-2.5 3M22 12h-7.5M17 9l-2.5 3 2.5 3' fill='none' stroke='black' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h16M9 7l5 5-5 5M15 7l-5 5 5 5' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h16M9 7l5 5-5 5M15 7l-5 5 5 5' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
 }
 #game-area .hud-bar .movement-ycenter {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cline x1='3' y1='12' x2='21' y2='12' stroke='black' stroke-width='1.4' stroke-dasharray='2.5 2'/%3E%3Cpath d='M12 2v7.5M9 7l3 2.5 3-2.5M12 22v-7.5M9 17l3-2.5 3 2.5' fill='none' stroke='black' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cline x1='3' y1='12' x2='21' y2='12' stroke='black' stroke-width='1.4' stroke-dasharray='2.5 2'/%3E%3Cpath d='M12 2v7.5M9 7l3 2.5 3-2.5M12 22v-7.5M9 17l3-2.5 3 2.5' fill='none' stroke='black' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4v16M7 9l5 5 5-5M7 15l5-5 5 5' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4v16M7 9l5 5 5-5M7 15l5-5 5 5' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
 }
 #game-area .hud-bar .movement-random {
   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 7h3c3.5 0 4.4 10 8 10h5M17 14l3 3-3 3M4 17h3c1.4 0 2.3-1.2 3.1-2.8M13.4 9.5C14 8.1 14.9 7 17 7h3M17 4l3 3-3 3' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
@@ -7948,3581 +7948,518 @@ body, input, select, textarea, button:not(.fmw-btn):not(.modal-btn):not(.start-b
 }
 
 
-/* =========================================================
-   FMW v5.2 — Logo startup + unified premium emerald/gold tone
-   Goal: startup, HUD, board, popups, settings, helpers, and legacy
-   modals all use the same deep emerald glass + antique gold system.
-   ========================================================= */
-:root,
-html[data-theme="emerald"],
-html[data-theme="classic-blue"],
-html[data-theme="dark-navy"],
-html[data-theme="royal-purple"],
-html[data-theme="burgundy-red"],
-html[data-theme="neon-night"],
-html[data-theme="cyber-blue"],
-html[data-theme="arcade-purple"],
-html[data-theme="soft-sky"],
-html[data-theme="candy-pop"],
-html[data-theme="mint-fresh"] {
-  color-scheme: dark !important;
-  --screen-1:#011310 !important;
-  --screen-2:#062a24 !important;
-  --screen-3:#0b3a32 !important;
-  --frame-1:#07372f !important;
-  --frame-2:#021c19 !important;
-  --frame-edge:rgba(226,190,100,.42) !important;
-  --frame-inner:rgba(255,248,220,.105) !important;
-  --hud-bg:rgba(3,32,27,.84) !important;
-  --hud-bg-2:rgba(6,46,39,.90) !important;
-  --hud-border:rgba(226,190,100,.28) !important;
-  --hud-label:rgba(230,236,214,.68) !important;
-  --hud-value:#fff3cf !important;
-  --accent-cyan:#57d68c !important;
-  --accent-pink:#b99040 !important;
-  --accent-yellow:#e8c265 !important;
-  --accent-red:#b94a34 !important;
-  --accent-primary-rgb:82, 198, 127 !important;
-  --accent-secondary-rgb:226, 190, 100 !important;
-  --accent-warn-rgb:226, 190, 100 !important;
-  --path-line:#e8c265 !important;
-  --path-core:#fff6d8 !important;
-  --path-halo:rgba(232,194,101,.40) !important;
-  --hud-action-hint-bg:linear-gradient(180deg,#1fc96d 0%,#0e8d55 56%,#07623e 100%) !important;
-  --hud-action-shuffle-bg:linear-gradient(180deg,#118b8b 0%,#0a6667 56%,#06484d 100%) !important;
-  --hud-action-border:rgba(226,190,100,.34) !important;
-  --hud-action-glow:rgba(82,198,127,.22) !important;
-  --hud-action-text:#fff8df !important;
-  --hud-display-glass:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.022)),rgba(3,32,27,.86) !important;
-  --hud-separator:rgba(226,190,100,.20) !important;
-  --hud-time:#7be08e !important;
-  --hud-score:#e8c265 !important;
-  --hud-bar-bg:linear-gradient(180deg,rgba(8,55,47,.86),rgba(2,25,23,.94)) !important;
-  --hud-panel-bg:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.015)) !important;
-  --hud-panel-bg-strong:linear-gradient(180deg,rgba(226,190,100,.105),rgba(255,255,255,.020)) !important;
-  --hud-divider:rgba(226,190,100,.20) !important;
-  --hud-label-strong:rgba(236,232,200,.80) !important;
-  --hud-glow-line:rgba(226,190,100,.48) !important;
-  --fmw-bg:#021714 !important;
-  --fmw-panel:rgba(4,44,38,.94) !important;
-  --fmw-gold:#e8c265 !important;
-  --fmw-gold-dim:rgba(232,194,101,.56) !important;
-  --fmw-head:#fff3cf !important;
-  --fmw-body:#d8ede6 !important;
-  --fmw-dim:rgba(216,237,230,.66) !important;
-  --fmw-green:#0e9e56 !important;
-  --fmw-green2:#08633d !important;
-  --fmw-teal:#0a6d72 !important;
-  --fmw-teal2:#064a50 !important;
-  --fmw-red:#a63a2e !important;
-  --fmw-red2:#74251f !important;
-  --final-hud-bar-bg:var(--hud-bar-bg) !important;
-  --final-hud-bar-border:rgba(226,190,100,.28) !important;
-  --final-hud-bar-shadow:inset 0 1px 0 rgba(255,255,255,.12), inset 0 -1px 0 rgba(0,0,0,.24), 0 0 18px rgba(0,0,0,.38) !important;
-  --final-hud-label:var(--hud-label-strong) !important;
-  --final-hud-rule-label:var(--hud-label-strong) !important;
-  --final-hud-muted-label:var(--hud-label-strong) !important;
-  --final-hud-value:var(--fmw-head) !important;
-  --final-hud-hint-bg:var(--hud-action-hint-bg) !important;
-  --final-hud-shuffle-bg:var(--hud-action-shuffle-bg) !important;
-  --final-hud-hint-icon:#fff8df !important;
-  --final-hud-shuffle-icon:#fff8df !important;
-  --final-hud-badge-text:#08231e !important;
-  --final-hud-hint-badge-bg:linear-gradient(180deg,#fff3cf,#e8c265) !important;
-  --final-hud-shuffle-badge-bg:linear-gradient(180deg,#fff3cf,#e8c265) !important;
-  --final-hud-pause-bg:linear-gradient(180deg,#e8c265 0%,#b99040 100%) !important;
-  --final-hud-pause-border:rgba(255,248,220,.54) !important;
-  --final-hud-pause-color:#09231d !important;
-  --final-hud-pause-shadow:0 0 16px rgba(232,194,101,.24), inset 0 1px 0 rgba(255,255,255,.30) !important;
-}
-html, body {
-  background:
-    radial-gradient(70vw 80vh at 26% 10%, rgba(42,151,102,.26), transparent 54%),
-    radial-gradient(64vw 70vh at 82% 78%, rgba(226,190,100,.16), transparent 58%),
-    linear-gradient(135deg,#011310,#062a24 56%,#0b3a32) !important;
-}
-.ambient {
-  background-image:
-    linear-gradient(rgba(232,194,101,.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(118,220,154,.026) 1px, transparent 1px) !important;
-}
-.scanline { opacity:.10 !important; }
+/* ═══════════════════════════════════════════════════════════════
+   MIDNIGHT BLUE + GOLD THEME — Logo image + colour overrides
+   ═══════════════════════════════════════════════════════════════ */
 
-/* Startup logo replacement */
-#overlay .fmw-start-card-v2 {
-  width:min(540px, 88vw) !important;
-  padding:clamp(22px,4.2vh,36px) clamp(24px,4.4vw,40px) clamp(24px,4.8vh,42px) !important;
-  background:
-    radial-gradient(120% 90% at 50% 0%, rgba(232,194,101,.08), transparent 48%),
-    linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.02)),
-    rgba(4,44,38,.94) !important;
-  border-color:rgba(232,194,101,.50) !important;
+/* ── Logo image replacing text title ── */
+.fmw-logo-wrap {
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto 8px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
 }
-#overlay .fmw-logo-wrap {
-  width:100% !important;
-  display:grid !important;
-  place-items:center !important;
-  margin:0 auto 8px !important;
-  padding:4px 0 !important;
-  border-radius:22px !important;
-  background:radial-gradient(ellipse at center, rgba(0,24,20,.70), rgba(0,0,0,.10) 68%, transparent 82%) !important;
-}
-#overlay .fmw-start-logo {
-  width:min(100%, 440px) !important;
-  max-height:min(27vh, 220px) !important;
-  object-fit:contain !important;
-  display:block !important;
-  filter:drop-shadow(0 12px 16px rgba(0,0,0,.45)) drop-shadow(0 0 16px rgba(232,194,101,.18)) !important;
-}
-#overlay .fmw-start-sub-pill {
-  margin-top:8px !important;
-  color:rgba(255,243,207,.78) !important;
-  border-color:rgba(232,194,101,.24) !important;
-  background:rgba(0,0,0,.26) !important;
-}
-#overlay .fmw-start-globe,
-#overlay .fmw-start-title,
-#overlay .fmw-start-world-row { display:none !important; }
-#overlay .fmw-start-vignette {
-  background:
-    radial-gradient(circle at 50% 42%, rgba(5,50,42,.10), rgba(0,0,0,.56) 64%, rgba(0,0,0,.90)),
-    linear-gradient(180deg,rgba(0,0,0,.42),rgba(0,0,0,.14) 32%,rgba(0,0,0,.48)) !important;
-}
-#overlay .fmw-start-flag {
-  box-shadow:0 0 0 2px rgba(0,0,0,.76), 0 6px 12px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.10) !important;
-  filter:saturate(.92) brightness(.82) !important;
+.fmw-logo-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: transparent !important;
+  mix-blend-mode: normal;
+  filter: drop-shadow(0 4px 28px rgba(245,200,66,.30))
+          drop-shadow(0 2px 10px rgba(0,0,0,.75));
 }
 
-/* Unified buttons */
-.fmw-btn,
-.modal-btn,
-.start-btn,
-.primary-action,
-.quick-action,
-.continue-action,
-.popup-actions button,
-.settings-modal button:not(.theme-option):not(.toggle-switch) {
-  border:1px solid rgba(232,194,101,.28) !important;
-  color:#fff8df !important;
-  text-shadow:0 1px 3px rgba(0,0,0,.36) !important;
-}
-.fmw-btn-green,
-.modal-btn.primary,
-.popup-actions .primary,
-.primary-action,
-.continue-action {
-  background:linear-gradient(180deg,#20c96f 0%,#0f9156 56%,#08633d 100%) !important;
-  box-shadow:0 6px 0 rgba(0,0,0,.30), 0 12px 26px rgba(0,0,0,.30), 0 0 18px rgba(82,198,127,.15) !important;
-}
-.fmw-btn-teal,
-.modal-btn.secondary,
-.popup-actions .secondary,
-.quick-action,
-.start-btn:not(.continue-action):not(.primary-action) {
-  background:linear-gradient(180deg,#118b8b 0%,#0a6667 56%,#06484d 100%) !important;
-  box-shadow:0 6px 0 rgba(0,0,0,.30), 0 12px 26px rgba(0,0,0,.28) !important;
-}
-.fmw-btn-red,
-#confirmNewGameBtn,
-#confirmRestartBtn,
-#confirmHomeBtn,
-#confirmQuitGameBtn,
-#confirmEndQuickBtn {
-  background:linear-gradient(180deg,#c04a36 0%,#963328 56%,#68231d 100%) !important;
-  box-shadow:0 6px 0 rgba(0,0,0,.30), 0 12px 26px rgba(0,0,0,.28) !important;
+/* ── Tagline pill ── */
+.fmw-start-sub-pill {
+  margin-top: 8px;
+  display: inline-block;
+  background: rgba(4,8,32,.5);
+  border: 1px solid rgba(245,200,66,.22);
+  border-radius: 6px;
+  padding: 6px 20px;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: clamp(11px, 1.4vw, 14px);
+  font-weight: 500;
+  letter-spacing: .18em;
+  color: rgba(180,200,255,.65);
+  text-transform: uppercase;
 }
 
-/* Gameplay shell: make HUD, board, meter and tile feedback match logo tone */
-#game-area .board-frame,
-.board-frame {
-  border-color:rgba(232,194,101,.34) !important;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.075), transparent 20%),
-    linear-gradient(135deg,#07372f,#021c19) !important;
-  box-shadow:inset 0 0 0 1px rgba(255,248,220,.08), 0 16px 38px rgba(0,0,0,.36) !important;
-}
-#game-area .board-frame .hud-bar,
-#game-area .hud-bar,
-.topbar.hud-bar {
-  background:var(--hud-bar-bg) !important;
-  border:1px solid rgba(232,194,101,.28) !important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.12), inset 0 -1px 0 rgba(0,0,0,.22), 0 0 18px rgba(0,0,0,.34) !important;
-}
-#game-area .hud-bar .hud-segment,
-#game-area .hud-bar .stat-group,
-#game-area .hud-bar .country-name-pill,
-#game-area .hud-bar .action-btn,
-#game-area .hud-bar .pause-btn-new {
-  border-color:rgba(232,194,101,.20) !important;
-  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.018)),rgba(3,32,27,.55) !important;
-}
-#game-area .hud-bar .hud-divider { background:rgba(232,194,101,.18) !important; }
-#game-area .hud-bar .stat-label,
-#game-area .hud-bar .hud-muted-label,
-#game-area .hud-bar .rule-label,
-#game-area .hud-bar .action-btn span {
-  color:rgba(236,232,200,.78) !important;
-}
-#game-area .hud-bar .stat-value,
-#game-area .hud-bar .level-with-rule,
-#game-area .hud-bar .hud-country-pill {
-  color:#fff3cf !important;
-}
-#game-area .hud-bar .time-val { color:#7be08e !important; }
-#game-area .hud-bar .score-val { color:#e8c265 !important; }
-#game-area .hud-bar .movement-icon { background:#e8c265 !important; }
-#game-area .hud-bar .btn-hint {
-  background:var(--hud-action-hint-bg) !important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.22), 0 0 14px rgba(82,198,127,.18) !important;
-}
-#game-area .hud-bar .btn-shuffle {
-  background:var(--hud-action-shuffle-bg) !important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.20), 0 0 14px rgba(10,109,114,.18) !important;
-}
-#game-area .hud-bar .action-btn i { color:#fff8df !important; }
-#game-area .hud-bar .notification-dot {
-  color:#08231e !important;
-  background:linear-gradient(180deg,#fff3cf,#e8c265) !important;
-  border:1px solid rgba(255,255,255,.38) !important;
-}
-#game-area .hud-bar .pause-btn-new {
-  background:linear-gradient(180deg,#e8c265 0%,#b99040 100%) !important;
-  color:#08231e !important;
-  border-color:rgba(255,248,220,.48) !important;
-  box-shadow:0 0 16px rgba(232,194,101,.24), inset 0 1px 0 rgba(255,255,255,.30) !important;
-}
-.board-time-meter {
-  background:rgba(0,0,0,.35) !important;
-  border:1px solid rgba(232,194,101,.18) !important;
-}
-.board-time-bar {
-  background:linear-gradient(90deg,#0f9156,#7be08e,#e8c265) !important;
-  box-shadow:0 0 14px rgba(82,198,127,.28) !important;
-}
-.board-wrap,
-.board {
-  background:linear-gradient(135deg,rgba(1,22,19,.94),rgba(3,36,31,.92)) !important;
-}
-.tile.selected {
-  border-color:#e8c265 !important;
-  outline-color:rgba(255,248,220,.92) !important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.94), 0 0 0 2px rgba(232,194,101,.64), 0 0 20px rgba(232,194,101,.38), 0 6px 14px rgba(0,0,0,.24) !important;
-}
-.tile.hint {
-  border-color:#7be08e !important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.94), 0 0 0 2px rgba(82,198,127,.56), 0 0 20px rgba(82,198,127,.42), 0 6px 14px rgba(0,0,0,.22) !important;
+/* ── Override #overlay background to midnight blue ── */
+#overlay {
+  background: linear-gradient(160deg, #060c28 0%, #040818 100%) !important;
 }
 
-/* Unified popup family including old save/helper/quit overlays */
-.fmw-popup-overlay,
-#saveOverlay,
-#helperMessageOverlay,
-#quitConfirmOverlay,
-#endQuickConfirmOverlay,
-.pause-overlay,
-.score-summary-overlay,
-.rc-overlay {
-  background:rgba(0,0,0,.52) !important;
-  backdrop-filter:blur(4px) saturate(1.04) !important;
+/* ── Tile colours — slight blue tint ── */
+.tile-cell, .game-tile, .tile {
+  background: linear-gradient(180deg, #eef2ff, #dde6ff) !important;
+  border-color: #b0c0f0 !important;
 }
-.fmw-popup-card,
-.modal:not(.start-modal),
-.save-modal,
-.confirm-modal,
-.compact-message-modal,
-.settings-modal,
-.pause-modal,
-.score-summary-modal,
-.level-modal,
-.game-over-modal,
-.premium-result-card,
-.premium-pause-card {
-  background:
-    radial-gradient(120% 90% at 50% 0%, rgba(232,194,101,.08), transparent 48%),
-    linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.02)),
-    rgba(4,44,38,.96) !important;
-  border:1.5px solid rgba(232,194,101,.50) !important;
-  color:#fff3cf !important;
-  box-shadow:0 32px 80px rgba(0,0,0,.65), inset 0 1px 0 rgba(255,248,220,.12) !important;
+
+/* ── Timer bar → gold gradient ── */
+.timer-bar-fill, .meter-fill, #timerBar .fill, #boardTimerBar .fill {
+  background: linear-gradient(90deg, #c89010, #f5c842, #f0e080) !important;
 }
+
+/* ── Score fly-up and combo text → gold ── */
+.score-fly, .combo-text, .match-score-fly {
+  color: #f5c842 !important;
+  text-shadow: 0 0 12px rgba(245,200,66,.5) !important;
+}
+
+/* ── Popup title → Paytone One ── */
 .fmw-popup-title,
 .fmw-popup-card h1,
-.save-modal h1,
-.confirm-modal h1,
-.compact-message-modal h1,
-.modal h1,
-.level-modal h1,
-.game-over-modal h1,
-.pause-modal h1,
+.score-summary-title,
 .rc-card h1,
 .premium-result-card h1,
-.premium-pause-card h1 {
-  color:#e8c265 !important;
-  text-shadow:0 2px 0 rgba(0,0,0,.52), 0 0 22px rgba(232,194,101,.22) !important;
-}
-.fmw-popup-title.danger,
-#goTitle,
-.game-over-modal h1 { color:#ff9a85 !important; }
-.fmw-popup-message,
-.modal p,
-.save-modal p,
-.confirm-modal p,
-.compact-message-modal p {
-  color:#d8ede6 !important;
-}
-.fmw-score-panel,
-.fmw-settings-panel,
-.fmw-mini-panel,
-.pause-panel,
-.premium-result-panel,
-.premium-score-card,
-.pause-status-bar {
-  background:rgba(0,0,0,.22) !important;
-  border:1px solid rgba(232,194,101,.30) !important;
-  color:#fff3cf !important;
-}
-.fmw-score-row span,
-.fmw-setting-row span,
-.fmw-save-line,
-.saved-slot-label { color:rgba(216,237,230,.72) !important; }
-.fmw-score-row strong,
-.fmw-total-row strong,
-.fmw-total-row { color:#e8c265 !important; }
-.fmw-toggle { background:linear-gradient(#67d66d,#169455) !important; }
-.fmw-toggle.off { background:linear-gradient(#65706d,#3d4a47) !important; }
-
-@media (orientation:landscape) and (max-height:560px) {
-  #overlay .fmw-start-card-v2 {
-    width:min(520px,74vw) !important;
-    padding:14px 24px 16px !important;
-    transform:scale(.94) !important;
-    transform-origin:center !important;
-  }
-  #overlay .fmw-start-logo {
-    width:min(100%, 330px) !important;
-    max-height:24vh !important;
-  }
-  #overlay .fmw-start-sub-pill {
-    margin-top:3px !important;
-    padding:4px 12px !important;
-    font-size:10px !important;
-    letter-spacing:.14em !important;
-  }
-  #overlay .fmw-gold-rule { margin:8px 0 !important; }
-  #overlay .fmw-menu-stack { margin-top:10px !important; gap:8px !important; }
-  #overlay .fmw-btn { min-height:38px !important; border-radius:13px !important; font-size:clamp(13px,3.3vh,16px) !important; }
-  #overlay .fmw-save-line { margin-top:9px !important; font-size:11px !important; }
-}
-@media (min-width:900px) and (orientation:landscape) {
-  #overlay .fmw-start-logo {
-    width:min(100%, 460px) !important;
-    max-height:min(30vh, 240px) !important;
-  }
-}
-@media (orientation:portrait) {
-  #overlay .fmw-start-card-v2 {
-    width:min(92vw,520px) !important;
-    padding:28px 22px 30px !important;
-  }
-  #overlay .fmw-start-logo {
-    width:min(100%, 380px) !important;
-    max-height:22vh !important;
-  }
+.premium-pause-card h1,
+.fmw-pause-card .fmw-popup-title,
+.fmw-gameover-card .fmw-popup-title,
+.fmw-confirm-card .fmw-popup-title,
+.fmw-settings-card .fmw-popup-title {
+  font-family: "Paytone One", sans-serif !important;
+  font-weight: 400 !important;
+  text-transform: uppercase !important;
+  letter-spacing: .04em !important;
+  color: var(--fmw-gold) !important;
+  text-shadow: 0 2px 0 rgba(0,0,0,.6), 0 0 28px rgba(245,200,66,.25) !important;
 }
 
-/* =========================================================
-   FMW v5.2.1 — Warm Champagne flag tile face
-   Goal: lighten the tile surface for better flag clarity while
-   preserving a dark emerald frame so it still matches the HUD,
-   board, popups, and startup logo tone.
-   ========================================================= */
-.tile,
-body[data-sprite-set="flags"] .tile {
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.04)),
-    linear-gradient(180deg, #f4ecd3 0%, #eadcb5 52%, #d8c99d 100%) !important;
-  border-color: rgba(217,187,99,.34) !important;
-  box-shadow:
-    inset 0 0 0 3px rgba(2,23,20,.78),
-    inset 0 1px 0 rgba(255,255,255,.46),
-    0 6px 14px rgba(0,0,0,.28) !important;
+/* ── Danger title (Game Over, quit confirm) ── */
+.fmw-popup-title.danger {
+  color: #ff8060 !important;
+  text-shadow: 0 2px 0 rgba(0,0,0,.5), 0 0 24px rgba(255,80,50,.25) !important;
 }
-body[data-sprite-set="flags"] .tile::before,
-.tile::before {
-  content:"";
-  position:absolute;
-  inset:3px;
-  border-radius:calc(var(--tile-radius) - 3px);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,0) 34%),
-    linear-gradient(180deg, rgba(255,255,255,0), rgba(0,0,0,.06));
-  box-shadow:
-    inset 0 1px rgba(255,255,255,.20),
-    inset 0 -8px 18px rgba(0,0,0,.08);
-  pointer-events:none;
-  z-index:1;
+
+/* ── Toggle ON → gold ── */
+.fmw-toggle:not(.off) {
+  background: linear-gradient(#d4a010, #a07808) !important;
 }
-.tile img,
-.tile .entity-sprite,
-body[data-sprite-set="flags"] .tile img,
-body[data-sprite-set="flags"] .tile .entity-sprite {
-  position:relative;
-  z-index:2;
+
+/* ── Low-time flash → keep red, fine as-is ── */
+
+/* ── Selected tile highlight → gold ── */
+.tile-cell.selected, .game-tile.selected, .tile.selected {
+  outline-color: #f5c842 !important;
+  box-shadow: 0 0 0 2px #f5c842, 0 0 10px rgba(245,200,66,.4) !important;
+}
+
+/* ── Matched tile dim → keep subtle ── */
+.tile-cell.matched, .game-tile.matched, .tile.matched,
+.tile-cell.removed, .game-tile.removed {
+  opacity: .25 !important;
+}
+
+/* ── Connection path line → gold ── */
+canvas#pathCanvas {
+  /* path colours controlled by --path-line var, already set to gold */
+}
+
+/* ── Modal overlay backdrop → midnight blue tint ── */
+.fmw-popup-overlay {
+  background: rgba(2,4,20,.55) !important;
+}
+
+/* ── Score history rows ── */
+.score-history-item, .level-history-row {
+  border-color: rgba(245,200,66,.15) !important;
 }
 
 
-/* =========================================================
-   FMW v5.2.2 — iPhone-first HUD layout refinement
-   Layout follows the cleaner structure:
-   left = status, center = selected country, right = actions.
-   Helper badges may float, but button bodies stay inside the HUD.
-   ========================================================= */
-.iphone-priority-hud {
+/* ═══════════════════════════════════════════════════════════════
+
+/* ═══════════════════════════════════════════════════════════════
+   HUD FINAL — Single row pill layout
+   Left:   Country pill (flex:1) + MATCHES + SCORE
+   Right:  HINT · SHUFFLE · PAUSE (shape-locked buttons)
+   No TIME in HUD — timer bar only
+   Responsive: iPhone ≤1024px / Desktop >1024px
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Hide old HUD elements ── */
+#game-area .hud-bar .hud-segment,
+#game-area .hud-bar .hud-divider,
+#game-area .hud-bar .country-segment,
+#game-area .hud-bar .action-group,
+#game-area .hud-bar .country-name-pill.hud-country-pill,
+#game-area .hud-bar .action-btn.btn-hint,
+#game-area .hud-bar .action-btn.btn-shuffle,
+#game-area .hud-bar .pause-btn-new,
+#game-area .hud-bar .stat-group,
+#game-area .hud-bar .pause-segment,
+#game-area .hud-bar .level-segment {
+  display: none !important;
+}
+
+/* ── HUD bar base ── */
+#game-area .hud-bar,
+.topbar.hud-bar {
   position: relative !important;
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) minmax(210px, 30vw) minmax(0, 1fr) !important;
-  align-items: center !important;
-  gap: 0 !important;
-  overflow: visible !important;
-}
-
-.iphone-priority-hud .hud-status-cluster,
-.iphone-priority-hud .hud-action-cluster {
-  height: 100% !important;
-  min-width: 0 !important;
   display: flex !important;
-  align-items: stretch !important;
-}
-
-.iphone-priority-hud .hud-status-cluster {
-  justify-self: start !important;
-  justify-content: flex-start !important;
-  max-width: 100% !important;
-}
-
-.iphone-priority-hud .hud-action-cluster {
-  justify-self: end !important;
-  justify-content: flex-end !important;
+  align-items: center !important;
+  background: linear-gradient(180deg, rgba(16,24,58,.96), rgba(8,14,36,.99)) !important;
+  border-bottom: 1px solid rgba(180,210,240,.14) !important;
   overflow: visible !important;
+  box-sizing: border-box !important;
 }
 
-.iphone-priority-hud .country-segment {
-  justify-self: center !important;
-  width: 100% !important;
+/* ── LEFT ZONE ── */
+.hud-left-zone {
+  display: flex !important;
+  align-items: center !important;
+  flex: 1 !important;
   min-width: 0 !important;
-}
-
-.iphone-priority-hud .country-name-pill {
-  width: 100% !important;
-  max-width: 100% !important;
-}
-
-/* Shared HUD segment reset for the new grouped structure */
-.iphone-priority-hud .hud-segment {
-  min-width: 0 !important;
-  height: 100% !important;
-}
-
-.iphone-priority-hud .hud-divider {
-  flex: 0 0 1px !important;
-  width: 1px !important;
-  min-width: 1px !important;
-  height: 72% !important;
-  align-self: center !important;
-  background: rgba(232,194,101,.18) !important;
-}
-
-/* iPhone landscape: compact status blocks, centered country, tidy action bodies */
-@media (orientation: landscape) and (max-height: 560px) {
-  .iphone-priority-hud {
-    grid-template-columns: minmax(315px, 1fr) minmax(210px, 31vw) minmax(182px, 1fr) !important;
-    min-height: var(--hud-h) !important;
-    overflow: visible !important;
-  }
-
-  .iphone-priority-hud .hud-status-cluster {
-    flex: 0 1 auto !important;
-  }
-
-  .iphone-priority-hud .hud-status-cluster .hud-segment {
-    flex: 0 0 auto !important;
-    padding: 0 clamp(5px, .8vw, 10px) !important;
-    border-left: 0 !important;
-    background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.014)) !important;
-  }
-
-  .iphone-priority-hud .level-segment { width: clamp(50px, 6.5vw, 72px) !important; }
-  .iphone-priority-hud .matches-segment { width: clamp(58px, 7.2vw, 82px) !important; }
-  .iphone-priority-hud .time-segment { width: clamp(78px, 9.4vw, 112px) !important; }
-  .iphone-priority-hud .score-segment { width: clamp(82px, 10.2vw, 122px) !important; }
-
-  .iphone-priority-hud .stat-group {
-    gap: clamp(1px, .28dvh, 2px) !important;
-  }
-
-  .iphone-priority-hud .stat-label {
-    font-size: clamp(6px, 1.45dvh, 8px) !important;
-    letter-spacing: .18em !important;
-    line-height: 1 !important;
-  }
-
-  .iphone-priority-hud .stat-value {
-    font-size: clamp(15px, 4.7dvh, 27px) !important;
-    line-height: .96 !important;
-    white-space: nowrap !important;
-  }
-
-  .iphone-priority-hud .level-with-rule {
-    gap: clamp(3px, .65dvh, 6px) !important;
-  }
-
-  .iphone-priority-hud .movement-icon {
-    transform: scale(.72) !important;
-    transform-origin: center !important;
-  }
-
-  .iphone-priority-hud .country-segment {
-    padding: 0 clamp(7px, 1.1vw, 13px) !important;
-    background: transparent !important;
-    border-left: 0 !important;
-    border-right: 0 !important;
-  }
-
-  .iphone-priority-hud .country-name-pill {
-    height: clamp(30px, 7.2dvh, 42px) !important;
-    min-height: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 0 clamp(14px, 2.5vw, 28px) !important;
-    border-radius: clamp(12px, 2.65dvh, 18px) !important;
-    background:
-      radial-gradient(120% 140% at 50% -20%, rgba(232,194,101,.14), transparent 48%),
-      linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.012)),
-      rgba(2, 20, 18, .62) !important;
-    border: 1px solid rgba(232,194,101,.34) !important;
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.11),
-      0 0 13px rgba(232,194,101,.08) !important;
-    color: #fff3cf !important;
-    font-size: clamp(14px, 3.55dvh, 21px) !important;
-    letter-spacing: .16em !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    white-space: nowrap !important;
-  }
-
-  .iphone-priority-hud .hud-action-cluster {
-    gap: clamp(6px, .9vw, 10px) !important;
-    align-items: center !important;
-    padding-right: clamp(4px, .75vw, 8px) !important;
-  }
-
-  .iphone-priority-hud .action-group {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-end !important;
-    gap: clamp(6px, .85vw, 10px) !important;
-    height: 100% !important;
-    overflow: visible !important;
-    background: transparent !important;
-    border-left: 0 !important;
-    padding: 0 !important;
-  }
-
-  .iphone-priority-hud .action-btn {
-    position: relative !important;
-    width: clamp(42px, 5.8vw, 62px) !important;
-    height: clamp(34px, 7.5dvh, 44px) !important;
-    min-height: 0 !important;
-    max-height: calc(var(--hud-h) - 8px) !important;
-    align-self: center !important;
-    padding: clamp(2px, .48dvh, 3px) clamp(5px, .7vw, 7px) !important;
-    border-radius: clamp(10px, 2.25dvh, 14px) !important;
-    overflow: visible !important;
-  }
-
-  .iphone-priority-hud .action-btn i {
-    font-size: clamp(14px, 3.15dvh, 18px) !important;
-    line-height: 1 !important;
-  }
-
-  .iphone-priority-hud .action-btn span {
-    font-size: clamp(6px, 1.35dvh, 8px) !important;
-    line-height: 1 !important;
-    letter-spacing: .08em !important;
-    margin-top: clamp(1px, .22dvh, 2px) !important;
-  }
-
-  .iphone-priority-hud .notification-dot {
-    width: clamp(18px, 3.3dvh, 24px) !important;
-    height: clamp(18px, 3.3dvh, 24px) !important;
-    min-width: clamp(18px, 3.3dvh, 24px) !important;
-    top: clamp(-10px, -1.75dvh, -7px) !important;
-    right: clamp(-7px, -1.1vw, -4px) !important;
-    font-size: clamp(8px, 1.75dvh, 11px) !important;
-    line-height: 1 !important;
-    z-index: 12 !important;
-  }
-
-  .iphone-priority-hud .pause-segment {
-    width: clamp(44px, 6.1vw, 64px) !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: transparent !important;
-    border-left: 0 !important;
-    padding: 0 !important;
-  }
-
-  .iphone-priority-hud .pause-btn-new {
-    width: clamp(38px, 5.45vw, 56px) !important;
-    height: clamp(34px, 7.5dvh, 44px) !important;
-    min-height: 0 !important;
-    max-height: calc(var(--hud-h) - 8px) !important;
-    border-radius: clamp(12px, 2.7dvh, 18px) !important;
-    align-self: center !important;
-  }
-}
-
-/* Very narrow iPhone landscape fallback: abbreviate labels instead of reducing readability */
-@media (orientation: landscape) and (max-height: 430px) {
-  .iphone-priority-hud {
-    grid-template-columns: minmax(286px, 1fr) minmax(190px, 30vw) minmax(170px, 1fr) !important;
-  }
-  .iphone-priority-hud .level-segment { width: 48px !important; }
-  .iphone-priority-hud .matches-segment { width: 56px !important; }
-  .iphone-priority-hud .time-segment { width: 74px !important; }
-  .iphone-priority-hud .score-segment { width: 78px !important; }
-  .iphone-priority-hud .level-segment .stat-label { font-size: 0 !important; letter-spacing: 0 !important; }
-  .iphone-priority-hud .level-segment .stat-label::after { content: "LV"; font-size: 7px; letter-spacing: .16em; }
-  .iphone-priority-hud .matches-segment .stat-label { font-size: 0 !important; letter-spacing: 0 !important; }
-  .iphone-priority-hud .matches-segment .stat-label::after { content: "MATCH"; font-size: 7px; letter-spacing: .12em; }
-}
-
-
-/* =========================================================
-   FMW v5.2.3 — iPhone HUD score-space and country-width tune
-   - Country plate is narrowed so it no longer dominates the HUD.
-   - Score panel reserves enough width for larger values with commas.
-   ========================================================= */
-@media (orientation: landscape) and (max-height: 560px) {
-  .iphone-priority-hud {
-    grid-template-columns:
-      minmax(372px, 1.18fr)
-      clamp(210px, 24vw, 286px)
-      minmax(178px, .82fr) !important;
-  }
-
-  .iphone-priority-hud .country-segment {
-    max-width: clamp(210px, 24vw, 286px) !important;
-    justify-self: center !important;
-  }
-
-  .iphone-priority-hud .country-name-pill {
-    width: 100% !important;
-    max-width: clamp(210px, 24vw, 286px) !important;
-    padding-left: clamp(12px, 1.8vw, 22px) !important;
-    padding-right: clamp(12px, 1.8vw, 22px) !important;
-  }
-
-  .iphone-priority-hud .score-segment {
-    width: clamp(104px, 12.4vw, 148px) !important;
-    flex-shrink: 0 !important;
-  }
-
-  .iphone-priority-hud .score-val {
-    max-width: 100% !important;
-    min-width: 0 !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: clamp(2px, .35vw, 5px) !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: clip !important;
-    font-size: clamp(15px, 4.35dvh, 24px) !important;
-    letter-spacing: .01em !important;
-    font-variant-numeric: tabular-nums !important;
-  }
-
-  .iphone-priority-hud .score-val i {
-    flex: 0 0 auto !important;
-    font-size: .76em !important;
-  }
-
-  .iphone-priority-hud .score-val #score {
-    min-width: 0 !important;
-    max-width: 100% !important;
-    overflow: hidden !important;
-    text-overflow: clip !important;
-    white-space: nowrap !important;
-  }
-}
-
-/* Very narrow iPhone: preserve score first, then reduce country plate. */
-@media (orientation: landscape) and (max-height: 430px) {
-  .iphone-priority-hud {
-    grid-template-columns:
-      minmax(338px, 1.22fr)
-      clamp(180px, 22vw, 238px)
-      minmax(166px, .78fr) !important;
-  }
-
-  .iphone-priority-hud .country-segment,
-  .iphone-priority-hud .country-name-pill {
-    max-width: clamp(180px, 22vw, 238px) !important;
-  }
-
-  .iphone-priority-hud .score-segment {
-    width: clamp(98px, 12vw, 132px) !important;
-  }
-
-  .iphone-priority-hud .score-val {
-    font-size: clamp(14px, 4.05dvh, 22px) !important;
-  }
-}
-
-/* Wider phones / browser previews: allow score to grow without stretching the country plate. */
-@media (orientation: landscape) and (min-height: 561px) and (max-width: 1200px) {
-  .iphone-priority-hud {
-    grid-template-columns:
-      minmax(390px, 1.2fr)
-      clamp(230px, 24vw, 300px)
-      minmax(190px, .82fr) !important;
-  }
-
-  .iphone-priority-hud .country-segment,
-  .iphone-priority-hud .country-name-pill {
-    max-width: clamp(230px, 24vw, 300px) !important;
-  }
-
-  .iphone-priority-hud .score-segment {
-    width: clamp(112px, 12vw, 156px) !important;
-    flex-shrink: 0 !important;
-  }
-}
-
-
-/* =========================================================
-   FMW v5.2.6 — Stable iPhone HUD fixed fields
-   Base: v5.2.3. This avoids the v5.2.5 hard-lock regression.
-   Fixes:
-   - Stable fixed widths for Time and Score.
-   - No duplicated LEVEL/LV or MATCHES/MATCH pseudo labels.
-   - Country plate remains narrower.
-   - Board sizing and tile layout are untouched.
-   ========================================================= */
-
-/* Safety cleanup: remove old pseudo label fallback that caused duplicated labels. */
-.iphone-priority-hud .level-segment .stat-label::after,
-.iphone-priority-hud .matches-segment .stat-label::after,
-.iphone-priority-hud .time-segment .stat-label::after,
-.iphone-priority-hud .score-segment .stat-label::after {
-  content: none !important;
-  display: none !important;
-}
-
-.iphone-priority-hud .level-segment .stat-label,
-.iphone-priority-hud .matches-segment .stat-label,
-.iphone-priority-hud .time-segment .stat-label,
-.iphone-priority-hud .score-segment .stat-label {
-  font-size: clamp(6px, 1.45dvh, 8px) !important;
-  letter-spacing: .16em !important;
-}
-
-/* iPhone landscape: fixed status/action widths, but keep the existing HUD structure. */
-@media (orientation: landscape) and (max-height: 560px) {
-  .iphone-priority-hud {
-    --fmw-level-w: 52px;
-    --fmw-matches-w: 66px;
-    --fmw-time-w: 90px;
-    --fmw-score-w: 126px;
-    --fmw-country-w: clamp(205px, 23vw, 270px);
-    --fmw-helper-w: 54px;
-    --fmw-shuffle-w: 60px;
-    --fmw-pause-w: 52px;
-    --fmw-gap-main: clamp(8px, 1.45vw, 16px);
-    --fmw-gap-action: clamp(6px, .9vw, 9px);
-
-    display: grid !important;
-    grid-template-columns:
-      calc(var(--fmw-level-w) + var(--fmw-matches-w) + var(--fmw-time-w) + var(--fmw-score-w) + 3px)
-      var(--fmw-country-w)
-      calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-pause-w) + (var(--fmw-gap-action) * 2)) !important;
-    column-gap: var(--fmw-gap-main) !important;
-    justify-content: center !important;
-    align-items: center !important;
-    overflow: visible !important;
-  }
-
-  .iphone-priority-hud .hud-status-cluster {
-    width: calc(var(--fmw-level-w) + var(--fmw-matches-w) + var(--fmw-time-w) + var(--fmw-score-w) + 3px) !important;
-    min-width: calc(var(--fmw-level-w) + var(--fmw-matches-w) + var(--fmw-time-w) + var(--fmw-score-w) + 3px) !important;
-    max-width: calc(var(--fmw-level-w) + var(--fmw-matches-w) + var(--fmw-time-w) + var(--fmw-score-w) + 3px) !important;
-    flex: 0 0 auto !important;
-    justify-self: start !important;
-    display: flex !important;
-    align-items: stretch !important;
-    justify-content: flex-start !important;
-  }
-
-  .iphone-priority-hud .level-segment {
-    width: var(--fmw-level-w) !important;
-    min-width: var(--fmw-level-w) !important;
-    max-width: var(--fmw-level-w) !important;
-    flex: 0 0 var(--fmw-level-w) !important;
-  }
-
-  .iphone-priority-hud .matches-segment {
-    width: var(--fmw-matches-w) !important;
-    min-width: var(--fmw-matches-w) !important;
-    max-width: var(--fmw-matches-w) !important;
-    flex: 0 0 var(--fmw-matches-w) !important;
-  }
-
-  .iphone-priority-hud .time-segment {
-    width: var(--fmw-time-w) !important;
-    min-width: var(--fmw-time-w) !important;
-    max-width: var(--fmw-time-w) !important;
-    flex: 0 0 var(--fmw-time-w) !important;
-  }
-
-  .iphone-priority-hud .score-segment {
-    width: var(--fmw-score-w) !important;
-    min-width: var(--fmw-score-w) !important;
-    max-width: var(--fmw-score-w) !important;
-    flex: 0 0 var(--fmw-score-w) !important;
-  }
-
-  .iphone-priority-hud .country-segment {
-    width: var(--fmw-country-w) !important;
-    min-width: var(--fmw-country-w) !important;
-    max-width: var(--fmw-country-w) !important;
-    flex: 0 0 var(--fmw-country-w) !important;
-    justify-self: center !important;
-  }
-
-  .iphone-priority-hud .country-name-pill {
-    width: var(--fmw-country-w) !important;
-    min-width: var(--fmw-country-w) !important;
-    max-width: var(--fmw-country-w) !important;
-    box-sizing: border-box !important;
-  }
-
-  .iphone-priority-hud .hud-action-cluster {
-    width: calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-pause-w) + (var(--fmw-gap-action) * 2)) !important;
-    min-width: calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-pause-w) + (var(--fmw-gap-action) * 2)) !important;
-    max-width: calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-pause-w) + (var(--fmw-gap-action) * 2)) !important;
-    flex: 0 0 auto !important;
-    justify-self: end !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-end !important;
-    gap: var(--fmw-gap-action) !important;
-    padding: 0 !important;
-  }
-
-  .iphone-priority-hud .action-group {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-end !important;
-    gap: var(--fmw-gap-action) !important;
-    width: calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-gap-action)) !important;
-    min-width: calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-gap-action)) !important;
-    max-width: calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-gap-action)) !important;
-    flex: 0 0 calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-gap-action)) !important;
-  }
-
-  .iphone-priority-hud .btn-hint {
-    width: var(--fmw-helper-w) !important;
-    min-width: var(--fmw-helper-w) !important;
-    max-width: var(--fmw-helper-w) !important;
-    flex: 0 0 var(--fmw-helper-w) !important;
-  }
-
-  .iphone-priority-hud .btn-shuffle {
-    width: var(--fmw-shuffle-w) !important;
-    min-width: var(--fmw-shuffle-w) !important;
-    max-width: var(--fmw-shuffle-w) !important;
-    flex: 0 0 var(--fmw-shuffle-w) !important;
-  }
-
-  .iphone-priority-hud .pause-segment {
-    width: var(--fmw-pause-w) !important;
-    min-width: var(--fmw-pause-w) !important;
-    max-width: var(--fmw-pause-w) !important;
-    flex: 0 0 var(--fmw-pause-w) !important;
-  }
-
-  .iphone-priority-hud .pause-btn-new {
-    width: calc(var(--fmw-pause-w) - 4px) !important;
-    min-width: calc(var(--fmw-pause-w) - 4px) !important;
-    max-width: calc(var(--fmw-pause-w) - 4px) !important;
-  }
-
-  .iphone-priority-hud .stat-group,
-  .iphone-priority-hud .stat-value,
-  .iphone-priority-hud .time-val,
-  .iphone-priority-hud .score-val,
-  .iphone-priority-hud .level-with-rule,
-  .iphone-priority-hud .match-val {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    box-sizing: border-box !important;
-  }
-
-  .iphone-priority-hud .time-val,
-  .iphone-priority-hud .score-val {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 4px !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    font-variant-numeric: tabular-nums !important;
-    font-feature-settings: "tnum" 1, "lnum" 1 !important;
-  }
-
-  .iphone-priority-hud #timerText {
-    display: inline-block !important;
-    width: 4.6ch !important;
-    min-width: 4.6ch !important;
-    max-width: 4.6ch !important;
-    text-align: left !important;
-  }
-
-  .iphone-priority-hud #score {
-    display: inline-block !important;
-    width: 6.3ch !important;
-    min-width: 6.3ch !important;
-    max-width: 6.3ch !important;
-    text-align: right !important;
-    white-space: nowrap !important;
-  }
-}
-
-/* Very short / narrow iPhone fallback: fixed smaller constants, no pseudo label changes. */
-@media (orientation: landscape) and (max-height: 430px) {
-  .iphone-priority-hud {
-    --fmw-level-w: 48px;
-    --fmw-matches-w: 58px;
-    --fmw-time-w: 82px;
-    --fmw-score-w: 112px;
-    --fmw-country-w: clamp(178px, 22vw, 220px);
-    --fmw-helper-w: 48px;
-    --fmw-shuffle-w: 54px;
-    --fmw-pause-w: 46px;
-    --fmw-gap-main: clamp(6px, 1vw, 11px);
-    --fmw-gap-action: 6px;
-  }
-
-  .iphone-priority-hud .stat-label {
-    font-size: 7px !important;
-    letter-spacing: .12em !important;
-  }
-
-  .iphone-priority-hud .score-val {
-    font-size: clamp(13px, 3.7dvh, 20px) !important;
-  }
-}
-
-
-/* =========================================================
-   FMW v5.2.7 — iPhone cleanup pass
-   - Restore warm champagne tile faces.
-   - Make pause button perfectly round.
-   - Push hint/shuffle/pause cluster farther right.
-   - Hard-disable pseudo-label duplication on iPhone HUD.
-   - Keep fixed status widths without altering board layout.
-   ========================================================= */
-
-/* Absolute cleanup for duplicate tiny labels on the custom iPhone HUD */
-.iphone-priority-hud .stat-label::before,
-.iphone-priority-hud .stat-label::after,
-.iphone-priority-hud .rule-label::before,
-.iphone-priority-hud .rule-label::after,
-.iphone-priority-hud .hud-muted-label::before,
-.iphone-priority-hud .hud-muted-label::after {
-  content: none !important;
-  display: none !important;
-}
-
-/* Re-assert warm champagne tile faces over later theme rules */
-#game-area .tile,
-#game-board .tile,
-body[data-sprite-set="flags"] .tile,
-.tile {
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.04)),
-    linear-gradient(180deg, #f4ecd3 0%, #eadcb5 52%, #d8c99d 100%) !important;
-  border-color: rgba(217,187,99,.34) !important;
-  box-shadow:
-    inset 0 0 0 3px rgba(2,23,20,.78),
-    inset 0 1px 0 rgba(255,255,255,.46),
-    0 6px 14px rgba(0,0,0,.28) !important;
-}
-#game-area .tile::before,
-#game-board .tile::before,
-body[data-sprite-set="flags"] .tile::before,
-.tile::before {
-  content: "" !important;
-  position: absolute !important;
-  inset: 3px !important;
-  border-radius: calc(var(--tile-radius) - 3px) !important;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,0) 34%),
-    linear-gradient(180deg, rgba(255,255,255,0), rgba(0,0,0,.06)) !important;
-  box-shadow:
-    inset 0 1px rgba(255,255,255,.20),
-    inset 0 -8px 18px rgba(0,0,0,.08) !important;
-  pointer-events: none !important;
-  z-index: 1 !important;
-}
-#game-area .tile img,
-#game-area .tile .entity-sprite,
-#game-board .tile img,
-#game-board .tile .entity-sprite,
-.tile img,
-.tile .entity-sprite {
-  position: relative !important;
   z-index: 2 !important;
 }
 
-@media (orientation: landscape) and (max-height: 560px) {
-  .iphone-priority-hud {
-    --fmw-level-w: 52px;
-    --fmw-matches-w: 66px;
-    --fmw-time-w: 90px;
-    --fmw-score-w: 126px;
-    --fmw-country-w: clamp(205px, 22vw, 260px);
-    --fmw-helper-w: 54px;
-    --fmw-shuffle-w: 60px;
-    --fmw-pause-w: 54px;
-    --fmw-main-gap: 8px;
-    --fmw-action-gap: 8px;
-
-    width: 100% !important;
-    display: grid !important;
-    grid-template-columns:
-      calc(var(--fmw-level-w) + var(--fmw-matches-w) + var(--fmw-time-w) + var(--fmw-score-w) + 3px)
-      minmax(0, 1fr)
-      calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-pause-w) + (var(--fmw-action-gap) * 2)) !important;
-    column-gap: var(--fmw-main-gap) !important;
-    justify-content: stretch !important;
-    align-items: center !important;
-  }
-
-  .iphone-priority-hud .hud-status-cluster {
-    width: calc(var(--fmw-level-w) + var(--fmw-matches-w) + var(--fmw-time-w) + var(--fmw-score-w) + 3px) !important;
-    min-width: calc(var(--fmw-level-w) + var(--fmw-matches-w) + var(--fmw-time-w) + var(--fmw-score-w) + 3px) !important;
-    max-width: calc(var(--fmw-level-w) + var(--fmw-matches-w) + var(--fmw-time-w) + var(--fmw-score-w) + 3px) !important;
-    justify-self: start !important;
-    flex: 0 0 auto !important;
-  }
-
-  .iphone-priority-hud .level-segment {
-    width: var(--fmw-level-w) !important;
-    min-width: var(--fmw-level-w) !important;
-    max-width: var(--fmw-level-w) !important;
-    flex: 0 0 var(--fmw-level-w) !important;
-  }
-  .iphone-priority-hud .matches-segment {
-    width: var(--fmw-matches-w) !important;
-    min-width: var(--fmw-matches-w) !important;
-    max-width: var(--fmw-matches-w) !important;
-    flex: 0 0 var(--fmw-matches-w) !important;
-  }
-  .iphone-priority-hud .time-segment {
-    width: var(--fmw-time-w) !important;
-    min-width: var(--fmw-time-w) !important;
-    max-width: var(--fmw-time-w) !important;
-    flex: 0 0 var(--fmw-time-w) !important;
-  }
-  .iphone-priority-hud .score-segment {
-    width: var(--fmw-score-w) !important;
-    min-width: var(--fmw-score-w) !important;
-    max-width: var(--fmw-score-w) !important;
-    flex: 0 0 var(--fmw-score-w) !important;
-  }
-
-  .iphone-priority-hud .country-segment {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: none !important;
-    justify-self: stretch !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 0 !important;
-  }
-
-  .iphone-priority-hud .country-name-pill {
-    width: var(--fmw-country-w) !important;
-    min-width: var(--fmw-country-w) !important;
-    max-width: var(--fmw-country-w) !important;
-  }
-
-  .iphone-priority-hud .hud-action-cluster {
-    width: calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-pause-w) + (var(--fmw-action-gap) * 2)) !important;
-    min-width: calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-pause-w) + (var(--fmw-action-gap) * 2)) !important;
-    max-width: calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-pause-w) + (var(--fmw-action-gap) * 2)) !important;
-    justify-self: end !important;
-    margin-left: auto !important;
-    padding-right: 2px !important;
-    gap: var(--fmw-action-gap) !important;
-  }
-
-  .iphone-priority-hud .action-group {
-    width: calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-action-gap)) !important;
-    min-width: calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-action-gap)) !important;
-    max-width: calc(var(--fmw-helper-w) + var(--fmw-shuffle-w) + var(--fmw-action-gap)) !important;
-    gap: var(--fmw-action-gap) !important;
-  }
-
-  .iphone-priority-hud .btn-hint {
-    width: var(--fmw-helper-w) !important;
-    min-width: var(--fmw-helper-w) !important;
-    max-width: var(--fmw-helper-w) !important;
-    flex: 0 0 var(--fmw-helper-w) !important;
-  }
-  .iphone-priority-hud .btn-shuffle {
-    width: var(--fmw-shuffle-w) !important;
-    min-width: var(--fmw-shuffle-w) !important;
-    max-width: var(--fmw-shuffle-w) !important;
-    flex: 0 0 var(--fmw-shuffle-w) !important;
-  }
-
-  .iphone-priority-hud .pause-segment {
-    width: var(--fmw-pause-w) !important;
-    min-width: var(--fmw-pause-w) !important;
-    max-width: var(--fmw-pause-w) !important;
-    flex: 0 0 var(--fmw-pause-w) !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-
-  .iphone-priority-hud .pause-btn-new {
-    width: var(--fmw-pause-w) !important;
-    min-width: var(--fmw-pause-w) !important;
-    max-width: var(--fmw-pause-w) !important;
-    height: var(--fmw-pause-w) !important;
-    min-height: var(--fmw-pause-w) !important;
-    max-height: var(--fmw-pause-w) !important;
-    aspect-ratio: 1 / 1 !important;
-    border-radius: 50% !important;
-    padding: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-
-  .iphone-priority-hud .time-val,
-  .iphone-priority-hud .score-val {
-    font-variant-numeric: tabular-nums !important;
-    font-feature-settings: "tnum" 1, "lnum" 1 !important;
-    white-space: nowrap !important;
-  }
-
-  .iphone-priority-hud #timerText {
-    display: inline-block !important;
-    width: 4.6ch !important;
-    min-width: 4.6ch !important;
-    max-width: 4.6ch !important;
-    text-align: left !important;
-  }
-
-  .iphone-priority-hud #score {
-    display: inline-block !important;
-    width: 6.3ch !important;
-    min-width: 6.3ch !important;
-    max-width: 6.3ch !important;
-    text-align: right !important;
-  }
-}
-
-/* Small iPhone landscape adjustment */
-@media (orientation: landscape) and (max-height: 430px) {
-  .iphone-priority-hud {
-    --fmw-level-w: 48px;
-    --fmw-matches-w: 58px;
-    --fmw-time-w: 82px;
-    --fmw-score-w: 114px;
-    --fmw-country-w: clamp(180px, 22vw, 220px);
-    --fmw-helper-w: 48px;
-    --fmw-shuffle-w: 54px;
-    --fmw-pause-w: 48px;
-    --fmw-main-gap: 6px;
-    --fmw-action-gap: 6px;
-  }
-}
-
-
-/* =========================================================
-   FMW v5.4 — Two-layer compact HUD
-   Layout: country display + tiny level/rule on the left; Matches,
-   Score, Hint, Shuffle, and Pause span the full HUD height on the right.
-   Timer uses the bar only. Buttons keep true shapes on every device.
-   ========================================================= */
-html, body { overflow: hidden !important; }
-
-/* Reduce HUD height while keeping the board as large as possible. */
-:root {
-  --fmw-v54-hud-h: clamp(46px, 10dvh, 54px);
-  --fmw-v54-meter-h: clamp(5px, 1.25dvh, 7px);
-  --hud-h: var(--fmw-v54-hud-h) !important;
-  --meter-h: var(--fmw-v54-meter-h) !important;
-}
-
-/* Universal v5.4 HUD grid */
-.topbar.fmw-v54-hud {
-  height: var(--fmw-v54-hud-h) !important;
-  min-height: var(--fmw-v54-hud-h) !important;
-  max-height: var(--fmw-v54-hud-h) !important;
-  width: 100% !important;
-  display: grid !important;
-  grid-template-columns:
-    minmax(260px, 1fr)
-    clamp(70px, 8.3vw, 112px)
-    clamp(104px, 12.2vw, 168px)
-    var(--fmw-v54-btn-size)
-    var(--fmw-v54-btn-size)
-    var(--fmw-v54-pause-size) !important;
-  gap: clamp(6px, .9vw, 12px) !important;
-  align-items: stretch !important;
-  padding: clamp(4px, .8dvh, 7px) clamp(7px, 1.2vw, 14px) !important;
-  border: 1px solid rgba(232,194,101,.32) !important;
-  border-radius: clamp(14px, 3.2dvh, 22px) !important;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.015)),
-    rgba(3,32,27,.82) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.12),
-    inset 0 -1px 0 rgba(0,0,0,.24),
-    0 0 17px rgba(0,0,0,.32) !important;
-  overflow: visible !important;
-}
-
-.fmw-v54-hud { --fmw-v54-btn-size: calc(var(--fmw-v54-hud-h) - clamp(9px, 1.65dvh, 13px)); --fmw-v54-pause-size: var(--fmw-v54-btn-size); }
-
-.fmw-v54-left {
+/* Country pill */
+.hud-pill-wrap {
+  flex: 1 !important;
   min-width: 0 !important;
-  height: 100% !important;
-  display: grid !important;
-  grid-template-rows: 1fr auto !important;
-  gap: clamp(2px, .36dvh, 4px) !important;
-  align-content: stretch !important;
+  display: flex !important;
+  align-items: center !important;
 }
-
-.fmw-v54-country {
-  min-width: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
+.hud-country-pill {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  padding: 0 clamp(10px, 2vw, 24px) !important;
-  border: 1px solid rgba(232,194,101,.36) !important;
-  border-radius: clamp(10px, 2.3dvh, 16px) !important;
-  background:
-    radial-gradient(120% 140% at 50% -35%, rgba(232,194,101,.13), transparent 52%),
-    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.012)),
-    rgba(2, 24, 21, .72) !important;
-  color: #fff3cf !important;
-  font-family: "Paytone One", "Barlow Condensed", sans-serif !important;
-  font-size: clamp(13px, 3.25dvh, 18px) !important;
-  line-height: 1 !important;
-  letter-spacing: .13em !important;
+  width: 100% !important;
+  background: linear-gradient(135deg, rgba(180,210,240,.11), rgba(140,180,220,.07)) !important;
+  border: 1px solid rgba(180,210,240,.26) !important;
+  border-radius: 8px !important;
+  font-family: var(--fmw-font) !important;
+  font-weight: 800 !important;
+  letter-spacing: .1em !important;
   text-transform: uppercase !important;
+  color: rgba(180,210,240,.4) !important;
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.10), 0 0 12px rgba(232,194,101,.08) !important;
-}
-
-.fmw-v54-level-rule {
-  min-height: clamp(9px, 2.1dvh, 13px) !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: .35em !important;
-  padding-left: clamp(5px, .85vw, 10px) !important;
-  color: rgba(236,232,200,.72) !important;
-  font-size: clamp(7px, 1.8dvh, 10px) !important;
-  line-height: 1 !important;
-  letter-spacing: .08em !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  text-transform: uppercase !important;
-}
-.fmw-v54-level-rule #level { color: #fff3cf !important; font-weight: 900 !important; }
-.fmw-v54-level-rule .movement-icon { display: none !important; }
-
-.fmw-v54-stat {
-  height: 100% !important;
-  min-width: 0 !important;
-  display: grid !important;
-  grid-template-rows: auto 1fr !important;
-  align-items: center !important;
-  justify-items: center !important;
-  padding: clamp(4px, .75dvh, 6px) clamp(5px, .9vw, 9px) !important;
-  border: 1px solid rgba(232,194,101,.24) !important;
-  border-radius: clamp(9px, 2.1dvh, 14px) !important;
-  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.016)), rgba(3,32,27,.70) !important;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.09) !important;
-  overflow: hidden !important;
-}
-.fmw-v54-stat-label {
-  color: rgba(236,232,200,.72) !important;
-  font-size: clamp(6px, 1.55dvh, 8px) !important;
-  line-height: 1 !important;
-  letter-spacing: .18em !important;
-  font-weight: 900 !important;
-}
-.fmw-v54-stat-value {
-  width: 100% !important;
-  min-width: 0 !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: clamp(2px, .4vw, 5px) !important;
-  color: #fff3cf !important;
-  font-family: "Paytone One", "Barlow Condensed", sans-serif !important;
-  font-size: clamp(18px, 5.1dvh, 28px) !important;
-  line-height: 1 !important;
-  font-variant-numeric: tabular-nums !important;
-  font-feature-settings: "tnum" 1, "lnum" 1 !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-}
-.fmw-v54-score .fmw-v54-stat-value { color:#e8c265 !important; }
-.fmw-v54-score #score { display:inline-block !important; min-width: 5.4ch !important; text-align:right !important; }
-.fmw-v54-score i { flex:0 0 auto !important; font-size:.78em !important; }
-
-/* Shape rule: square means square, circle means circle, on every device. */
-.fmw-v54-square-btn,
-.fmw-v54-pause-btn {
-  width: var(--fmw-v54-btn-size) !important;
-  height: var(--fmw-v54-btn-size) !important;
-  min-width: var(--fmw-v54-btn-size) !important;
-  min-height: var(--fmw-v54-btn-size) !important;
-  max-width: var(--fmw-v54-btn-size) !important;
-  max-height: var(--fmw-v54-btn-size) !important;
-  aspect-ratio: 1 / 1 !important;
-  align-self: center !important;
-  justify-self: center !important;
-  box-sizing: border-box !important;
-  padding: 0 !important;
-}
-.fmw-v54-square-btn {
-  border-radius: clamp(9px, 2.2dvh, 14px) !important;
-  display:flex !important;
-  flex-direction:column !important;
-  align-items:center !important;
-  justify-content:center !important;
-  gap: clamp(1px, .25dvh, 2px) !important;
-  overflow: visible !important;
-}
-.fmw-v54-square-btn i { font-size: clamp(14px, 3.1dvh, 18px) !important; line-height:1 !important; }
-.fmw-v54-square-btn span { font-size: clamp(5px, 1.25dvh, 7px) !important; line-height:1 !important; letter-spacing:.08em !important; }
-.fmw-v54-pause-btn {
-  width: var(--fmw-v54-pause-size) !important;
-  height: var(--fmw-v54-pause-size) !important;
-  min-width: var(--fmw-v54-pause-size) !important;
-  min-height: var(--fmw-v54-pause-size) !important;
-  max-width: var(--fmw-v54-pause-size) !important;
-  max-height: var(--fmw-v54-pause-size) !important;
-  border-radius: 50% !important;
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  overflow:hidden !important;
-}
-.fmw-v54-pause-btn i { font-size: clamp(14px, 3.1dvh, 18px) !important; line-height:1 !important; }
-.fmw-v54-hud .notification-dot {
-  width: clamp(17px, 3.15dvh, 22px) !important;
-  height: clamp(17px, 3.15dvh, 22px) !important;
-  min-width: clamp(17px, 3.15dvh, 22px) !important;
-  top: clamp(-9px, -1.65dvh, -6px) !important;
-  right: clamp(-7px, -1vw, -4px) !important;
-  font-size: clamp(8px, 1.75dvh, 10px) !important;
-  z-index: 20 !important;
-}
-
-.board-time-meter { height: var(--fmw-v54-meter-h) !important; min-height: var(--fmw-v54-meter-h) !important; }
-.board-header.fmw-board-header { display: none !important; }
-
-/* Restore warm champagne flag tile surfaces as final layer. */
-.tile,
-body[data-sprite-set="flags"] .tile {
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.04)),
-    linear-gradient(180deg, #f4ecd3 0%, #eadcb5 52%, #d8c99d 100%) !important;
-  border-color: rgba(217,187,99,.34) !important;
-  box-shadow:
-    inset 0 0 0 3px rgba(2,23,20,.78),
-    inset 0 1px 0 rgba(255,255,255,.46),
-    0 6px 14px rgba(0,0,0,.28) !important;
-}
-.tile::before,
-body[data-sprite-set="flags"] .tile::before {
-  content:"" !important;
-  position:absolute !important;
-  inset:3px !important;
-  border-radius:calc(var(--tile-radius) - 3px) !important;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,0) 34%),
-    linear-gradient(180deg, rgba(255,255,255,0), rgba(0,0,0,.06)) !important;
-  box-shadow: inset 0 1px rgba(255,255,255,.20), inset 0 -8px 18px rgba(0,0,0,.08) !important;
-  pointer-events:none !important;
-  z-index:1 !important;
-}
-.tile img,
-.tile .entity-sprite,
-body[data-sprite-set="flags"] .tile img,
-body[data-sprite-set="flags"] .tile .entity-sprite { position:relative !important; z-index:2 !important; }
-
-/* Compact iPhone landscape: preserve board height. */
-@media (orientation: landscape) and (max-height: 560px) {
-  :root {
-    --fmw-v54-hud-h: clamp(44px, 9.4dvh, 50px);
-    --fmw-v54-meter-h: clamp(5px, 1.15dvh, 6px);
-  }
-  .topbar.fmw-v54-hud {
-    grid-template-columns:
-      minmax(230px, 1fr)
-      clamp(58px, 7.4vw, 78px)
-      clamp(82px, 10.6vw, 116px)
-      var(--fmw-v54-btn-size)
-      var(--fmw-v54-btn-size)
-      var(--fmw-v54-pause-size) !important;
-    gap: clamp(5px, .72vw, 9px) !important;
-    padding: clamp(3px, .62dvh, 5px) clamp(6px, .95vw, 10px) !important;
-  }
-  .fmw-v54-country { font-size: clamp(12px, 3.05dvh, 16px) !important; letter-spacing:.12em !important; }
-  .fmw-v54-level-rule { font-size: clamp(6px, 1.55dvh, 8px) !important; min-height: clamp(8px, 1.8dvh, 10px) !important; }
-  .fmw-v54-stat-value { font-size: clamp(16px, 4.5dvh, 23px) !important; }
-  .fmw-v54-score #score { min-width: 5.1ch !important; }
-}
-
-/* Desktop / iPad landscape: same layout, larger but still shape-locked. */
-@media (orientation: landscape) and (min-height: 561px) {
-  :root {
-    --fmw-v54-hud-h: clamp(56px, 7.2dvh, 68px);
-    --fmw-v54-meter-h: clamp(6px, .9dvh, 8px);
-  }
-  .topbar.fmw-v54-hud {
-    grid-template-columns:
-      minmax(360px, 1fr)
-      clamp(90px, 8vw, 126px)
-      clamp(135px, 11vw, 190px)
-      var(--fmw-v54-btn-size)
-      var(--fmw-v54-btn-size)
-      var(--fmw-v54-pause-size) !important;
-  }
-}
-
-/* =========================================================
-   v5.4.1 — Screenshot-layout rebuild
-   Goal: match the user's specified placement exactly in spirit:
-   left two-layer block (country + tiny level/rule), then fixed-position
-   Matches, Score, Hint, Shuffle, Pause to the right.
-   Desktop and iPhone use their own locked placements.
-   ========================================================= */
-
-/* Shared hard reset for the v5.4 HUD layout */
-.topbar.fmw-v54-hud {
-  justify-content: stretch !important;
-  align-content: center !important;
-}
-.topbar.fmw-v54-hud > * {
+  text-shadow: none !important;
   position: relative !important;
+  cursor: default !important;
 }
-.fmw-v54-left { justify-self: stretch !important; align-self: stretch !important; }
-.fmw-v54-matches { justify-self: stretch !important; }
-.fmw-v54-score { justify-self: stretch !important; }
-.fmw-v54-square-btn, .fmw-v54-pause-btn { justify-self: center !important; align-self: center !important; }
-.fmw-v54-country {
-  justify-content: flex-start !important;
-  text-align: left !important;
-  padding-left: clamp(14px, 2vw, 22px) !important;
-}
-.fmw-v54-level-rule {
-  justify-content: flex-start !important;
-  padding-left: clamp(10px, 1.4vw, 16px) !important;
-  font-size: clamp(6px, 1.35dvh, 9px) !important;
-  letter-spacing: .04em !important;
-  text-transform: none !important;
-}
-.fmw-v54-stat {
-  justify-items: start !important;
-  align-content: center !important;
-  padding-left: clamp(8px, 1vw, 12px) !important;
-  padding-right: clamp(8px, 1vw, 12px) !important;
-}
-.fmw-v54-stat-label {
-  text-align: left !important;
-  width: 100% !important;
-}
-.fmw-v54-stat-value {
-  justify-content: flex-end !important;
-  text-align: right !important;
-}
-.fmw-v54-matches .fmw-v54-stat-value,
-.fmw-v54-score .fmw-v54-stat-value { width: 100% !important; }
-.fmw-v54-score i { display:none !important; }
-.fmw-v54-score #score { min-width: 0 !important; }
-
-/* Desktop / larger layouts */
-@media (orientation: landscape) and (min-height: 561px) {
-  :root {
-    --fmw-v54-hud-h: clamp(58px, 7dvh, 72px);
-  }
-  .topbar.fmw-v54-hud {
-    grid-template-columns:
-      minmax(360px, 1fr)
-      112px
-      150px
-      58px
-      58px
-      62px !important;
-    gap: 10px !important;
-    padding: 6px 14px !important;
-  }
-  .fmw-v54-left {
-    grid-template-rows: minmax(0, 1fr) auto !important;
-    gap: 4px !important;
-  }
-  .fmw-v54-country {
-    font-size: clamp(16px, 2dvh, 20px) !important;
-    border-radius: 18px !important;
-  }
-  .fmw-v54-level-rule {
-    min-height: 10px !important;
-    font-size: clamp(8px, 1dvh, 10px) !important;
-  }
-  .fmw-v54-stat-label {
-    font-size: 8px !important;
-    letter-spacing: .14em !important;
-  }
-  .fmw-v54-stat-value {
-    font-size: clamp(24px, 3.2dvh, 34px) !important;
-  }
-  .fmw-v54-square-btn,
-  .fmw-v54-pause-btn {
-    width: 52px !important;
-    height: 52px !important;
-    min-width: 52px !important;
-    min-height: 52px !important;
-    max-width: 52px !important;
-    max-height: 52px !important;
-  }
-  .fmw-v54-pause-btn {
-    width: 56px !important;
-    height: 56px !important;
-    min-width: 56px !important;
-    min-height: 56px !important;
-    max-width: 56px !important;
-    max-height: 56px !important;
-  }
-}
-
-/* iPhone compact landscape */
-@media (orientation: landscape) and (max-height: 560px) {
-  :root {
-    --fmw-v54-hud-h: clamp(44px, 8.6dvh, 50px);
-  }
-  .topbar.fmw-v54-hud {
-    grid-template-columns:
-      minmax(190px, 1fr)
-      66px
-      102px
-      42px
-      42px
-      46px !important;
-    gap: 5px !important;
-    padding: 4px 8px !important;
-  }
-  .fmw-v54-left {
-    gap: 2px !important;
-  }
-  .fmw-v54-country {
-    padding-left: 12px !important;
-    font-size: clamp(11px, 2.45dvh, 14px) !important;
-    letter-spacing: .08em !important;
-    border-radius: 12px !important;
-  }
-  .fmw-v54-level-rule {
-    padding-left: 8px !important;
-    min-height: 8px !important;
-    font-size: clamp(5px, 1.1dvh, 7px) !important;
-    letter-spacing: .02em !important;
-  }
-  .fmw-v54-stat {
-    padding-left: 6px !important;
-    padding-right: 6px !important;
-  }
-  .fmw-v54-stat-label {
-    font-size: 6px !important;
-    letter-spacing: .12em !important;
-  }
-  .fmw-v54-stat-value {
-    font-size: clamp(15px, 3.8dvh, 21px) !important;
-  }
-  .fmw-v54-square-btn,
-  .fmw-v54-pause-btn {
-    width: 38px !important;
-    height: 38px !important;
-    min-width: 38px !important;
-    min-height: 38px !important;
-    max-width: 38px !important;
-    max-height: 38px !important;
-  }
-  .fmw-v54-square-btn i,
-  .fmw-v54-pause-btn i {
-    font-size: 14px !important;
-  }
-  .fmw-v54-square-btn span {
-    font-size: 5px !important;
-  }
-  .fmw-v54-pause-btn {
-    width: 42px !important;
-    height: 42px !important;
-    min-width: 42px !important;
-    min-height: 42px !important;
-    max-width: 42px !important;
-    max-height: 42px !important;
-  }
-  .fmw-v54-hud .notification-dot {
-    width: 16px !important;
-    height: 16px !important;
-    min-width: 16px !important;
-    font-size: 8px !important;
-    top: -7px !important;
-    right: -5px !important;
-  }
-}
-
-
-/* =========================================================
-   v5.4.2 — Fixed-position HUD, based on user's screenshot
-   No fluid grid movement. Each HUD element has a locked placement.
-   Desktop and iPhone have their own coordinates.
-   ========================================================= */
-
-/* The HUD shell becomes a coordinate canvas. */
-.topbar.fmw-v54-hud {
-  position: relative !important;
-  display: block !important;
-  overflow: visible !important;
-  box-sizing: border-box !important;
-}
-
-/* Every direct HUD item is positioned explicitly. */
-.topbar.fmw-v54-hud > .fmw-v54-left,
-.topbar.fmw-v54-hud > .fmw-v54-matches,
-.topbar.fmw-v54-hud > .fmw-v54-score,
-.topbar.fmw-v54-hud > #hintBtn,
-.topbar.fmw-v54-hud > #shuffleBtn,
-.topbar.fmw-v54-hud > #pauseBtn {
+.hud-country-pill::before {
+  content: '' !important;
   position: absolute !important;
-  margin: 0 !important;
-  box-sizing: border-box !important;
+  top: 0 !important; left: 8% !important; right: 8% !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent) !important;
+}
+.hud-country-pill.has-selection {
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  letter-spacing: .08em !important;
+  text-shadow: 0 0 16px rgba(200,225,255,.28) !important;
+}
+/* Warning state — when time is low */
+body.low-time .hud-country-pill.has-selection {
+  border-color: rgba(255,128,64,.38) !important;
+  background: linear-gradient(135deg,rgba(255,120,50,.1),rgba(255,90,30,.06)) !important;
 }
 
-/* Left two-layer area */
-.fmw-v54-left {
-  display: grid !important;
-  grid-template-rows: 1fr auto !important;
-  gap: 3px !important;
-  min-width: 0 !important;
-}
-
-.fmw-v54-country {
-  width: 100% !important;
-  height: 100% !important;
-  box-sizing: border-box !important;
-  justify-content: center !important;
-  text-align: center !important;
-}
-
-.fmw-v54-level-rule {
-  width: 100% !important;
-  box-sizing: border-box !important;
-  opacity: .78 !important;
-  justify-content: flex-start !important;
-  text-align: left !important;
-  padding-left: 8px !important;
-}
-
-/* Fixed stats */
-.fmw-v54-stat {
-  box-sizing: border-box !important;
-  display: grid !important;
-  grid-template-rows: auto 1fr !important;
-  justify-items: stretch !important;
-  align-items: center !important;
-  text-align: left !important;
-}
-
-.fmw-v54-stat-label {
-  width: 100% !important;
-  text-align: left !important;
-}
-
-.fmw-v54-stat-value {
-  width: 100% !important;
-  justify-content: flex-end !important;
-  text-align: right !important;
-}
-
-.fmw-v54-score i { display: none !important; }
-.fmw-v54-score #score {
-  min-width: 0 !important;
-  width: 100% !important;
-  text-align: right !important;
-}
-
-/* Shape rules remain absolute: square stays square, pause stays circle. */
-.fmw-v54-square-btn,
-.fmw-v54-pause-btn {
-  aspect-ratio: 1 / 1 !important;
-  box-sizing: border-box !important;
-  padding: 0 !important;
-}
-
-.fmw-v54-pause-btn {
-  border-radius: 50% !important;
-}
-
-/* Desktop / wide landscape placement */
-@media (orientation: landscape) and (min-height: 561px) {
-  :root {
-    --fmw-v542-hud-h: 66px;
-    --fmw-v542-pad-x: 14px;
-    --fmw-v542-pad-y: 7px;
-    --fmw-v542-gap: 10px;
-    --fmw-v542-country-w: 46%;
-    --fmw-v542-matches-w: 96px;
-    --fmw-v542-score-w: 148px;
-    --fmw-v542-btn: 52px;
-    --fmw-v542-pause: 58px;
-    --fmw-v54-hud-h: var(--fmw-v542-hud-h);
-  }
-
-  .topbar.fmw-v54-hud {
-    height: var(--fmw-v542-hud-h) !important;
-    min-height: var(--fmw-v542-hud-h) !important;
-    max-height: var(--fmw-v542-hud-h) !important;
-    padding: 0 !important;
-  }
-
-  .topbar.fmw-v54-hud > .fmw-v54-left {
-    left: var(--fmw-v542-pad-x) !important;
-    top: var(--fmw-v542-pad-y) !important;
-    width: var(--fmw-v542-country-w) !important;
-    height: calc(var(--fmw-v542-hud-h) - (var(--fmw-v542-pad-y) * 2)) !important;
-  }
-
-  .topbar.fmw-v54-hud > .fmw-v54-matches {
-    left: calc(var(--fmw-v542-pad-x) + var(--fmw-v542-country-w) + var(--fmw-v542-gap)) !important;
-    top: var(--fmw-v542-pad-y) !important;
-    width: var(--fmw-v542-matches-w) !important;
-    height: calc(var(--fmw-v542-hud-h) - (var(--fmw-v542-pad-y) * 2)) !important;
-  }
-
-  .topbar.fmw-v54-hud > .fmw-v54-score {
-    left: calc(var(--fmw-v542-pad-x) + var(--fmw-v542-country-w) + var(--fmw-v542-gap) + var(--fmw-v542-matches-w) + var(--fmw-v542-gap)) !important;
-    top: var(--fmw-v542-pad-y) !important;
-    width: var(--fmw-v542-score-w) !important;
-    height: calc(var(--fmw-v542-hud-h) - (var(--fmw-v542-pad-y) * 2)) !important;
-  }
-
-  .topbar.fmw-v54-hud > #hintBtn {
-    left: calc(var(--fmw-v542-pad-x) + var(--fmw-v542-country-w) + var(--fmw-v542-gap) + var(--fmw-v542-matches-w) + var(--fmw-v542-gap) + var(--fmw-v542-score-w) + var(--fmw-v542-gap)) !important;
-    top: calc((var(--fmw-v542-hud-h) - var(--fmw-v542-btn)) / 2) !important;
-    width: var(--fmw-v542-btn) !important;
-    height: var(--fmw-v542-btn) !important;
-    min-width: var(--fmw-v542-btn) !important;
-    min-height: var(--fmw-v542-btn) !important;
-    max-width: var(--fmw-v542-btn) !important;
-    max-height: var(--fmw-v542-btn) !important;
-  }
-
-  .topbar.fmw-v54-hud > #shuffleBtn {
-    left: calc(var(--fmw-v542-pad-x) + var(--fmw-v542-country-w) + var(--fmw-v542-gap) + var(--fmw-v542-matches-w) + var(--fmw-v542-gap) + var(--fmw-v542-score-w) + var(--fmw-v542-gap) + var(--fmw-v542-btn) + var(--fmw-v542-gap)) !important;
-    top: calc((var(--fmw-v542-hud-h) - var(--fmw-v542-btn)) / 2) !important;
-    width: var(--fmw-v542-btn) !important;
-    height: var(--fmw-v542-btn) !important;
-    min-width: var(--fmw-v542-btn) !important;
-    min-height: var(--fmw-v542-btn) !important;
-    max-width: var(--fmw-v542-btn) !important;
-    max-height: var(--fmw-v542-btn) !important;
-  }
-
-  .topbar.fmw-v54-hud > #pauseBtn {
-    left: calc(var(--fmw-v542-pad-x) + var(--fmw-v542-country-w) + var(--fmw-v542-gap) + var(--fmw-v542-matches-w) + var(--fmw-v542-gap) + var(--fmw-v542-score-w) + var(--fmw-v542-gap) + var(--fmw-v542-btn) + var(--fmw-v542-gap) + var(--fmw-v542-btn) + var(--fmw-v542-gap)) !important;
-    top: calc((var(--fmw-v542-hud-h) - var(--fmw-v542-pause)) / 2) !important;
-    width: var(--fmw-v542-pause) !important;
-    height: var(--fmw-v542-pause) !important;
-    min-width: var(--fmw-v542-pause) !important;
-    min-height: var(--fmw-v542-pause) !important;
-    max-width: var(--fmw-v542-pause) !important;
-    max-height: var(--fmw-v542-pause) !important;
-  }
-
-  .fmw-v54-country {
-    font-size: clamp(16px, 2.05dvh, 20px) !important;
-    letter-spacing: .12em !important;
-  }
-  .fmw-v54-level-rule { font-size: 9px !important; min-height: 11px !important; }
-  .fmw-v54-stat-label { font-size: 8px !important; }
-  .fmw-v54-stat-value { font-size: clamp(26px, 3.4dvh, 34px) !important; }
-}
-
-/* iPhone / compact landscape placement */
-@media (orientation: landscape) and (max-height: 560px) {
-  :root {
-    --fmw-v542-hud-h: 48px;
-    --fmw-v542-pad-x: 8px;
-    --fmw-v542-pad-y: 4px;
-    --fmw-v542-gap: 5px;
-    --fmw-v542-country-w: 40%;
-    --fmw-v542-matches-w: 48px;
-    --fmw-v542-score-w: 66px;
-    --fmw-v542-btn: 34px;
-    --fmw-v542-pause: 40px;
-    --fmw-v54-hud-h: var(--fmw-v542-hud-h);
-  }
-
-  .topbar.fmw-v54-hud {
-    height: var(--fmw-v542-hud-h) !important;
-    min-height: var(--fmw-v542-hud-h) !important;
-    max-height: var(--fmw-v542-hud-h) !important;
-    padding: 0 !important;
-  }
-
-  .topbar.fmw-v54-hud > .fmw-v54-left {
-    left: var(--fmw-v542-pad-x) !important;
-    top: var(--fmw-v542-pad-y) !important;
-    width: var(--fmw-v542-country-w) !important;
-    height: calc(var(--fmw-v542-hud-h) - (var(--fmw-v542-pad-y) * 2)) !important;
-  }
-
-  .topbar.fmw-v54-hud > .fmw-v54-matches {
-    left: calc(var(--fmw-v542-pad-x) + var(--fmw-v542-country-w) + var(--fmw-v542-gap)) !important;
-    top: var(--fmw-v542-pad-y) !important;
-    width: var(--fmw-v542-matches-w) !important;
-    height: calc(var(--fmw-v542-hud-h) - (var(--fmw-v542-pad-y) * 2)) !important;
-  }
-
-  .topbar.fmw-v54-hud > .fmw-v54-score {
-    left: calc(var(--fmw-v542-pad-x) + var(--fmw-v542-country-w) + var(--fmw-v542-gap) + var(--fmw-v542-matches-w) + var(--fmw-v542-gap)) !important;
-    top: var(--fmw-v542-pad-y) !important;
-    width: var(--fmw-v542-score-w) !important;
-    height: calc(var(--fmw-v542-hud-h) - (var(--fmw-v542-pad-y) * 2)) !important;
-  }
-
-  .topbar.fmw-v54-hud > #hintBtn {
-    left: calc(var(--fmw-v542-pad-x) + var(--fmw-v542-country-w) + var(--fmw-v542-gap) + var(--fmw-v542-matches-w) + var(--fmw-v542-gap) + var(--fmw-v542-score-w) + var(--fmw-v542-gap)) !important;
-    top: calc((var(--fmw-v542-hud-h) - var(--fmw-v542-btn)) / 2) !important;
-    width: var(--fmw-v542-btn) !important;
-    height: var(--fmw-v542-btn) !important;
-    min-width: var(--fmw-v542-btn) !important;
-    min-height: var(--fmw-v542-btn) !important;
-    max-width: var(--fmw-v542-btn) !important;
-    max-height: var(--fmw-v542-btn) !important;
-  }
-
-  .topbar.fmw-v54-hud > #shuffleBtn {
-    left: calc(var(--fmw-v542-pad-x) + var(--fmw-v542-country-w) + var(--fmw-v542-gap) + var(--fmw-v542-matches-w) + var(--fmw-v542-gap) + var(--fmw-v542-score-w) + var(--fmw-v542-gap) + var(--fmw-v542-btn) + var(--fmw-v542-gap)) !important;
-    top: calc((var(--fmw-v542-hud-h) - var(--fmw-v542-btn)) / 2) !important;
-    width: var(--fmw-v542-btn) !important;
-    height: var(--fmw-v542-btn) !important;
-    min-width: var(--fmw-v542-btn) !important;
-    min-height: var(--fmw-v542-btn) !important;
-    max-width: var(--fmw-v542-btn) !important;
-    max-height: var(--fmw-v542-btn) !important;
-  }
-
-  .topbar.fmw-v54-hud > #pauseBtn {
-    left: calc(var(--fmw-v542-pad-x) + var(--fmw-v542-country-w) + var(--fmw-v542-gap) + var(--fmw-v542-matches-w) + var(--fmw-v542-gap) + var(--fmw-v542-score-w) + var(--fmw-v542-gap) + var(--fmw-v542-btn) + var(--fmw-v542-gap) + var(--fmw-v542-btn) + var(--fmw-v542-gap)) !important;
-    top: calc((var(--fmw-v542-hud-h) - var(--fmw-v542-pause)) / 2) !important;
-    width: var(--fmw-v542-pause) !important;
-    height: var(--fmw-v542-pause) !important;
-    min-width: var(--fmw-v542-pause) !important;
-    min-height: var(--fmw-v542-pause) !important;
-    max-width: var(--fmw-v542-pause) !important;
-    max-height: var(--fmw-v542-pause) !important;
-  }
-
-  .fmw-v54-country {
-    font-size: clamp(10px, 2.45dvh, 13px) !important;
-    letter-spacing: .08em !important;
-    border-radius: 11px !important;
-  }
-  .fmw-v54-level-rule {
-    font-size: clamp(5px, 1.1dvh, 7px) !important;
-    min-height: 8px !important;
-    padding-left: 6px !important;
-  }
-  .fmw-v54-stat {
-    padding: 3px 4px !important;
-  }
-  .fmw-v54-stat-label {
-    font-size: 5px !important;
-    letter-spacing: .08em !important;
-  }
-  .fmw-v54-stat-value {
-    font-size: clamp(13px, 3.55dvh, 19px) !important;
-  }
-  .fmw-v54-square-btn i,
-  .fmw-v54-pause-btn i { font-size: 13px !important; }
-  .fmw-v54-square-btn span { font-size: 4.5px !important; }
-  .fmw-v54-hud .notification-dot {
-    width: 15px !important;
-    height: 15px !important;
-    min-width: 15px !important;
-    font-size: 7px !important;
-    top: -6px !important;
-    right: -4px !important;
-  }
-}
-
-/* Protect board/tile visual consistency */
-.tile,
-body[data-sprite-set="flags"] .tile {
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.04)),
-    linear-gradient(180deg, #f4ecd3 0%, #eadcb5 52%, #d8c99d 100%) !important;
-}
-
-
-/* =========================================================
-   v5.5 — PROFESSIONAL HUD RESET
-   This is the final layout authority for gameplay HUD.
-   It intentionally overrides all previous v5.4.x HUD experiments.
-
-   UX rules:
-   - Board frame is the master container.
-   - HUD width equals board width.
-   - Desktop/iPad and iPhone use separate fixed slot maps.
-   - Only the country panel is flexible.
-   - Matches and Score are fixed stat blocks.
-   - Hint and Shuffle are true squares.
-   - Pause is a true circle.
-   - Level/Rule is tiny reference text only.
-   - No numeric time in HUD; timer bar only.
-   ========================================================= */
-
-/* Make sizing predictable and remove earlier layout side effects. */
-.fmw-v54-hud,
-.fmw-v54-hud * {
-  box-sizing: border-box !important;
-}
-
-.topbar.fmw-v54-hud {
-  position: relative !important;
-  inset: auto !important;
-  width: 100% !important;
-  margin: 0 !important;
-  display: grid !important;
-  align-items: center !important;
-  justify-content: stretch !important;
-  overflow: visible !important;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.065), rgba(255,255,255,.012)),
-    rgba(3,32,27,.84) !important;
-  border: 1px solid rgba(232,194,101,.34) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.14),
-    inset 0 -1px 0 rgba(0,0,0,.26),
-    0 8px 22px rgba(0,0,0,.18) !important;
-}
-
-/* Cancel every absolute-position override from v5.4.2. */
-.topbar.fmw-v54-hud > .fmw-v54-left,
-.topbar.fmw-v54-hud > .fmw-v54-matches,
-.topbar.fmw-v54-hud > .fmw-v54-score,
-.topbar.fmw-v54-hud > #hintBtn,
-.topbar.fmw-v54-hud > #shuffleBtn,
-.topbar.fmw-v54-hud > #pauseBtn {
-  position: relative !important;
-  left: auto !important;
-  top: auto !important;
-  right: auto !important;
-  bottom: auto !important;
-  margin: 0 !important;
-  min-width: 0 !important;
-}
-
-/* Left information panel */
-.fmw-v54-left {
-  width: 100% !important;
-  height: 100% !important;
-  display: grid !important;
-  grid-template-rows: minmax(0, 1fr) auto !important;
-  align-items: stretch !important;
-  align-self: stretch !important;
-  gap: 3px !important;
-  min-width: 0 !important;
-}
-
-.fmw-v54-country {
-  width: 100% !important;
-  min-width: 0 !important;
-  height: 100% !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  white-space: nowrap !important;
-  text-align: center !important;
-  border: 1px solid rgba(232,194,101,.36) !important;
-  background:
-    radial-gradient(120% 150% at 50% -45%, rgba(232,194,101,.16), transparent 50%),
-    linear-gradient(180deg, rgba(255,255,255,.052), rgba(255,255,255,.012)),
-    rgba(2,24,21,.72) !important;
-  color: #fff3cf !important;
-  font-family: "Paytone One", "Barlow Condensed", sans-serif !important;
-  text-transform: uppercase !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.11),
-    0 0 10px rgba(232,194,101,.06) !important;
-}
-
-.fmw-v54-level-rule {
-  width: 100% !important;
-  min-width: 0 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  white-space: nowrap !important;
-  color: rgba(236,232,200,.72) !important;
-  text-transform: none !important;
-  font-weight: 700 !important;
-}
-.fmw-v54-level-rule #level {
-  color: #fff3cf !important;
-  font-weight: 900 !important;
-}
-.fmw-v54-level-rule .movement-icon {
-  display: none !important;
+/* Vertical divider */
+.hud-divider-v {
+  height: 28px !important;
+  width: 1px !important;
+  background: rgba(180,210,240,.18) !important;
+  flex-shrink: 0 !important;
 }
 
 /* Stat blocks */
-.fmw-v54-stat {
-  width: 100% !important;
-  height: 100% !important;
-  min-width: 0 !important;
-  align-self: stretch !important;
-  display: grid !important;
-  grid-template-rows: auto 1fr !important;
-  align-items: center !important;
-  justify-items: stretch !important;
-  border: 1px solid rgba(232,194,101,.25) !important;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.014)),
-    rgba(3,32,27,.70) !important;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.09) !important;
-  overflow: hidden !important;
-}
-
-.fmw-v54-stat-label {
-  display: block !important;
-  width: 100% !important;
-  color: rgba(236,232,200,.70) !important;
-  font-weight: 900 !important;
-  line-height: 1 !important;
-  text-align: left !important;
-  text-transform: uppercase !important;
-}
-
-.fmw-v54-stat-value {
-  width: 100% !important;
-  min-width: 0 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: flex-end !important;
-  color: #fff3cf !important;
-  font-family: "Paytone One", "Barlow Condensed", sans-serif !important;
-  line-height: 1 !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  font-variant-numeric: tabular-nums !important;
-  font-feature-settings: "tnum" 1, "lnum" 1 !important;
-}
-.fmw-v54-score .fmw-v54-stat-value {
-  color: #e8c265 !important;
-}
-.fmw-v54-score i {
-  display: none !important;
-}
-.fmw-v54-score #score {
-  min-width: 0 !important;
-  width: 100% !important;
-  text-align: right !important;
-}
-
-/* Button shape system */
-.fmw-v54-square-btn,
-.fmw-v54-pause-btn {
-  aspect-ratio: 1 / 1 !important;
-  align-self: center !important;
-  justify-self: center !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  box-sizing: border-box !important;
-  flex: none !important;
-  min-width: 0 !important;
-  min-height: 0 !important;
-}
-
-.fmw-v54-square-btn {
+.hud-stat-block {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
   justify-content: center !important;
-  overflow: visible !important;
-}
-
-.fmw-v54-pause-btn {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  border-radius: 50% !important;
-  overflow: hidden !important;
-}
-
-.fmw-v54-square-btn span {
   line-height: 1 !important;
-  white-space: nowrap !important;
+  gap: 2px !important;
+  flex-shrink: 0 !important;
 }
-
-.fmw-v54-hud .notification-dot {
-  border-radius: 50% !important;
-  z-index: 30 !important;
-}
-
-/* Timer bar aligned with board/HUD width. */
-.board-time-meter {
-  width: 100% !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-}
-
-/* Desktop / iPad placement map */
-@media (orientation: landscape) and (min-height: 561px) {
-  :root {
-    --fmw-v55-hud-h: 64px;
-    --fmw-v55-pad-x: 12px;
-    --fmw-v55-pad-y: 6px;
-    --fmw-v55-gap: 10px;
-    --fmw-v55-matches-w: 96px;
-    --fmw-v55-score-w: 150px;
-    --fmw-v55-btn: 52px;
-    --fmw-v55-pause: 58px;
-    --fmw-v54-hud-h: var(--fmw-v55-hud-h);
-    --hud-h: var(--fmw-v55-hud-h) !important;
-  }
-
-  .topbar.fmw-v54-hud {
-    height: var(--fmw-v55-hud-h) !important;
-    min-height: var(--fmw-v55-hud-h) !important;
-    max-height: var(--fmw-v55-hud-h) !important;
-    padding: var(--fmw-v55-pad-y) var(--fmw-v55-pad-x) !important;
-    gap: var(--fmw-v55-gap) !important;
-    grid-template-columns:
-      minmax(380px, 1fr)
-      var(--fmw-v55-matches-w)
-      var(--fmw-v55-score-w)
-      var(--fmw-v55-btn)
-      var(--fmw-v55-btn)
-      var(--fmw-v55-pause) !important;
-    border-radius: 22px !important;
-  }
-
-  .fmw-v54-country {
-    padding: 0 18px !important;
-    border-radius: 16px !important;
-    font-size: 19px !important;
-    letter-spacing: .12em !important;
-  }
-  .fmw-v54-level-rule {
-    height: 12px !important;
-    padding-left: 10px !important;
-    font-size: 9px !important;
-    letter-spacing: .02em !important;
-  }
-
-  .fmw-v54-stat {
-    padding: 6px 10px !important;
-    border-radius: 14px !important;
-  }
-  .fmw-v54-stat-label {
-    font-size: 8px !important;
-    letter-spacing: .13em !important;
-  }
-  .fmw-v54-stat-value {
-    font-size: 31px !important;
-  }
-
-  .fmw-v54-square-btn {
-    width: var(--fmw-v55-btn) !important;
-    height: var(--fmw-v55-btn) !important;
-    min-width: var(--fmw-v55-btn) !important;
-    min-height: var(--fmw-v55-btn) !important;
-    max-width: var(--fmw-v55-btn) !important;
-    max-height: var(--fmw-v55-btn) !important;
-    border-radius: 14px !important;
-  }
-  .fmw-v54-pause-btn {
-    width: var(--fmw-v55-pause) !important;
-    height: var(--fmw-v55-pause) !important;
-    min-width: var(--fmw-v55-pause) !important;
-    min-height: var(--fmw-v55-pause) !important;
-    max-width: var(--fmw-v55-pause) !important;
-    max-height: var(--fmw-v55-pause) !important;
-  }
-  .fmw-v54-square-btn i,
-  .fmw-v54-pause-btn i {
-    font-size: 18px !important;
-  }
-  .fmw-v54-square-btn span {
-    font-size: 7px !important;
-    letter-spacing: .07em !important;
-  }
-  .fmw-v54-hud .notification-dot {
-    width: 20px !important;
-    height: 20px !important;
-    min-width: 20px !important;
-    top: -7px !important;
-    right: -6px !important;
-    font-size: 10px !important;
-  }
-}
-
-/* iPhone / compact landscape placement map */
-@media (orientation: landscape) and (max-height: 560px) {
-  :root {
-    --fmw-v55-hud-h: 46px;
-    --fmw-v55-pad-x: 7px;
-    --fmw-v55-pad-y: 4px;
-    --fmw-v55-gap: 5px;
-    --fmw-v55-matches-w: 52px;
-    --fmw-v55-score-w: 76px;
-    --fmw-v55-btn: 34px;
-    --fmw-v55-pause: 40px;
-    --fmw-v54-hud-h: var(--fmw-v55-hud-h);
-    --hud-h: var(--fmw-v55-hud-h) !important;
-  }
-
-  .topbar.fmw-v54-hud {
-    height: var(--fmw-v55-hud-h) !important;
-    min-height: var(--fmw-v55-hud-h) !important;
-    max-height: var(--fmw-v55-hud-h) !important;
-    padding: var(--fmw-v55-pad-y) var(--fmw-v55-pad-x) !important;
-    gap: var(--fmw-v55-gap) !important;
-    grid-template-columns:
-      minmax(0, 1fr)
-      var(--fmw-v55-matches-w)
-      var(--fmw-v55-score-w)
-      var(--fmw-v55-btn)
-      var(--fmw-v55-btn)
-      var(--fmw-v55-pause) !important;
-    border-radius: 17px !important;
-  }
-
-  .fmw-v54-left {
-    gap: 2px !important;
-  }
-  .fmw-v54-country {
-    padding: 0 10px !important;
-    border-radius: 11px !important;
-    font-size: 12px !important;
-    letter-spacing: .08em !important;
-  }
-  .fmw-v54-level-rule {
-    height: 8px !important;
-    padding-left: 6px !important;
-    font-size: 6px !important;
-    letter-spacing: 0 !important;
-  }
-
-  .fmw-v54-stat {
-    padding: 3px 5px !important;
-    border-radius: 10px !important;
-  }
-  .fmw-v54-stat-label {
-    font-size: 5px !important;
-    letter-spacing: .07em !important;
-  }
-  .fmw-v54-stat-value {
-    font-size: 18px !important;
-  }
-
-  .fmw-v54-square-btn {
-    width: var(--fmw-v55-btn) !important;
-    height: var(--fmw-v55-btn) !important;
-    min-width: var(--fmw-v55-btn) !important;
-    min-height: var(--fmw-v55-btn) !important;
-    max-width: var(--fmw-v55-btn) !important;
-    max-height: var(--fmw-v55-btn) !important;
-    border-radius: 9px !important;
-  }
-  .fmw-v54-pause-btn {
-    width: var(--fmw-v55-pause) !important;
-    height: var(--fmw-v55-pause) !important;
-    min-width: var(--fmw-v55-pause) !important;
-    min-height: var(--fmw-v55-pause) !important;
-    max-width: var(--fmw-v55-pause) !important;
-    max-height: var(--fmw-v55-pause) !important;
-  }
-  .fmw-v54-square-btn i,
-  .fmw-v54-pause-btn i {
-    font-size: 13px !important;
-  }
-  .fmw-v54-square-btn span {
-    font-size: 4.8px !important;
-    letter-spacing: .04em !important;
-  }
-  .fmw-v54-hud .notification-dot {
-    width: 15px !important;
-    height: 15px !important;
-    min-width: 15px !important;
-    top: -6px !important;
-    right: -4px !important;
-    font-size: 7px !important;
-  }
-}
-
-/* Very narrow landscape fallback: hide helper button labels only, keep shapes. */
-@media (orientation: landscape) and (max-width: 780px) {
-  :root {
-    --fmw-v55-matches-w: 48px;
-    --fmw-v55-score-w: 68px;
-    --fmw-v55-btn: 32px;
-    --fmw-v55-pause: 38px;
-    --fmw-v55-gap: 4px;
-  }
-  .fmw-v54-square-btn span {
-    display: none !important;
-  }
-  .fmw-v54-country {
-    font-size: 11px !important;
-  }
-}
-
-/* Tile surface protection. */
-.tile,
-body[data-sprite-set="flags"] .tile {
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.04)),
-    linear-gradient(180deg, #f4ecd3 0%, #eadcb5 52%, #d8c99d 100%) !important;
-  border-color: rgba(217,187,99,.34) !important;
-}
-
-
-/* =========================================================
-   v5.5.1 — Fixed composition HUD map
-   This overrides v5.5's flexible country panel.
-   The HUD content no longer stretches across the whole board.
-   Elements use a fixed professional composition with a trailing spacer.
-   ========================================================= */
-
-.topbar.fmw-v54-hud {
-  display: grid !important;
-  align-items: center !important;
-  justify-content: stretch !important;
-}
-
-.topbar.fmw-v54-hud > .fmw-v54-left,
-.topbar.fmw-v54-hud > .fmw-v54-matches,
-.topbar.fmw-v54-hud > .fmw-v54-score,
-.topbar.fmw-v54-hud > #hintBtn,
-.topbar.fmw-v54-hud > #shuffleBtn,
-.topbar.fmw-v54-hud > #pauseBtn {
-  position: relative !important;
-  left: auto !important;
-  top: auto !important;
-  right: auto !important;
-  bottom: auto !important;
-  margin: 0 !important;
-}
-
-.fmw-v54-left { grid-column: 1 !important; }
-.fmw-v54-matches { grid-column: 2 !important; }
-.fmw-v54-score { grid-column: 3 !important; }
-#hintBtn.fmw-v54-square-btn { grid-column: 4 !important; }
-#shuffleBtn.fmw-v54-square-btn { grid-column: 5 !important; }
-#pauseBtn.fmw-v54-pause-btn { grid-column: 6 !important; }
-
-.fmw-v54-country {
-  justify-content: center !important;
-  text-align: center !important;
-}
-
-.fmw-v54-level-rule {
-  justify-content: flex-start !important;
-  text-align: left !important;
-  opacity: .72 !important;
-}
-
-/* Large desktop / iPad: fixed composition, not stretched */
-@media (orientation: landscape) and (min-height: 561px) {
-  :root {
-    --fmw-v55-hud-h: 62px;
-    --fmw-v55-country-w: 420px;
-    --fmw-v55-matches-w: 78px;
-    --fmw-v55-score-w: 124px;
-    --fmw-v55-btn: 48px;
-    --fmw-v55-pause: 52px;
-    --fmw-v55-gap: 8px;
-    --hud-h: var(--fmw-v55-hud-h) !important;
-    --fmw-v54-hud-h: var(--fmw-v55-hud-h);
-  }
-
-  .topbar.fmw-v54-hud {
-    height: var(--fmw-v55-hud-h) !important;
-    min-height: var(--fmw-v55-hud-h) !important;
-    max-height: var(--fmw-v55-hud-h) !important;
-    padding: 6px 12px !important;
-    gap: var(--fmw-v55-gap) !important;
-    grid-template-columns:
-      var(--fmw-v55-country-w)
-      var(--fmw-v55-matches-w)
-      var(--fmw-v55-score-w)
-      var(--fmw-v55-btn)
-      var(--fmw-v55-btn)
-      var(--fmw-v55-pause)
-      minmax(0, 1fr) !important;
-    border-radius: 20px !important;
-  }
-
-  .fmw-v54-left {
-    width: var(--fmw-v55-country-w) !important;
-    min-width: var(--fmw-v55-country-w) !important;
-    max-width: var(--fmw-v55-country-w) !important;
-  }
-
-  .fmw-v54-country {
-    border-radius: 14px !important;
-    font-size: 17px !important;
-    letter-spacing: .13em !important;
-    padding: 0 16px !important;
-  }
-
-  .fmw-v54-level-rule {
-    height: 11px !important;
-    min-height: 11px !important;
-    padding-left: 8px !important;
-    font-size: 8px !important;
-    line-height: 1 !important;
-  }
-
-  .fmw-v54-stat {
-    padding: 5px 8px !important;
-    border-radius: 12px !important;
-  }
-
-  .fmw-v54-stat-label {
-    font-size: 7px !important;
-    letter-spacing: .10em !important;
-  }
-
-  .fmw-v54-stat-value {
-    font-size: 27px !important;
-  }
-
-  .fmw-v54-square-btn {
-    width: var(--fmw-v55-btn) !important;
-    height: var(--fmw-v55-btn) !important;
-    min-width: var(--fmw-v55-btn) !important;
-    min-height: var(--fmw-v55-btn) !important;
-    max-width: var(--fmw-v55-btn) !important;
-    max-height: var(--fmw-v55-btn) !important;
-    border-radius: 12px !important;
-  }
-
-  .fmw-v54-pause-btn {
-    width: var(--fmw-v55-pause) !important;
-    height: var(--fmw-v55-pause) !important;
-    min-width: var(--fmw-v55-pause) !important;
-    min-height: var(--fmw-v55-pause) !important;
-    max-width: var(--fmw-v55-pause) !important;
-    max-height: var(--fmw-v55-pause) !important;
-    border-radius: 50% !important;
-  }
-
-  .fmw-v54-square-btn i,
-  .fmw-v54-pause-btn i {
-    font-size: 17px !important;
-  }
-
-  .fmw-v54-square-btn span {
-    font-size: 6px !important;
-    letter-spacing: .05em !important;
-  }
-
-  .fmw-v54-hud .notification-dot {
-    width: 18px !important;
-    height: 18px !important;
-    min-width: 18px !important;
-    top: -6px !important;
-    right: -5px !important;
-    font-size: 9px !important;
-  }
-}
-
-/* Medium desktop / shorter browser windows */
-@media (orientation: landscape) and (min-height: 561px) and (max-width: 1300px) {
-  :root {
-    --fmw-v55-country-w: 360px;
-    --fmw-v55-matches-w: 72px;
-    --fmw-v55-score-w: 112px;
-    --fmw-v55-btn: 44px;
-    --fmw-v55-pause: 48px;
-    --fmw-v55-gap: 7px;
-  }
-
-  .fmw-v54-country {
-    font-size: 15px !important;
-  }
-  .fmw-v54-stat-value {
-    font-size: 24px !important;
-  }
-}
-
-/* iPhone / compact landscape: separate fixed composition */
-@media (orientation: landscape) and (max-height: 560px) {
-  :root {
-    --fmw-v55-hud-h: 46px;
-    --fmw-v55-country-w: clamp(230px, 41vw, 340px);
-    --fmw-v55-matches-w: 52px;
-    --fmw-v55-score-w: 72px;
-    --fmw-v55-btn: 34px;
-    --fmw-v55-pause: 40px;
-    --fmw-v55-gap: 5px;
-    --hud-h: var(--fmw-v55-hud-h) !important;
-    --fmw-v54-hud-h: var(--fmw-v55-hud-h);
-  }
-
-  .topbar.fmw-v54-hud {
-    height: var(--fmw-v55-hud-h) !important;
-    min-height: var(--fmw-v55-hud-h) !important;
-    max-height: var(--fmw-v55-hud-h) !important;
-    padding: 4px 7px !important;
-    gap: var(--fmw-v55-gap) !important;
-    grid-template-columns:
-      var(--fmw-v55-country-w)
-      var(--fmw-v55-matches-w)
-      var(--fmw-v55-score-w)
-      var(--fmw-v55-btn)
-      var(--fmw-v55-btn)
-      var(--fmw-v55-pause)
-      minmax(0, 1fr) !important;
-    border-radius: 16px !important;
-  }
-
-  .fmw-v54-left {
-    width: var(--fmw-v55-country-w) !important;
-    min-width: var(--fmw-v55-country-w) !important;
-    max-width: var(--fmw-v55-country-w) !important;
-    gap: 2px !important;
-  }
-
-  .fmw-v54-country {
-    border-radius: 10px !important;
-    font-size: 12px !important;
-    letter-spacing: .08em !important;
-    padding: 0 9px !important;
-  }
-
-  .fmw-v54-level-rule {
-    height: 8px !important;
-    min-height: 8px !important;
-    padding-left: 5px !important;
-    font-size: 5.8px !important;
-    line-height: 1 !important;
-  }
-
-  .fmw-v54-stat {
-    padding: 3px 4px !important;
-    border-radius: 9px !important;
-  }
-
-  .fmw-v54-stat-label {
-    font-size: 5px !important;
-    letter-spacing: .05em !important;
-  }
-
-  .fmw-v54-stat-value {
-    font-size: 18px !important;
-  }
-
-  .fmw-v54-square-btn {
-    width: var(--fmw-v55-btn) !important;
-    height: var(--fmw-v55-btn) !important;
-    min-width: var(--fmw-v55-btn) !important;
-    min-height: var(--fmw-v55-btn) !important;
-    max-width: var(--fmw-v55-btn) !important;
-    max-height: var(--fmw-v55-btn) !important;
-    border-radius: 9px !important;
-  }
-
-  .fmw-v54-pause-btn {
-    width: var(--fmw-v55-pause) !important;
-    height: var(--fmw-v55-pause) !important;
-    min-width: var(--fmw-v55-pause) !important;
-    min-height: var(--fmw-v55-pause) !important;
-    max-width: var(--fmw-v55-pause) !important;
-    max-height: var(--fmw-v55-pause) !important;
-    border-radius: 50% !important;
-  }
-
-  .fmw-v54-square-btn i,
-  .fmw-v54-pause-btn i {
-    font-size: 13px !important;
-  }
-
-  .fmw-v54-square-btn span {
-    font-size: 4.5px !important;
-    letter-spacing: .02em !important;
-  }
-
-  .fmw-v54-hud .notification-dot {
-    width: 15px !important;
-    height: 15px !important;
-    min-width: 15px !important;
-    top: -6px !important;
-    right: -4px !important;
-    font-size: 7px !important;
-  }
-}
-
-/* Extremely narrow iPhone: icons only, still fixed positions and shapes. */
-@media (orientation: landscape) and (max-width: 760px) {
-  :root {
-    --fmw-v55-country-w: clamp(190px, 37vw, 260px);
-    --fmw-v55-matches-w: 46px;
-    --fmw-v55-score-w: 62px;
-    --fmw-v55-btn: 32px;
-    --fmw-v55-pause: 38px;
-    --fmw-v55-gap: 4px;
-  }
-
-  .fmw-v54-square-btn span {
-    display: none !important;
-  }
-
-  .fmw-v54-country {
-    font-size: 10.5px !important;
-  }
-}
-
-/* Keep tile face consistent. */
-.tile,
-body[data-sprite-set="flags"] .tile {
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.04)),
-    linear-gradient(180deg, #f4ecd3 0%, #eadcb5 52%, #d8c99d 100%) !important;
-}
-
-
-/* =========================================================
-   v5.6 — REFERENCE-ARTWORK HUD RESET
-   This is the final authority for the gameplay HUD.
-
-   Design rule:
-   The iPhone artwork is the master composition. Larger screens scale the
-   same composition; they do not reinterpret it.
-
-   Layout:
-   [Country + tiny Level/Rule] [Matches] [Score] [Hint] [Shuffle] [Pause]
-
-   Important:
-   - No outer long pill border/background.
-   - Individual HUD elements define the layout.
-   - Columns use locked proportions across the full board width.
-   - Hint/Shuffle are square.
-   - Pause is circular.
-   ========================================================= */
-
-/* Remove previous HUD shell look and all old placement side effects. */
-.topbar.fmw-v54-hud {
-  position: relative !important;
-  display: grid !important;
-  width: 100% !important;
-  min-width: 0 !important;
-  max-width: 100% !important;
-  margin: 0 !important;
-  overflow: visible !important;
-  align-items: start !important;
-  justify-content: stretch !important;
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  outline: 0 !important;
-}
-
-.topbar.fmw-v54-hud > .fmw-v54-left,
-.topbar.fmw-v54-hud > .fmw-v54-matches,
-.topbar.fmw-v54-hud > .fmw-v54-score,
-.topbar.fmw-v54-hud > #hintBtn,
-.topbar.fmw-v54-hud > #shuffleBtn,
-.topbar.fmw-v54-hud > #pauseBtn {
-  position: relative !important;
-  inset: auto !important;
-  left: auto !important;
-  top: auto !important;
-  right: auto !important;
-  bottom: auto !important;
-  margin: 0 !important;
-  transform: none !important;
-  box-sizing: border-box !important;
-}
-
-/* Explicit grid order. */
-.topbar.fmw-v54-hud > .fmw-v54-left { grid-column: 1 !important; }
-.topbar.fmw-v54-hud > .fmw-v54-matches { grid-column: 2 !important; }
-.topbar.fmw-v54-hud > .fmw-v54-score { grid-column: 3 !important; }
-.topbar.fmw-v54-hud > #hintBtn { grid-column: 4 !important; }
-.topbar.fmw-v54-hud > #shuffleBtn { grid-column: 5 !important; }
-.topbar.fmw-v54-hud > #pauseBtn { grid-column: 6 !important; }
-
-/* Left information block follows the artwork: large country panel + tiny rule line. */
-.fmw-v54-left {
-  width: 100% !important;
-  height: 100% !important;
-  min-width: 0 !important;
-  display: grid !important;
-  grid-template-rows: minmax(0, 1fr) auto !important;
-  align-self: stretch !important;
-  align-items: stretch !important;
-}
-
-.fmw-v54-country {
-  width: 100% !important;
-  height: 100% !important;
-  min-width: 0 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  text-align: center !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  box-sizing: border-box !important;
-  font-family: "Paytone One", "Barlow Condensed", sans-serif !important;
-  text-transform: uppercase !important;
-  color: #fff8df !important;
-  background:
-    linear-gradient(180deg, rgba(83, 214, 127, .96), rgba(24, 141, 76, .96)) !important;
-  border: 1px solid rgba(201, 245, 176, .46) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.30),
-    inset 0 -3px 8px rgba(0,0,0,.22),
-    0 2px 7px rgba(0,0,0,.25) !important;
-}
-
-.fmw-v54-level-rule {
-  width: 100% !important;
-  min-width: 0 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  box-sizing: border-box !important;
-  color: rgba(255, 246, 208, .88) !important;
+.hud-stat-lbl {
+  font-family: var(--fmw-font) !important;
   font-weight: 700 !important;
-  text-transform: none !important;
-  opacity: .95 !important;
-}
-.fmw-v54-level-rule #level {
-  color: #fff6cf !important;
-  font-weight: 900 !important;
-}
-.fmw-v54-level-rule .movement-icon {
-  display: inline-block !important;
-  opacity: .9 !important;
-  transform: scale(.46) !important;
-  transform-origin: center !important;
-}
-
-/* Stat cards follow artwork proportions. */
-.fmw-v54-stat {
-  width: 100% !important;
-  height: 100% !important;
-  min-width: 0 !important;
-  display: grid !important;
-  grid-template-rows: auto 1fr !important;
-  align-items: center !important;
-  justify-items: stretch !important;
-  box-sizing: border-box !important;
-  overflow: hidden !important;
-  background:
-    linear-gradient(180deg, rgba(35, 123, 164, .95), rgba(16, 88, 126, .98)) !important;
-  border: 1px solid rgba(124, 203, 232, .42) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.22),
-    inset 0 -3px 8px rgba(0,0,0,.24),
-    0 2px 7px rgba(0,0,0,.25) !important;
-}
-
-.fmw-v54-stat-label {
-  width: 100% !important;
-  display: block !important;
-  text-align: left !important;
-  color: rgba(255,255,255,.83) !important;
-  line-height: 1 !important;
-  font-weight: 900 !important;
+  letter-spacing: .1em !important;
   text-transform: uppercase !important;
+  line-height: 1 !important;
+}
+.hud-stat-val {
+  font-family: var(--fmw-font) !important;
+  font-weight: 900 !important;
+  letter-spacing: -.02em !important;
+  line-height: 1 !important;
 }
 
-.fmw-v54-stat-value {
-  width: 100% !important;
-  min-width: 0 !important;
+/* Colour tokens */
+.hud-stat-matches .hud-stat-lbl { color: rgba(126,200,240,.55) !important; }
+.hud-stat-matches .hud-stat-val { color: #7ec8f0 !important; text-shadow: 0 0 10px rgba(126,200,240,.3) !important; }
+.hud-stat-score .hud-stat-lbl   { color: rgba(106,220,176,.55) !important; }
+.hud-stat-score .hud-stat-val   { color: #6adcb0 !important; text-shadow: 0 0 10px rgba(106,220,176,.3) !important; }
+
+/* ── RIGHT ZONE ── */
+.hud-right-zone {
   display: flex !important;
   align-items: center !important;
-  justify-content: flex-end !important;
-  text-align: right !important;
-  color: #fff8df !important;
-  font-family: "Paytone One", "Barlow Condensed", sans-serif !important;
-  line-height: 1 !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  font-variant-numeric: tabular-nums !important;
-  font-feature-settings: "tnum" 1, "lnum" 1 !important;
+  flex-shrink: 0 !important;
+  z-index: 2 !important;
 }
 
-.fmw-v54-score .fmw-v54-stat-value {
-  color: #fff8df !important;
-}
-.fmw-v54-score i {
-  display: none !important;
-}
-.fmw-v54-score #score {
-  min-width: 0 !important;
-  width: 100% !important;
-  text-align: right !important;
-}
-
-/* Buttons: true square / true circle on every device. */
-.fmw-v54-square-btn,
-.fmw-v54-pause-btn {
-  position: relative !important;
-  align-self: start !important;
-  justify-self: center !important;
+/* All buttons — shape-locked */
+.hud-action-btn,
+.hud-pause-btn {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
   aspect-ratio: 1 / 1 !important;
-  min-width: 0 !important;
-  min-height: 0 !important;
-  max-width: none !important;
-  max-height: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  box-sizing: border-box !important;
-  transform: none !important;
-}
-
-.fmw-v54-square-btn {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  background:
-    linear-gradient(180deg, rgba(93, 176, 232, .96), rgba(47, 117, 184, .96)) !important;
-  border: 1px solid rgba(174, 225, 255, .45) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.25),
-    inset 0 -3px 8px rgba(0,0,0,.22),
-    0 2px 7px rgba(0,0,0,.25) !important;
-  overflow: visible !important;
-}
-
-.fmw-v54-square-btn i,
-.fmw-v54-pause-btn i {
-  line-height: 1 !important;
-}
-
-.fmw-v54-square-btn span {
-  line-height: 1 !important;
-  white-space: nowrap !important;
-  font-weight: 900 !important;
-}
-
-.fmw-v54-pause-btn {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  border-radius: 50% !important;
-  overflow: hidden !important;
-  background:
-    linear-gradient(180deg, rgba(245, 204, 95, .98), rgba(183, 132, 45, .98)) !important;
-  border: 1px solid rgba(255, 235, 166, .55) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.28),
-    inset 0 -5px 10px rgba(0,0,0,.23),
-    0 2px 8px rgba(0,0,0,.28) !important;
-}
-
-.fmw-v54-hud .notification-dot {
-  border-radius: 50% !important;
-  z-index: 20 !important;
-}
-
-/* Timer bar has the same visual relationship as the artwork. */
-.board-time-meter {
-  width: 100% !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-}
-
-/* Desktop/iPad: same artwork composition scaled up. */
-@media (orientation: landscape) and (min-height: 561px) {
-  :root {
-    --fmw-v56-hud-h: 68px;
-    --fmw-v56-hud-gap: 10px;
-    --fmw-v56-top-h: 46px;
-    --fmw-v56-level-h: 13px;
-    --fmw-v56-btn: 52px;
-    --fmw-v56-pause: 58px;
-    --hud-h: var(--fmw-v56-hud-h) !important;
-    --fmw-v54-hud-h: var(--fmw-v56-hud-h) !important;
-  }
-
-  .topbar.fmw-v54-hud {
-    height: var(--fmw-v56-hud-h) !important;
-    min-height: var(--fmw-v56-hud-h) !important;
-    max-height: var(--fmw-v56-hud-h) !important;
-    padding: 6px 0 0 0 !important;
-    gap: var(--fmw-v56-hud-gap) !important;
-    grid-template-columns:
-      46fr
-      9fr
-      15fr
-      6fr
-      6fr
-      7fr !important;
-  }
-
-  .fmw-v54-left {
-    grid-template-rows: var(--fmw-v56-top-h) var(--fmw-v56-level-h) !important;
-    gap: 3px !important;
-  }
-
-  .fmw-v54-country {
-    height: var(--fmw-v56-top-h) !important;
-    border-radius: 16px !important;
-    padding: 0 18px !important;
-    font-size: clamp(17px, 2.05dvh, 22px) !important;
-    letter-spacing: .095em !important;
-  }
-
-  .fmw-v54-level-rule {
-    height: var(--fmw-v56-level-h) !important;
-    min-height: var(--fmw-v56-level-h) !important;
-    padding-left: 10px !important;
-    font-size: 10px !important;
-    line-height: 1 !important;
-  }
-
-  .fmw-v54-stat {
-    height: var(--fmw-v56-top-h) !important;
-    min-height: var(--fmw-v56-top-h) !important;
-    max-height: var(--fmw-v56-top-h) !important;
-    border-radius: 12px !important;
-    padding: 6px 10px !important;
-  }
-
-  .fmw-v54-stat-label {
-    font-size: 8px !important;
-    letter-spacing: .10em !important;
-  }
-
-  .fmw-v54-stat-value {
-    font-size: clamp(26px, 3.25dvh, 36px) !important;
-  }
-
-  .fmw-v54-square-btn {
-    width: var(--fmw-v56-btn) !important;
-    height: var(--fmw-v56-btn) !important;
-    min-width: var(--fmw-v56-btn) !important;
-    min-height: var(--fmw-v56-btn) !important;
-    max-width: var(--fmw-v56-btn) !important;
-    max-height: var(--fmw-v56-btn) !important;
-    border-radius: 13px !important;
-  }
-
-  .fmw-v54-pause-btn {
-    width: var(--fmw-v56-pause) !important;
-    height: var(--fmw-v56-pause) !important;
-    min-width: var(--fmw-v56-pause) !important;
-    min-height: var(--fmw-v56-pause) !important;
-    max-width: var(--fmw-v56-pause) !important;
-    max-height: var(--fmw-v56-pause) !important;
-  }
-
-  .fmw-v54-square-btn i,
-  .fmw-v54-pause-btn i {
-    font-size: 18px !important;
-  }
-
-  .fmw-v54-square-btn span {
-    font-size: 7px !important;
-    letter-spacing: .06em !important;
-    margin-top: 3px !important;
-  }
-
-  .fmw-v54-hud .notification-dot {
-    width: 21px !important;
-    height: 21px !important;
-    min-width: 21px !important;
-    top: -7px !important;
-    right: -6px !important;
-    font-size: 10px !important;
-  }
-}
-
-/* iPhone compact landscape: master reference. */
-@media (orientation: landscape) and (max-height: 560px) {
-  :root {
-    --fmw-v56-hud-h: 52px;
-    --fmw-v56-hud-gap: 7px;
-    --fmw-v56-top-h: 36px;
-    --fmw-v56-level-h: 10px;
-    --fmw-v56-btn: 40px;
-    --fmw-v56-pause: 46px;
-    --hud-h: var(--fmw-v56-hud-h) !important;
-    --fmw-v54-hud-h: var(--fmw-v56-hud-h) !important;
-  }
-
-  .topbar.fmw-v54-hud {
-    height: var(--fmw-v56-hud-h) !important;
-    min-height: var(--fmw-v56-hud-h) !important;
-    max-height: var(--fmw-v56-hud-h) !important;
-    padding: 5px 0 0 0 !important;
-    gap: var(--fmw-v56-hud-gap) !important;
-    grid-template-columns:
-      46fr
-      9fr
-      15fr
-      6fr
-      6fr
-      7fr !important;
-  }
-
-  .fmw-v54-left {
-    grid-template-rows: var(--fmw-v56-top-h) var(--fmw-v56-level-h) !important;
-    gap: 2px !important;
-  }
-
-  .fmw-v54-country {
-    height: var(--fmw-v56-top-h) !important;
-    border-radius: 12px !important;
-    padding: 0 10px !important;
-    font-size: clamp(12px, 3.05dvh, 16px) !important;
-    letter-spacing: .075em !important;
-  }
-
-  .fmw-v54-level-rule {
-    height: var(--fmw-v56-level-h) !important;
-    min-height: var(--fmw-v56-level-h) !important;
-    padding-left: 6px !important;
-    font-size: clamp(5.5px, 1.35dvh, 7px) !important;
-    line-height: 1 !important;
-  }
-
-  .fmw-v54-stat {
-    height: var(--fmw-v56-top-h) !important;
-    min-height: var(--fmw-v56-top-h) !important;
-    max-height: var(--fmw-v56-top-h) !important;
-    border-radius: 9px !important;
-    padding: 4px 6px !important;
-  }
-
-  .fmw-v54-stat-label {
-    font-size: clamp(4.8px, 1.15dvh, 6px) !important;
-    letter-spacing: .055em !important;
-  }
-
-  .fmw-v54-stat-value {
-    font-size: clamp(16px, 4.2dvh, 23px) !important;
-  }
-
-  .fmw-v54-square-btn {
-    width: var(--fmw-v56-btn) !important;
-    height: var(--fmw-v56-btn) !important;
-    min-width: var(--fmw-v56-btn) !important;
-    min-height: var(--fmw-v56-btn) !important;
-    max-width: var(--fmw-v56-btn) !important;
-    max-height: var(--fmw-v56-btn) !important;
-    border-radius: 10px !important;
-  }
-
-  .fmw-v54-pause-btn {
-    width: var(--fmw-v56-pause) !important;
-    height: var(--fmw-v56-pause) !important;
-    min-width: var(--fmw-v56-pause) !important;
-    min-height: var(--fmw-v56-pause) !important;
-    max-width: var(--fmw-v56-pause) !important;
-    max-height: var(--fmw-v56-pause) !important;
-  }
-
-  .fmw-v54-square-btn i,
-  .fmw-v54-pause-btn i {
-    font-size: 15px !important;
-  }
-
-  .fmw-v54-square-btn span {
-    font-size: 5px !important;
-    letter-spacing: .025em !important;
-    margin-top: 2px !important;
-  }
-
-  .fmw-v54-hud .notification-dot {
-    width: 17px !important;
-    height: 17px !important;
-    min-width: 17px !important;
-    top: -6px !important;
-    right: -5px !important;
-    font-size: 8px !important;
-  }
-}
-
-/* Very small iPhone safety: preserve shapes and hide helper labels only if necessary. */
-@media (orientation: landscape) and (max-width: 760px) {
-  :root {
-    --fmw-v56-hud-gap: 5px;
-    --fmw-v56-btn: 36px;
-    --fmw-v56-pause: 42px;
-  }
-
-  .fmw-v54-square-btn span {
-    display: none !important;
-  }
-
-  .fmw-v54-country {
-    font-size: 11px !important;
-  }
-}
-
-/* Keep the board visual consistent. */
-.tile,
-body[data-sprite-set="flags"] .tile {
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.04)),
-    linear-gradient(180deg, #f4ecd3 0%, #eadcb5 52%, #d8c99d 100%) !important;
-  border-color: rgba(217,187,99,.34) !important;
-}
-
-
-/* =========================================================
-   v5.7 — USER REFERENCE HUD IMPLEMENTATION
-   Implements the supplied self-contained HUD reference directly
-   into the game HUD using existing game element IDs.
-   ========================================================= */
-
-/* Overall board frame relationship */
-.board-frame {
-  --fmw-v57-hud-max: 950px;
-}
-
-/* HUD wrapper = user's dark green container */
-.topbar.fmw-v54-hud {
-  position: relative !important;
-  display: block !important;
-  width: 100% !important;
-  max-width: var(--fmw-v57-hud-max) !important;
-  margin: 0 auto !important;
-  height: auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  padding: 12px 16px !important;
-  border-radius: 12px !important;
-  background-color: #0b3121 !important;
-  border: 2px solid #236842 !important;
-  box-shadow: none !important;
-  overflow: visible !important;
-  box-sizing: border-box !important;
-}
-
-/* Turn the header itself into the reference flex row. */
-.topbar.fmw-v54-hud {
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: flex-start !important;
-  gap: 20px !important;
-}
-
-/* Left side: country display + tiny level/rule */
-.fmw-v54-left {
-  position: relative !important;
-  inset: auto !important;
-  flex: 1 1 auto !important;
-  min-width: 0 !important;
-  width: auto !important;
-  max-width: none !important;
-  height: auto !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 12px !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-.fmw-v54-country {
-  width: 100% !important;
-  height: auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  padding: 10px 20px !important;
-  border-radius: 25px !important;
-  background: #3fca7a !important;
-  color: white !important;
-  text-transform: uppercase !important;
-  font-family: "Barlow Condensed", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
-  font-weight: 800 !important;
-  font-size: 15px !important;
-  line-height: 1.15 !important;
-  text-align: center !important;
-  letter-spacing: 0.5px !important;
-  display: block !important;
-  box-shadow: inset 0 -3px 0 rgba(0,0,0,.15), 0 2px 4px rgba(0,0,0,.2) !important;
-  border: 0 !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  white-space: nowrap !important;
-}
-
-.fmw-v54-level-rule {
-  width: 100% !important;
-  height: auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  padding: 0 !important;
-  margin-left: 6px !important;
-  color: #ffffff !important;
-  font-family: "Barlow Condensed", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
-  font-size: 12px !important;
-  font-weight: 600 !important;
-  line-height: 1.1 !important;
-  letter-spacing: 0 !important;
-  text-transform: none !important;
-  opacity: 1 !important;
-  display: block !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-}
-
-.fmw-v54-level-rule .movement-icon {
-  display: none !important;
-}
-
-/* Right side is recreated by making all non-left HUD children participate in one flex row. */
-.topbar.fmw-v54-hud > .fmw-v54-stat,
-.topbar.fmw-v54-hud > .fmw-v54-square-btn,
-.topbar.fmw-v54-hud > .fmw-v54-pause-btn {
-  position: relative !important;
-  inset: auto !important;
-  left: auto !important;
-  top: auto !important;
-  right: auto !important;
-  bottom: auto !important;
-  margin: 0 !important;
-  flex: 0 0 auto !important;
-}
-
-/* Matches and Score boxes */
-.fmw-v54-stat {
-  background: #27799e !important;
-  border: 0 !important;
-  border-radius: 8px !important;
-  padding: 6px 14px !important;
-  color: white !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: flex-start !important;
-  justify-content: center !important;
-  min-width: 55px !important;
-  width: auto !important;
-  height: auto !important;
-  min-height: 44px !important;
-  max-height: none !important;
-  box-shadow: inset 0 -3px 0 rgba(0,0,0,.25), 0 2px 4px rgba(0,0,0,.2) !important;
-  overflow: hidden !important;
-}
-
-.fmw-v54-score {
-  min-width: 110px !important;
-}
-
-.fmw-v54-stat-label {
-  display: block !important;
-  width: 100% !important;
-  color: white !important;
-  font-family: "Barlow Condensed", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
-  font-size: 10px !important;
-  font-weight: 600 !important;
-  line-height: 1 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0 !important;
-  margin-bottom: 2px !important;
-  text-align: left !important;
-}
-
-.fmw-v54-stat-value {
-  width: 100% !important;
-  min-width: 0 !important;
-  max-width: none !important;
-  color: white !important;
-  font-family: "Barlow Condensed", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
-  font-size: 20px !important;
-  font-weight: 900 !important;
-  line-height: 1 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: flex-end !important;
-  align-self: flex-end !important;
-  text-align: right !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  font-variant-numeric: tabular-nums !important;
-}
-
-.fmw-v54-score i {
-  display: none !important;
-}
-
-.fmw-v54-score #score {
-  width: 100% !important;
-  min-width: 0 !important;
-  text-align: right !important;
-}
-
-/* Icon buttons: blue squares */
-.fmw-v54-square-btn {
-  background: #5ea9d7 !important;
-  border: 0 !important;
+  background: linear-gradient(180deg, rgba(28,44,90,.92), rgba(14,22,54,.96)) !important;
+  border: 1px solid rgba(180,210,240,.22) !important;
   border-radius: 10px !important;
-  width: 44px !important;
-  height: 44px !important;
-  min-width: 44px !important;
-  min-height: 44px !important;
-  max-width: 44px !important;
-  max-height: 44px !important;
-  aspect-ratio: 1 / 1 !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
   cursor: pointer !important;
-  box-shadow: inset 0 -3px 0 rgba(0,0,0,.2), 0 2px 4px rgba(0,0,0,.2) !important;
-  padding: 0 !important;
-  overflow: visible !important;
+  position: relative !important;
+  flex-shrink: 0 !important;
+}
+.hud-pause-btn {
+  border-color: rgba(180,210,240,.38) !important;
+}
+.hud-action-btn i,
+.hud-pause-btn i {
+  color: #c8d8f0 !important;
+  pointer-events: none !important;
+}
+.hud-btn-lbl {
+  font-family: var(--fmw-font) !important;
+  font-weight: 700 !important;
+  letter-spacing: .1em !important;
+  text-transform: uppercase !important;
+  color: rgba(180,210,240,.48) !important;
 }
 
-.fmw-v54-square-btn i {
-  font-size: 22px !important;
-  color: #0a273c !important;
-  line-height: 1 !important;
+/* Badge */
+.hud-badge {
+  position: absolute !important;
+  background: #f5c842 !important;
+  color: #060818 !important;
+  font-family: var(--fmw-font) !important;
+  font-weight: 800 !important;
+  border-radius: 99px !important;
+  text-align: center !important;
+  line-height: 14px !important;
+  box-shadow: 0 0 8px rgba(245,200,66,.4) !important;
+  top: -6px !important; right: -6px !important;
+  font-size: 9px !important;
+  padding: 1px 5px !important;
+  min-width: 18px !important;
 }
 
-.fmw-v54-square-btn span {
-  display: none !important;
-}
-
-/* Pause button: true circle */
-.fmw-v54-pause-btn {
-  background: #3fc878 !important;
-  border: 0 !important;
-  border-radius: 50% !important;
-  width: 46px !important;
-  height: 46px !important;
-  min-width: 46px !important;
-  min-height: 46px !important;
-  max-width: 46px !important;
-  max-height: 46px !important;
-  aspect-ratio: 1 / 1 !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  cursor: pointer !important;
-  box-shadow: inset 0 -4px 0 rgba(0,0,0,.2), 0 2px 4px rgba(0,0,0,.2) !important;
-  margin-left: 5px !important;
-  padding: 0 !important;
-  overflow: hidden !important;
-}
-
-.fmw-v54-pause-btn i {
-  font-size: 18px !important;
-  color: white !important;
-  line-height: 1 !important;
-}
-
-/* Helper count badges stay readable but small. */
-.fmw-v54-hud .notification-dot {
-  width: 17px !important;
-  height: 17px !important;
-  min-width: 17px !important;
-  top: -7px !important;
-  right: -6px !important;
-  font-size: 8px !important;
-  line-height: 17px !important;
-  border-radius: 50% !important;
-  z-index: 20 !important;
-}
-
-/* Timer bar styled to match supplied progress bar reference. */
-.board-time-meter {
-  width: 100% !important;
-  max-width: var(--fmw-v57-hud-max) !important;
-  height: 8px !important;
-  min-height: 8px !important;
-  background-color: #071911 !important;
-  border-radius: 4px !important;
-  margin: 15px auto 0 !important;
-  overflow: hidden !important;
-  border: 1px solid #1a422a !important;
+/* Empty button state */
+.hud-action-btn.empty { opacity: .38 !important; }
+.hud-action-btn.empty .hud-badge {
+  background: rgba(180,210,240,.2) !important;
+  color: rgba(180,210,240,.45) !important;
   box-shadow: none !important;
-  padding: 0 !important;
 }
 
-.board-time-bar {
-  height: 100% !important;
-  background: #d1c765 !important;
-  border-radius: 4px !important;
-  box-shadow: inset 0 -2px 0 rgba(0,0,0,.1) !important;
-}
+/* Desktop divider between shuffle and pause */
+.hud-desktop-div { display: none !important; }
 
-/* Responsive compact iPhone handling: same design, smaller gaps and text. */
-@media (orientation: landscape) and (max-height: 560px) {
-  .board-frame {
-    --fmw-v57-hud-max: 100%;
+/* ══ iPHONE / iPad  ≤ 1024px ══ */
+@media (max-width: 1024px) {
+  #game-area .hud-bar, .topbar.hud-bar {
+    height: 46px !important;
+    padding: 0 8px !important;
   }
-
-  .topbar.fmw-v54-hud {
-    padding: 8px 10px !important;
-    gap: 10px !important;
-    border-radius: 10px !important;
-  }
-
-  .fmw-v54-left {
-    gap: 7px !important;
-  }
-
-  .fmw-v54-country {
-    padding: 7px 12px !important;
-    border-radius: 18px !important;
-    font-size: clamp(11px, 2.8dvh, 14px) !important;
-  }
-
-  .fmw-v54-level-rule {
-    font-size: clamp(8px, 1.9dvh, 10px) !important;
-    margin-left: 4px !important;
-  }
-
-  .fmw-v54-stat {
-    min-width: 47px !important;
-    min-height: 38px !important;
-    padding: 5px 8px !important;
+  .hud-pill-wrap { padding: 5px 0 !important; }
+  .hud-country-pill {
+    height: 34px !important;
+    font-size: clamp(10px, 1.4vw, 13px) !important;
+    padding: 0 10px !important;
     border-radius: 7px !important;
   }
+  .hud-left-zone { gap: 0 !important; }
+  .hud-divider-v { height: 24px !important; }
+  .hud-stat-block { padding: 0 10px !important; gap: 2px !important; }
+  .hud-stat-lbl   { font-size: 7.5px !important; }
+  .hud-stat-val   { font-size: 19px !important; }
+  .hud-right-zone { gap: 5px !important; padding: 4px 6px 4px 8px !important; border-left: 1px solid rgba(180,210,240,.15) !important; }
+  .hud-action-btn,
+  .hud-pause-btn  { height: 36px !important; }
+  .hud-action-btn i, .hud-pause-btn i { font-size: 14px !important; }
+  .hud-btn-lbl    { display: none !important; }
+  .hud-badge      { font-size: 8.5px !important; padding: 1px 4px !important; min-width: 16px !important; top: -5px !important; right: -5px !important; }
+}
 
-  .fmw-v54-score {
-    min-width: 82px !important;
+/* ══ Desktop  > 1024px ══ */
+@media (min-width: 1025px) {
+  #game-area .hud-bar, .topbar.hud-bar {
+    height: 56px !important;
+    padding: 0 14px !important;
+    background: linear-gradient(180deg, rgba(20,30,70,.98), rgba(8,14,38,.99)) !important;
+    box-shadow: inset 0 1px 0 rgba(180,210,240,.1) !important;
   }
-
-  .fmw-v54-stat-label {
-    font-size: 8px !important;
-  }
-
-  .fmw-v54-stat-value {
-    font-size: clamp(15px, 3.7dvh, 18px) !important;
-  }
-
-  .fmw-v54-square-btn {
-    width: 38px !important;
-    height: 38px !important;
-    min-width: 38px !important;
-    min-height: 38px !important;
-    max-width: 38px !important;
-    max-height: 38px !important;
+  .hud-pill-wrap  { padding: 7px 0 !important; }
+  .hud-country-pill {
+    height: 42px !important;
+    font-size: 17px !important;
+    padding: 0 16px !important;
     border-radius: 9px !important;
   }
-
-  .fmw-v54-square-btn i {
-    font-size: 19px !important;
-  }
-
-  .fmw-v54-pause-btn {
-    width: 40px !important;
-    height: 40px !important;
-    min-width: 40px !important;
-    min-height: 40px !important;
-    max-width: 40px !important;
-    max-height: 40px !important;
-    margin-left: 2px !important;
-  }
-
-  .fmw-v54-pause-btn i {
-    font-size: 16px !important;
-  }
-
-  .board-time-meter {
-    height: 6px !important;
-    min-height: 6px !important;
-    margin-top: 9px !important;
-  }
+  .hud-left-zone  { gap: 0 !important; }
+  .hud-divider-v  { height: 30px !important; }
+  .hud-stat-block { padding: 0 16px !important; gap: 3px !important; }
+  .hud-stat-lbl   { font-size: 9px !important; letter-spacing: .12em !important; }
+  .hud-stat-val   { font-size: 24px !important; }
+  .hud-right-zone { gap: 8px !important; padding: 5px 10px 5px 14px !important; border-left: 1px solid rgba(180,210,240,.14) !important; }
+  .hud-action-btn { height: 46px !important; gap: 3px !important; }
+  .hud-pause-btn  { height: 46px !important; }
+  .hud-action-btn i, .hud-pause-btn i { font-size: 18px !important; }
+  .hud-btn-lbl    { display: block !important; font-size: 7.5px !important; }
+  .hud-badge      { font-size: 10px !important; padding: 2px 5px !important; min-width: 19px !important; top: -7px !important; right: -7px !important; }
+  .hud-desktop-div { display: block !important; width: 1px !important; height: 36px !important; background: rgba(180,210,240,.15) !important; flex-shrink: 0 !important; }
 }
 
-/* Very narrow fallback: keep button shapes, allow country to shrink first. */
-@media (orientation: landscape) and (max-width: 760px) {
-  .topbar.fmw-v54-hud {
-    gap: 7px !important;
-    padding: 7px 8px !important;
-  }
-
-  .fmw-v54-stat {
-    min-width: 42px !important;
-    padding-left: 6px !important;
-    padding-right: 6px !important;
-  }
-
-  .fmw-v54-score {
-    min-width: 70px !important;
-  }
-
-  .fmw-v54-square-btn {
-    width: 34px !important;
-    height: 34px !important;
-    min-width: 34px !important;
-    min-height: 34px !important;
-    max-width: 34px !important;
-    max-height: 34px !important;
-  }
-
-  .fmw-v54-pause-btn {
-    width: 36px !important;
-    height: 36px !important;
-    min-width: 36px !important;
-    min-height: 36px !important;
-    max-width: 36px !important;
-    max-height: 36px !important;
-  }
+/* Timer bar — gold gradient */
+.board-time-meter, .board-time-bar,
+#boardTimerBar, #timerBar {
+  background: linear-gradient(90deg, #c89010, #f5c842, #f0e080) !important;
+}
+body.low-time .board-time-meter,
+body.low-time .board-time-bar {
+  background: linear-gradient(90deg, #c06020, #ff8040) !important;
+}
+body.critical-time .board-time-meter,
+body.critical-time .board-time-bar {
+  background: linear-gradient(90deg, #900808, #ff2828) !important;
 }
 
-/* Tile face protection. */
-.tile,
-body[data-sprite-set="flags"] .tile {
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.04)),
-    linear-gradient(180deg, #f4ecd3 0%, #eadcb5 52%, #d8c99d 100%) !important;
-  border-color: rgba(217,187,99,.34) !important;
+/* ═══════════════════════════════════════════════════════════════
+   LEVEL START POPUP
+   Compact vertical — fits both iPhone portrait & landscape
+   Max card height ~310px (landscape safe: 390-46-20*2 = 304px avail)
+   ═══════════════════════════════════════════════════════════════ */
+
+.fmw-levelstart-card {
+  width: min(360px, 90vw) !important;
+  padding: 18px 20px 20px !important;
+  border-radius: 22px !important;
+  animation: puPopIn 400ms cubic-bezier(.2,.8,.2,1.05) both !important;
+}
+
+/* Level header — inline LEVEL label + big chrome number */
+.fmw-levelstart-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  margin-bottom: 12px !important;
+}
+.fmw-levelstart-label {
+  font-family: "Paytone One", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  letter-spacing: .2em !important;
+  text-transform: uppercase !important;
+  color: var(--fmw-gold) !important;
+  text-shadow: 0 0 14px rgba(245,200,66,.25) !important;
+  line-height: 1 !important;
+}
+.fmw-levelstart-num {
+  font-family: "Paytone One", sans-serif !important;
+  font-size: 52px !important;
+  font-weight: 400 !important;
+  line-height: 1 !important;
+  background: linear-gradient(160deg,#ffffff 0%,#c8d8f0 30%,#f8faff 55%,#a0b8d8 80%,#e0eaff 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  filter: drop-shadow(0 2px 8px rgba(180,210,240,.3)) !important;
+  display: block !important;
+}
+
+/* Gold rule — tighter */
+.fmw-levelstart-card .fmw-gold-rule {
+  margin: 0 0 12px !important;
+}
+
+/* Rule section wrapper */
+.fmw-levelstart-rule-wrap {
+  margin-bottom: 14px !important;
+}
+.fmw-levelstart-rule-label {
+  display: block !important;
+  font-size: 8px !important;
+  font-weight: 700 !important;
+  letter-spacing: .14em !important;
+  text-transform: uppercase !important;
+  color: var(--fmw-dim) !important;
+  margin-bottom: 8px !important;
+}
+
+/* Rule panel — matches fmw-score-panel style */
+.fmw-levelstart-rule-panel {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  background: rgba(4,8,32,.4) !important;
+  border: 1px solid rgba(245,200,66,.22) !important;
+  border-radius: 14px !important;
+  padding: 12px 14px !important;
+}
+
+/* Icon box */
+.fmw-levelstart-icon-box {
+  width: 52px !important;
+  height: 52px !important;
+  flex-shrink: 0 !important;
+  background: linear-gradient(180deg,rgba(26,42,90,.92),rgba(10,18,50,.96)) !important;
+  border: 1px solid rgba(245,200,66,.28) !important;
+  border-radius: 13px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.fmw-levelstart-icon {
+  width: 30px !important;
+  height: 30px !important;
+  background: linear-gradient(120deg,#fff 0%,#c8d8f0 30%,#f8faff 55%,#a0b8d8 80%,#e0eaff 100%) !important;
+}
+
+/* Rule info */
+.fmw-levelstart-rule-info {
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+.fmw-levelstart-rule-name {
+  font-family: var(--fmw-font) !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  letter-spacing: .06em !important;
+  text-transform: uppercase !important;
+  color: var(--fmw-head) !important;
+  line-height: 1 !important;
+  margin-bottom: 4px !important;
+}
+.fmw-levelstart-rule-desc {
+  font-family: var(--fmw-font) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  letter-spacing: .02em !important;
+  color: var(--fmw-body) !important;
+  line-height: 1.35 !important;
+}
+
+/* Button — tighter min-height */
+.fmw-levelstart-card .fmw-btn {
+  min-height: 50px !important;
+}
+
+/* ── NEW SINGLE-ROW HUD — country name pill layout ──
+   Replaces the previous HUD redesign for the pill specifically
+   ─────────────────────────────────────────────────── */
+.hud-country-centre {
+  font-size: clamp(11px, 1.4vw, 14px) !important;
 }
