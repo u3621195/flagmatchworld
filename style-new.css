@@ -11121,3 +11121,408 @@ body[data-sprite-set="flags"] .tile {
     linear-gradient(180deg, #f4ecd3 0%, #eadcb5 52%, #d8c99d 100%) !important;
   border-color: rgba(217,187,99,.34) !important;
 }
+
+
+/* =========================================================
+   v5.7 — USER REFERENCE HUD IMPLEMENTATION
+   Implements the supplied self-contained HUD reference directly
+   into the game HUD using existing game element IDs.
+   ========================================================= */
+
+/* Overall board frame relationship */
+.board-frame {
+  --fmw-v57-hud-max: 950px;
+}
+
+/* HUD wrapper = user's dark green container */
+.topbar.fmw-v54-hud {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  max-width: var(--fmw-v57-hud-max) !important;
+  margin: 0 auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  padding: 12px 16px !important;
+  border-radius: 12px !important;
+  background-color: #0b3121 !important;
+  border: 2px solid #236842 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  box-sizing: border-box !important;
+}
+
+/* Turn the header itself into the reference flex row. */
+.topbar.fmw-v54-hud {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  gap: 20px !important;
+}
+
+/* Left side: country display + tiny level/rule */
+.fmw-v54-left {
+  position: relative !important;
+  inset: auto !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  width: auto !important;
+  max-width: none !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.fmw-v54-country {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  padding: 10px 20px !important;
+  border-radius: 25px !important;
+  background: #3fca7a !important;
+  color: white !important;
+  text-transform: uppercase !important;
+  font-family: "Barlow Condensed", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+  font-weight: 800 !important;
+  font-size: 15px !important;
+  line-height: 1.15 !important;
+  text-align: center !important;
+  letter-spacing: 0.5px !important;
+  display: block !important;
+  box-shadow: inset 0 -3px 0 rgba(0,0,0,.15), 0 2px 4px rgba(0,0,0,.2) !important;
+  border: 0 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.fmw-v54-level-rule {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  padding: 0 !important;
+  margin-left: 6px !important;
+  color: #ffffff !important;
+  font-family: "Barlow Condensed", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  line-height: 1.1 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  opacity: 1 !important;
+  display: block !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.fmw-v54-level-rule .movement-icon {
+  display: none !important;
+}
+
+/* Right side is recreated by making all non-left HUD children participate in one flex row. */
+.topbar.fmw-v54-hud > .fmw-v54-stat,
+.topbar.fmw-v54-hud > .fmw-v54-square-btn,
+.topbar.fmw-v54-hud > .fmw-v54-pause-btn {
+  position: relative !important;
+  inset: auto !important;
+  left: auto !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  margin: 0 !important;
+  flex: 0 0 auto !important;
+}
+
+/* Matches and Score boxes */
+.fmw-v54-stat {
+  background: #27799e !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  padding: 6px 14px !important;
+  color: white !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  min-width: 55px !important;
+  width: auto !important;
+  height: auto !important;
+  min-height: 44px !important;
+  max-height: none !important;
+  box-shadow: inset 0 -3px 0 rgba(0,0,0,.25), 0 2px 4px rgba(0,0,0,.2) !important;
+  overflow: hidden !important;
+}
+
+.fmw-v54-score {
+  min-width: 110px !important;
+}
+
+.fmw-v54-stat-label {
+  display: block !important;
+  width: 100% !important;
+  color: white !important;
+  font-family: "Barlow Condensed", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0 !important;
+  margin-bottom: 2px !important;
+  text-align: left !important;
+}
+
+.fmw-v54-stat-value {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  color: white !important;
+  font-family: "Barlow Condensed", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  align-self: flex-end !important;
+  text-align: right !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  font-variant-numeric: tabular-nums !important;
+}
+
+.fmw-v54-score i {
+  display: none !important;
+}
+
+.fmw-v54-score #score {
+  width: 100% !important;
+  min-width: 0 !important;
+  text-align: right !important;
+}
+
+/* Icon buttons: blue squares */
+.fmw-v54-square-btn {
+  background: #5ea9d7 !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  max-width: 44px !important;
+  max-height: 44px !important;
+  aspect-ratio: 1 / 1 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  cursor: pointer !important;
+  box-shadow: inset 0 -3px 0 rgba(0,0,0,.2), 0 2px 4px rgba(0,0,0,.2) !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+.fmw-v54-square-btn i {
+  font-size: 22px !important;
+  color: #0a273c !important;
+  line-height: 1 !important;
+}
+
+.fmw-v54-square-btn span {
+  display: none !important;
+}
+
+/* Pause button: true circle */
+.fmw-v54-pause-btn {
+  background: #3fc878 !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  width: 46px !important;
+  height: 46px !important;
+  min-width: 46px !important;
+  min-height: 46px !important;
+  max-width: 46px !important;
+  max-height: 46px !important;
+  aspect-ratio: 1 / 1 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  cursor: pointer !important;
+  box-shadow: inset 0 -4px 0 rgba(0,0,0,.2), 0 2px 4px rgba(0,0,0,.2) !important;
+  margin-left: 5px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+.fmw-v54-pause-btn i {
+  font-size: 18px !important;
+  color: white !important;
+  line-height: 1 !important;
+}
+
+/* Helper count badges stay readable but small. */
+.fmw-v54-hud .notification-dot {
+  width: 17px !important;
+  height: 17px !important;
+  min-width: 17px !important;
+  top: -7px !important;
+  right: -6px !important;
+  font-size: 8px !important;
+  line-height: 17px !important;
+  border-radius: 50% !important;
+  z-index: 20 !important;
+}
+
+/* Timer bar styled to match supplied progress bar reference. */
+.board-time-meter {
+  width: 100% !important;
+  max-width: var(--fmw-v57-hud-max) !important;
+  height: 8px !important;
+  min-height: 8px !important;
+  background-color: #071911 !important;
+  border-radius: 4px !important;
+  margin: 15px auto 0 !important;
+  overflow: hidden !important;
+  border: 1px solid #1a422a !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.board-time-bar {
+  height: 100% !important;
+  background: #d1c765 !important;
+  border-radius: 4px !important;
+  box-shadow: inset 0 -2px 0 rgba(0,0,0,.1) !important;
+}
+
+/* Responsive compact iPhone handling: same design, smaller gaps and text. */
+@media (orientation: landscape) and (max-height: 560px) {
+  .board-frame {
+    --fmw-v57-hud-max: 100%;
+  }
+
+  .topbar.fmw-v54-hud {
+    padding: 8px 10px !important;
+    gap: 10px !important;
+    border-radius: 10px !important;
+  }
+
+  .fmw-v54-left {
+    gap: 7px !important;
+  }
+
+  .fmw-v54-country {
+    padding: 7px 12px !important;
+    border-radius: 18px !important;
+    font-size: clamp(11px, 2.8dvh, 14px) !important;
+  }
+
+  .fmw-v54-level-rule {
+    font-size: clamp(8px, 1.9dvh, 10px) !important;
+    margin-left: 4px !important;
+  }
+
+  .fmw-v54-stat {
+    min-width: 47px !important;
+    min-height: 38px !important;
+    padding: 5px 8px !important;
+    border-radius: 7px !important;
+  }
+
+  .fmw-v54-score {
+    min-width: 82px !important;
+  }
+
+  .fmw-v54-stat-label {
+    font-size: 8px !important;
+  }
+
+  .fmw-v54-stat-value {
+    font-size: clamp(15px, 3.7dvh, 18px) !important;
+  }
+
+  .fmw-v54-square-btn {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    max-width: 38px !important;
+    max-height: 38px !important;
+    border-radius: 9px !important;
+  }
+
+  .fmw-v54-square-btn i {
+    font-size: 19px !important;
+  }
+
+  .fmw-v54-pause-btn {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    margin-left: 2px !important;
+  }
+
+  .fmw-v54-pause-btn i {
+    font-size: 16px !important;
+  }
+
+  .board-time-meter {
+    height: 6px !important;
+    min-height: 6px !important;
+    margin-top: 9px !important;
+  }
+}
+
+/* Very narrow fallback: keep button shapes, allow country to shrink first. */
+@media (orientation: landscape) and (max-width: 760px) {
+  .topbar.fmw-v54-hud {
+    gap: 7px !important;
+    padding: 7px 8px !important;
+  }
+
+  .fmw-v54-stat {
+    min-width: 42px !important;
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+  }
+
+  .fmw-v54-score {
+    min-width: 70px !important;
+  }
+
+  .fmw-v54-square-btn {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+    max-width: 34px !important;
+    max-height: 34px !important;
+  }
+
+  .fmw-v54-pause-btn {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    max-width: 36px !important;
+    max-height: 36px !important;
+  }
+}
+
+/* Tile face protection. */
+.tile,
+body[data-sprite-set="flags"] .tile {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.04)),
+    linear-gradient(180deg, #f4ecd3 0%, #eadcb5 52%, #d8c99d 100%) !important;
+  border-color: rgba(217,187,99,.34) !important;
+}

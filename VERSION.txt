@@ -24,3 +24,5 @@ Flag Match World v5.2 - PNG logo startup and unified emerald/gold visual tone.
 - v5.5.1: Reworked HUD into a fixed composition map instead of letting the country panel stretch across the whole board. Desktop/iPad and iPhone use separate fixed-width slot maps with a trailing spacer.
 
 - v5.6: Reference-artwork HUD reset. Uses the iPhone design artwork as the master composition, with proportional columns across the board width: country, matches, score, hint, shuffle, pause. Removed the outer HUD capsule and made individual HUD blocks carry the design.
+
+- v5.7: Implemented the user-supplied self-contained HUD reference directly in the game: dark green HUD wrapper, country display, tiny level/rule text, stat boxes, square blue icon buttons, circular pause button, and matching progress bar styling.
