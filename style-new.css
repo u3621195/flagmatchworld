@@ -9352,3 +9352,176 @@ body.critical-time #boardTimerBar { background: linear-gradient(90deg, #ff365f, 
   .fmw-btn { min-height: 32px !important; height: 32px !important; font-size: 13px !important; border-radius: 12px !important; }
   .fmw-save-line { margin-top: 6px !important; font-size: 10px !important; }
 }
+
+/* =========================================================
+   FMW v5.8 iPhone HUD + Rule Icon Fix
+   - Pause uses exact same round button body as Hint/Shuffle on every device
+   - Level-start movement icon restored without bringing rule icon back to HUD
+   - iPhone landscape HUD/startup safety pass
+   ========================================================= */
+
+/* Pause button: exact same body as helper buttons; only icon color differs. */
+#game-area .hud-bar #hintBtn,
+#game-area .hud-bar #shuffleBtn,
+#game-area .hud-bar #pauseBtn,
+.topbar.hud-bar #hintBtn,
+.topbar.hud-bar #shuffleBtn,
+.topbar.hud-bar #pauseBtn {
+  --fmw-hud-btn-size: clamp(44px, 6.5dvh, 54px) !important;
+  width: var(--fmw-hud-btn-size) !important;
+  height: var(--fmw-hud-btn-size) !important;
+  min-width: var(--fmw-hud-btn-size) !important;
+  max-width: var(--fmw-hud-btn-size) !important;
+  flex: 0 0 var(--fmw-hud-btn-size) !important;
+  aspect-ratio: 1 / 1 !important;
+  box-sizing: border-box !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 50% !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 1px solid rgba(154,196,255,.46) !important;
+  outline: 0 !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  background:
+    radial-gradient(circle at 34% 23%, rgba(255,255,255,.34) 0%, rgba(255,255,255,.11) 23%, rgba(255,255,255,0) 43%),
+    linear-gradient(145deg, rgba(78,105,207,.95) 0%, rgba(30,50,130,.96) 54%, rgba(10,22,74,.98) 100%) !important;
+  box-shadow:
+    inset 0 2px 3px rgba(255,255,255,.24),
+    inset 0 -7px 12px rgba(0,0,0,.34),
+    0 3px 0 rgba(0,0,0,.38),
+    0 8px 16px rgba(0,0,0,.26),
+    0 0 14px rgba(73,119,255,.22) !important;
+  transform: translateZ(0) !important;
+  overflow: visible !important;
+}
+
+#game-area .hud-bar #hintBtn::before,
+#game-area .hud-bar #hintBtn::after,
+#game-area .hud-bar #shuffleBtn::before,
+#game-area .hud-bar #shuffleBtn::after,
+#game-area .hud-bar #pauseBtn::before,
+#game-area .hud-bar #pauseBtn::after,
+.topbar.hud-bar #hintBtn::before,
+.topbar.hud-bar #hintBtn::after,
+.topbar.hud-bar #shuffleBtn::before,
+.topbar.hud-bar #shuffleBtn::after,
+.topbar.hud-bar #pauseBtn::before,
+.topbar.hud-bar #pauseBtn::after {
+  content: none !important;
+  display: none !important;
+}
+
+#game-area .hud-bar #hintBtn i,
+#game-area .hud-bar #shuffleBtn i,
+#game-area .hud-bar #pauseBtn i,
+.topbar.hud-bar #hintBtn i,
+.topbar.hud-bar #shuffleBtn i,
+.topbar.hud-bar #pauseBtn i {
+  position: static !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  line-height: 1 !important;
+  font-size: clamp(17px, 3.7dvh, 21px) !important;
+  color: #ffe36e !important;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,.38)) !important;
+  transform: none !important;
+}
+#game-area .hud-bar #pauseBtn i,
+.topbar.hud-bar #pauseBtn i {
+  color: #ffffff !important;
+  font-size: clamp(18px, 3.9dvh, 22px) !important;
+}
+
+@media (orientation: landscape) and (max-height: 560px) {
+  #game-area .hud-bar #hintBtn,
+  #game-area .hud-bar #shuffleBtn,
+  #game-area .hud-bar #pauseBtn,
+  .topbar.hud-bar #hintBtn,
+  .topbar.hud-bar #shuffleBtn,
+  .topbar.hud-bar #pauseBtn {
+    --fmw-hud-btn-size: clamp(39px, 9.5dvh, 46px) !important;
+  }
+  #game-area .hud-bar #hintBtn i,
+  #game-area .hud-bar #shuffleBtn i,
+  #game-area .hud-bar #pauseBtn i,
+  .topbar.hud-bar #hintBtn i,
+  .topbar.hud-bar #shuffleBtn i,
+  .topbar.hud-bar #pauseBtn i {
+    font-size: clamp(16px, 4.1dvh, 20px) !important;
+  }
+}
+
+/* Keep the old HUD movement/rule icon hidden, but restore the Level Start popup icon. */
+#levelStartIcon.fmw-levelstart-icon,
+.fmw-levelstart-icon-box #levelStartIcon,
+.fmw-levelstart-icon-box .movement-icon.fmw-levelstart-icon {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: static !important;
+  left: auto !important;
+  width: clamp(28px, 7.2dvh, 38px) !important;
+  height: clamp(28px, 7.2dvh, 38px) !important;
+  min-width: clamp(28px, 7.2dvh, 38px) !important;
+  max-width: clamp(28px, 7.2dvh, 38px) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  pointer-events: none !important;
+  background: linear-gradient(140deg,#ffffff 0%,#c8d8f0 32%,#f8faff 56%,#9fb8d8 82%,#e0eaff 100%) !important;
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,.35)) drop-shadow(0 0 10px rgba(210,230,255,.20)) !important;
+  -webkit-mask-repeat: no-repeat !important;
+  mask-repeat: no-repeat !important;
+  -webkit-mask-position: center !important;
+  mask-position: center !important;
+  -webkit-mask-size: contain !important;
+  mask-size: contain !important;
+}
+
+#levelStartIcon.movement-normal {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='5' y='5' width='14' height='14' rx='3' fill='none' stroke='black' stroke-width='2.4'/%3E%3Cpath d='M8 12h8M12 8v8' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' opacity='.75'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='5' y='5' width='14' height='14' rx='3' fill='none' stroke='black' stroke-width='2.4'/%3E%3Cpath d='M8 12h8M12 8v8' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' opacity='.75'/%3E%3C/svg%3E") !important;
+}
+#levelStartIcon.movement-down {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4v14M7 13l5 5 5-5' fill='none' stroke='black' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4v14M7 13l5 5 5-5' fill='none' stroke='black' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+}
+#levelStartIcon.movement-up {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 20V6M7 11l5-5 5 5' fill='none' stroke='black' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 20V6M7 11l5-5 5 5' fill='none' stroke='black' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+}
+#levelStartIcon.movement-left {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 12H6M11 7l-5 5 5 5' fill='none' stroke='black' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 12H6M11 7l-5 5 5 5' fill='none' stroke='black' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+}
+#levelStartIcon.movement-right {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h14M13 7l5 5-5 5' fill='none' stroke='black' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h14M13 7l5 5-5 5' fill='none' stroke='black' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+}
+#levelStartIcon.movement-xcenter {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h16M9 7l5 5-5 5M15 7l-5 5 5 5' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h16M9 7l5 5-5 5M15 7l-5 5 5 5' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+}
+#levelStartIcon.movement-ycenter {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4v16M7 9l5 5 5-5M7 15l5-5 5 5' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4v16M7 9l5 5 5-5M7 15l5-5 5 5' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+}
+#levelStartIcon.movement-random {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 7h3c3.5 0 4.4 10 8 10h5M17 14l3 3-3 3M4 17h3c1.4 0 2.3-1.2 3.1-2.8M13.4 9.5C14 8.1 14.9 7 17 7h3M17 4l3 3-3 3' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 7h3c3.5 0 4.4 10 8 10h5M17 14l3 3-3 3M4 17h3c1.4 0 2.3-1.2 3.1-2.8M13.4 9.5C14 8.1 14.9 7 17 7h3M17 4l3 3-3 3' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+}
+
+@media (orientation: landscape) and (max-height: 560px) {
+  .fmw-levelstart-icon-box {
+    width: clamp(48px, 12.5dvh, 58px) !important;
+    height: clamp(48px, 12.5dvh, 58px) !important;
+  }
+  .fmw-levelstart-rule-panel {
+    align-items: center !important;
+  }
+}
