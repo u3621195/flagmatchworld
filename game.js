@@ -4065,6 +4065,7 @@ refreshSaveSlot(); // show saved game slot on start screen if one exists
 
   const oldShowLevelComplete = showLevelComplete;
   showLevelComplete = function(){
+    const savedCombo = bestCombo; // capture before oldShowLevelComplete resets it via prepareNextLevelState
     oldShowLevelComplete(); modalOpen(true);
     const title=q('levelCompleteTitle'); if(title) title.textContent=isQuickGame?'QUICK GAME COMPLETE':'LEVEL COMPLETE';
     const main=q('mainCompleteActions'), quick=q('quickCompleteActions'); if(main) main.classList.toggle('hidden', isQuickGame); if(quick) quick.classList.toggle('hidden', !isQuickGame);
@@ -4073,7 +4074,7 @@ refreshSaveSlot(); // show saved game slot on start screen if one exists
     const time=q('lcTimeBonus'); if(time) time.textContent=formatScore(last.timeBonus||0);
     const perf=q('lcPerfectBonus'); if(perf) perf.textContent=formatScore(last.perfectBonus||0);
     const total=q('lcTotalScore'); if(total) total.textContent=formatScore(isQuickGame?(last.levelScore||levelScore):score);
-    const combo=q('lcBestCombo'); if(combo) combo.textContent=bestCombo>0?`×${bestCombo}`:'—';
+    const combo=q('lcBestCombo'); if(combo) combo.textContent=savedCombo>0?`×${savedCombo}`:'—';
   };
   const oldStartNextLevel = startNextLevel;
   startNextLevel = function(){ modalOpen(false); oldStartNextLevel(); };
@@ -4112,12 +4113,13 @@ refreshSaveSlot(); // show saved game slot on start screen if one exists
 (function fmwNormalizeBestComboDisplay(){
   const oldShowLevelCompleteFinal = showLevelComplete;
   showLevelComplete = function(){
+    const savedCombo = bestCombo; // capture before the call chain resets it
     oldShowLevelCompleteFinal();
     const comboEl = $("lcBestCombo");
-    if (comboEl) comboEl.textContent = bestCombo > 0 ? `×${bestCombo}` : "—";
+    if (comboEl) comboEl.textContent = savedCombo > 0 ? `×${savedCombo}` : "—";
     setTimeout(() => {
       const again = $("lcBestCombo");
-      if (again) again.textContent = bestCombo > 0 ? `×${bestCombo}` : "—";
+      if (again) again.textContent = savedCombo > 0 ? `×${savedCombo}` : "—";
     }, 0);
   };
 })();
