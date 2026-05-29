@@ -8705,176 +8705,139 @@ body[data-sprite-set="flags"] .tile .entity-sprite {
 
 
 /* =========================================================
-   FMW v5.2.4 — Fixed-width iPhone HUD fields
-   Purpose: stop HUD elements from shifting as Time/Score values change.
-   All status blocks and action buttons are fixed-width on iPhone landscape.
+   FMW v5.2.7 — iPhone HUD minimal correction
+   Important: no HUD-height increase, no board/tile-size changes.
+   Fixes:
+   - Removes redundant pseudo labels such as LEVELLV / MATCHESMATCH.
+   - Gives Time and Score stable internal widths.
+   - Keeps Country plate slightly narrower.
+   - Makes Pause button perfectly round.
    ========================================================= */
+.iphone-priority-hud .level-segment .stat-label::before,
+.iphone-priority-hud .level-segment .stat-label::after,
+.iphone-priority-hud .matches-segment .stat-label::before,
+.iphone-priority-hud .matches-segment .stat-label::after,
+.iphone-priority-hud .time-segment .stat-label::before,
+.iphone-priority-hud .time-segment .stat-label::after,
+.iphone-priority-hud .score-segment .stat-label::before,
+.iphone-priority-hud .score-segment .stat-label::after {
+  content: none !important;
+  display: none !important;
+}
+
+.iphone-priority-hud .level-segment .stat-label,
+.iphone-priority-hud .matches-segment .stat-label,
+.iphone-priority-hud .time-segment .stat-label,
+.iphone-priority-hud .score-segment .stat-label {
+  font-size: clamp(6px, 1.45dvh, 8px) !important;
+  letter-spacing: .16em !important;
+}
+
+/* iPhone-only: lock content widths without changing HUD height or board height. */
 @media (orientation: landscape) and (max-height: 560px) {
-  .iphone-priority-hud {
-    --fmw-hud-level-w: 54px;
-    --fmw-hud-matches-w: 64px;
-    --fmw-hud-time-w: 88px;
-    --fmw-hud-score-w: 124px;
-    --fmw-hud-country-w: clamp(205px, 23vw, 270px);
-    --fmw-hud-helper-w: 54px;
-    --fmw-hud-pause-w: 52px;
-    --fmw-hud-action-gap: 8px;
-    grid-template-columns:
-      calc(var(--fmw-hud-level-w) + var(--fmw-hud-matches-w) + var(--fmw-hud-time-w) + var(--fmw-hud-score-w) + 3px)
-      var(--fmw-hud-country-w)
-      calc((var(--fmw-hud-helper-w) * 2) + var(--fmw-hud-pause-w) + (var(--fmw-hud-action-gap) * 2) + 10px) !important;
-    justify-content: center !important;
-    column-gap: clamp(10px, 1.7vw, 22px) !important;
-  }
-
-  .iphone-priority-hud .hud-status-cluster {
-    width: calc(var(--fmw-hud-level-w) + var(--fmw-hud-matches-w) + var(--fmw-hud-time-w) + var(--fmw-hud-score-w) + 3px) !important;
-    min-width: calc(var(--fmw-hud-level-w) + var(--fmw-hud-matches-w) + var(--fmw-hud-time-w) + var(--fmw-hud-score-w) + 3px) !important;
-    max-width: calc(var(--fmw-hud-level-w) + var(--fmw-hud-matches-w) + var(--fmw-hud-time-w) + var(--fmw-hud-score-w) + 3px) !important;
-    flex: 0 0 auto !important;
-  }
-
-  .iphone-priority-hud .level-segment {
-    width: var(--fmw-hud-level-w) !important;
-    min-width: var(--fmw-hud-level-w) !important;
-    max-width: var(--fmw-hud-level-w) !important;
-    flex: 0 0 var(--fmw-hud-level-w) !important;
-  }
-
-  .iphone-priority-hud .matches-segment {
-    width: var(--fmw-hud-matches-w) !important;
-    min-width: var(--fmw-hud-matches-w) !important;
-    max-width: var(--fmw-hud-matches-w) !important;
-    flex: 0 0 var(--fmw-hud-matches-w) !important;
+  .iphone-priority-hud,
+  .iphone-priority-hud.topbar,
+  header.iphone-priority-hud {
+    height: var(--hud-h) !important;
+    min-height: var(--hud-h) !important;
+    max-height: var(--hud-h) !important;
+    overflow: visible !important;
   }
 
   .iphone-priority-hud .time-segment {
-    width: var(--fmw-hud-time-w) !important;
-    min-width: var(--fmw-hud-time-w) !important;
-    max-width: var(--fmw-hud-time-w) !important;
-    flex: 0 0 var(--fmw-hud-time-w) !important;
+    width: clamp(82px, 9.4vw, 96px) !important;
+    min-width: clamp(82px, 9.4vw, 96px) !important;
+    max-width: clamp(82px, 9.4vw, 96px) !important;
+    flex: 0 0 clamp(82px, 9.4vw, 96px) !important;
   }
 
   .iphone-priority-hud .score-segment {
-    width: var(--fmw-hud-score-w) !important;
-    min-width: var(--fmw-hud-score-w) !important;
-    max-width: var(--fmw-hud-score-w) !important;
-    flex: 0 0 var(--fmw-hud-score-w) !important;
+    width: clamp(108px, 12vw, 128px) !important;
+    min-width: clamp(108px, 12vw, 128px) !important;
+    max-width: clamp(108px, 12vw, 128px) !important;
+    flex: 0 0 clamp(108px, 12vw, 128px) !important;
   }
 
-  .iphone-priority-hud .country-segment {
-    width: var(--fmw-hud-country-w) !important;
-    min-width: var(--fmw-hud-country-w) !important;
-    max-width: var(--fmw-hud-country-w) !important;
-    flex: 0 0 var(--fmw-hud-country-w) !important;
-  }
-
+  .iphone-priority-hud .country-segment,
   .iphone-priority-hud .country-name-pill {
-    width: var(--fmw-hud-country-w) !important;
-    min-width: var(--fmw-hud-country-w) !important;
-    max-width: var(--fmw-hud-country-w) !important;
-  }
-
-  .iphone-priority-hud .hud-action-cluster {
-    width: calc((var(--fmw-hud-helper-w) * 2) + var(--fmw-hud-pause-w) + (var(--fmw-hud-action-gap) * 2) + 10px) !important;
-    min-width: calc((var(--fmw-hud-helper-w) * 2) + var(--fmw-hud-pause-w) + (var(--fmw-hud-action-gap) * 2) + 10px) !important;
-    max-width: calc((var(--fmw-hud-helper-w) * 2) + var(--fmw-hud-pause-w) + (var(--fmw-hud-action-gap) * 2) + 10px) !important;
-    flex: 0 0 auto !important;
-  }
-
-  .iphone-priority-hud .action-group {
-    gap: var(--fmw-hud-action-gap) !important;
-    flex: 0 0 calc((var(--fmw-hud-helper-w) * 2) + var(--fmw-hud-action-gap)) !important;
-    width: calc((var(--fmw-hud-helper-w) * 2) + var(--fmw-hud-action-gap)) !important;
-    min-width: calc((var(--fmw-hud-helper-w) * 2) + var(--fmw-hud-action-gap)) !important;
-    max-width: calc((var(--fmw-hud-helper-w) * 2) + var(--fmw-hud-action-gap)) !important;
-  }
-
-  .iphone-priority-hud .action-btn {
-    width: var(--fmw-hud-helper-w) !important;
-    min-width: var(--fmw-hud-helper-w) !important;
-    max-width: var(--fmw-hud-helper-w) !important;
-    flex: 0 0 var(--fmw-hud-helper-w) !important;
-  }
-
-  .iphone-priority-hud .pause-segment {
-    width: var(--fmw-hud-pause-w) !important;
-    min-width: var(--fmw-hud-pause-w) !important;
-    max-width: var(--fmw-hud-pause-w) !important;
-    flex: 0 0 var(--fmw-hud-pause-w) !important;
-  }
-
-  .iphone-priority-hud .pause-btn-new {
-    width: calc(var(--fmw-hud-pause-w) - 6px) !important;
-    min-width: calc(var(--fmw-hud-pause-w) - 6px) !important;
-    max-width: calc(var(--fmw-hud-pause-w) - 6px) !important;
+    width: clamp(205px, 23vw, 270px) !important;
+    min-width: clamp(205px, 23vw, 270px) !important;
+    max-width: clamp(205px, 23vw, 270px) !important;
   }
 
   .iphone-priority-hud .time-val,
-  .iphone-priority-hud .score-val,
-  .iphone-priority-hud .level-with-rule,
-  .iphone-priority-hud .match-val {
+  .iphone-priority-hud .score-val {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
     font-variant-numeric: tabular-nums !important;
     font-feature-settings: "tnum" 1, "lnum" 1 !important;
+  }
+
+  .iphone-priority-hud #timerText {
+    display: inline-block !important;
+    width: 4.6ch !important;
+    min-width: 4.6ch !important;
+    max-width: 4.6ch !important;
+    text-align: left !important;
+  }
+
+  .iphone-priority-hud #score {
+    display: inline-block !important;
+    width: 6.2ch !important;
+    min-width: 6.2ch !important;
+    max-width: 6.2ch !important;
+    text-align: right !important;
+    overflow: hidden !important;
     white-space: nowrap !important;
   }
 
-  .iphone-priority-hud .score-val {
-    width: 100% !important;
+  .iphone-priority-hud .score-val i,
+  .iphone-priority-hud .time-val i {
+    flex: 0 0 auto !important;
+  }
+
+  .iphone-priority-hud .pause-segment {
+    width: clamp(42px, 5.5vw, 54px) !important;
+    min-width: clamp(42px, 5.5vw, 54px) !important;
+    max-width: clamp(42px, 5.5vw, 54px) !important;
+    flex: 0 0 clamp(42px, 5.5vw, 54px) !important;
+    display: flex !important;
+    align-items: center !important;
     justify-content: center !important;
   }
 
-  .iphone-priority-hud .score-val #score {
-    display: inline-block !important;
-    min-width: 5.8ch !important; /* stable up to 999,999 with comma */
-    text-align: right !important;
-  }
-
-  .iphone-priority-hud .time-val #timerText {
-    display: inline-block !important;
-    min-width: 4.2ch !important; /* stable mm:ss */
-    text-align: left !important;
+  .iphone-priority-hud .pause-btn-new {
+    width: clamp(34px, 7.2dvh, 44px) !important;
+    height: clamp(34px, 7.2dvh, 44px) !important;
+    min-width: clamp(34px, 7.2dvh, 44px) !important;
+    min-height: clamp(34px, 7.2dvh, 44px) !important;
+    max-width: calc(var(--hud-h) - 8px) !important;
+    max-height: calc(var(--hud-h) - 8px) !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 999px !important;
+    padding: 0 !important;
   }
 }
 
-/* Narrow iPhone fallback: keep fixed widths, only reduce the constants once. */
+/* Very short iPhone fallback: still no pseudo labels or HUD-height increase. */
 @media (orientation: landscape) and (max-height: 430px) {
-  .iphone-priority-hud {
-    --fmw-hud-level-w: 50px;
-    --fmw-hud-matches-w: 58px;
-    --fmw-hud-time-w: 82px;
-    --fmw-hud-score-w: 112px;
-    --fmw-hud-country-w: clamp(178px, 22vw, 230px);
-    --fmw-hud-helper-w: 50px;
-    --fmw-hud-pause-w: 48px;
-    --fmw-hud-action-gap: 7px;
-    column-gap: clamp(7px, 1.2vw, 14px) !important;
-  }
-
-  .iphone-priority-hud .score-val {
-    font-size: clamp(13px, 3.75dvh, 20px) !important;
-  }
-
-  .iphone-priority-hud .country-name-pill {
+  .iphone-priority-hud .level-segment .stat-label,
+  .iphone-priority-hud .matches-segment .stat-label {
+    font-size: clamp(6px, 1.35dvh, 7px) !important;
     letter-spacing: .12em !important;
   }
-}
 
-/* Wider phone/browser preview: still fixed, but with a little extra score room. */
-@media (orientation: landscape) and (min-height: 561px) and (max-width: 1200px) {
-  .iphone-priority-hud {
-    --fmw-hud-level-w: 58px;
-    --fmw-hud-matches-w: 68px;
-    --fmw-hud-time-w: 94px;
-    --fmw-hud-score-w: 132px;
-    --fmw-hud-country-w: clamp(220px, 23vw, 285px);
-    --fmw-hud-helper-w: 58px;
-    --fmw-hud-pause-w: 56px;
-    --fmw-hud-action-gap: 9px;
-    grid-template-columns:
-      calc(var(--fmw-hud-level-w) + var(--fmw-hud-matches-w) + var(--fmw-hud-time-w) + var(--fmw-hud-score-w) + 3px)
-      var(--fmw-hud-country-w)
-      calc((var(--fmw-hud-helper-w) * 2) + var(--fmw-hud-pause-w) + (var(--fmw-hud-action-gap) * 2) + 10px) !important;
-    justify-content: center !important;
+  .iphone-priority-hud .country-segment,
+  .iphone-priority-hud .country-name-pill {
+    width: clamp(178px, 22vw, 220px) !important;
+    min-width: clamp(178px, 22vw, 220px) !important;
+    max-width: clamp(178px, 22vw, 220px) !important;
   }
 }
