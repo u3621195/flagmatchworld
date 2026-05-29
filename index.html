@@ -60,7 +60,6 @@
   </div>
 
   <!-- Hidden legacy timer/level elements for JS compatibility -->
-  <span style="display:none" id="timerText">08:00</span>
   <span style="display:none" id="level">01</span>
   <span style="display:none" class="movement-icon movement-normal" id="movementIcon"></span>
 
@@ -72,8 +71,9 @@
     <button id="musicBtn"></button>
   </div>
 </header>
-<div aria-hidden="true" class="board-time-meter">
-<div class="board-time-bar" id="boardTimerBar"></div>
+<div class="board-time-meter">
+  <div class="board-time-bar" id="boardTimerBar"></div>
+  <span class="board-time-pill" id="timerText">08:00</span>
 </div>
 <div class="board-header fmw-board-header">
 <span id="boardInfo">MATCHES: --</span>
