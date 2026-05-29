@@ -1,2 +1,12 @@
 Flag Match World v5.1.1 - Compact Level HUD + Restored Board Size
 Baseline: Flag_Match_World_v5_UI_Replaced_Fixes.zip
+
+Flag Match World v5.2 - PNG logo startup and unified emerald/gold visual tone.
+
+- v5.2.1: Updated tile surfaces to warm champagne with a dark emerald frame for improved flag contrast and better logo/theme consistency.
+
+- v5.2.2: Rebuilt the iPhone HUD into a left status cluster, centered country-name plate, and right action cluster. Moved Time and Score to the left, reduced Hint/Shuffle button bodies so they fit inside the HUD, and kept floating count badges.
+
+- v5.2.3: Narrowed the centered country-name pill and reserved more space for Score on iPhone HUD, including larger comma-formatted scores.
+
+- v5.2.4: Locked iPhone HUD field widths so Level, Matches, Time, Score, Country, Hint, Shuffle, and Pause no longer shift when values update.

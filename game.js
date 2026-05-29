@@ -1363,11 +1363,6 @@ function formatHelperCount(n) {
 function updateHelperDisplay() {
   hintCountEl.textContent = formatHelperCount(hintCount);
   shuffleCountEl.textContent = formatHelperCount(shuffleCount);
-  // Toggle empty/dimmed state on buttons when count hits 0
-  const hintBtn = $("hintBtn");
-  const shuffleBtn = $("shuffleBtn");
-  if (hintBtn) hintBtn.classList.toggle("empty", hintCount <= 0);
-  if (shuffleBtn) shuffleBtn.classList.toggle("empty", shuffleCount <= 0);
 }
 function refillHelpersAfterClearedLevel(clearedLevel, perfectClear = false) {
   let changed = false;
@@ -2165,7 +2160,6 @@ function setSelectedCountryName(name) {
   const clean = String(name || "").trim();
   pill.textContent = clean ? clean.toUpperCase() : "SELECT A FLAG";
   pill.classList.toggle("active", !!clean);
-  pill.classList.toggle("has-selection", !!clean);
 }
 
 function resetSelectedCountryName() {
@@ -2514,10 +2508,6 @@ function updateTimer() {
   document.body.classList.toggle(
     "low-time",
     timeLeft <= 60 && gameStarted && !paused,
-  );
-  document.body.classList.toggle(
-    "critical-time",
-    timeLeft <= 15 && gameStarted && !paused,
   );
   if (timeLeft === 60 && !timerWarned) {
     timerWarned = true;
