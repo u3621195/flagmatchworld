@@ -1,1 +1,1 @@
-v5.10 Badge Centering Polish
+v5.11 Rule Popup + Persistent Helper Inventory

@@ -1,3 +1,12 @@
+# Flag Match World v5.11
+
+Changes in this build:
+- Continue from a fresh saved level checkpoint now shows the movement rule popup before the timer starts.
+- Main Game helper inventory now deducts persistently when Hint or Shuffle is used.
+- Restart Level, Home/Quit, Game Over, Retry, and Replay do not refund used helpers.
+- Auto-shuffle remains free and does not consume Shuffle inventory.
+- Quick Game remains temporary and resets helpers only when starting a new Quick Game session.
+
 # Flag Match World v5.0
 
 This package keeps the stable HTML/CSS Flag Match World game structure and real 3D flag sprites, while applying the useful gameplay-logic corrections inspired by the Google AI Studio version.

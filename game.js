@@ -1669,6 +1669,22 @@ function deleteSave(setId = currentSpriteSetId) {
   saveAllSaves(saves);
 }
 
+function persistHelperInventoryOnly() {
+  if (isQuickGame) return false;
+  const slot = SPRITE_SETS[currentSaveSlotId] ? currentSaveSlotId : currentSpriteSetId;
+  const saves = loadAllSaves();
+  const save = saves[slot];
+  // Keep existing progress/checkpoint exactly as-is; only update persistent
+  // helper inventory so helpers are not refunded by Restart/Home/Game Over.
+  if (!save) return false;
+  save.hintCount = hintCount;
+  save.shuffleCount = shuffleCount;
+  save.theme = currentTheme;
+  save.ts = Date.now();
+  saves[slot] = save;
+  return saveAllSaves(saves);
+}
+
 function formatSaveDate(ts) {
   const d = new Date(ts);
   const dd = String(d.getDate()).padStart(2, "0");
@@ -2701,6 +2717,7 @@ function hint() {
   }
   hintCount--;
   usedHintLvl++;
+  persistHelperInventoryOnly();
   updateHelperDisplay();
   document
     .querySelectorAll(".tile.hint")
@@ -2742,6 +2759,7 @@ function shuffleTiles(count = true) {
   if (count) {
     shuffleCount--;
     usedShuffLvl++;
+    persistHelperInventoryOnly();
     updateHelperDisplay();
   }
   renderBoard();
@@ -3064,8 +3082,15 @@ function continueFromSave() {
   unlockAudio();
   sfx.level();
   playBgmIfAllowed();
-  startTimer();
-  moveStatus.textContent = `SAVE RESTORED  LV ${level}`;
+  if (save.freshLevelCheckpoint && !isQuickGame) {
+    showLevelStartPopup(level, currentStrategy, () => {
+      startTimer();
+      moveStatus.textContent = `SYSTEM ONLINE  LV ${level}`;
+    });
+  } else {
+    startTimer();
+    moveStatus.textContent = `SAVE RESTORED  LV ${level}`;
+  }
 }
 
 function setupPauseModal() {
