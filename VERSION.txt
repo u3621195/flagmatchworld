@@ -1,1 +1,1 @@
-5.9 Squircle HUD Buttons Fix
+v5.10 Badge Centering Polish

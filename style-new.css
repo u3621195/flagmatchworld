@@ -9642,3 +9642,63 @@ body.critical-time #boardTimerBar { background: linear-gradient(90deg, #ff365f, 
     font-size: clamp(16px, 4.2dvh, 20px) !important;
   }
 }
+
+/* =========================================================
+   FMW v5.10 tiny HUD badge polish
+   - Optically center helper counts inside the yellow badges
+   ========================================================= */
+#game-area .hud-bar #hintCount,
+#game-area .hud-bar #shuffleCount,
+#game-area .hud-bar .hud-badge,
+.topbar.hud-bar #hintCount,
+.topbar.hud-bar #shuffleCount,
+.topbar.hud-bar .hud-badge {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+  line-height: 1 !important;
+  padding: 0 !important;
+  letter-spacing: -0.03em !important;
+  font-variant-numeric: tabular-nums !important;
+}
+
+#game-area .hud-bar #hintCount,
+#game-area .hud-bar #shuffleCount,
+.topbar.hud-bar #hintCount,
+.topbar.hud-bar #shuffleCount {
+  width: clamp(19px, 3.6dvh, 23px) !important;
+  height: clamp(19px, 3.6dvh, 23px) !important;
+  min-width: clamp(19px, 3.6dvh, 23px) !important;
+  min-height: clamp(19px, 3.6dvh, 23px) !important;
+  border-radius: 999px !important;
+  transform: translate(0, 0) !important;
+}
+
+#game-area .hud-bar #hintCount::before,
+#game-area .hud-bar #shuffleCount::before,
+#game-area .hud-bar #hintCount::after,
+#game-area .hud-bar #shuffleCount::after,
+.topbar.hud-bar #hintCount::before,
+.topbar.hud-bar #shuffleCount::before,
+.topbar.hud-bar #hintCount::after,
+.topbar.hud-bar #shuffleCount::after {
+  content: none !important;
+  display: none !important;
+}
+
+@media (orientation: landscape) and (max-height: 560px) {
+  #game-area .hud-bar #hintCount,
+  #game-area .hud-bar #shuffleCount,
+  .topbar.hud-bar #hintCount,
+  .topbar.hud-bar #shuffleCount {
+    width: clamp(18px, 4.1dvh, 22px) !important;
+    height: clamp(18px, 4.1dvh, 22px) !important;
+    min-width: clamp(18px, 4.1dvh, 22px) !important;
+    min-height: clamp(18px, 4.1dvh, 22px) !important;
+    font-size: clamp(8.5px, 2.35dvh, 10.5px) !important;
+    top: -7px !important;
+    right: -7px !important;
+  }
+}
