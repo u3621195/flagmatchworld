@@ -9702,3 +9702,41 @@ body.critical-time #boardTimerBar { background: linear-gradient(90deg, #ff365f, 
     right: -7px !important;
   }
 }
+
+/* =========================================================
+   FMW v5.14 Settings Panel Padding Polish
+   - Give Music/Sound labels breathing room from left edge
+   - Pull toggles inward from right edge
+   ========================================================= */
+.fmw-settings-panel {
+  padding-left: clamp(18px, 2.4vw, 28px) !important;
+  padding-right: clamp(18px, 2.4vw, 28px) !important;
+}
+.fmw-settings-panel .fmw-setting-row {
+  padding-left: clamp(10px, 1.6vw, 18px) !important;
+  padding-right: clamp(10px, 1.6vw, 18px) !important;
+  column-gap: clamp(18px, 2.4vw, 28px) !important;
+}
+.fmw-settings-panel .fmw-setting-row span {
+  padding-left: clamp(4px, .7vw, 10px) !important;
+}
+.fmw-settings-panel .fmw-toggle {
+  margin-right: clamp(4px, .8vw, 10px) !important;
+}
+
+@media (orientation: landscape) and (max-height: 560px) {
+  .fmw-settings-panel {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+  .fmw-settings-panel .fmw-setting-row {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+  .fmw-settings-panel .fmw-setting-row span {
+    padding-left: 4px !important;
+  }
+  .fmw-settings-panel .fmw-toggle {
+    margin-right: 4px !important;
+  }
+}

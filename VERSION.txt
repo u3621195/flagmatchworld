@@ -1,1 +1,1 @@
-v5.13 Center Rule Icon Spacing Patch
+v5.14 Settings Padding Polish
