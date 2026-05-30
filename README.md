@@ -1,3 +1,9 @@
+# Flag Match World v5.13
+
+Changes in this build:
+- Adjusted X-Center rule popup icon spacing so the arrows and center line read clearly.
+- Adjusted Y-Center rule popup icon so the top arrow points down and the bottom arrow points up toward the center line, with clearer spacing.
+
 # Flag Match World v5.11
 
 Changes in this build:
@@ -47,3 +53,9 @@ Version: v5.5 HUD Final Cleanup
 - Removes legacy HINT/SHUFFLE pseudo text.
 - Hides old movement rule icon from HUD.
 - Locks HUD grid spacing to prevent timer/helper overlap.
+
+
+## v5.12 Fixed 8-Minute Timer Cleanup
+- Removed legacy timer scaling constants.
+- `getLevelTime()` now always returns `TOTAL_TIME` / 480 seconds.
+- Levels 1+ and Quick Game now consistently start at 8:00.

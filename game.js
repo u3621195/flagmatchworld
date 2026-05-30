@@ -1,8 +1,6 @@
 const ROWS = 9,
   COLS = 16,
   TOTAL_TIME = 480,
-  MIN_TOTAL_TIME = 360,
-  TIMER_STEP_PER_LOOP = 15,
   LEVEL_LOOP_SIZE = 8,
   HINTS = 5,
   SHUFFLES = 5,
@@ -1331,9 +1329,9 @@ let scoreHistory = [];
 let currentStrategy = STRATEGIES[0];
 
 function getLevelTime(lvl) {
-  const reduction =
-    Math.floor((Math.max(1, lvl) - 1) / LEVEL_LOOP_SIZE) * TIMER_STEP_PER_LOOP;
-  return Math.max(MIN_TOTAL_TIME, TOTAL_TIME - reduction);
+  // Flag Match World locked rule: every Main Game and Quick Game level starts at 8:00.
+  // Older inherited builds reduced time by 15 seconds every 8 levels; that scaling has been removed.
+  return TOTAL_TIME;
 }
 
 function getMainGameUniqueFlagCount(lvl) {
@@ -1667,22 +1665,6 @@ function deleteSave(setId = currentSpriteSetId) {
   const saves = loadAllSaves();
   delete saves[setId];
   saveAllSaves(saves);
-}
-
-function persistHelperInventoryOnly() {
-  if (isQuickGame) return false;
-  const slot = SPRITE_SETS[currentSaveSlotId] ? currentSaveSlotId : currentSpriteSetId;
-  const saves = loadAllSaves();
-  const save = saves[slot];
-  // Keep existing progress/checkpoint exactly as-is; only update persistent
-  // helper inventory so helpers are not refunded by Restart/Home/Game Over.
-  if (!save) return false;
-  save.hintCount = hintCount;
-  save.shuffleCount = shuffleCount;
-  save.theme = currentTheme;
-  save.ts = Date.now();
-  saves[slot] = save;
-  return saveAllSaves(saves);
 }
 
 function formatSaveDate(ts) {
@@ -2717,7 +2699,6 @@ function hint() {
   }
   hintCount--;
   usedHintLvl++;
-  persistHelperInventoryOnly();
   updateHelperDisplay();
   document
     .querySelectorAll(".tile.hint")
@@ -2759,7 +2740,6 @@ function shuffleTiles(count = true) {
   if (count) {
     shuffleCount--;
     usedShuffLvl++;
-    persistHelperInventoryOnly();
     updateHelperDisplay();
   }
   renderBoard();
@@ -3082,15 +3062,8 @@ function continueFromSave() {
   unlockAudio();
   sfx.level();
   playBgmIfAllowed();
-  if (save.freshLevelCheckpoint && !isQuickGame) {
-    showLevelStartPopup(level, currentStrategy, () => {
-      startTimer();
-      moveStatus.textContent = `SYSTEM ONLINE  LV ${level}`;
-    });
-  } else {
-    startTimer();
-    moveStatus.textContent = `SAVE RESTORED  LV ${level}`;
-  }
+  startTimer();
+  moveStatus.textContent = `SAVE RESTORED  LV ${level}`;
 }
 
 function setupPauseModal() {
