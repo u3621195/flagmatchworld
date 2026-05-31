@@ -8,6 +8,8 @@
 <!-- Fonts loaded locally via @font-face in style-new.css -->
 
 <link href="style-new.css?v=fmw-v5-7-iphone-polish" rel="stylesheet"/>
+<!-- Ocean Blue skin — layered on top of the base layout engine -->
+<link href="ocean-blue.css?v=ob-1" rel="stylesheet"/>
 
 
 </head>
@@ -90,28 +92,73 @@
 </div>
 
 <div class="theme-picker hidden" id="themePicker" aria-hidden="true"></div>
-<section class="overlay" id="overlay">
+<section class="overlay ob-overlay" id="overlay">
+  <!-- sky + cloud atmosphere -->
+  <div class="ob-sky" aria-hidden="true"></div>
+  <!-- JS-driven flag mosaic kept for compatibility; hidden in Ocean Blue -->
   <div class="fmw-start-bg" id="fmwStartMosaic" aria-hidden="true"></div>
-  <div class="fmw-start-vignette" aria-hidden="true"></div>
-  <div class="fmw-start-card-v2">
-    <div class="fmw-logo-wrap" aria-label="Flag Match World">
-      <img src="assets/images/logo.png" alt="Flag Match World" class="fmw-logo-img">
+
+  <div class="ob-stage">
+    <!-- LEFT: hero globe on a brass stand, ringed by floating flag chips -->
+    <div class="ob-globe-col">
+      <div class="ob-globe" aria-hidden="true">
+        <div class="ob-globe-sphere">
+          <div class="ob-globe-land"></div>
+          <div class="ob-globe-clouds"></div>
+          <div class="ob-globe-shine"></div>
+          <div class="ob-globe-shadow"></div>
+        </div>
+        <div class="ob-globe-ring"></div>
+        <div class="ob-globe-stand"></div>
+        <div class="ob-globe-base"></div>
+      </div>
     </div>
-    <div class="fmw-start-sub-pill">MATCH FLAGS ACROSS THE GLOBE</div>
-    <hr class="fmw-gold-rule">
-    <div class="fmw-menu-stack">
-      <button class="fmw-btn fmw-btn-green" id="continueFromSaveBtn" type="button">Continue</button>
-      <button class="fmw-btn fmw-btn-teal" id="startBtn" type="button">New Game</button>
-      <button class="fmw-btn fmw-btn-teal" id="quickGameBtn" type="button">Quick Game</button>
-      <button class="fmw-btn fmw-btn-teal" id="settingsBtn" type="button">Settings</button>
-    </div>
-    <div class="fmw-save-line" id="savedSlot">
-      <span id="saveLevel">Flags</span>
-      <span class="fmw-save-sep">·</span>
-      <span id="saveScore">No saved game</span>
-      <span class="fmw-save-sep">·</span>
-      <span id="saveDate">—</span>
-      <button class="delete-save-btn hidden" id="deleteSaveBtn" title="Delete saved game" type="button">×</button>
+
+    <!-- RIGHT: title, subtitle, menu cards, save status -->
+    <div class="ob-content-col">
+      <div class="ob-title" aria-label="Flag Match World">
+        <div class="ob-title-rows">
+          <span class="ob-title-line ob-tl-flag">FLAG</span>
+          <span class="ob-title-line ob-tl-match">MATCH</span>
+        </div>
+          <span class="ob-flag"></span>
+        </span>
+        <span class="ob-title-ribbon"><i class="fa-solid fa-star"></i>WORLD<i class="fa-solid fa-star"></i></span>
+      </div>
+      <div class="ob-subtitle"><span class="ob-sub-rule"></span>Match flags across the globe<span class="ob-sub-rule"></span></div>
+
+      <div class="ob-menu">
+        <button class="ob-card ob-card-green" id="continueFromSaveBtn" type="button">
+          <span class="ob-card-ic"><i class="fa-solid fa-play"></i></span>
+          <span class="ob-card-label">Continue</span>
+          <span class="ob-card-sub">Pick up where you left off</span>
+        </button>
+        <button class="ob-card ob-card-blue" id="startBtn" type="button">
+          <span class="ob-card-ic"><i class="fa-solid fa-globe"></i></span>
+          <span class="ob-card-label">New Game</span>
+          <span class="ob-card-sub">Start your journey</span>
+        </button>
+        <button class="ob-card ob-card-purple" id="quickGameBtn" type="button">
+          <span class="ob-card-ic"><i class="fa-solid fa-bolt"></i></span>
+          <span class="ob-card-label">Quick Game</span>
+          <span class="ob-card-sub">Fast fun, anytime</span>
+        </button>
+        <button class="ob-card ob-card-amber" id="settingsBtn" type="button">
+          <span class="ob-card-ic"><i class="fa-solid fa-gear"></i></span>
+          <span class="ob-card-label">Settings</span>
+          <span class="ob-card-sub">Customize your experience</span>
+        </button>
+      </div>
+
+      <div class="ob-save-bar" id="savedSlot">
+        <i class="fa-solid fa-floppy-disk ob-save-ic" aria-hidden="true"></i>
+        <span id="saveLevel">Flags</span>
+        <span class="fmw-save-sep">·</span>
+        <span id="saveScore">No saved game</span>
+        <span class="fmw-save-sep">·</span>
+        <span id="saveDate">—</span>
+        <button class="delete-save-btn hidden" id="deleteSaveBtn" title="Delete saved game" type="button">×</button>
+      </div>
     </div>
   </div>
 </section>
@@ -306,5 +353,78 @@
 </section>
 <div aria-hidden="true" class="combo-layer" id="comboLayer"></div>
 <script src="game.js?v=fmw-v5-ui-fixes"></script>
+
+<!-- Ocean Blue startup helpers: fallback image and restore Continue card structure. -->
+<script>
+(function(){
+  var PLACEHOLDER='data:image/svg+xml,'+encodeURIComponent(
+    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 70 50'>"+
+    "<rect width='70' height='50' rx='8' fill='#e7eef7'/>"+
+    "<rect x='4' y='4' width='62' height='42' rx='5' fill='none' stroke='#b9cce4' stroke-width='2'/>"+
+    "<g fill='#9fb8d8'><rect x='14' y='14' width='42' height='6' rx='3'/>"+
+    "<rect x='14' y='22' width='42' height='6' rx='3'/><rect x='14' y='30' width='42' height='6' rx='3'/></g></svg>");
+  document.addEventListener('error', function(e){
+    var t=e.target;
+    if(t && t.tagName==='IMG' && t.dataset.obFallback!=='1'){
+      t.dataset.obFallback='1';
+      t.src=PLACEHOLDER;
+    }
+  }, true);
+
+  function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  var rebuilding=false;
+  function rebuildContinue(){
+    var btn=document.getElementById('continueFromSaveBtn');
+    if(!btn || rebuilding) return;
+    if(btn.querySelector('.ob-card-label')) return;
+    var txt=(btn.textContent||'Continue').trim() || 'Continue';
+    rebuilding=true;
+    btn.innerHTML=
+      '<span class="ob-card-ic"><i class="fa-solid fa-play"></i></span>'+
+      '<span class="ob-card-label">'+esc(txt)+'</span>'+
+      '<span class="ob-card-sub">Pick up where you left off</span>';
+    rebuilding=false;
+  }
+  function startContinueWatch(){
+    var btn=document.getElementById('continueFromSaveBtn');
+    if(!btn) return;
+    rebuildContinue();
+    new MutationObserver(function(){ rebuildContinue(); })
+      .observe(btn, {childList:true, characterData:true, subtree:true});
+  }
+
+  function assignFlagChips(){
+    var chips=[].slice.call(document.querySelectorAll('.ob-flag-chip'));
+    if(!chips.length || typeof FLAGS_SPRITES==='undefined' || !Array.isArray(FLAGS_SPRITES)) return;
+    var pool=FLAGS_SPRITES.slice();
+    for(var i=pool.length-1;i>0;i--){
+      var j=Math.floor(Math.random()*(i+1));
+      var tmp=pool[i]; pool[i]=pool[j]; pool[j]=tmp;
+    }
+    chips.forEach(function(chip, idx){
+      var flag=pool[idx % pool.length];
+      if(!flag || !flag.img) return;
+      chip.style.backgroundImage='url("'+flag.img.replace(/"/g, '%22')+'")';
+      chip.style.backgroundSize='cover';
+      chip.style.backgroundPosition='center';
+      chip.setAttribute('title', flag.n || 'Flag');
+      chip.setAttribute('aria-label', flag.n || 'Flag');
+    });
+  }
+
+  function initOceanBlueStartup(){
+    startContinueWatch();
+    // Floating startup flag chips removed per design polish.
+    // assignFlagChips();
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', initOceanBlueStartup);
+  } else {
+    initOceanBlueStartup();
+  }
+  window.addEventListener('load', initOceanBlueStartup);
+})();
+</script>
+
 </body>
 </html>
