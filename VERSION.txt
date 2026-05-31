@@ -2,3 +2,4 @@ v5.14 Settings Padding Polish
 Ocean Blue visual overlay applied on top of v5.14.
 
 Globe and board-corner startup/gameplay visual polish applied.
+Layout Correction Pass: startup composition, horizontal globe GIF, compact HUD, lighter board, simplified flag tiles.

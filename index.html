@@ -7,14 +7,14 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <!-- Fonts loaded locally via @font-face in style-new.css -->
 
-<link href="style-new.css?v=fmw-v5-7-iphone-polish" rel="stylesheet"/>
+<link href="style-new.css?v=fmw-v5-14-board-first-polish" rel="stylesheet"/>
 <!-- Ocean Blue skin — layered on top of the base layout engine -->
-<link href="ocean-blue.css?v=ob-1" rel="stylesheet"/>
+<link href="ocean-blue.css?v=ob-4-layout-rotation-board" rel="stylesheet"/>
 
 
 </head>
 
-<body>
+<body class="startup-layout-polish">
 <div class="ambient"></div>
 <div class="scanline"></div>
 <div class="app-shell">
@@ -121,9 +121,7 @@
           <span class="ob-title-line ob-tl-flag">FLAG</span>
           <span class="ob-title-line ob-tl-match">MATCH</span>
         </div>
-          <span class="ob-flag"></span>
-        </span>
-        <span class="ob-title-ribbon"><i class="fa-solid fa-star"></i>WORLD<i class="fa-solid fa-star"></i></span>
+<span class="ob-title-ribbon"><i class="fa-solid fa-star"></i>WORLD<i class="fa-solid fa-star"></i></span>
       </div>
       <div class="ob-subtitle"><span class="ob-sub-rule"></span>Match flags across the globe<span class="ob-sub-rule"></span></div>
 
@@ -352,7 +350,7 @@
 </div>
 </section>
 <div aria-hidden="true" class="combo-layer" id="comboLayer"></div>
-<script src="game.js?v=fmw-v5-ui-fixes"></script>
+<script src="game.js?v=fmw-v5-14-logic-unchanged-2"></script>
 
 <!-- Ocean Blue startup helpers: fallback image and restore Continue card structure. -->
 <script>
@@ -425,6 +423,7 @@
   window.addEventListener('load', initOceanBlueStartup);
 })();
 </script>
+
 
 </body>
 </html>
