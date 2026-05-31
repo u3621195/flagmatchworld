@@ -4066,10 +4066,18 @@ refreshSaveSlot(); // show saved game slot on start screen if one exists
   function renderStartupMosaic(){
     const el=q('fmwStartMosaic'); if(!el || typeof FLAGS_SPRITES === 'undefined') return;
     const w=window.innerWidth||1024, h=window.innerHeight||768;
-    const cw=w>1200?72:w>760?66:54;
-    const cols=Math.max(8,Math.ceil((w+80)/cw));
-    const rows=Math.ceil((h+120)/((cw*2/3)+6))+3;
-    const count=cols*rows; el.style.gridTemplateColumns=`repeat(${cols},1fr)`;
+    const isPhoneLandscape = w > h && h <= 560;
+    // Startup background mosaic: on iPhone landscape the previous auto-stretch grid
+    // made flags look crowded/overlapped behind the menu. Use smaller fixed cells
+    // with wider gaps only for the decorative startup layer. Gameplay tiles are unaffected.
+    const cw = isPhoneLandscape ? 46 : (w>1200?72:w>760?66:54);
+    const gap = isPhoneLandscape ? 12 : 6;
+    const cols=Math.max(8,Math.ceil((w+120)/(cw+gap)));
+    const rows=Math.ceil((h+140)/((cw*2/3)+gap))+3;
+    const count=cols*rows;
+    el.style.gridTemplateColumns = isPhoneLandscape ? `repeat(${cols}, ${cw}px)` : `repeat(${cols},1fr)`;
+    el.style.gap = `${gap}px`;
+    el.style.justifyContent = 'center';
     if(el.childElementCount===count) return;
     el.innerHTML='';
     for(let i=0;i<count;i++){

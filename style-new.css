@@ -9740,3 +9740,24 @@ body.critical-time #boardTimerBar { background: linear-gradient(90deg, #ff365f, 
     margin-right: 4px !important;
   }
 }
+
+/* =========================================================
+   FMW v5.17 — Startup mosaic iPhone landscape spacing polish
+   Keeps the startup background decorative and prevents flag tiles
+   from visually colliding behind the menu. Gameplay board unchanged.
+   ========================================================= */
+@media (orientation: landscape) and (max-height: 560px) {
+  .fmw-start-bg {
+    inset: -54px !important;
+    gap: 12px !important;
+    transform: none !important;
+    opacity: .74 !important;
+    filter: saturate(.95) brightness(.86) !important;
+  }
+  .fmw-start-flag {
+    border-radius: 7px !important;
+    box-shadow:
+      0 0 0 1px rgba(0,0,0,.76),
+      0 5px 10px rgba(0,0,0,.34) !important;
+  }
+}
