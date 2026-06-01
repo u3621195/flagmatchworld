@@ -1,23 +1,11 @@
-# Flag Match World — Atlas Index (Direction A)
+# Flag Match World - Boarding Pass v5.18 Gameplay Logic Merge
 
-The playable game with the **Atlas Index** design applied: a Swiss-editorial
-skin — warm paper + ink, a single warm-red accent, ruled grids, condensed
-display type (Saira Condensed) with monospace numerals (Space Mono) and Archivo
-body text. Same game and structure as the other builds — only the theme skin
-changed.
+Boarding Pass visual design with latest v5.17 gameplay/rules logic merged:
 
-## Run it
-Open `index.html`.
-
-## How the styling is structured
-- `style-new.css` — the original layout engine (HUD, board sizing, responsive). Untouched.
-- `atlas-index.css` — the Atlas Index skin, layered on top. **Edit colours / type here.**
-- `index.html` — Atlas Index startup screen + game; all game IDs kept intact.
-
-## Assets (already wired)
-```
-assets/
-├── fonts/            ← legacy local fonts (skin uses Google Fonts: Archivo, Saira Condensed, Space Mono)
-├── sprites/flags/    ← all country flag tiles (included)
-└── audio/            ← game audio
-```
+- Pure random flag selection from all 212 flags; no difficulty buckets.
+- Unique flags: 1-8=24, 9-16=28, 17-24=32, 25-32=36, 33-40=40, 41-48=44, 49+=48.
+- Timer: 1-48=8:00, 49-96=7:45, 97-144=7:30, 145-192=7:15, 193+=7:00 minimum.
+- Old saved timer values are recalculated from current rules.
+- Rule popup appears on Continue and Restart before timer starts.
+- Main Game helpers deduct immediately and persist without refund on restart/quit/game over.
+- Quick Game helpers remain temporary per session.

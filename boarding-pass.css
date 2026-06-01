@@ -1,0 +1,512 @@
+/* ============================================================
+   FLAG MATCH WORLD — BOARDING PASS SKIN  (Direction B)
+   First-class travel ticket. Deep teal sky, cream ticket stock,
+   navy ink, brushed-gold accent + a single stamp-red.
+   Display type = Saira Condensed, labels = Space Mono,
+   body = Archivo. Layered ON TOP of style-new.css (the layout
+   engine) — only colour / surface / type, never the geometry.
+   ============================================================ */
+
+:root,
+html[data-theme]{
+  --bp-sky-1:#154045; --bp-sky-2:#0c2327; --bp-sky-3:#081a1d;
+  --bp-card:#f3ecdc; --bp-card-2:#efe6d0; --bp-card-3:#f8f2e4;
+  --bp-navy:#16343a; --bp-navy-soft:#3a5358; --bp-navy-dim:#5b6d6f;
+  --bp-gold:#d6b46e; --bp-gold-deep:#bb953f;
+  --bp-red:oklch(0.55 0.18 25); --bp-red-deep:oklch(0.47 0.17 25);
+  --bp-line:rgba(22,52,58,.22); --bp-line-strong:#16343a;
+  --fmw-font:'Archivo',system-ui,sans-serif;
+  /* connection path → navy core, gold halo */
+  --path-line:#16343a !important; --path-core:#f3ecdc !important; --path-halo:rgba(214,180,110,.55) !important;
+}
+
+/* ---------- global atmosphere ---------- */
+html, body{
+  background:#0c2327 !important;
+  color:var(--bp-navy) !important;
+  font-family:'Archivo',system-ui,sans-serif !important;
+}
+.ambient{ display:none !important; }
+.scanline{ display:none !important; }
+.app-shell{ background:transparent !important; }
+body::before{ display:none !important; }
+/* deep-sky vignette + faint star/route dot field over the whole app */
+body::after{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(214,180,110,.16) 0 1.3px, transparent 1.6px) 0 0/40px 40px,
+    radial-gradient(130% 110% at 18% -5%, #16484e 0%, #0c2327 58%, #07191c 100%);
+  -webkit-mask-image:radial-gradient(150% 120% at 50% 45%, #000 32%, transparent 82%), none;
+  opacity:1;
+}
+
+/* ============================================================
+   STARTUP SCREEN — Boarding Pass
+   ============================================================ */
+html body #overlay,
+html body #overlay:not(.hidden){
+  background:
+    radial-gradient(circle at 50% 50%, rgba(214,180,110,.16) 0 1.3px, transparent 1.6px) 0 0/40px 40px,
+    radial-gradient(130% 110% at 18% -5%, #16484e 0%, #0c2327 58%, #07191c 100%) !important;
+  display:flex !important; align-items:center; justify-content:center;
+  padding:clamp(12px,3vh,30px) clamp(14px,3.4vw,46px) !important; overflow:hidden;
+}
+html body #overlay::before,
+html body #overlay::after,
+html body #overlay:not(.hidden)::before,
+html body #overlay:not(.hidden)::after{
+  content:none !important; display:none !important; background:none !important;
+}
+#overlay .fmw-start-bg{ display:none !important; }
+
+/* the diagonal dashed flight path behind the ticket */
+.bp-start{
+  position:relative; z-index:3; width:100%; max-width:1120px;
+  aspect-ratio:auto; display:flex; align-items:center; justify-content:center;
+}
+.bp-start::before{
+  content:""; position:absolute; left:-4%; right:-4%; top:52%; height:0;
+  border-top:2px dashed rgba(214,180,110,.32); transform:rotate(-4deg); z-index:-1;
+}
+
+/* the ticket itself : main | perforation | stub */
+.bp-ticket{
+  width:100%; display:grid; grid-template-columns:1fr clamp(240px,29%,300px);
+  border-radius:16px; overflow:hidden; background:var(--bp-card);
+  box-shadow:0 34px 70px rgba(0,0,0,.5), 0 2px 0 rgba(255,255,255,.45) inset;
+}
+
+/* ---- ticket main body ---- */
+.bp-main{
+  position:relative; padding:clamp(16px,2.4vw,28px) clamp(18px,2.6vw,32px) clamp(14px,2vw,22px);
+  display:flex; flex-direction:column; min-height:0;
+}
+.bp-main::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent 0 7px,rgba(22,52,58,.028) 7px 8px);
+}
+.bp-head{
+  display:flex; align-items:flex-end; justify-content:space-between; gap:14px;
+  border-bottom:2px solid var(--bp-navy); padding-bottom:clamp(10px,1.4vw,14px);
+}
+.bp-airline{
+  font-family:'Saira Condensed',sans-serif; font-weight:700; line-height:.9;
+  font-size:clamp(26px,3.4vw,40px); letter-spacing:.05em; text-transform:uppercase;
+  color:var(--bp-navy); display:flex; align-items:center; gap:.32em;
+}
+.bp-airline em{ color:var(--bp-red); font-style:normal; font-size:.82em; }
+.bp-class{
+  font-family:'Space Mono',monospace; font-size:clamp(8px,.85vw,10px);
+  letter-spacing:.22em; text-transform:uppercase; color:var(--bp-red);
+  text-align:right; line-height:1.6; flex:none;
+}
+
+.bp-route{ display:flex; align-items:center; gap:clamp(10px,1.6vw,18px); margin:clamp(14px,2vw,22px) 0 clamp(8px,1.2vw,12px); }
+.bp-port{ display:flex; flex-direction:column; line-height:1; }
+.bp-port b{
+  font-family:'Saira Condensed',sans-serif; font-weight:700; font-size:clamp(34px,4.6vw,54px);
+  letter-spacing:.04em; color:var(--bp-navy); }
+.bp-port i{ font-style:normal; font-size:clamp(8px,.85vw,10px); letter-spacing:.2em;
+  text-transform:uppercase; opacity:.6; margin-top:6px; }
+.bp-track{ flex:1; position:relative; height:26px; display:flex; align-items:center; }
+.bp-track::before{ content:""; position:absolute; left:0; right:0; top:50%; border-top:2px dotted var(--bp-navy); opacity:.5; }
+.bp-track span{ position:relative; margin:0 auto; color:var(--bp-red); font-size:clamp(16px,2vw,22px);
+  background:var(--bp-card); padding:0 10px; }
+
+.bp-tagline{
+  margin:0 0 clamp(8px,1.4vw,14px); max-width:46ch; font-size:clamp(11px,1.05vw,13.5px);
+  line-height:1.5; color:var(--bp-navy-soft); text-wrap:pretty; }
+.bp-tagline b{ color:var(--bp-red); font-weight:600; }
+
+.bp-passenger{ display:flex; flex-wrap:wrap; gap:clamp(16px,2.4vw,30px); margin-top:auto; }
+.bp-field{ display:flex; flex-direction:column; line-height:1; }
+.bp-field i{ font-style:normal; font-family:'Space Mono',monospace; font-size:clamp(7.5px,.8vw,9px);
+  letter-spacing:.18em; text-transform:uppercase; color:var(--bp-red); }
+.bp-field b{ font-family:'Saira Condensed',sans-serif; font-weight:600; font-size:clamp(15px,1.7vw,20px);
+  letter-spacing:.05em; text-transform:uppercase; color:var(--bp-navy); margin-top:5px; }
+
+.bp-stamps{ margin-top:clamp(12px,1.8vw,18px); display:flex; align-items:center; gap:clamp(10px,1.6vw,16px); }
+.bp-stamp{ width:clamp(42px,4.2vw,54px); height:clamp(42px,4.2vw,54px); border-radius:50%; overflow:hidden;
+  position:relative; border:2px solid var(--bp-navy); box-shadow:0 4px 9px rgba(0,0,0,.2); }
+.bp-stamp:nth-child(1){ transform:rotate(-9deg); }
+.bp-stamp:nth-child(2){ transform:rotate(6deg); }
+.bp-stamp:nth-child(3){ transform:rotate(-4deg); }
+.bp-stamp:nth-child(4){ transform:rotate(8deg); }
+.bp-stamp:nth-child(5){ transform:rotate(-6deg); }
+.bp-stamp img{ width:100%; height:100%; object-fit:cover; filter:saturate(.92) contrast(1.02); }
+.bp-stamp::after{ content:""; position:absolute; inset:0; border-radius:50%;
+  box-shadow:inset 0 0 0 3px rgba(243,236,220,.55), inset 0 0 12px rgba(22,52,58,.35); }
+
+/* ---- ticket stub (the menu) ---- */
+.bp-stub{
+  background:var(--bp-navy); color:var(--bp-card); position:relative;
+  padding:clamp(16px,2.2vw,24px) clamp(16px,2vw,22px) clamp(14px,1.8vw,18px);
+  display:flex; flex-direction:column; }
+.bp-stub::before{
+  content:""; position:absolute; left:-1px; top:0; bottom:0; width:2px;
+  background-image:radial-gradient(circle, var(--bp-card) 0 3px, transparent 3.5px);
+  background-size:2px 14px; background-repeat:repeat-y; }
+.bp-stub-h{ font-family:'Space Mono',monospace; font-size:clamp(8px,.85vw,10px);
+  letter-spacing:.26em; text-transform:uppercase; opacity:.62; margin-bottom:clamp(6px,1vw,10px);
+  text-align:center; }
+
+.bp-menu{ display:flex; flex-direction:column; margin:0 -4px; }
+.bp-mrow{
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  padding:clamp(8px,1.2vw,11px) 8px; border:0; border-bottom:1px dashed rgba(243,236,220,.26);
+  background:transparent; color:var(--bp-card); cursor:pointer; text-align:left;
+  border-radius:6px; transition:background .15s ease, padding-left .15s ease; font-family:inherit; width:auto; }
+.bp-menu .bp-mrow:last-child{ border-bottom:0; }
+.bp-mrow:hover{ background:rgba(243,236,220,.12); padding-left:14px; }
+.bp-mrow .bp-mk{ display:flex; flex-direction:column; line-height:1.05; min-width:0; }
+.bp-mrow .bp-mk i{ font-style:normal; font-family:'Space Mono',monospace; font-size:clamp(7px,.78vw,8.5px);
+  letter-spacing:.18em; text-transform:uppercase; color:var(--bp-gold); }
+.bp-mrow .bp-mk b{ font-family:'Saira Condensed',sans-serif; font-weight:600; font-size:clamp(15px,1.7vw,19px);
+  letter-spacing:.05em; text-transform:uppercase; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.bp-mrow .bp-seat{ font-family:'Saira Condensed',sans-serif; font-weight:700; font-size:clamp(14px,1.6vw,18px);
+  color:var(--bp-gold); flex:none; }
+.bp-mrow:disabled,.bp-mrow.disabled{ cursor:not-allowed; }
+.bp-mrow:disabled .bp-mk,.bp-mrow.disabled .bp-mk{ opacity:.34; }
+.bp-mrow:disabled .bp-seat,.bp-mrow.disabled .bp-seat{ opacity:.34; }
+.bp-mrow:disabled:hover,.bp-mrow.disabled:hover{ background:transparent; padding-left:8px; }
+
+/* saved-trip plate inside the stub */
+.bp-saved{ position:relative; margin-top:clamp(10px,1.4vw,14px); padding:clamp(8px,1.1vw,11px) 12px;
+  border:1px dashed rgba(243,236,220,.3); border-radius:7px; display:flex; flex-direction:column; gap:3px; }
+.bp-saved .bp-saved-k{ font-family:'Space Mono',monospace; font-size:8px; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--bp-gold); }
+.bp-saved #saveScore{ font-family:'Saira Condensed',sans-serif; font-weight:600; font-size:clamp(14px,1.5vw,17px);
+  letter-spacing:.02em; line-height:1; color:var(--bp-card); }
+.bp-saved .bp-saved-meta{ display:flex; gap:7px; font-family:'Space Mono',monospace; font-size:8px;
+  letter-spacing:.08em; text-transform:uppercase; opacity:.6; }
+.bp-saved .bp-del{ position:absolute; top:6px; right:8px; width:18px; height:18px; border-radius:50%;
+  border:1px solid rgba(243,236,220,.4); background:transparent; color:var(--bp-card); font-size:13px;
+  line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+.bp-saved .bp-del:hover{ background:var(--bp-red); border-color:var(--bp-red); }
+
+.bp-barcode{ margin-top:clamp(10px,1.4vw,14px); height:30px; display:flex; align-items:flex-end; gap:1.5px; }
+.bp-barcode i{ flex:1; background:var(--bp-card); }
+.bp-gate{ display:flex; align-items:center; justify-content:space-between; margin-top:9px;
+  font-family:'Space Mono',monospace; font-size:8px; letter-spacing:.18em; text-transform:uppercase; opacity:.68; }
+
+/* keep legacy save-slot helpers from leaking */
+#overlay .ob-save-bar, #overlay .fmw-start-pills, #overlay .theme-picker{ display:none !important; }
+
+/* ============================================================
+   GAMEPLAY — board frame + HUD (the in-flight ticket)
+   ============================================================ */
+#game-area .board-frame.board-frame{
+  background:var(--bp-card) !important;
+  border:2px solid var(--bp-navy) !important;
+  border-radius:14px !important;
+  box-shadow:0 28px 56px rgba(0,0,0,.42), 0 2px 0 rgba(255,255,255,.4) inset !important;
+}
+#game-area .hud-bar.hud-bar,
+.topbar.hud-bar.hud-bar{
+  background:var(--bp-card-2) !important;
+  border:0 !important; border-bottom:2px dashed var(--bp-line-strong) !important;
+  box-shadow:none !important;
+}
+/* country pill → destination tag */
+#game-area .hud-bar #countryNamePill,
+#game-area .hud-bar .hud-country-pill.hud-country-pill,
+.topbar.hud-bar #countryNamePill{
+  background:var(--bp-navy) !important; color:var(--bp-card) !important;
+  border:0 !important; border-radius:7px !important;
+  font-family:'Saira Condensed',sans-serif !important; font-weight:700 !important;
+  letter-spacing:.12em !important; text-shadow:none !important; box-shadow:0 4px 10px rgba(0,0,0,.22) !important;
+}
+#game-area .hud-bar .hud-divider-v{ background:var(--bp-line) !important; }
+#game-area .hud-bar .hud-stat-lbl{
+  color:var(--bp-red) !important; font-family:'Space Mono',monospace !important;
+  letter-spacing:.16em !important;
+}
+#game-area .hud-bar .hud-stat-val{
+  color:var(--bp-navy) !important; font-family:'Saira Condensed',sans-serif !important;
+  font-weight:600 !important; text-shadow:none !important;
+}
+#game-area .hud-bar .hud-stat-time .hud-stat-lbl{ color:var(--bp-gold-deep) !important; }
+#game-area .hud-bar .hud-stat-time .hud-stat-val{ color:var(--bp-gold-deep) !important; text-shadow:none !important; }
+
+/* HUD action buttons → outline navy, gold badges */
+#game-area .hud-bar #hintBtn.btn-hint,
+#game-area .hud-bar #shuffleBtn.btn-shuffle,
+.topbar.hud-bar #hintBtn.btn-hint,
+.topbar.hud-bar #shuffleBtn.btn-shuffle{
+  background:transparent !important; color:var(--bp-navy) !important;
+  border:1.5px solid var(--bp-navy) !important; border-radius:8px !important;
+  box-shadow:none !important;
+}
+#game-area .hud-bar #hintBtn.btn-hint:hover,
+#game-area .hud-bar #shuffleBtn.btn-shuffle:hover{ background:var(--bp-navy) !important; color:var(--bp-card) !important; }
+#game-area .hud-bar #hintBtn.btn-hint:hover i,
+#game-area .hud-bar #shuffleBtn.btn-shuffle:hover i{ color:var(--bp-card) !important; }
+#game-area .hud-bar #pauseBtn.hud-pause-btn,
+.topbar.hud-bar #pauseBtn.hud-pause-btn{
+  background:var(--bp-navy) !important; color:var(--bp-card) !important;
+  border:1.5px solid var(--bp-navy) !important; border-radius:8px !important; box-shadow:none !important;
+}
+#game-area .hud-bar #hintBtn.btn-hint i,
+#game-area .hud-bar #shuffleBtn.btn-shuffle i,
+.topbar.hud-bar #hintBtn.btn-hint i,
+.topbar.hud-bar #shuffleBtn.btn-shuffle i{ color:var(--bp-navy) !important; filter:none !important; }
+#game-area .hud-bar #pauseBtn.hud-pause-btn i,
+.topbar.hud-bar #pauseBtn.hud-pause-btn i{ color:var(--bp-card) !important; filter:none !important; }
+#game-area .hud-bar .hud-badge{
+  background:var(--bp-gold) !important; color:var(--bp-navy) !important;
+  border:1.5px solid var(--bp-card-2) !important; box-shadow:none !important;
+  font-family:'Space Mono',monospace !important; font-weight:700 !important;
+}
+#game-area .hud-bar .movement-icon,
+#game-area .movement-icon{ background:var(--bp-navy) !important; }
+
+/* board header / status text */
+html body .board-header.fmw-board-header #boardInfo,
+html body .board-header.fmw-board-header #moveStatus{
+  color:var(--bp-navy-dim) !important; font-family:'Space Mono',monospace !important;
+  letter-spacing:.1em !important; text-transform:uppercase;
+}
+html body .country-name-pill{
+  background:transparent !important; border:1px solid var(--bp-line) !important;
+  color:var(--bp-navy-dim) !important; border-radius:6px !important; box-shadow:none !important;
+  font-family:'Saira Condensed',sans-serif !important; letter-spacing:.1em !important;
+}
+html body .country-name-pill.active{
+  color:var(--bp-navy) !important; border-color:var(--bp-line-strong) !important;
+  background:transparent !important; text-shadow:none !important;
+}
+
+/* timer meter → the flight route bar */
+html body .board-time-meter{
+  background:rgba(22,52,58,.16) !important; border-radius:99px !important;
+  box-shadow:inset 0 0 0 1px var(--bp-line) !important;
+}
+html body .board-time-bar,
+html body #boardTimerBar{
+  background:var(--bp-gold) !important; box-shadow:0 0 8px rgba(214,180,110,.5) !important; border-radius:99px !important;
+}
+html body.low-time .board-time-bar,
+html body.low-time #boardTimerBar{ background:var(--bp-red) !important; box-shadow:0 0 8px rgba(190,70,50,.5) !important; }
+html body.low-time .hud-stat-time .hud-stat-val{ color:var(--bp-red) !important; }
+
+/* board surface */
+html body .board,
+html body #board{
+  background:transparent !important; border:0 !important; box-shadow:none !important;
+}
+
+/* ============================================================
+   TILES  (cream luggage tags, navy rule, gold ring on select)
+   ============================================================ */
+html body .board .tile,
+html body #board .tile{
+  background:var(--bp-card-3) !important;
+  border:1.5px solid var(--bp-navy) !important; border-radius:7px !important;
+  box-shadow:0 3px 6px rgba(0,0,0,.22) !important;
+}
+html body .board .tile.selected,
+html body #board .tile.selected{
+  box-shadow:0 0 0 3px var(--bp-gold), 0 6px 12px rgba(0,0,0,.32) !important;
+  transform:translateY(-2px) !important;
+}
+html body .board .tile.matched,
+html body #board .tile.matched{
+  box-shadow:0 0 0 3px var(--bp-gold) !important;
+}
+html body .board .tile.tile-invalid,
+html body #board .tile.tile-invalid{
+  box-shadow:0 0 0 3px var(--bp-red), 0 3px 6px rgba(0,0,0,.22) !important;
+  border-color:var(--bp-red) !important;
+}
+html body .board .tile.hint,
+html body #board .tile.hint{ animation:bpHintPulse 1s ease-in-out infinite !important; }
+@keyframes bpHintPulse{
+  0%,100%{ box-shadow:0 3px 6px rgba(0,0,0,.22); }
+  50%{ box-shadow:0 0 0 3px var(--bp-gold), 0 0 14px rgba(214,180,110,.65); }
+}
+
+/* ============================================================
+   POPUPS  (fmw-* cards) → ticket-stock card
+   ============================================================ */
+html body .fmw-popup-overlay,
+html body .pause-overlay,
+html body .score-summary-overlay,
+html body .rc-overlay{
+  background:rgba(8,26,29,.6) !important; backdrop-filter:blur(3px) !important;
+}
+html body .fmw-popup-card{
+  background:var(--bp-card) !important; border:2px solid var(--bp-navy) !important;
+  border-radius:14px !important; backdrop-filter:none !important;
+  box-shadow:0 30px 60px rgba(0,0,0,.5) !important;
+}
+html body .fmw-popup-card::before{
+  background:var(--bp-gold) !important; left:0 !important; right:0 !important;
+  top:0 !important; height:5px !important;
+}
+html body .fmw-popup-title,
+html body .fmw-popup-card h1,
+html body .score-summary-title{
+  color:var(--bp-navy) !important; font-family:'Saira Condensed',sans-serif !important;
+  font-weight:700 !important; letter-spacing:.04em !important; text-shadow:none !important;
+}
+html body .fmw-pause-card .fmw-popup-title,
+html body .fmw-gameover-card .fmw-popup-title,
+html body .fmw-confirm-card .fmw-popup-title,
+html body .fmw-settings-card .fmw-popup-title,
+html body .fmw-complete-card .fmw-popup-title,
+html body .fmw-levelstart-card .fmw-popup-title{
+  color:var(--bp-navy) !important; font-family:'Saira Condensed',sans-serif !important;
+  font-weight:700 !important; letter-spacing:.04em !important; text-shadow:none !important;
+}
+html body .fmw-gameover-card .fmw-popup-title.danger,
+html body .fmw-popup-title.danger,
+html body .fmw-popup-title.danger.danger{ color:var(--bp-red-deep) !important; text-shadow:none !important; }
+html body .fmw-popup-message{ color:var(--bp-navy-soft) !important; }
+html body .fmw-gold-rule{
+  background:var(--bp-navy) !important; height:2px !important; opacity:1 !important;
+}
+html body .fmw-score-panel,
+html body .fmw-settings-panel,
+html body .fmw-mini-panel,
+html body .fmw-levelstart-rule-panel{
+  background:rgba(22,52,58,.04) !important; border:1.5px solid var(--bp-navy) !important;
+  border-radius:8px !important;
+}
+html body .fmw-score-row span,
+html body .fmw-setting-row span,
+html body .fmw-mini-panel span{
+  color:var(--bp-navy-soft) !important; font-family:'Space Mono',monospace !important;
+  letter-spacing:.08em !important; text-transform:uppercase;
+}
+html body .fmw-score-row strong,
+html body .fmw-mini-panel strong{
+  color:var(--bp-navy) !important; font-family:'Saira Condensed',sans-serif !important; font-weight:600 !important;
+}
+html body .fmw-score-row,
+html body .fmw-setting-row{ border-bottom-color:var(--bp-line) !important; }
+html body .fmw-total-row{
+  background:var(--bp-navy) !important; border:0 !important; border-radius:8px !important;
+}
+html body .fmw-total-row span{ color:var(--bp-card) !important; opacity:.78 !important; }
+html body .fmw-total-row strong{
+  color:var(--bp-gold) !important; font-family:'Saira Condensed',sans-serif !important; font-weight:700 !important;
+}
+
+/* popup buttons → ticket actions */
+html body .fmw-btn{
+  border-radius:8px !important; font-family:'Saira Condensed',sans-serif !important;
+  font-weight:600 !important; letter-spacing:.08em !important; text-transform:uppercase !important;
+}
+html body .fmw-btn-green{
+  background:var(--bp-gold) !important; box-shadow:0 4px 0 var(--bp-gold-deep) !important;
+  color:var(--bp-navy) !important; border:0 !important;
+}
+html body .fmw-btn-teal{
+  background:transparent !important; box-shadow:none !important;
+  color:var(--bp-navy) !important; border:1.5px solid var(--bp-navy) !important;
+}
+html body .fmw-btn-red{
+  background:var(--bp-red-deep) !important; box-shadow:0 4px 0 rgba(22,52,58,.4) !important;
+  color:#fff !important; border:0 !important;
+}
+html body .fmw-btn:disabled,
+html body .fmw-btn.disabled{
+  background:transparent !important; box-shadow:none !important;
+  color:var(--bp-navy-dim) !important; border:1.5px solid var(--bp-line) !important;
+}
+html body #confirmQuitGameBtn,
+html body #confirmEndQuickBtn,
+html body #endQuickGameBtn{
+  background:var(--bp-red-deep) !important; color:#fff !important;
+  border:0 !important; box-shadow:0 4px 0 rgba(22,52,58,.4) !important;
+}
+html body #levelCompleteQuitBtn{
+  background:transparent !important; color:var(--bp-navy) !important;
+  border:1.5px solid var(--bp-navy) !important; box-shadow:none !important;
+}
+
+/* settings toggle */
+html body .fmw-toggle{ background:rgba(22,52,58,.2) !important; border-radius:999px !important; }
+html body .fmw-toggle[aria-pressed="true"]{ background:var(--bp-gold) !important; }
+
+/* level-start popup */
+html body .fmw-levelstart-label,
+html body .fmw-levelstart-rule-label{ color:var(--bp-navy-dim) !important;
+  font-family:'Space Mono',monospace !important; letter-spacing:.16em !important; }
+html body .fmw-levelstart-num{ color:var(--bp-gold-deep) !important;
+  font-family:'Saira Condensed',sans-serif !important; text-shadow:none !important; }
+html body .fmw-levelstart-icon-box{
+  background:transparent !important; border:1.5px solid var(--bp-navy) !important; border-radius:7px !important;
+}
+html body .fmw-levelstart-rule-name{ color:var(--bp-navy) !important;
+  font-family:'Saira Condensed',sans-serif !important; }
+html body .fmw-levelstart-rule-desc{ color:var(--bp-navy-soft) !important; }
+
+/* ============================================================
+   LEGACY MODALS (save / helper / quit / endQuick)
+   ============================================================ */
+html body .modal.save-modal,
+html body .modal.confirm-modal,
+html body .modal.compact-message-modal{
+  background:var(--bp-card) !important; border:2px solid var(--bp-navy) !important;
+  border-radius:14px !important; box-shadow:0 30px 60px rgba(0,0,0,.5) !important;
+  color:var(--bp-navy-soft) !important;
+}
+html body .modal .modal-kicker{ color:var(--bp-red) !important;
+  font-family:'Space Mono',monospace !important; letter-spacing:.16em !important; }
+html body .modal h1{ color:var(--bp-navy) !important; font-family:'Saira Condensed',sans-serif !important; }
+html body .modal p{ color:var(--bp-navy-soft) !important; }
+html body .modal-btn{ border-radius:8px !important; font-family:'Saira Condensed',sans-serif !important;
+  text-transform:uppercase; letter-spacing:.08em; }
+html body .modal-btn.primary{
+  background:var(--bp-gold) !important; box-shadow:0 4px 0 var(--bp-gold-deep) !important;
+  color:var(--bp-navy) !important; border:0 !important;
+}
+html body .modal-btn.secondary{
+  background:transparent !important; box-shadow:none !important;
+  color:var(--bp-navy) !important; border:1.5px solid var(--bp-navy) !important;
+}
+html body .modal.save-modal .modal-btn,
+html body .modal.confirm-modal .modal-btn,
+html body .modal.compact-message-modal .modal-btn{
+  font-family:'Saira Condensed',sans-serif !important; font-weight:600 !important;
+  letter-spacing:.08em !important; text-transform:uppercase !important; border-radius:8px !important;
+}
+html body .modal.save-modal .modal-btn.primary,
+html body .modal.confirm-modal .modal-btn.primary,
+html body .modal.compact-message-modal .modal-btn.primary{
+  background:var(--bp-gold) !important; color:var(--bp-navy) !important;
+  border:0 !important; box-shadow:0 4px 0 var(--bp-gold-deep) !important;
+}
+html body .modal.save-modal .modal-btn.secondary,
+html body .modal.confirm-modal .modal-btn.secondary,
+html body .modal.compact-message-modal .modal-btn.secondary{
+  background:transparent !important; color:var(--bp-navy) !important;
+  border:1.5px solid var(--bp-navy) !important; box-shadow:none !important;
+}
+
+/* combo pop → gold ticket ink */
+html body .combo-pop{ color:var(--bp-gold) !important; -webkit-text-stroke:0 !important;
+  text-shadow:0 2px 6px rgba(0,0,0,.5) !important; }
+
+/* ============================================================
+   RESPONSIVE — iPhone landscape (≈844×390) & portrait
+   ============================================================ */
+@media (max-width:980px), (max-height:560px){
+  .bp-tagline{ display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .bp-stamps{ gap:10px; }
+}
+@media (max-height:430px){
+  .bp-main{ padding-top:14px; padding-bottom:12px; }
+  .bp-stamps{ display:none; }
+  .bp-tagline{ -webkit-line-clamp:2; }
+}
+@media (max-width:680px){
+  .bp-ticket{ grid-template-columns:1fr; }
+  .bp-stub::before{ left:0; right:0; top:-1px; bottom:auto; width:auto; height:2px;
+    background-image:radial-gradient(circle, var(--bp-card) 0 3px, transparent 3.5px);
+    background-size:14px 2px; background-repeat:repeat-x; }
+  .bp-tagline{ display:none; }
+  .bp-stamps{ display:none; }
+  .bp-saved{ display:none; }
+}

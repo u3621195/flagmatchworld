@@ -1,8 +1,6 @@
 const ROWS = 9,
   COLS = 16,
   TOTAL_TIME = 480,
-  MIN_TOTAL_TIME = 360,
-  TIMER_STEP_PER_LOOP = 15,
   LEVEL_LOOP_SIZE = 8,
   HINTS = 5,
   SHUFFLES = 5,
@@ -10,13 +8,19 @@ const ROWS = 9,
   MAX_SHUFFLES = 15,
   QUICK_GAME_UNIQUE_FLAGS = 48;
 
-// Flag Match World locked progression:
+// Flag Match World progression:
+// Pure random flag selection from all 212 flags. No difficulty buckets.
 // Level 1-8   = 24 unique flags
-// Level 9-16  = 30 unique flags
-// Level 17-24 = 36 unique flags
-// Level 25-32 = 42 unique flags
-// Level 33+   = 48 unique flags max
-const MAIN_GAME_UNIQUE_FLAG_STEPS = [24, 30, 36, 42, 48];
+// Level 9-16  = 28 unique flags
+// Level 17-24 = 32 unique flags
+// Level 25-32 = 36 unique flags
+// Level 33-40 = 40 unique flags
+// Level 41-48 = 44 unique flags
+// Level 49+   = 48 unique flags max
+const MAIN_GAME_UNIQUE_FLAG_STEPS = [24, 28, 32, 36, 40, 44, 48];
+const MIN_LEVEL_TIME = 420; // 7:00
+const TIMER_REDUCTION_STEP = 15; // seconds
+const TIMER_REDUCTION_LEVEL_BLOCK = 48;
 const SAVE_KEY = "fmw_save_v1"; // legacy single-slot save key
 const SAVES_KEY = "fmw_saves_v2";
 const BEST_SCORES_KEY = "fmw_best_scores_v1";
@@ -1331,9 +1335,12 @@ let scoreHistory = [];
 let currentStrategy = STRATEGIES[0];
 
 function getLevelTime(lvl) {
-  const reduction =
-    Math.floor((Math.max(1, lvl) - 1) / LEVEL_LOOP_SIZE) * TIMER_STEP_PER_LOOP;
-  return Math.max(MIN_TOTAL_TIME, TOTAL_TIME - reduction);
+  const safeLevel = Math.max(1, Number(lvl) || 1);
+  // Levels 1-48 stay at 8:00. From Level 49 onward, reduce by
+  // 15 seconds every 48 levels, with 7:00 as the shortest allowance.
+  const reductionBlocks = Math.max(0, Math.floor((safeLevel - 1) / TIMER_REDUCTION_LEVEL_BLOCK));
+  const seconds = TOTAL_TIME - reductionBlocks * TIMER_REDUCTION_STEP;
+  return Math.max(MIN_LEVEL_TIME, seconds);
 }
 
 function getMainGameUniqueFlagCount(lvl) {
@@ -1669,6 +1676,21 @@ function deleteSave(setId = currentSpriteSetId) {
   saveAllSaves(saves);
 }
 
+function persistHelperInventoryOnly() {
+  if (isQuickGame) return;
+  const slot = SPRITE_SETS[currentSaveSlotId] ? currentSaveSlotId : currentSpriteSetId;
+  const saves = loadAllSaves();
+  const save = saves[slot];
+  if (!save) return;
+  save.hintCount = hintCount;
+  save.shuffleCount = shuffleCount;
+  save.usedHintLvl = usedHintLvl;
+  save.usedShuffLvl = usedShuffLvl;
+  save.ts = Date.now();
+  saves[slot] = save;
+  saveAllSaves(saves);
+}
+
 function formatSaveDate(ts) {
   const d = new Date(ts);
   const dd = String(d.getDate()).padStart(2, "0");
@@ -1778,8 +1800,9 @@ function restoreGame(save) {
   level = save.level;
   score = save.score;
   levelScore = save.levelScore || 0;
-  levelTotalTime = save.levelTotalTime || getLevelTime(level);
-  timeLeft = Math.min(save.timeLeft, levelTotalTime);
+  // Always recalculate from current rules so old saves cannot preserve legacy timer values.
+  levelTotalTime = getLevelTime(level);
+  timeLeft = save.freshLevelCheckpoint ? levelTotalTime : Math.min(save.timeLeft || levelTotalTime, levelTotalTime);
   hintCount = Number.isFinite(save.hintCount) ? save.hintCount : HINTS;
   shuffleCount = Number.isFinite(save.shuffleCount)
     ? save.shuffleCount
@@ -2702,6 +2725,7 @@ function hint() {
   hintCount--;
   usedHintLvl++;
   updateHelperDisplay();
+  persistHelperInventoryOnly();
   document
     .querySelectorAll(".tile.hint")
     .forEach((t) => t.classList.remove("hint"));
@@ -2743,6 +2767,7 @@ function shuffleTiles(count = true) {
     shuffleCount--;
     usedShuffLvl++;
     updateHelperDisplay();
+    persistHelperInventoryOnly();
   }
   renderBoard();
   sfx.shuffle();
@@ -3054,7 +3079,7 @@ function continueFromSave() {
   }
   overlay.classList.add("hidden");
   gameOverOverlay.classList.add("hidden");
-  $("themePicker").classList.add("hidden");
+  $("themePicker")?.classList.add("hidden");
   appShell.classList.remove("paused");
   restoreGame(save);
   nextLevelReadyAfterComplete = false;
@@ -3064,8 +3089,12 @@ function continueFromSave() {
   unlockAudio();
   sfx.level();
   playBgmIfAllowed();
-  startTimer();
   moveStatus.textContent = `SAVE RESTORED  LV ${level}`;
+  if (!isQuickGame) {
+    showLevelStartPopup(level, currentStrategy, () => startTimer());
+  } else {
+    startTimer();
+  }
 }
 
 function setupPauseModal() {
@@ -3241,7 +3270,11 @@ function restartCurrentLevel() {
   paused = false;
   gameStarted = true;
   moveStatus.textContent = `RETRY  LV ${level}`;
-  startTimer();
+  if (!isQuickGame) {
+    showLevelStartPopup(level, currentStrategy, () => startTimer());
+  } else {
+    startTimer();
+  }
 }
 
 function newGameFromGameOver() {
