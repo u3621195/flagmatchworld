@@ -1,6 +1,8 @@
 const ROWS = 9,
   COLS = 16,
   TOTAL_TIME = 480,
+  MIN_TOTAL_TIME = 360,
+  TIMER_STEP_PER_LOOP = 15,
   LEVEL_LOOP_SIZE = 8,
   HINTS = 5,
   SHUFFLES = 5,
@@ -8,19 +10,13 @@ const ROWS = 9,
   MAX_SHUFFLES = 15,
   QUICK_GAME_UNIQUE_FLAGS = 48;
 
-// Flag Match World progression:
-// Pure random flag selection from all 212 flags. No difficulty buckets.
+// Flag Match World locked progression:
 // Level 1-8   = 24 unique flags
-// Level 9-16  = 28 unique flags
-// Level 17-24 = 32 unique flags
-// Level 25-32 = 36 unique flags
-// Level 33-40 = 40 unique flags
-// Level 41-48 = 44 unique flags
-// Level 49+   = 48 unique flags max
-const MAIN_GAME_UNIQUE_FLAG_STEPS = [24, 28, 32, 36, 40, 44, 48];
-const MIN_LEVEL_TIME = 420; // 7:00
-const TIMER_REDUCTION_STEP = 15; // seconds
-const TIMER_REDUCTION_LEVEL_BLOCK = 48;
+// Level 9-16  = 30 unique flags
+// Level 17-24 = 36 unique flags
+// Level 25-32 = 42 unique flags
+// Level 33+   = 48 unique flags max
+const MAIN_GAME_UNIQUE_FLAG_STEPS = [24, 30, 36, 42, 48];
 const SAVE_KEY = "fmw_save_v1"; // legacy single-slot save key
 const SAVES_KEY = "fmw_saves_v2";
 const BEST_SCORES_KEY = "fmw_best_scores_v1";
@@ -1335,12 +1331,9 @@ let scoreHistory = [];
 let currentStrategy = STRATEGIES[0];
 
 function getLevelTime(lvl) {
-  const safeLevel = Math.max(1, Number(lvl) || 1);
-  // Levels 1-48 stay at 8:00. From Level 49 onward, reduce by
-  // 15 seconds every 48 levels, with 7:00 as the shortest allowance.
-  const reductionBlocks = Math.max(0, Math.floor((safeLevel - 1) / TIMER_REDUCTION_LEVEL_BLOCK));
-  const seconds = TOTAL_TIME - reductionBlocks * TIMER_REDUCTION_STEP;
-  return Math.max(MIN_LEVEL_TIME, seconds);
+  const reduction =
+    Math.floor((Math.max(1, lvl) - 1) / LEVEL_LOOP_SIZE) * TIMER_STEP_PER_LOOP;
+  return Math.max(MIN_TOTAL_TIME, TOTAL_TIME - reduction);
 }
 
 function getMainGameUniqueFlagCount(lvl) {
@@ -1785,10 +1778,8 @@ function restoreGame(save) {
   level = save.level;
   score = save.score;
   levelScore = save.levelScore || 0;
-  // Recalculate timer from current progression rules so old saves from previous
-  // builds cannot preserve outdated timer allowances.
-  levelTotalTime = getLevelTime(level);
-  timeLeft = levelTotalTime;
+  levelTotalTime = save.levelTotalTime || getLevelTime(level);
+  timeLeft = Math.min(save.timeLeft, levelTotalTime);
   hintCount = Number.isFinite(save.hintCount) ? save.hintCount : HINTS;
   shuffleCount = Number.isFinite(save.shuffleCount)
     ? save.shuffleCount
@@ -4066,18 +4057,10 @@ refreshSaveSlot(); // show saved game slot on start screen if one exists
   function renderStartupMosaic(){
     const el=q('fmwStartMosaic'); if(!el || typeof FLAGS_SPRITES === 'undefined') return;
     const w=window.innerWidth||1024, h=window.innerHeight||768;
-    const isPhoneLandscape = w > h && h <= 560;
-    // Startup background mosaic: on iPhone landscape the previous auto-stretch grid
-    // made flags look crowded/overlapped behind the menu. Use smaller fixed cells
-    // with wider gaps only for the decorative startup layer. Gameplay tiles are unaffected.
-    const cw = isPhoneLandscape ? 46 : (w>1200?72:w>760?66:54);
-    const gap = isPhoneLandscape ? 12 : 6;
-    const cols=Math.max(8,Math.ceil((w+120)/(cw+gap)));
-    const rows=Math.ceil((h+140)/((cw*2/3)+gap))+3;
-    const count=cols*rows;
-    el.style.gridTemplateColumns = isPhoneLandscape ? `repeat(${cols}, ${cw}px)` : `repeat(${cols},1fr)`;
-    el.style.gap = `${gap}px`;
-    el.style.justifyContent = 'center';
+    const cw=w>1200?72:w>760?66:54;
+    const cols=Math.max(8,Math.ceil((w+80)/cw));
+    const rows=Math.ceil((h+120)/((cw*2/3)+6))+3;
+    const count=cols*rows; el.style.gridTemplateColumns=`repeat(${cols},1fr)`;
     if(el.childElementCount===count) return;
     el.innerHTML='';
     for(let i=0;i<count;i++){
@@ -4269,96 +4252,4 @@ refreshSaveSlot(); // show saved game slot on start screen if one exists
   [0, 50, 200, 600].forEach(ms => setTimeout(run, ms));
   // bfcache restore on iOS: only reset if no game is active
   window.addEventListener('pageshow', run);
-})();
-
-// FMW v5.15 logic polish: always show movement-rule popup when a level is freshly entered
-// via Continue or Restart Level. Timer starts only after the player taps LET'S GO.
-(function fmwRulePopupOnContinueAndRestart(){
-  function hideIfExists(id){
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.classList.add('hidden');
-    el.setAttribute('aria-hidden', 'true');
-    el.style.display = 'none';
-  }
-
-  function showIfExists(id){
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.classList.remove('hidden');
-    el.setAttribute('aria-hidden', 'false');
-    el.style.removeProperty('display');
-  }
-
-  function closeGameModals(){
-    [
-      'pauseOverlay','levelCompleteOverlay','gameOverOverlay','settingsOverlay',
-      'restartConfirmOverlay','homeConfirmOverlay','newGameConfirmOverlay',
-      'helperMessageOverlay','quitConfirmOverlay','endQuickConfirmOverlay',
-      'saveOverlay','themePicker'
-    ].forEach(hideIfExists);
-    document.body.classList.remove('modal-open','fmw-modal-open','low-time');
-    document.documentElement.classList.remove('modal-open','fmw-modal-open');
-    try { if (appShell) appShell.classList.remove('paused'); } catch(e) {}
-  }
-
-  function startAfterRulePopup(statusText){
-    try { clearInterval(timerId); } catch(e) {}
-    paused = false;
-    gameStarted = true;
-    timerWarned = false;
-    try { updateTimer(); } catch(e) {}
-    try { unlockAudio(); sfx.level(); playBgmIfAllowed(); } catch(e) {}
-    if (!isQuickGame && typeof showLevelStartPopup === 'function') {
-      showLevelStartPopup(level, currentStrategy, function(){
-        startTimer();
-        if (moveStatus) moveStatus.textContent = statusText || `LV ${level}  ·  ${currentStrategy.name}`;
-      });
-    } else {
-      startTimer();
-      if (moveStatus) moveStatus.textContent = statusText || 'SYSTEM ONLINE';
-    }
-  }
-
-  continueFromSave = function(){
-    currentSpriteSetId = 'flags';
-    currentSaveSlotId = 'flags';
-    const save = loadSave('flags');
-    if (!save) {
-      deleteSave('flags');
-      refreshStartScreen();
-      try { sfx.invalid(); } catch(e) {}
-      return;
-    }
-    closeGameModals();
-    hideIfExists('overlay');
-    restoreGame(save);
-    nextLevelReadyAfterComplete = false;
-    currentStrategy = getStrategy(level);
-    levelTotalTime = getLevelTime(level);
-    timeLeft = levelTotalTime;
-    timerWarned = false;
-    try { updateRuleTag(); updateTimer(); renderBoard(); applySoundSettings(); } catch(e) {}
-    startAfterRulePopup(`SAVE RESTORED  LV ${level}`);
-  };
-
-  restartCurrentLevel = function(){
-    closeGameModals();
-    nextLevelReadyAfterComplete = false;
-    levelScore = 0;
-    setScoreDisplay();
-    resetLevelScoring();
-    currentStrategy = getStrategy(level);
-    levelTotalTime = getLevelTime(level);
-    timeLeft = levelTotalTime;
-    timerWarned = false;
-    updateRuleTag();
-    updateTimer();
-    createBoard();
-    renderBoard();
-    startAfterRulePopup(`RETRY  LV ${level}`);
-  };
-
-  const continueBtn = document.getElementById('continueFromSaveBtn');
-  if (continueBtn) continueBtn.onclick = continueFromSave;
 })();

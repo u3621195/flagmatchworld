@@ -5,9 +5,13 @@
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" name="viewport"/>
 <title>Flag Match World</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<!-- Fonts loaded locally via @font-face in style-new.css -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800&family=Saira+Condensed:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
 
 <link href="style-new.css?v=fmw-v5-7-iphone-polish" rel="stylesheet"/>
+<!-- Atlas Index skin (Direction A) — layered on top of the base layout engine -->
+<link href="atlas-index.css?v=a1" rel="stylesheet"/>
 
 
 </head>
@@ -90,28 +94,63 @@
 </div>
 
 <div class="theme-picker hidden" id="themePicker" aria-hidden="true"></div>
-<section class="overlay" id="overlay">
+<section class="overlay ob-overlay ai-overlay" id="overlay" aria-hidden="false">
+  <!-- JS-driven flag mosaic kept for compatibility; hidden in Atlas -->
   <div class="fmw-start-bg" id="fmwStartMosaic" aria-hidden="true"></div>
-  <div class="fmw-start-vignette" aria-hidden="true"></div>
-  <div class="fmw-start-card-v2">
-    <div class="fmw-logo-wrap" aria-label="Flag Match World">
-      <img src="assets/images/logo.png" alt="Flag Match World" class="fmw-logo-img">
+
+  <div class="ai-start">
+    <header class="ai-top">
+      <div class="ai-wm">Flag Match World</div>
+      <div class="ai-meta">Nº 001 — Atlas Edition · Est. MMXXV</div>
+    </header>
+
+    <div class="ai-body">
+      <div class="ai-hero">
+        <div class="ai-eyebrow">The Global Flag Atlas</div>
+        <h1 class="ai-title" aria-label="Flag Match World">
+          <span>Flag</span><span>Match</span><span class="ai-out">World</span>
+        </h1>
+        <p class="ai-sub">Match flags across the globe — <b>two hundred nations</b>, one board, infinite routes.</p>
+      </div>
+
+      <nav class="ai-index" aria-label="Main menu">
+        <button class="ai-row" id="continueFromSaveBtn" type="button">
+          <span class="ai-num">01</span><span class="ai-rl"><b>Continue</b><i>Resume your voyage</i></span><span class="ai-arr">→</span>
+        </button>
+        <button class="ai-row" id="startBtn" type="button">
+          <span class="ai-num">02</span><span class="ai-rl"><b>New Game</b><i>Begin a new expedition</i></span><span class="ai-arr">→</span>
+        </button>
+        <button class="ai-row" id="quickGameBtn" type="button">
+          <span class="ai-num">03</span><span class="ai-rl"><b>Quick Game</b><i>A swift round</i></span><span class="ai-arr">→</span>
+        </button>
+        <button class="ai-row" id="settingsBtn" type="button">
+          <span class="ai-num">04</span><span class="ai-rl"><b>Settings</b><i>Sound, music & more</i></span><span class="ai-arr">→</span>
+        </button>
+      </nav>
     </div>
-    <div class="fmw-start-sub-pill">MATCH FLAGS ACROSS THE GLOBE</div>
-    <hr class="fmw-gold-rule">
-    <div class="fmw-menu-stack">
-      <button class="fmw-btn fmw-btn-green" id="continueFromSaveBtn" type="button">Continue</button>
-      <button class="fmw-btn fmw-btn-teal" id="startBtn" type="button">New Game</button>
-      <button class="fmw-btn fmw-btn-teal" id="quickGameBtn" type="button">Quick Game</button>
-      <button class="fmw-btn fmw-btn-teal" id="settingsBtn" type="button">Settings</button>
-    </div>
-    <div class="fmw-save-line" id="savedSlot">
-      <span id="saveLevel">Flags</span>
-      <span class="fmw-save-sep">·</span>
-      <span id="saveScore">No saved game</span>
-      <span class="fmw-save-sep">·</span>
-      <span id="saveDate">—</span>
-      <button class="delete-save-btn hidden" id="deleteSaveBtn" title="Delete saved game" type="button">×</button>
+
+    <div class="ai-strip">
+      <div class="ai-strip-lbl" id="savedSlot">
+        <span class="ai-save-k">Saved Game</span>
+        <span id="saveScore">No saved game</span>
+        <span class="ai-save-meta"><span id="saveLevel">Flags</span><span id="saveDate">—</span></span>
+        <button class="ai-del hidden" id="deleteSaveBtn" title="Delete saved game" type="button">×</button>
+      </div>
+      <div class="ai-film" aria-hidden="true">
+        <div class="ai-cell"><img src="assets/sprites/flags/089-japan.png" alt=""/><span>JPN</span></div>
+        <div class="ai-cell"><img src="assets/sprites/flags/024-brazil.png" alt=""/><span>BRA</span></div>
+        <div class="ai-cell"><img src="assets/sprites/flags/172-south-africa.png" alt=""/><span>ZAF</span></div>
+        <div class="ai-cell"><img src="assets/sprites/flags/081-india.png" alt=""/><span>IND</span></div>
+        <div class="ai-cell"><img src="assets/sprites/flags/067-germany.png" alt=""/><span>DEU</span></div>
+        <div class="ai-cell"><img src="assets/sprites/flags/031-canada.png" alt=""/><span>CAN</span></div>
+        <div class="ai-cell"><img src="assets/sprites/flags/010-australia.png" alt=""/><span>AUS</span></div>
+        <div class="ai-cell"><img src="assets/sprites/flags/116-mexico.png" alt=""/><span>MEX</span></div>
+        <div class="ai-cell"><img src="assets/sprites/flags/173-south-korea.png" alt=""/><span>KOR</span></div>
+        <div class="ai-cell"><img src="assets/sprites/flags/086-italy.png" alt=""/><span>ITA</span></div>
+        <div class="ai-cell"><img src="assets/sprites/flags/199-united-kingdom.png" alt=""/><span>GBR</span></div>
+        <div class="ai-cell"><img src="assets/sprites/flags/064-france.png" alt=""/><span>FRA</span></div>
+        <div class="ai-cell"><img src="assets/sprites/flags/200-united-states-of-america.png" alt=""/><span>USA</span></div>
+      </div>
     </div>
   </div>
 </section>
@@ -306,5 +345,52 @@
 </section>
 <div aria-hidden="true" class="combo-layer" id="comboLayer"></div>
 <script src="game.js?v=fmw-v5-ui-fixes"></script>
+<!-- Ocean Blue: graceful placeholder for flag images not yet added.
+     Once your real sprites are in assets/sprites/flags/ this does nothing. -->
+<script>
+(function(){
+  var PLACEHOLDER='data:image/svg+xml,'+encodeURIComponent(
+    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 70 50'>"+
+    "<rect width='70' height='50' rx='8' fill='#e7eef7'/>"+
+    "<rect x='4' y='4' width='62' height='42' rx='5' fill='none' stroke='#b9cce4' stroke-width='2'/>"+
+    "<g fill='#9fb8d8'><rect x='14' y='14' width='42' height='6' rx='3'/>"+
+    "<rect x='14' y='22' width='42' height='6' rx='3'/><rect x='14' y='30' width='42' height='6' rx='3'/></g></svg>");
+  document.addEventListener('error', function(e){
+    var t=e.target;
+    if(t && t.tagName==='IMG' && t.dataset.obFallback!=='1'){
+      t.dataset.obFallback='1';
+      t.src=PLACEHOLDER;
+    }
+  }, true);
+
+  // Continue card: game.js sets continueFromSaveBtn.textContent (e.g. "Continue · Level 03"),
+  // which wipes the icon/label/sub structure. Re-wrap it whenever that happens.
+  function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  var rebuilding=false;
+  function rebuildContinue(){
+    var btn=document.getElementById('continueFromSaveBtn');
+    if(!btn || rebuilding) return;
+    if(btn.querySelector('.ai-rl')) return; // already structured
+    var txt=(btn.textContent||'Continue').trim() || 'Continue';
+    rebuilding=true;
+    btn.innerHTML=
+      '<span class="ai-num">01</span>'+
+      '<span class="ai-rl"><b>'+esc(txt)+'</b><i>Resume your voyage</i></span>'+
+      '<span class="ai-arr">→</span>';
+    rebuilding=false;
+  }
+  function startContinueWatch(){
+    var btn=document.getElementById('continueFromSaveBtn');
+    if(!btn) return;
+    rebuildContinue();
+    new MutationObserver(function(){ rebuildContinue(); })
+      .observe(btn, {childList:true, characterData:true, subtree:true});
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', startContinueWatch);
+  } else { startContinueWatch(); }
+  window.addEventListener('load', rebuildContinue);
+})();
+</script>
 </body>
 </html>

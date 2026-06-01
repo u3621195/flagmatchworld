@@ -1,15 +1,23 @@
-# Flag Match World v5.14 Settings Padding Polish
+# Flag Match World — Atlas Index (Direction A)
 
-Changes:
-- Added inner breathing room to the Settings panel rows.
-- Moved Music / Sound Effects labels slightly right.
-- Moved toggle buttons slightly left.
-- Kept the grouped settings box.
+The playable game with the **Atlas Index** design applied: a Swiss-editorial
+skin — warm paper + ink, a single warm-red accent, ruled grids, condensed
+display type (Saira Condensed) with monospace numerals (Space Mono) and Archivo
+body text. Same game and structure as the other builds — only the theme skin
+changed.
 
+## Run it
+Open `index.html`.
 
-## v5.16 Pure Random Progression + Timer Scaling
-- Removed difficulty-bucket based flag selection from level generation.
-- Main Game now selects unique flags purely at random from all available flag entities.
-- Updated unique-flag progression: 24, 28, 32, 36, 40, 44, then 48 cap from Level 49 onward.
-- Updated timer progression: 8:00 through Level 48, then -15 seconds every 48 levels, capped at 7:00 minimum.
-- Continue/save restore recalculates level timer from the current rules to prevent old saves from preserving outdated timer values.
+## How the styling is structured
+- `style-new.css` — the original layout engine (HUD, board sizing, responsive). Untouched.
+- `atlas-index.css` — the Atlas Index skin, layered on top. **Edit colours / type here.**
+- `index.html` — Atlas Index startup screen + game; all game IDs kept intact.
+
+## Assets (already wired)
+```
+assets/
+├── fonts/            ← legacy local fonts (skin uses Google Fonts: Archivo, Saira Condensed, Space Mono)
+├── sprites/flags/    ← all country flag tiles (included)
+└── audio/            ← game audio
+```
