@@ -813,3 +813,110 @@ html body .fmw-complete-card .fmw-score-panel{ overflow:visible !important; }
   }
   html body .fmw-complete-card .fmw-btn{ min-height:34px !important; }
 }
+
+/* ============================================================
+   Boarding Pass second polish pass — startup balance, dynamic
+   progress codes, stronger level-start contrast, and denser board.
+   ============================================================ */
+
+/* Restore a mid-point landscape startup width: safe from Dynamic Island,
+   but no longer squeezed as tightly as the first polish pass. */
+@media (orientation: landscape) and (max-height: 520px){
+  html body #overlay,
+  html body #overlay:not(.hidden){
+    padding-top:max(10px, env(safe-area-inset-top)) !important;
+    padding-bottom:max(10px, env(safe-area-inset-bottom)) !important;
+    padding-left:max(18px, calc(env(safe-area-inset-left) + 14px)) !important;
+    padding-right:max(18px, calc(env(safe-area-inset-right) + 14px)) !important;
+  }
+  .bp-start{
+    max-width:min(1120px, calc(100vw - env(safe-area-inset-left) - env(safe-area-inset-right) - 24px)) !important;
+  }
+  .bp-ticket{
+    grid-template-columns:minmax(0, 1fr) clamp(248px, 28.5%, 304px) !important;
+  }
+  .bp-main{
+    padding-left:clamp(18px, 2.45vw, 30px) !important;
+    padding-right:clamp(18px, 2.45vw, 30px) !important;
+  }
+  .bp-airline{ font-size:clamp(25px, 3.15vw, 39px) !important; }
+}
+
+/* Keep the branded tagline and the updated 212-flag info readable. */
+.bp-tagline{ max-width:54ch !important; }
+.bp-tagline .bp-tagline-main{ color:var(--bp-navy-soft); font-weight:500; }
+.bp-tagline .bp-tagline-info{ color:var(--bp-navy-soft); font-weight:400; }
+.bp-tagline .bp-tagline-info b{ color:var(--bp-red); font-weight:700; }
+@media (orientation: landscape) and (max-height: 520px){
+  .bp-tagline{ display:block !important; -webkit-line-clamp:unset !important; overflow:visible !important; }
+}
+
+/* Menu codes should sit in one clean right-aligned column. */
+.bp-mrow{
+  display:grid !important;
+  grid-template-columns:minmax(0, 1fr) minmax(42px, auto) 10px !important;
+  column-gap:10px !important;
+  align-items:center !important;
+}
+.bp-mrow .bp-mk{ min-width:0 !important; }
+.bp-mrow .bp-seat{
+  justify-self:end !important;
+  min-width:42px !important;
+  text-align:right !important;
+  font-variant-numeric:tabular-nums !important;
+}
+.bp-mrow::after{
+  position:static !important;
+  justify-self:end !important;
+  transform:none !important;
+}
+
+/* Level-start popup: make the level number and movement icon easier to read. */
+html body .fmw-levelstart-num{
+  color:var(--bp-navy) !important;
+  text-shadow:0 2px 0 rgba(214,180,110,.34), 0 0 12px rgba(22,52,58,.18) !important;
+}
+html body .fmw-levelstart-icon-box{
+  background:rgba(214,180,110,.14) !important;
+  border:2px solid var(--bp-navy) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.34), 0 4px 12px rgba(22,52,58,.14) !important;
+}
+#levelStartIcon.fmw-levelstart-icon,
+.fmw-levelstart-icon-box #levelStartIcon,
+.fmw-levelstart-icon-box .movement-icon.fmw-levelstart-icon{
+  background:var(--bp-navy) !important;
+  filter:drop-shadow(0 2px 3px rgba(0,0,0,.28)) !important;
+}
+
+/* Gameplay density pass for iPhone landscape: remove the decorative dashed HUD divider,
+   reclaim vertical space for the timer/board, and make tiles slightly denser. */
+#game-area .hud-bar.hud-bar,
+.topbar.hud-bar.hud-bar{
+  border-bottom:0 !important;
+}
+@media (max-width: 950px) and (orientation: landscape), (max-height: 500px) and (orientation: landscape){
+  :root{
+    --gap:clamp(2px, .62dvh, 4px) !important;
+    --tile-gap:clamp(1px, .42dvh, 3px) !important;
+  }
+  .board-frame{
+    gap:var(--gap) !important;
+    grid-template-rows:var(--hud-h) var(--meter-h) minmax(0, 1fr) !important;
+  }
+  .board-time-meter{
+    margin-top:0 !important;
+  }
+  .board-wrap{
+    margin-top:0 !important;
+  }
+  .board{
+    gap:var(--tile-gap) !important;
+  }
+  .tile{
+    border-radius:clamp(4px, 1.18dvh, 7px) !important;
+  }
+  .entity-sprite{
+    width:91% !important;
+    height:91% !important;
+  }
+}

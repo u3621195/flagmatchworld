@@ -4286,3 +4286,74 @@ refreshSaveSlot(); // show saved game slot on start screen if one exists
   // bfcache restore on iOS: only reset if no game is active
   window.addEventListener('pageshow', run);
 })();
+
+// Boarding Pass second polish patch: dynamic itinerary codes and restored tagline.
+(function fmwBoardingPassSecondPolish(){
+  const q = (id) => document.getElementById(id);
+  const moveLetters = ["A","B","C","D","E","F","G","H"];
+  function movementLetterForLevel(lvl){
+    const n = Math.max(1, parseInt(lvl, 10) || 1);
+    return moveLetters[(n - 1) % 8] || "A";
+  }
+  function flightCodeForLevel(lvl){
+    const n = Math.max(1, parseInt(lvl, 10) || 1);
+    return `${String(n).padStart(2,"0")}${movementLetterForLevel(n)}`;
+  }
+  function ensureMenuRow(btn, kicker, label, code){
+    if(!btn) return;
+    btn.innerHTML = `<span class="bp-mk"><i>${kicker}</i><b>${label}</b></span><span class="bp-seat">${code}</span>`;
+  }
+  function applyBoardingPassStartupCopy(){
+    const tag = document.querySelector('.bp-tagline');
+    if(tag){
+      tag.innerHTML = `<span class="bp-tagline-main">Match flags across the globe</span> — <span class="bp-tagline-info"><b>212 flags.</b> One board. Infinite routes.</span>`;
+    }
+    const fieldLabels = Array.from(document.querySelectorAll('.bp-passenger .bp-field'));
+    fieldLabels.forEach((field) => {
+      const i = field.querySelector('i');
+      const b = field.querySelector('b');
+      if(!i || !b) return;
+      const label = i.textContent.trim().toLowerCase();
+      if(label === 'flags') b.textContent = '212';
+    });
+  }
+  function applyDynamicBoardingPassCodes(){
+    let save = null;
+    try { save = (typeof loadSave === 'function') ? loadSave('flags') : null; } catch(e) {}
+    const continueLevel = save && save.level ? save.level : 1;
+    const code = save ? flightCodeForLevel(continueLevel) : 'LV';
+    const label = save ? `Continue · Level ${String(continueLevel).padStart(2,'0')}` : 'Continue';
+
+    const c = q('continueFromSaveBtn');
+    ensureMenuRow(c, 'Resume', label, code);
+    if(c){ c.disabled = !save; c.classList.toggle('disabled', !save); }
+    ensureMenuRow(q('startBtn'), 'Depart', 'New Game', 'NEW');
+    ensureMenuRow(q('quickGameBtn'), 'Express', 'Quick Game', 'QG');
+    ensureMenuRow(q('settingsBtn'), 'Cabin', 'Settings', '⚙');
+
+    const gates = document.querySelectorAll('.bp-gate span');
+    if(gates && gates[1]) gates[1].textContent = `Seat ${code}`;
+  }
+  function applyAll(){
+    applyBoardingPassStartupCopy();
+    applyDynamicBoardingPassCodes();
+  }
+
+  const oldRefreshSaveSlot2 = (typeof refreshSaveSlot === 'function') ? refreshSaveSlot : null;
+  if(oldRefreshSaveSlot2){
+    refreshSaveSlot = function(){
+      try { oldRefreshSaveSlot2(); } catch(e) {}
+      applyAll();
+    };
+  }
+  const oldRefreshStartScreen2 = (typeof refreshStartScreen === 'function') ? refreshStartScreen : null;
+  if(oldRefreshStartScreen2){
+    refreshStartScreen = function(){
+      try { oldRefreshStartScreen2(); } catch(e) {}
+      applyAll();
+    };
+  }
+  document.addEventListener('DOMContentLoaded', applyAll, {once:true});
+  window.addEventListener('pageshow', applyAll, {passive:true});
+  setTimeout(applyAll, 0);
+})();
