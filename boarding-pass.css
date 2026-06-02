@@ -1087,7 +1087,7 @@ html body #levelStartNum.fmw-levelstart-num{
     padding-bottom:clamp(12px, 2.6dvh, 18px) !important;
   }
   .bp-stamps{
-    transform:translateY(clamp(-30px, -5.2dvh, -20px)) !important;
+    transform:translateY(clamp(-34px, -6.1dvh, -24px)) !important;
     margin-top:clamp(4px, 1.0dvh, 8px) !important;
   }
 }
