@@ -118,14 +118,21 @@ html body #overlay:not(.hidden)::after{
   line-height:1.5; color:var(--bp-navy-soft); text-wrap:pretty; }
 .bp-tagline b{ color:var(--bp-red); font-weight:600; }
 
-.bp-passenger{ display:flex; flex-wrap:wrap; gap:clamp(16px,2.4vw,30px); margin-top:auto; }
+.bp-lower-info{
+  display:flex; flex-direction:column; align-items:flex-start; width:100%;
+  gap:clamp(12px,1.8vw,18px);
+  margin-top:auto; margin-bottom:auto;
+  padding-top:clamp(10px,1.8vw,16px);
+}
+
+.bp-passenger{ display:flex; flex-wrap:wrap; gap:clamp(16px,2.4vw,30px); margin-top:0; }
 .bp-field{ display:flex; flex-direction:column; line-height:1; }
 .bp-field i{ font-style:normal; font-family:'Space Mono',monospace; font-size:clamp(7.5px,.8vw,9px);
   letter-spacing:.18em; text-transform:uppercase; color:var(--bp-red); }
 .bp-field b{ font-family:'Saira Condensed',sans-serif; font-weight:600; font-size:clamp(15px,1.7vw,20px);
   letter-spacing:.05em; text-transform:uppercase; color:var(--bp-navy); margin-top:5px; }
 
-.bp-stamps{ margin-top:clamp(12px,1.8vw,18px); display:flex; align-items:center; gap:clamp(10px,1.6vw,16px); }
+.bp-stamps{ margin-top:0; display:flex; align-items:center; gap:clamp(10px,1.6vw,16px); }
 .bp-stamp{ width:clamp(42px,4.2vw,54px); height:clamp(42px,4.2vw,54px); border-radius:50%; overflow:hidden;
   position:relative; border:2px solid var(--bp-navy); box-shadow:0 4px 9px rgba(0,0,0,.2); }
 .bp-stamp:nth-child(1){ transform:rotate(-9deg); }
@@ -136,6 +143,14 @@ html body #overlay:not(.hidden)::after{
 .bp-stamp img{ width:100%; height:100%; object-fit:cover; filter:saturate(.92) contrast(1.02); }
 .bp-stamp::after{ content:""; position:absolute; inset:0; border-radius:50%;
   box-shadow:inset 0 0 0 3px rgba(243,236,220,.55), inset 0 0 12px rgba(22,52,58,.35); }
+
+@media (max-width: 860px){
+  .bp-lower-info{
+    margin-top:clamp(18px,4vh,28px);
+    margin-bottom:0;
+    padding-top:0;
+  }
+}
 
 /* ---- ticket stub (the menu) ---- */
 .bp-stub{
@@ -1197,5 +1212,64 @@ html body #overlay .bp-stamps{
   html body #overlay .bp-stamps{
     margin-bottom:auto !important;
     transform:none !important;
+  }
+}
+
+/* ============================================================
+   Boarding Pass patch 9 — true lower-group centering.
+   ============================================================ */
+
+/* Treat Passenger / Flags / Class + stamp row as one grouped block.
+   Center that whole group within the remaining cream space below the tagline,
+   instead of anchoring each row separately like a footer. */
+html body #overlay .bp-main{
+  display:flex !important;
+  flex-direction:column !important;
+}
+html body #overlay .bp-lower-info{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:flex-start !important;
+  width:100% !important;
+  gap:clamp(12px,1.8vw,18px) !important;
+  margin-top:auto !important;
+  margin-bottom:auto !important;
+  padding-top:clamp(10px,1.8vw,16px) !important;
+}
+html body #overlay .bp-passenger{
+  margin-top:0 !important;
+  margin-bottom:0 !important;
+  transform:none !important;
+  padding-bottom:0 !important;
+}
+html body #overlay .bp-stamps{
+  margin-top:0 !important;
+  margin-bottom:0 !important;
+  transform:none !important;
+}
+
+@media (orientation: landscape) and (max-height: 520px){
+  html body #overlay .bp-lower-info{
+    gap:clamp(8px,1.3dvh,12px) !important;
+    padding-top:clamp(4px,0.8dvh,8px) !important;
+  }
+  html body #overlay .bp-passenger{
+    gap:clamp(14px,2vw,22px) !important;
+  }
+  html body #overlay .bp-stamps{
+    display:flex !important;
+    gap:clamp(6px,1.2vw,10px) !important;
+  }
+}
+
+@media (max-width:680px){
+  html body #overlay .bp-lower-info{
+    gap:10px !important;
+    padding-top:0 !important;
+  }
+  html body #overlay .bp-stamps{
+    display:flex !important;
+    flex-wrap:wrap !important;
+    gap:10px !important;
   }
 }
