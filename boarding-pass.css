@@ -994,3 +994,28 @@ html body #levelStartNum.fmw-levelstart-num{
   -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h16M12 4v5M8 7l4 3 4-3M12 20v-5M8 17l4-3 4 3' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
   mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h16M12 4v5M8 7l4 3 4-3M12 20v-5M8 17l4-3 4 3' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
 }
+
+/* ============================================================
+   Boarding Pass patch 4 — startup footer lift.
+   ============================================================ */
+
+/* The lower-left ticket fields were sitting too close to the bottom edge on
+   iPhone landscape after the ticket-height tuning. Lift them slightly so the
+   Passenger / Flags / Class block stays fully visible and keeps the boarding
+   pass silhouette intact. */
+@media (orientation: landscape) and (max-height: 520px){
+  .bp-passenger{
+    margin-top:auto !important;
+    transform:translateY(clamp(-18px, -3.2dvh, -10px)) !important;
+    padding-bottom:clamp(8px, 2.0dvh, 14px) !important;
+  }
+}
+
+/* Apply a gentler lift in portrait too, so rotating between orientations does
+   not leave the lower ticket information pressed against the edge. */
+@media (orientation: portrait) and (max-width: 700px){
+  .bp-passenger{
+    transform:translateY(clamp(-10px, -1.4dvh, -5px)) !important;
+    padding-bottom:clamp(8px, 1.6dvh, 14px) !important;
+  }
+}
