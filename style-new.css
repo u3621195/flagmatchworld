@@ -7670,12 +7670,12 @@ body{font-family:var(--fmw-font)!important;} .theme-picker,.theme-picker-overlay
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h14M13 7l5 5-5 5' fill='none' stroke='black' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
 }
 #game-area .hud-bar .movement-xcenter {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h16M9 7l5 5-5 5M15 7l-5 5 5 5' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h16M9 7l5 5-5 5M15 7l-5 5 5 5' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4v16M4 12h4M8 9l3 3-3 3M20 12h-4M16 9l-3 3 3 3' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4v16M4 12h4M8 9l3 3-3 3M20 12h-4M16 9l-3 3 3 3' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
 }
 #game-area .hud-bar .movement-ycenter {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4v16M7 9l5 5 5-5M7 15l5-5 5 5' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4v16M7 9l5 5 5-5M7 15l5-5 5 5' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h16M12 4v4M9 8l3 3 3-3M12 20v-4M9 16l3-3 3 3' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h16M12 4v4M9 8l3 3 3-3M12 20v-4M9 16l3-3 3 3' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
 }
 #game-area .hud-bar .movement-random {
   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 7h3c3.5 0 4.4 10 8 10h5M17 14l3 3-3 3M4 17h3c1.4 0 2.3-1.2 3.1-2.8M13.4 9.5C14 8.1 14.9 7 17 7h3M17 4l3 3-3 3' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
@@ -9504,12 +9504,12 @@ body.critical-time #boardTimerBar { background: linear-gradient(90deg, #ff365f, 
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h14M13 7l5 5-5 5' fill='none' stroke='black' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
 }
 #levelStartIcon.movement-xcenter {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h16M9 7l5 5-5 5M15 7l-5 5 5 5' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h16M9 7l5 5-5 5M15 7l-5 5 5 5' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4v16M4 12h4M8 9l3 3-3 3M20 12h-4M16 9l-3 3 3 3' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4v16M4 12h4M8 9l3 3-3 3M20 12h-4M16 9l-3 3 3 3' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
 }
 #levelStartIcon.movement-ycenter {
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4v16M7 9l5 5 5-5M7 15l5-5 5 5' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4v16M7 9l5 5 5-5M7 15l5-5 5 5' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h16M12 4v4M9 8l3 3 3-3M12 20v-4M9 16l3-3 3 3' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h16M12 4v4M9 8l3 3 3-3M12 20v-4M9 16l3-3 3 3' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
 }
 #levelStartIcon.movement-random {
   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 7h3c3.5 0 4.4 10 8 10h5M17 14l3 3-3 3M4 17h3c1.4 0 2.3-1.2 3.1-2.8M13.4 9.5C14 8.1 14.9 7 17 7h3M17 4l3 3-3 3' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
@@ -9524,4 +9524,23 @@ body.critical-time #boardTimerBar { background: linear-gradient(90deg, #ff365f, 
   .fmw-levelstart-rule-panel {
     align-items: center !important;
   }
+}
+
+
+/* ============================================================
+   Atlas Index patch 3 — wider center-gap movement icons.
+   ============================================================ */
+
+/* X CENTER = vertical center line, arrows point inward but stop before the line. */
+#game-area .hud-bar .movement-xcenter,
+#levelStartIcon.movement-xcenter{
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3v18M3.5 12h4M7.5 8.8l3.1 3.2-3.1 3.2M20.5 12h-4M16.5 8.8l-3.1 3.2 3.1 3.2' fill='none' stroke='black' stroke-width='2.15' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3v18M3.5 12h4M7.5 8.8l3.1 3.2-3.1 3.2M20.5 12h-4M16.5 8.8l-3.1 3.2 3.1 3.2' fill='none' stroke='black' stroke-width='2.15' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+}
+
+/* Y CENTER = horizontal center line, arrows point inward but stop before the line. */
+#game-area .hud-bar .movement-ycenter,
+#levelStartIcon.movement-ycenter{
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 12h18M12 3.5v4M8.8 7.5l3.2 3.1 3.2-3.1M12 20.5v-4M8.8 16.5l3.2-3.1 3.2 3.1' fill='none' stroke='black' stroke-width='2.15' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 12h18M12 3.5v4M8.8 7.5l3.2 3.1 3.2-3.1M12 20.5v-4M8.8 16.5l3.2-3.1 3.2 3.1' fill='none' stroke='black' stroke-width='2.15' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
 }

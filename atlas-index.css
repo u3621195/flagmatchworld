@@ -480,3 +480,410 @@ html body .modal.compact-message-modal .modal-btn.secondary{
   .ai-sub{ display:none; }
   .ai-strip-lbl{ width:130px; }
 }
+
+
+/* ============================================================
+   Atlas Index — Boarding Pass polish parity patch.
+   Ports the accepted mobile/layout/gameplay refinements while
+   preserving the Atlas editorial visual language.
+   ============================================================ */
+
+:root,
+html[data-theme]{
+  --ai-radius-shell:4px;
+  --ai-radius-control:7px;
+  --ai-start-display:'Saira Condensed',sans-serif;
+  --ai-start-label:'Space Mono',monospace;
+  --ai-start-body:'Archivo',system-ui,sans-serif;
+}
+
+/* Startup: safe-area aware sizing, with clean orientation reflow. */
+@media (orientation: landscape) and (max-height: 520px){
+  html body #overlay,
+  html body #overlay:not(.hidden){
+    align-items:center !important;
+    padding-top:max(10px, env(safe-area-inset-top)) !important;
+    padding-bottom:max(10px, env(safe-area-inset-bottom)) !important;
+    padding-left:max(18px, calc(env(safe-area-inset-left) + 14px)) !important;
+    padding-right:max(18px, calc(env(safe-area-inset-right) + 14px)) !important;
+  }
+  .ai-start{
+    max-width:min(1220px, calc(100vw - env(safe-area-inset-left) - env(safe-area-inset-right) - 28px)) !important;
+    max-height:calc(100dvh - max(24px, env(safe-area-inset-top)) - max(24px, env(safe-area-inset-bottom))) !important;
+    padding:clamp(8px, 2.2dvh, 14px) clamp(12px, 2.2vw, 28px) 0 !important;
+  }
+  .ai-top{ padding-bottom:clamp(6px, 1.6dvh, 10px) !important; }
+  .ai-hero{ padding-top:clamp(7px, 1.8dvh, 13px) !important; padding-bottom:clamp(7px, 1.8dvh, 13px) !important; }
+  .ai-strip{ height:clamp(54px, 13dvh, 68px) !important; }
+}
+
+@media (orientation: portrait) and (max-width: 700px){
+  html body #overlay,
+  html body #overlay:not(.hidden){
+    align-items:center !important;
+    padding-top:max(18px, env(safe-area-inset-top)) !important;
+    padding-bottom:max(18px, env(safe-area-inset-bottom)) !important;
+    overflow:hidden !important;
+  }
+  .ai-start{ min-height:min(78dvh, 780px) !important; }
+  .ai-body{ min-height:0 !important; }
+}
+
+/* Startup wording/brand line remains visible and uses the updated count. */
+.ai-sub{ max-width:42ch !important; }
+.ai-sub b{ color:var(--ai-accent) !important; font-weight:700 !important; }
+@media (orientation: landscape) and (max-height: 520px){
+  .ai-sub{ display:block !important; -webkit-line-clamp:unset !important; overflow:visible !important; }
+}
+
+/* Startup rows: stronger tap affordance, aligned codes, and clear active state. */
+.ai-index{ gap:clamp(6px, 1.4dvh, 9px) !important; padding:clamp(5px, 1.0dvh, 8px) 0 !important; }
+.ai-row{
+  flex:1 1 0 !important;
+  min-height:clamp(48px, 12dvh, 70px) !important;
+  border:1px solid rgba(26,24,19,.16) !important;
+  background:linear-gradient(180deg, rgba(255,255,255,.20), rgba(26,24,19,.025)) !important;
+  border-radius:var(--ai-radius-control) !important;
+  display:grid !important;
+  grid-template-columns:minmax(34px, auto) minmax(0, 1fr) 18px !important;
+  column-gap:clamp(10px,1.4vw,16px) !important;
+  padding:0 clamp(12px,1.6vw,18px) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5) !important;
+}
+.ai-row:first-child{
+  border-color:color-mix(in srgb, var(--ai-accent) 54%, var(--ai-line-strong)) !important;
+  background:linear-gradient(180deg, color-mix(in srgb, var(--ai-accent) 14%, var(--ai-paper-2)), rgba(255,255,255,.18)) !important;
+}
+.ai-row:hover,
+.ai-row:focus-visible{
+  background:var(--ai-ink) !important;
+  color:var(--ai-paper) !important;
+  padding-left:clamp(12px,1.6vw,18px) !important;
+  transform:translateY(-1px);
+  outline:none !important;
+}
+.ai-row:active{ transform:translateY(1px); }
+.ai-row:disabled:hover,.ai-row.disabled:hover{ transform:none !important; background:linear-gradient(180deg, rgba(255,255,255,.20), rgba(26,24,19,.025)) !important; color:var(--ai-ink) !important; }
+.ai-num{ width:auto !important; min-width:34px !important; text-align:right !important; font-variant-numeric:tabular-nums !important; }
+.ai-arr{ justify-self:end !important; transform:none !important; opacity:.55 !important; }
+.ai-row:hover .ai-arr{ color:var(--ai-paper) !important; opacity:1 !important; }
+.ai-row:hover .ai-num{ color:var(--ai-accent) !important; }
+
+/* Startup film strip: keep visible on compact views and protect bottom spacing. */
+@media (orientation: landscape) and (max-height: 520px){
+  .ai-strip{ transform:translateY(clamp(-4px, -0.8dvh, -2px)) !important; }
+  .ai-film .ai-cell img{ height:58% !important; }
+}
+@media (max-width:680px){
+  .ai-film{ display:flex !important; }
+  .ai-film .ai-cell:nth-child(n+7){ display:none !important; }
+  .ai-strip{ height:clamp(62px, 9.8dvh, 78px) !important; }
+  .ai-strip-lbl{ width:clamp(126px, 34vw, 155px) !important; }
+}
+
+/* Gameplay frame and HUD share the same radius language. */
+#game-area .board-frame.board-frame{ border-radius:var(--ai-radius-shell) !important; }
+#game-area .hud-bar.hud-bar,
+.topbar.hud-bar.hud-bar{ border-radius:var(--ai-radius-shell) var(--ai-radius-shell) 0 0 !important; }
+
+/* HUD controls: unified squircle/atlas button system. */
+#game-area .hud-bar .hud-action-btn,
+.topbar.hud-bar .hud-action-btn,
+#game-area .hud-bar #hintBtn.btn-hint,
+#game-area .hud-bar #shuffleBtn.btn-shuffle,
+#game-area .hud-bar #pauseBtn.hud-pause-btn,
+.topbar.hud-bar #hintBtn.btn-hint,
+.topbar.hud-bar #shuffleBtn.btn-shuffle,
+.topbar.hud-bar #pauseBtn.hud-pause-btn{
+  width:clamp(42px, 10.2dvh, 58px) !important;
+  height:clamp(42px, 10.2dvh, 58px) !important;
+  min-width:clamp(42px, 10.2dvh, 58px) !important;
+  min-height:clamp(42px, 10.2dvh, 58px) !important;
+  border-radius:var(--ai-radius-control) !important;
+  display:grid !important;
+  place-items:center !important;
+  padding:0 !important;
+  position:relative !important;
+  overflow:visible !important;
+}
+#game-area .hud-bar #hintBtn.btn-hint,
+#game-area .hud-bar #shuffleBtn.btn-shuffle,
+.topbar.hud-bar #hintBtn.btn-hint,
+.topbar.hud-bar #shuffleBtn.btn-shuffle{
+  background:var(--ai-paper-2) !important;
+  border:1.5px solid var(--ai-line-strong) !important;
+  box-shadow:3px 3px 0 rgba(26,24,19,.10) !important;
+  color:var(--ai-ink) !important;
+}
+#game-area .hud-bar #pauseBtn.hud-pause-btn,
+.topbar.hud-bar #pauseBtn.hud-pause-btn{
+  background:var(--ai-ink) !important;
+  border:1.5px solid var(--ai-ink) !important;
+  box-shadow:3px 3px 0 rgba(26,24,19,.18) !important;
+  color:var(--ai-paper) !important;
+}
+#game-area .hud-bar .hud-action-btn i,
+.topbar.hud-bar .hud-action-btn i{ font-size:clamp(17px, 4.8dvh, 28px) !important; line-height:1 !important; }
+#game-area .hud-bar .hud-badge,
+.topbar.hud-bar .hud-badge,
+#game-area .hud-bar .notification-dot,
+.topbar.hud-bar .notification-dot{
+  position:absolute !important;
+  top:clamp(-8px, -1.25dvh, -4px) !important;
+  right:clamp(-7px, -1.1dvh, -4px) !important;
+  width:clamp(19px, 4.4dvh, 25px) !important;
+  height:clamp(19px, 4.4dvh, 25px) !important;
+  min-width:clamp(19px, 4.4dvh, 25px) !important;
+  min-height:clamp(19px, 4.4dvh, 25px) !important;
+  border-radius:50% !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:0 !important;
+  line-height:1 !important;
+  text-align:center !important;
+  font-family:var(--ai-start-label) !important;
+  font-size:clamp(9px, 2dvh, 12px) !important;
+  letter-spacing:0 !important;
+  transform:none !important;
+}
+@media (orientation: landscape) and (max-height: 520px){
+  #game-area .hud-bar .hud-action-btn,
+  .topbar.hud-bar .hud-action-btn,
+  #game-area .hud-bar #hintBtn.btn-hint,
+  #game-area .hud-bar #shuffleBtn.btn-shuffle,
+  #game-area .hud-bar #pauseBtn.hud-pause-btn{
+    width:clamp(38px, 11.4dvh, 48px) !important;
+    height:clamp(38px, 11.4dvh, 48px) !important;
+    min-width:clamp(38px, 11.4dvh, 48px) !important;
+    min-height:clamp(38px, 11.4dvh, 48px) !important;
+  }
+}
+
+/* Hint visibility: make the suggested pair unmistakable in the Atlas palette. */
+html body .board .tile.hint,
+html body #board .tile.hint{
+  z-index:5 !important;
+  border-color:var(--ai-accent) !important;
+  animation:aiHintPulseStrong .52s ease-in-out infinite alternate !important;
+}
+html body .board .tile.hint::after,
+html body #board .tile.hint::after{
+  content:"" !important;
+  position:absolute !important;
+  inset:-6px !important;
+  border-radius:inherit !important;
+  pointer-events:none !important;
+  border:3px solid var(--ai-accent) !important;
+  box-shadow:0 0 0 2px rgba(247,243,234,.96), 0 0 24px color-mix(in srgb, var(--ai-accent) 80%, transparent), 0 0 42px color-mix(in srgb, var(--ai-accent) 48%, transparent) !important;
+  animation:aiHintRingStrong .52s ease-in-out infinite alternate !important;
+}
+html body .board .tile.hint img,
+html body #board .tile.hint img,
+html body .board .tile.hint .entity-sprite,
+html body #board .tile.hint .entity-sprite{ filter:saturate(1.3) brightness(1.12) contrast(1.08) !important; }
+@keyframes aiHintPulseStrong{
+  from{ transform:translateY(-1px) scale(1.01); box-shadow:0 0 0 3px color-mix(in srgb, var(--ai-accent) 86%, transparent), 0 0 16px color-mix(in srgb, var(--ai-accent) 62%, transparent), 0 5px 12px rgba(0,0,0,.20); }
+  to{ transform:translateY(-3px) scale(1.055); box-shadow:0 0 0 5px var(--ai-accent), 0 0 30px color-mix(in srgb, var(--ai-accent) 88%, transparent), 0 8px 18px rgba(0,0,0,.25); }
+}
+@keyframes aiHintRingStrong{ from{ opacity:.65; transform:scale(.98); } to{ opacity:1; transform:scale(1.04); } }
+
+/* Settings popup spacing. */
+html body .fmw-settings-panel{ padding-left:20px !important; padding-right:20px !important; }
+html body .fmw-setting-row{ grid-template-columns:minmax(0,1fr) auto !important; padding-left:18px !important; padding-right:18px !important; }
+html body .fmw-setting-row > span{ padding-left:4px !important; text-align:left !important; }
+html body .fmw-setting-row .fmw-toggle,
+html body .fmw-setting-row > button{ margin-right:10px !important; }
+
+/* Level-start popup contrast and updated center-movement icons. */
+html body .fmw-levelstart-card .fmw-levelstart-num,
+html body #levelStartNum.fmw-levelstart-num{
+  color:var(--ai-ink) !important;
+  background:none !important;
+  -webkit-background-clip:initial !important;
+  background-clip:initial !important;
+  -webkit-text-fill-color:var(--ai-ink) !important;
+  filter:none !important;
+  text-shadow:0 2px 0 rgba(189,90,58,.18) !important;
+  opacity:1 !important;
+}
+html body .fmw-levelstart-icon-box{
+  background:rgba(189,90,58,.08) !important;
+  border:1.8px solid var(--ai-line-strong) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5), 3px 3px 0 rgba(26,24,19,.08) !important;
+}
+#levelStartIcon.fmw-levelstart-icon,
+.fmw-levelstart-icon-box #levelStartIcon,
+.fmw-levelstart-icon-box .movement-icon.fmw-levelstart-icon{
+  background:var(--ai-ink) !important;
+  filter:none !important;
+}
+#game-area .hud-bar .movement-xcenter,
+#levelStartIcon.movement-xcenter{
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4v16M4 12h5M7 8l3 4-3 4M20 12h-5M17 8l-3 4 3 4' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4v16M4 12h5M7 8l3 4-3 4M20 12h-5M17 8l-3 4 3 4' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+}
+#game-area .hud-bar .movement-ycenter,
+#levelStartIcon.movement-ycenter{
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h16M12 4v5M8 7l4 3 4-3M12 20v-5M8 17l4-3 4 3' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h16M12 4v5M8 7l4 3 4-3M12 20v-5M8 17l4-3 4 3' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+}
+
+/* Gameplay density pass for iPhone landscape. */
+#game-area .hud-bar.hud-bar,
+.topbar.hud-bar.hud-bar{ border-bottom:0 !important; }
+@media (max-width: 950px) and (orientation: landscape), (max-height: 500px) and (orientation: landscape){
+  :root{
+    --gap:clamp(2px, .62dvh, 4px) !important;
+    --tile-gap:clamp(1px, .42dvh, 3px) !important;
+  }
+  .board-frame{ gap:var(--gap) !important; grid-template-rows:var(--hud-h) var(--meter-h) minmax(0, 1fr) !important; }
+  .board-time-meter{ margin-top:0 !important; }
+  .board-wrap{ margin-top:0 !important; }
+  .board{ gap:var(--tile-gap) !important; }
+  .tile{ border-radius:clamp(4px, 1.18dvh, 7px) !important; }
+  .entity-sprite{ width:91% !important; height:91% !important; }
+}
+
+/* Level Complete / Quick Complete: prevent hidden action groups from being displayed by landscape grid rules. */
+html body .fmw-complete-card #mainCompleteActions.hidden,
+html body .fmw-complete-card #quickCompleteActions.hidden,
+html body .fmw-complete-card .fmw-actions.hidden{ display:none !important; }
+
+/* Level Complete: no overlap, no duplicate Quick buttons, and more breathing room. */
+html body .fmw-complete-card{ width:min(760px, 92vw) !important; }
+html body .fmw-complete-card .fmw-score-panel{ overflow:visible !important; }
+@media (orientation: landscape) and (max-height: 560px){
+  html body .fmw-complete-card{
+    width:min(820px, calc(100vw - env(safe-area-inset-left) - env(safe-area-inset-right) - 38px)) !important;
+    max-height:calc(100dvh - 18px) !important;
+    padding:clamp(14px, 3.1dvh, 20px) 24px clamp(16px, 3.3dvh, 22px) !important;
+    overflow:visible !important;
+  }
+  html body .fmw-complete-card .fmw-popup-title{ font-size:clamp(26px, 7.2vh, 38px) !important; margin:0 !important; }
+  html body .fmw-complete-card .fmw-gold-rule{ margin:8px 0 9px !important; }
+  html body .fmw-complete-card .fmw-score-panel{
+    display:grid !important;
+    grid-template-columns:1fr 1fr !important;
+    column-gap:22px !important;
+    row-gap:0 !important;
+    margin:clamp(6px, 1.5dvh, 10px) 0 clamp(12px, 2.4dvh, 16px) !important;
+    padding:clamp(10px, 2.2dvh, 14px) 16px !important;
+  }
+  html body .fmw-complete-card .fmw-score-row{ padding:clamp(4px, 1.1dvh, 7px) 6px !important; min-height:0 !important; font-size:clamp(13px, 3.1vh, 17px) !important; }
+  html body .fmw-complete-card .fmw-total-row{
+    grid-column:1 / -1 !important;
+    margin-top:6px !important;
+    min-height:clamp(46px, 10.5dvh, 58px) !important;
+    padding:clamp(8px, 1.8dvh, 12px) 14px !important;
+    font-size:clamp(20px, 5vh, 30px) !important;
+    border-radius:var(--ai-radius-control) !important;
+  }
+  html body .fmw-complete-card #mainCompleteActions:not(.hidden),
+  html body .fmw-complete-card #quickCompleteActions:not(.hidden){
+    display:grid !important;
+    gap:clamp(8px, 1.8dvh, 12px) !important;
+    margin-top:0 !important;
+  }
+  html body .fmw-complete-card .fmw-actions.two{ gap:10px !important; }
+  html body .fmw-complete-card .fmw-btn{ min-height:clamp(38px, 8.5dvh, 46px) !important; font-size:clamp(14px, 3.2vh, 17px) !important; }
+}
+
+/* Popup typography follows the Atlas startup display system. */
+html body .fmw-popup-card,
+html body .modal.save-modal,
+html body .modal.confirm-modal,
+html body .modal.compact-message-modal{ font-family:var(--ai-start-body) !important; }
+html body .fmw-popup-title,
+html body .fmw-popup-card h1,
+html body .score-summary-title,
+html body .modal h1{
+  font-family:var(--ai-start-display) !important;
+  font-weight:700 !important;
+  letter-spacing:.08em !important;
+  text-transform:uppercase !important;
+}
+html body .fmw-score-row span,
+html body .fmw-levelstart-label,
+html body .fmw-levelstart-rule-label,
+html body .fmw-setting-label,
+html body .modal .modal-kicker{
+  font-family:var(--ai-start-label) !important;
+  letter-spacing:.16em !important;
+  text-transform:uppercase !important;
+}
+html body .fmw-score-row strong,
+html body .fmw-total-row strong,
+html body .fmw-btn,
+html body .modal-btn{
+  font-family:var(--ai-start-display) !important;
+  font-weight:600 !important;
+  letter-spacing:.08em !important;
+  text-transform:uppercase !important;
+}
+
+
+/* ============================================================
+   Atlas Index patch 4 — apply center-gap icons after Atlas skin.
+   ============================================================ */
+
+/* Patch 3 changed style-new.css, but Atlas skin loads later and overrode it.
+   This final override is placed in atlas-index.css so the visible rule-popup
+   icon actually changes. */
+
+#game-area .hud-bar .movement-xcenter,
+#levelStartIcon.movement-xcenter{
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3v18M3.5 12h3.7M7.2 9l3 3-3 3M20.5 12h-3.7M16.8 9l-3 3 3 3' fill='none' stroke='black' stroke-width='2.05' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3v18M3.5 12h3.7M7.2 9l3 3-3 3M20.5 12h-3.7M16.8 9l-3 3 3 3' fill='none' stroke='black' stroke-width='2.05' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+}
+
+#game-area .hud-bar .movement-ycenter,
+#levelStartIcon.movement-ycenter{
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 12h18M12 3.5v3.7M9 7.2l3 3 3-3M12 20.5v-3.7M9 16.8l3-3 3 3' fill='none' stroke='black' stroke-width='2.05' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 12h18M12 3.5v3.7M9 7.2l3 3 3-3M12 20.5v-3.7M9 16.8l3-3 3 3' fill='none' stroke='black' stroke-width='2.05' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+}
+
+
+/* ============================================================
+   Atlas Index patch 6 — borderless startup rows with dark hover.
+   ============================================================ */
+.ai-index{
+  gap:0 !important;
+}
+.ai-row{
+  border:none !important;
+  outline:none !important;
+  box-shadow:none !important;
+  background:transparent !important;
+  border-radius:0 !important;
+  margin:0 !important;
+}
+.ai-row:hover,
+.ai-row:focus-visible{
+  background:var(--ai-ink) !important;
+  box-shadow:none !important;
+  transform:none !important;
+}
+.ai-row:active{
+  background:color-mix(in srgb, var(--ai-ink) 88%, black) !important;
+}
+.ai-row:hover .ai-num,
+.ai-row:focus-visible .ai-num,
+.ai-row:hover .ai-rl b,
+.ai-row:focus-visible .ai-rl b,
+.ai-row:hover .ai-rl i,
+.ai-row:focus-visible .ai-rl i,
+.ai-row:hover .ai-arr,
+.ai-row:focus-visible .ai-arr{
+  color:#f4efe4 !important;
+  opacity:1 !important;
+}
+.ai-row.disabled,
+.ai-row:disabled{
+  opacity:.45 !important;
+  background:transparent !important;
+}
+.ai-row.disabled:hover,
+.ai-row:disabled:hover{
+  background:transparent !important;
+}
