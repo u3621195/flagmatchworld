@@ -1323,7 +1323,22 @@ let comboCount = 0,
   lastMatchAt = 0,
   bestCombo = 0,
   usedHintLvl = 0,
-  usedShuffLvl = 0;
+  usedShuffLvl = 0,
+  boardRunId = 0;
+
+function invalidateBoardRun() {
+  boardRunId += 1;
+  return boardRunId;
+}
+
+function resetBoardForFreshAttempt() {
+  clearInterval(timerId);
+  clearSel();
+  clearPath();
+  invalidateBoardRun();
+  board = [];
+  if (boardEl) boardEl.innerHTML = "";
+}
 const COMBO_WINDOW_MS = 5000;
 const COMBO_POINTS = [100, 150, 200, 300, 400, 500];
 const TIME_BONUS_PER_SECOND = 50;
@@ -2420,7 +2435,9 @@ function clickTile(r, c, el) {
           : `MATCH  +${formatScore(pts)}`;
       if (isComboMatch)
         showCombo(`COMBO x${comboCount}  +${formatScore(pts)}`);
+      const actionRunId = boardRunId;
       setTimeout(() => {
+        if (actionRunId !== boardRunId) return;
         clearPath();
         applyMovement(currentStrategy);
         renderBoard();
@@ -2430,7 +2447,10 @@ function clickTile(r, c, el) {
         } else if (!findMove()) {
           updateBoardInfo();
           moveStatus.textContent = "NO MATCHES // AUTO SHUFFLE";
-          setTimeout(() => shuffleTiles(false), 500);
+          setTimeout(() => {
+            if (actionRunId !== boardRunId) return;
+            shuffleTiles(false);
+          }, 500);
         }
       }, 430);
     } else {
@@ -2575,6 +2595,7 @@ function showGameOver() {
   clearInterval(timerId);
   clearSel();
   clearPath();
+  invalidateBoardRun();
   paused = true;
   gameStarted = false;
   const elapsed = Math.max(0, levelTotalTime - timeLeft);
@@ -2901,6 +2922,7 @@ function prepareNextLevelState(perfectClear = false) {
   timerWarned = false;
   updateHelperDisplay();
   updateTimer();
+  resetBoardForFreshAttempt();
   createBoard();
   renderBoard();
 }
@@ -3036,6 +3058,7 @@ function startGame(options = {}) {
   updateHelperDisplay();
   updateRuleTag();
   updateTimer();
+  resetBoardForFreshAttempt();
   createBoard();
   renderBoard();
   // Show level start popup — timer starts only after OK
@@ -3081,6 +3104,7 @@ function continueFromSave() {
   gameOverOverlay.classList.add("hidden");
   $("themePicker")?.classList.add("hidden");
   appShell.classList.remove("paused");
+  invalidateBoardRun();
   restoreGame(save);
   nextLevelReadyAfterComplete = false;
   timerWarned = false;
@@ -3256,6 +3280,9 @@ function resumeGame() {
 function restartCurrentLevel() {
   nextLevelReadyAfterComplete = false;
   gameOverOverlay.classList.add("hidden");
+  levelCompleteOverlay.classList.add("hidden");
+  pauseOverlay.classList.add("hidden");
+  resetBoardForFreshAttempt();
   levelScore = 0;
   setScoreDisplay();
   resetLevelScoring();

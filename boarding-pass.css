@@ -1273,3 +1273,77 @@ html body #overlay .bp-stamps{
     gap:10px !important;
   }
 }
+
+
+/* ============================================================
+   Boarding Pass patch 10 — portrait breathing room + startup spacing polish.
+   ============================================================ */
+
+/* Portrait / narrow mobile: restore the tagline, use the available vertical
+   room better, and keep the lower info group more spacious instead of dense. */
+@media (max-width:680px){
+  html body #overlay,
+  html body #overlay:not(.hidden){
+    align-items:flex-start !important;
+    padding-top:max(20px, env(safe-area-inset-top)) !important;
+    padding-bottom:max(20px, env(safe-area-inset-bottom)) !important;
+  }
+  html body #overlay .bp-start{
+    max-width:min(92vw, 430px) !important;
+    width:100% !important;
+  }
+  html body #overlay .bp-ticket{
+    grid-template-columns:1fr !important;
+  }
+  html body #overlay .bp-main{
+    min-height:clamp(340px, 42dvh, 430px) !important;
+    padding-top:clamp(18px, 2.8dvh, 24px) !important;
+    padding-bottom:clamp(18px, 2.8dvh, 26px) !important;
+  }
+  html body #overlay .bp-route{
+    margin-top:clamp(14px, 2.0dvh, 20px) !important;
+    margin-bottom:clamp(10px, 1.6dvh, 14px) !important;
+  }
+  html body #overlay .bp-tagline{
+    display:block !important;
+    -webkit-line-clamp:unset !important;
+    overflow:visible !important;
+    margin-bottom:0 !important;
+    max-width:36ch !important;
+  }
+  html body #overlay .bp-lower-info{
+    gap:clamp(16px, 2.4dvh, 24px) !important;
+    padding-top:clamp(18px, 3.2dvh, 28px) !important;
+  }
+  html body #overlay .bp-passenger{
+    gap:clamp(14px, 3vw, 24px) !important;
+  }
+  html body #overlay .bp-stamps{
+    display:flex !important;
+    flex-wrap:wrap !important;
+    gap:12px !important;
+  }
+  html body #overlay .bp-stamp{
+    width:38px !important;
+    height:38px !important;
+  }
+  html body #overlay .bp-stub{
+    padding-top:clamp(16px, 2.4dvh, 20px) !important;
+    padding-bottom:clamp(16px, 2.6dvh, 22px) !important;
+  }
+}
+
+/* Landscape / desktop: give the flag stamp row a little more breathing room
+   below the Passenger / Flags / Class text row. */
+html body #overlay .bp-lower-info{
+  gap:clamp(16px, 2.2vw, 24px) !important;
+}
+@media (orientation: landscape) and (max-height: 520px){
+  html body #overlay .bp-lower-info{
+    gap:clamp(12px, 1.8dvh, 18px) !important;
+    padding-top:clamp(6px, 1.0dvh, 10px) !important;
+  }
+  html body #overlay .bp-stamps{
+    gap:clamp(8px, 1.4vw, 12px) !important;
+  }
+}
