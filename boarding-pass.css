@@ -1019,3 +1019,57 @@ html body #levelStartNum.fmw-levelstart-num{
     padding-bottom:clamp(8px, 1.6dvh, 14px) !important;
   }
 }
+
+/* ============================================================
+   Boarding Pass patch 5 — stronger footer lift + mobile stamps.
+   ============================================================ */
+
+/* Lower-left footer block still sits a touch low on compact layouts.
+   Lift it further and keep a little breathing room above the bottom edge. */
+@media (orientation: landscape) and (max-height: 520px){
+  .bp-main{
+    padding-bottom:clamp(14px, 2.8dvh, 20px) !important;
+  }
+  .bp-passenger{
+    transform:translateY(clamp(-28px, -5.2dvh, -18px)) !important;
+    padding-bottom:clamp(10px, 2.3dvh, 16px) !important;
+    gap:clamp(14px, 2vw, 22px) !important;
+  }
+  .bp-stamps{
+    display:flex !important;
+    margin-top:clamp(6px, 1.2dvh, 10px) !important;
+    gap:clamp(6px, 1.2vw, 10px) !important;
+    transform:translateY(clamp(-24px, -4.2dvh, -14px)) !important;
+  }
+  .bp-stamp{
+    width:clamp(28px, 7.4dvh, 38px) !important;
+    height:clamp(28px, 7.4dvh, 38px) !important;
+    border-width:1.6px !important;
+    box-shadow:0 2px 6px rgba(0,0,0,.18) !important;
+  }
+}
+
+/* Portrait / narrow mobile: keep the stamp row visible below the footer fields,
+   but use a smaller treatment so it still fits comfortably. */
+@media (max-width:680px){
+  .bp-main{
+    padding-bottom:clamp(18px, 3.8dvh, 28px) !important;
+  }
+  .bp-passenger{
+    transform:translateY(clamp(-16px, -2.2dvh, -10px)) !important;
+    padding-bottom:clamp(8px, 1.8dvh, 14px) !important;
+    gap:clamp(14px, 3.2vw, 22px) !important;
+  }
+  .bp-stamps{
+    display:flex !important;
+    margin-top:4px !important;
+    gap:10px !important;
+    flex-wrap:wrap !important;
+    transform:translateY(clamp(-12px, -1.3dvh, -6px)) !important;
+  }
+  .bp-stamp{
+    width:34px !important;
+    height:34px !important;
+    border-width:1.6px !important;
+  }
+}
