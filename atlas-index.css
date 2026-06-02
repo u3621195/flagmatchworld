@@ -542,16 +542,17 @@ html[data-theme]{
   flex:1 1 0 !important;
   min-height:clamp(48px, 12dvh, 70px) !important;
   border:1px solid rgba(26,24,19,.16) !important;
-  background:var(--ai-paper-2) !important;
+  background:linear-gradient(180deg, rgba(255,255,255,.20), rgba(26,24,19,.025)) !important;
   border-radius:var(--ai-radius-control) !important;
   display:grid !important;
   grid-template-columns:minmax(34px, auto) minmax(0, 1fr) 18px !important;
   column-gap:clamp(10px,1.4vw,16px) !important;
   padding:0 clamp(12px,1.6vw,18px) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5) !important;
 }
 .ai-row:first-child{
   border-color:color-mix(in srgb, var(--ai-accent) 54%, var(--ai-line-strong)) !important;
-  background:color-mix(in srgb, var(--ai-accent) 14%, var(--ai-paper-2)) !important;
+  background:linear-gradient(180deg, color-mix(in srgb, var(--ai-accent) 14%, var(--ai-paper-2)), rgba(255,255,255,.18)) !important;
 }
 .ai-row:hover,
 .ai-row:focus-visible{
@@ -562,7 +563,7 @@ html[data-theme]{
   outline:none !important;
 }
 .ai-row:active{ transform:translateY(1px); }
-.ai-row:disabled:hover,.ai-row.disabled:hover{ transform:none !important; background:var(--ai-paper-2) !important; color:var(--ai-ink) !important; }
+.ai-row:disabled:hover,.ai-row.disabled:hover{ transform:none !important; background:linear-gradient(180deg, rgba(255,255,255,.20), rgba(26,24,19,.025)) !important; color:var(--ai-ink) !important; }
 .ai-num{ width:auto !important; min-width:34px !important; text-align:right !important; font-variant-numeric:tabular-nums !important; }
 .ai-arr{ justify-self:end !important; transform:none !important; opacity:.55 !important; }
 .ai-row:hover .ai-arr{ color:var(--ai-paper) !important; opacity:1 !important; }
@@ -1067,7 +1068,6 @@ html body .modal-btn{
     padding-top:clamp(18px, 4.8dvh, 26px) !important;
     padding-bottom:clamp(76px, 17.5dvh, 92px) !important;
     min-height:0 !important;
-    align-self:start !important;
   }
 
   .ai-eyebrow{
@@ -1224,5 +1224,87 @@ html body .modal-btn{
 
   #saveScore{
     font-size:clamp(14px, 3.4dvh, 18px) !important;
+  }
+}
+
+
+/* ============================================================
+   Atlas Index patch 9 — compact divider stop + solid menu buttons.
+   ============================================================ */
+
+/* On iPhone landscape, stop the vertical divider before the footer/flag strip.
+   The original divider is the hero panel border, so hide it and draw a controlled
+   divider that ends exactly above the bottom strip. */
+@media (orientation: landscape) and (max-height: 520px){
+  .ai-body{
+    position:relative !important;
+  }
+  .ai-hero{
+    border-right:0 !important;
+  }
+  .ai-body::after{
+    content:"" !important;
+    position:absolute !important;
+    top:0 !important;
+    bottom:clamp(48px, 12.8dvh, 62px) !important;
+    left:50% !important;
+    width:1.5px !important;
+    background:var(--ai-line-strong) !important;
+    transform:translateX(-.75px) !important;
+    pointer-events:none !important;
+    z-index:2 !important;
+  }
+
+  /* Right-side menu rows: no gradient, no shadow, no raised card effect.
+     Hover/focus remains a single solid dark colour. */
+  .ai-index .ai-row,
+  .ai-row,
+  .ai-row:first-child{
+    background:transparent !important;
+    background-image:none !important;
+    box-shadow:none !important;
+    border:none !important;
+    border-radius:0 !important;
+    transform:none !important;
+  }
+  .ai-row:hover,
+  .ai-row:focus-visible{
+    background:var(--ai-ink) !important;
+    background-image:none !important;
+    box-shadow:none !important;
+    color:var(--ai-paper) !important;
+    transform:none !important;
+  }
+  .ai-row:active{
+    background:#000 !important;
+    background-image:none !important;
+    transform:none !important;
+  }
+  .ai-row:hover .ai-rl b,
+  .ai-row:hover .ai-rl i,
+  .ai-row:hover .ai-num,
+  .ai-row:hover .ai-arr,
+  .ai-row:focus-visible .ai-rl b,
+  .ai-row:focus-visible .ai-rl i,
+  .ai-row:focus-visible .ai-num,
+  .ai-row:focus-visible .ai-arr{
+    color:var(--ai-paper) !important;
+    opacity:1 !important;
+  }
+  .ai-row.disabled,
+  .ai-row:disabled,
+  .ai-row.disabled:hover,
+  .ai-row:disabled:hover{
+    background:transparent !important;
+    background-image:none !important;
+    box-shadow:none !important;
+    color:var(--ai-ink) !important;
+    transform:none !important;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 430px){
+  .ai-body::after{
+    bottom:clamp(42px, 12.2dvh, 52px) !important;
   }
 }
