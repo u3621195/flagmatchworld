@@ -1152,3 +1152,27 @@ html body .fmw-complete-card .fmw-actions.hidden{
     min-height:36px !important;
   }
 }
+
+/* ============================================================
+   Boarding Pass patch 8 — landscape footer vertical centering.
+   ============================================================ */
+
+/* On iPhone landscape the blank area between the tagline and the lower
+   passenger block was uneven — too much space above, footer pinned low.
+   Switch from translateY nudges to proper flex distribution so the
+   passenger/stamp block sits centred in the available white space,
+   matching the visual balance in the target reference. */
+@media (orientation: landscape) and (max-height: 520px){
+  .bp-main{
+    justify-content:space-between !important;
+  }
+  .bp-passenger{
+    margin-top:0 !important;
+    transform:none !important;
+    padding-bottom:clamp(10px, 2.2dvh, 16px) !important;
+  }
+  .bp-stamps{
+    transform:none !important;
+    margin-top:clamp(6px, 1.4dvh, 10px) !important;
+  }
+}
