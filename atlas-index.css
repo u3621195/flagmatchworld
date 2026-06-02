@@ -1033,3 +1033,196 @@ html body .modal-btn{
     height:clamp(48px, 13dvh, 58px) !important;
   }
 }
+
+
+/* ============================================================
+   Atlas Index patch 8 — iPhone landscape startup layout organization.
+   ============================================================ */
+
+/* Fine-tune the compact iPhone landscape Atlas layout:
+   - keep the red section label below the top rule so it does not collide
+   - let the four menu rows use the whole right panel height cleanly
+   - move the bottom strip lower so the center vertical line does not overlap it
+   - keep the saved card and flag film in a clean footer band */
+@media (orientation: landscape) and (max-height: 520px){
+  .ai-start{
+    padding-top:clamp(8px, 1.8dvh, 14px) !important;
+    padding-bottom:clamp(4px, 1.0dvh, 8px) !important;
+  }
+
+  .ai-top{
+    height:clamp(32px, 8.4dvh, 44px) !important;
+    min-height:0 !important;
+    align-items:center !important;
+  }
+
+  .ai-body{
+    height:auto !important;
+    min-height:0 !important;
+    grid-template-columns:minmax(0, 1.02fr) minmax(0, .98fr) !important;
+    border-bottom:0 !important;
+  }
+
+  .ai-hero{
+    position:relative !important;
+    padding-top:clamp(18px, 4.8dvh, 26px) !important;
+    padding-bottom:clamp(76px, 17.5dvh, 92px) !important;
+    min-height:0 !important;
+  }
+
+  .ai-eyebrow{
+    position:relative !important;
+    z-index:4 !important;
+    margin-top:clamp(8px, 2.2dvh, 14px) !important;
+    margin-bottom:clamp(10px, 2.4dvh, 16px) !important;
+    background:var(--ai-paper) !important;
+    padding-right:10px !important;
+  }
+
+  .ai-title{
+    margin-top:0 !important;
+    font-size:clamp(52px, 18.2dvh, 82px) !important;
+    line-height:.86 !important;
+  }
+
+  .ai-sub{
+    margin-top:clamp(8px, 2.0dvh, 12px) !important;
+    max-width:39ch !important;
+    font-size:clamp(12px, 2.9dvh, 15px) !important;
+    line-height:1.25 !important;
+  }
+
+  .ai-index{
+    height:100% !important;
+    align-self:stretch !important;
+    display:grid !important;
+    grid-template-rows:repeat(4, minmax(0, 1fr)) !important;
+    gap:0 !important;
+    padding-top:clamp(8px, 2.0dvh, 12px) !important;
+    padding-bottom:clamp(70px, 16.5dvh, 88px) !important;
+    overflow:hidden !important;
+  }
+
+  .ai-row{
+    min-height:0 !important;
+    height:100% !important;
+    display:grid !important;
+    align-items:center !important;
+    grid-template-columns:clamp(34px, 5vw, 48px) minmax(0, 1fr) clamp(28px, 4vw, 38px) !important;
+    padding:0 clamp(12px, 2.1vw, 18px) !important;
+  }
+
+  .ai-row .ai-rl{
+    justify-content:center !important;
+    min-height:0 !important;
+  }
+
+  .ai-row .ai-rl b{
+    font-size:clamp(20px, 5.4dvh, 30px) !important;
+    line-height:.95 !important;
+  }
+
+  .ai-row .ai-rl i{
+    font-size:clamp(9px, 2.45dvh, 12px) !important;
+    line-height:1.05 !important;
+    margin-top:clamp(3px, .8dvh, 5px) !important;
+  }
+
+  /* Drop the footer band lower and reserve its own clean area below the main
+     split layout. This prevents the vertical center rule and main text from
+     visually crossing the saved game / flag strip. */
+  .ai-strip{
+    position:absolute !important;
+    left:clamp(10px, 2.2vw, 24px) !important;
+    right:clamp(10px, 2.2vw, 24px) !important;
+    bottom:clamp(5px, 1.2dvh, 9px) !important;
+    height:clamp(48px, 12.8dvh, 62px) !important;
+    display:grid !important;
+    grid-template-columns:minmax(190px, 29%) minmax(0, 1fr) !important;
+    align-items:center !important;
+    gap:clamp(12px, 2.4vw, 20px) !important;
+    padding:0 !important;
+    border-top:2px solid var(--ai-ink) !important;
+    overflow:visible !important;
+    z-index:8 !important;
+  }
+
+  .ai-strip-lbl{
+    align-self:stretch !important;
+    height:100% !important;
+    min-height:0 !important;
+    padding:clamp(5px, 1.1dvh, 7px) clamp(11px, 1.6vw, 15px) !important;
+    justify-content:center !important;
+    overflow:hidden !important;
+  }
+
+  .ai-film{
+    height:100% !important;
+    min-width:0 !important;
+    display:flex !important;
+    align-items:center !important;
+    overflow:hidden !important;
+    padding-top:0 !important;
+  }
+
+  .ai-cell{
+    width:clamp(48px, 7.3vw, 64px) !important;
+    min-width:clamp(48px, 7.3vw, 64px) !important;
+    height:100% !important;
+    align-items:center !important;
+    justify-content:center !important;
+    border-left:1px solid rgba(26,24,19,.18) !important;
+  }
+
+  .ai-cell img{
+    width:clamp(34px, 5.4vw, 46px) !important;
+    max-height:clamp(24px, 6.2dvh, 34px) !important;
+  }
+
+  .ai-cell span{
+    display:none !important;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 430px){
+  .ai-top{
+    height:clamp(28px, 8dvh, 36px) !important;
+  }
+
+  .ai-hero{
+    padding-top:clamp(14px, 4.0dvh, 20px) !important;
+    padding-bottom:clamp(58px, 15.0dvh, 72px) !important;
+  }
+
+  .ai-eyebrow{
+    margin-top:clamp(6px, 1.8dvh, 10px) !important;
+    margin-bottom:clamp(8px, 2.0dvh, 12px) !important;
+  }
+
+  .ai-title{
+    font-size:clamp(44px, 17.0dvh, 68px) !important;
+  }
+
+  .ai-sub{
+    font-size:clamp(11px, 2.65dvh, 13px) !important;
+    line-height:1.18 !important;
+  }
+
+  .ai-index{
+    padding-top:clamp(6px, 1.5dvh, 9px) !important;
+    padding-bottom:clamp(52px, 14.0dvh, 66px) !important;
+  }
+
+  .ai-row .ai-rl b{
+    font-size:clamp(18px, 5.0dvh, 25px) !important;
+  }
+
+  .ai-strip{
+    height:clamp(42px, 12.2dvh, 52px) !important;
+    bottom:clamp(4px, 1.0dvh, 7px) !important;
+  }
+
+  #saveScore{
+    font-size:clamp(14px, 3.4dvh, 18px) !important;
+  }
+}
