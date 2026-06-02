@@ -1676,6 +1676,21 @@ function deleteSave(setId = currentSpriteSetId) {
   saveAllSaves(saves);
 }
 
+function persistHelperInventoryOnly() {
+  if (isQuickGame) return;
+  const slot = SPRITE_SETS[currentSaveSlotId] ? currentSaveSlotId : currentSpriteSetId;
+  const saves = loadAllSaves();
+  const save = saves[slot];
+  if (!save) return;
+  save.hintCount = hintCount;
+  save.shuffleCount = shuffleCount;
+  save.usedHintLvl = usedHintLvl;
+  save.usedShuffLvl = usedShuffLvl;
+  save.ts = Date.now();
+  saves[slot] = save;
+  saveAllSaves(saves);
+}
+
 function formatSaveDate(ts) {
   const d = new Date(ts);
   const dd = String(d.getDate()).padStart(2, "0");
@@ -1785,10 +1800,9 @@ function restoreGame(save) {
   level = save.level;
   score = save.score;
   levelScore = save.levelScore || 0;
-  // Recalculate timer from current progression rules so old saves from previous
-  // builds cannot preserve outdated timer allowances.
+  // Always recalculate from current rules so old saves cannot preserve legacy timer values.
   levelTotalTime = getLevelTime(level);
-  timeLeft = levelTotalTime;
+  timeLeft = save.freshLevelCheckpoint ? levelTotalTime : Math.min(save.timeLeft || levelTotalTime, levelTotalTime);
   hintCount = Number.isFinite(save.hintCount) ? save.hintCount : HINTS;
   shuffleCount = Number.isFinite(save.shuffleCount)
     ? save.shuffleCount
@@ -2711,12 +2725,7 @@ function hint() {
   hintCount--;
   usedHintLvl++;
   updateHelperDisplay();
-  // Main Game helper inventory is persistent: deduct and save immediately.
-  if (!isQuickGame) {
-    saveGame();
-    refreshSpriteSavePills();
-    refreshSaveSlot();
-  }
+  persistHelperInventoryOnly();
   document
     .querySelectorAll(".tile.hint")
     .forEach((t) => t.classList.remove("hint"));
@@ -2758,12 +2767,7 @@ function shuffleTiles(count = true) {
     shuffleCount--;
     usedShuffLvl++;
     updateHelperDisplay();
-    // Main Game helper inventory is persistent: deduct and save immediately.
-    if (!isQuickGame) {
-      saveGame();
-      refreshSpriteSavePills();
-      refreshSaveSlot();
-    }
+    persistHelperInventoryOnly();
   }
   renderBoard();
   sfx.shuffle();
@@ -3075,27 +3079,19 @@ function continueFromSave() {
   }
   overlay.classList.add("hidden");
   gameOverOverlay.classList.add("hidden");
-  $("themePicker").classList.add("hidden");
+  $("themePicker")?.classList.add("hidden");
   appShell.classList.remove("paused");
   restoreGame(save);
   nextLevelReadyAfterComplete = false;
-  currentStrategy = getStrategy(level);
-  levelTotalTime = getLevelTime(level);
-  timeLeft = levelTotalTime;
   timerWarned = false;
   paused = false;
   gameStarted = true;
-  updateRuleTag();
-  updateTimer();
-  renderBoard();
   unlockAudio();
   sfx.level();
   playBgmIfAllowed();
   moveStatus.textContent = `SAVE RESTORED  LV ${level}`;
-  if (!isQuickGame && typeof showLevelStartPopup === "function") {
-    showLevelStartPopup(level, currentStrategy, () => {
-      startTimer();
-    });
+  if (!isQuickGame) {
+    showLevelStartPopup(level, currentStrategy, () => startTimer());
   } else {
     startTimer();
   }
@@ -3274,10 +3270,8 @@ function restartCurrentLevel() {
   paused = false;
   gameStarted = true;
   moveStatus.textContent = `RETRY  LV ${level}`;
-  if (!isQuickGame && typeof showLevelStartPopup === "function") {
-    showLevelStartPopup(level, currentStrategy, () => {
-      startTimer();
-    });
+  if (!isQuickGame) {
+    showLevelStartPopup(level, currentStrategy, () => startTimer());
   } else {
     startTimer();
   }
@@ -4096,18 +4090,10 @@ refreshSaveSlot(); // show saved game slot on start screen if one exists
   function renderStartupMosaic(){
     const el=q('fmwStartMosaic'); if(!el || typeof FLAGS_SPRITES === 'undefined') return;
     const w=window.innerWidth||1024, h=window.innerHeight||768;
-    const isPhoneLandscape = w > h && h <= 560;
-    // Startup background mosaic: on iPhone landscape the previous auto-stretch grid
-    // made flags look crowded/overlapped behind the menu. Use smaller fixed cells
-    // with wider gaps only for the decorative startup layer. Gameplay tiles are unaffected.
-    const cw = isPhoneLandscape ? 46 : (w>1200?72:w>760?66:54);
-    const gap = isPhoneLandscape ? 12 : 6;
-    const cols=Math.max(8,Math.ceil((w+120)/(cw+gap)));
-    const rows=Math.ceil((h+140)/((cw*2/3)+gap))+3;
-    const count=cols*rows;
-    el.style.gridTemplateColumns = isPhoneLandscape ? `repeat(${cols}, ${cw}px)` : `repeat(${cols},1fr)`;
-    el.style.gap = `${gap}px`;
-    el.style.justifyContent = 'center';
+    const cw=w>1200?72:w>760?66:54;
+    const cols=Math.max(8,Math.ceil((w+80)/cw));
+    const rows=Math.ceil((h+120)/((cw*2/3)+6))+3;
+    const count=cols*rows; el.style.gridTemplateColumns=`repeat(${cols},1fr)`;
     if(el.childElementCount===count) return;
     el.innerHTML='';
     for(let i=0;i<count;i++){
@@ -4116,29 +4102,12 @@ refreshSaveSlot(); // show saved game slot on start screen if one exists
       d.appendChild(img); el.appendChild(d);
     }
   }
-  function atlasLevelCode(lv){
-    const n = Math.max(1, Number(lv)||1);
-    const letter = 'ABCDEFGH'[(n - 1) % 8] || 'A';
-    return `${String(n).padStart(2,'0')}${letter}`;
-  }
-  function atlasMovementName(lv){
-    const n = Math.max(1, Number(lv)||1);
-    const strategy = getStrategy ? getStrategy(n) : null;
-    return strategy && strategy.name ? strategy.name : 'STATIC';
-  }
   function updateStartupSaveUi(){
     const save=loadSave('flags');
     const btn=q('continueFromSaveBtn');
-    if(btn){
-      btn.disabled=!save;
-      btn.classList.toggle('disabled', !save);
-      const num=btn.querySelector('.ai-num'), title=btn.querySelector('.ai-rl b'), sub=btn.querySelector('.ai-rl i');
-      if(num) num.textContent='01';
-      if(title) title.textContent=save?`Continue · Level ${Number(save.level)||1}`:'Continue';
-      if(sub) sub.textContent=save?'Resume your voyage':'No saved journey';
-    }
+    if(btn){ btn.disabled=!save; btn.classList.toggle('disabled', !save); btn.textContent=save?`Continue · Level ${String(save.level).padStart(2,'0')}`:'Continue'; }
     const sl=q('saveLevel'), ss=q('saveScore'), sd=q('saveDate'), del=q('deleteSaveBtn');
-    if(sl) sl.textContent=save?`Flags · LV ${atlasLevelCode(save.level)}`:'Flags';
+    if(sl) sl.textContent=save?`Flags · LV ${String(save.level).padStart(2,'0')}`:'Flags';
     if(ss) ss.textContent=save?`${formatScore(save.score)} pts`:'No saved game';
     if(sd) sd.textContent=save?formatSaveDate(save.ts):'—';
     if(del) del.classList.add('hidden');
@@ -4316,4 +4285,75 @@ refreshSaveSlot(); // show saved game slot on start screen if one exists
   [0, 50, 200, 600].forEach(ms => setTimeout(run, ms));
   // bfcache restore on iOS: only reset if no game is active
   window.addEventListener('pageshow', run);
+})();
+
+// Boarding Pass second polish patch: dynamic itinerary codes and restored tagline.
+(function fmwBoardingPassSecondPolish(){
+  const q = (id) => document.getElementById(id);
+  const moveLetters = ["A","B","C","D","E","F","G","H"];
+  function movementLetterForLevel(lvl){
+    const n = Math.max(1, parseInt(lvl, 10) || 1);
+    return moveLetters[(n - 1) % 8] || "A";
+  }
+  function flightCodeForLevel(lvl){
+    const n = Math.max(1, parseInt(lvl, 10) || 1);
+    return `${String(n).padStart(2,"0")}${movementLetterForLevel(n)}`;
+  }
+  function ensureMenuRow(btn, kicker, label, code){
+    if(!btn) return;
+    btn.innerHTML = `<span class="bp-mk"><i>${kicker}</i><b>${label}</b></span><span class="bp-seat">${code}</span>`;
+  }
+  function applyBoardingPassStartupCopy(){
+    const tag = document.querySelector('.bp-tagline');
+    if(tag){
+      tag.innerHTML = `<span class="bp-tagline-main">Match flags across the globe</span> — <span class="bp-tagline-info"><b>212 flags.</b> One board. Infinite routes.</span>`;
+    }
+    const fieldLabels = Array.from(document.querySelectorAll('.bp-passenger .bp-field'));
+    fieldLabels.forEach((field) => {
+      const i = field.querySelector('i');
+      const b = field.querySelector('b');
+      if(!i || !b) return;
+      const label = i.textContent.trim().toLowerCase();
+      if(label === 'flags') b.textContent = '212';
+    });
+  }
+  function applyDynamicBoardingPassCodes(){
+    let save = null;
+    try { save = (typeof loadSave === 'function') ? loadSave('flags') : null; } catch(e) {}
+    const continueLevel = save && save.level ? save.level : 1;
+    const code = save ? flightCodeForLevel(continueLevel) : 'LV';
+    const label = save ? `Continue · Level ${String(continueLevel).padStart(2,'0')}` : 'Continue';
+
+    const c = q('continueFromSaveBtn');
+    ensureMenuRow(c, 'Resume', label, code);
+    if(c){ c.disabled = !save; c.classList.toggle('disabled', !save); }
+    ensureMenuRow(q('startBtn'), 'Depart', 'New Game', 'NEW');
+    ensureMenuRow(q('quickGameBtn'), 'Express', 'Quick Game', 'QG');
+    ensureMenuRow(q('settingsBtn'), 'Cabin', 'Settings', '⚙');
+
+    const gates = document.querySelectorAll('.bp-gate span');
+    if(gates && gates[1]) gates[1].textContent = `Seat ${code}`;
+  }
+  function applyAll(){
+    applyBoardingPassStartupCopy();
+    applyDynamicBoardingPassCodes();
+  }
+
+  const oldRefreshSaveSlot2 = (typeof refreshSaveSlot === 'function') ? refreshSaveSlot : null;
+  if(oldRefreshSaveSlot2){
+    refreshSaveSlot = function(){
+      try { oldRefreshSaveSlot2(); } catch(e) {}
+      applyAll();
+    };
+  }
+  const oldRefreshStartScreen2 = (typeof refreshStartScreen === 'function') ? refreshStartScreen : null;
+  if(oldRefreshStartScreen2){
+    refreshStartScreen = function(){
+      try { oldRefreshStartScreen2(); } catch(e) {}
+      applyAll();
+    };
+  }
+  document.addEventListener('DOMContentLoaded', applyAll, {once:true});
+  window.addEventListener('pageshow', applyAll, {passive:true});
+  setTimeout(applyAll, 0);
 })();
