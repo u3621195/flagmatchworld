@@ -1153,37 +1153,49 @@ html body .fmw-complete-card .fmw-actions.hidden{
   }
 }
 
+
 /* ============================================================
-   Boarding Pass patch 8 — landscape footer vertical centering.
+   Boarding Pass patch 8 — startup passenger block vertical centering.
    ============================================================ */
 
-/* Base: group passenger + stamps together as one footer block. */
-.bp-footer{
-  margin-top:auto;
-  display:flex;
-  flex-direction:column;
+/* Keep the Passenger / Flags / Class block and flag stamps centered within
+   the blank cream-ticket space below the tagline. Earlier mobile nudges pushed
+   this group down toward the bottom border; this restores equal breathing room
+   above and below the whole lower information group. */
+html body #overlay .bp-main{
+  display:flex !important;
+  flex-direction:column !important;
+}
+html body #overlay .bp-passenger{
+  margin-top:auto !important;
+  transform:none !important;
+  padding-bottom:0 !important;
+}
+html body #overlay .bp-stamps{
+  margin-bottom:auto !important;
+  transform:none !important;
 }
 
-/* iPhone landscape: reset all translateY hacks from patches 4-6.
-   Use margin-bottom (not margin-top:auto) so the footer group sits a
-   fixed distance from the bottom edge — stamps stay fully visible — and
-   the blank area above it reads as balanced white space. */
 @media (orientation: landscape) and (max-height: 520px){
-  .bp-main{
-    justify-content:flex-start !important;
-  }
-  .bp-passenger{
-    margin-top:0 !important;
-    transform:none !important;
-    padding-bottom:0 !important;
-  }
-  .bp-stamps{
-    transform:none !important;
-  }
-  .bp-footer{
+  html body #overlay .bp-passenger{
     margin-top:auto !important;
-    margin-bottom:clamp(14px, 3.0dvh, 22px) !important;
-    padding-top:0 !important;
+    transform:none !important;
     padding-bottom:0 !important;
+  }
+  html body #overlay .bp-stamps{
+    margin-bottom:auto !important;
+    transform:none !important;
+  }
+}
+
+@media (max-width:680px){
+  html body #overlay .bp-passenger{
+    margin-top:auto !important;
+    transform:none !important;
+    padding-bottom:0 !important;
+  }
+  html body #overlay .bp-stamps{
+    margin-bottom:auto !important;
+    transform:none !important;
   }
 }
