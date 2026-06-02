@@ -1073,3 +1073,21 @@ html body #levelStartNum.fmw-levelstart-num{
     border-width:1.6px !important;
   }
 }
+
+/* ============================================================
+   Boarding Pass patch 6 — landscape-only footer nudge.
+   ============================================================ */
+
+/* iPhone landscape: nudge the lower-left footer text block and stamp row a bit
+   higher so they sit more comfortably above the bottom border. Portrait stays
+   unchanged as requested. */
+@media (orientation: landscape) and (max-height: 520px){
+  .bp-passenger{
+    transform:translateY(clamp(-34px, -6.1dvh, -24px)) !important;
+    padding-bottom:clamp(12px, 2.6dvh, 18px) !important;
+  }
+  .bp-stamps{
+    transform:translateY(clamp(-30px, -5.2dvh, -20px)) !important;
+    margin-top:clamp(4px, 1.0dvh, 8px) !important;
+  }
+}
