@@ -1087,7 +1087,68 @@ html body #levelStartNum.fmw-levelstart-num{
     padding-bottom:clamp(12px, 2.6dvh, 18px) !important;
   }
   .bp-stamps{
-    transform:translateY(clamp(-34px, -6.1dvh, -24px)) !important;
+    transform:translateY(clamp(-30px, -5.2dvh, -20px)) !important;
     margin-top:clamp(4px, 1.0dvh, 8px) !important;
+  }
+}
+
+
+/* ============================================================
+   Boarding Pass patch 7 — Level Complete landscape cleanup.
+   ============================================================ */
+
+/* The earlier landscape layout forced both complete-action groups to display,
+   which overrode the .hidden class. Keep only the correct action group visible:
+   - Main Game: Next Flight / Replay Level / Home
+   - Quick Game: New Quick Game / Home */
+html body .fmw-complete-card #mainCompleteActions.hidden,
+html body .fmw-complete-card #quickCompleteActions.hidden,
+html body .fmw-complete-card .fmw-actions.hidden{
+  display:none !important;
+}
+
+/* After removing the duplicate Quick Game/Home row, give the landscape popup
+   a little more vertical breathing room so it no longer feels squeezed. */
+@media (orientation: landscape) and (max-height: 560px){
+  html body .fmw-complete-card{
+    max-height:calc(100dvh - 18px) !important;
+    padding:clamp(14px, 3.1dvh, 20px) 24px clamp(16px, 3.3dvh, 22px) !important;
+  }
+  html body .fmw-complete-card .fmw-score-panel{
+    margin:clamp(6px, 1.5dvh, 10px) 0 clamp(12px, 2.4dvh, 16px) !important;
+    padding:clamp(10px, 2.2dvh, 14px) 16px !important;
+  }
+  html body .fmw-complete-card .fmw-score-row{
+    padding:clamp(4px, 1.1dvh, 7px) 6px !important;
+  }
+  html body .fmw-complete-card .fmw-total-row{
+    min-height:clamp(46px, 10.5dvh, 58px) !important;
+    padding:clamp(8px, 1.8dvh, 12px) 14px !important;
+  }
+  html body .fmw-complete-card #mainCompleteActions:not(.hidden),
+  html body .fmw-complete-card #quickCompleteActions:not(.hidden){
+    display:grid !important;
+    gap:clamp(8px, 1.8dvh, 12px) !important;
+  }
+  html body .fmw-complete-card .fmw-btn{
+    min-height:clamp(38px, 8.5dvh, 46px) !important;
+  }
+}
+
+/* Extra compact landscape devices still get the duplicate-action fix, but with
+   controlled spacing so the card stays inside the safe area. */
+@media (orientation: landscape) and (max-height: 430px){
+  html body .fmw-complete-card{
+    padding:12px 22px 14px !important;
+  }
+  html body .fmw-complete-card .fmw-score-panel{
+    margin:5px 0 10px !important;
+    padding:9px 14px !important;
+  }
+  html body .fmw-complete-card .fmw-total-row{
+    min-height:44px !important;
+  }
+  html body .fmw-complete-card .fmw-btn{
+    min-height:36px !important;
   }
 }
