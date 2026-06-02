@@ -920,3 +920,77 @@ html body .fmw-levelstart-icon-box{
     height:91% !important;
   }
 }
+
+/* ============================================================
+   Boarding Pass patch 3 — startup orientation height tuning,
+   level-start contrast, and center-movement icon corrections.
+   ============================================================ */
+
+/* Startup: keep the ticket silhouette intact in landscape. The previous pass
+   allowed the card to sit too tall, clipping the top rounded corners on iPhone. */
+@media (orientation: landscape) and (max-height: 520px){
+  html body #overlay,
+  html body #overlay:not(.hidden){
+    align-items:center !important;
+    padding-top:max(14px, env(safe-area-inset-top)) !important;
+    padding-bottom:max(14px, env(safe-area-inset-bottom)) !important;
+  }
+  .bp-start{
+    max-height:calc(100dvh - max(28px, env(safe-area-inset-top)) - max(28px, env(safe-area-inset-bottom))) !important;
+  }
+  .bp-ticket{
+    max-height:calc(100dvh - max(34px, env(safe-area-inset-top)) - max(34px, env(safe-area-inset-bottom))) !important;
+  }
+  .bp-main,
+  .bp-stub{
+    padding-top:clamp(12px, 3.0dvh, 20px) !important;
+    padding-bottom:clamp(10px, 2.6dvh, 18px) !important;
+  }
+  .bp-route{ margin-top:clamp(9px, 2.2dvh, 15px) !important; margin-bottom:clamp(5px, 1.4dvh, 9px) !important; }
+  .bp-menu{ gap:clamp(5px, 1.4dvh, 7px) !important; }
+  .bp-mrow{ padding-top:clamp(7px, 1.7dvh, 10px) !important; padding-bottom:clamp(7px, 1.7dvh, 10px) !important; }
+  .bp-saved{ margin-top:clamp(8px, 1.8dvh, 12px) !important; }
+}
+
+/* Startup: portrait needs a little more vertical room so the cream ticket's
+   middle fields do not get clipped after rotating back from landscape. */
+@media (orientation: portrait) and (max-width: 700px){
+  html body #overlay,
+  html body #overlay:not(.hidden){
+    align-items:center !important;
+    padding-top:max(18px, env(safe-area-inset-top)) !important;
+    padding-bottom:max(18px, env(safe-area-inset-bottom)) !important;
+    overflow:hidden !important;
+  }
+  .bp-start{ min-height:min(74dvh, 760px) !important; align-items:center !important; }
+  .bp-ticket{ min-height:min(62dvh, 610px) !important; }
+  .bp-main{ padding-bottom:clamp(18px, 3.8dvh, 30px) !important; }
+  .bp-passenger{ margin-top:clamp(14px, 3.0dvh, 26px) !important; }
+}
+
+/* Level-start popup: the old chrome text fill was still making the number pale.
+   Override both the background clipping and WebKit text fill directly. */
+html body .fmw-levelstart-card .fmw-levelstart-num,
+html body #levelStartNum.fmw-levelstart-num{
+  color:var(--bp-navy) !important;
+  background:none !important;
+  -webkit-background-clip:initial !important;
+  background-clip:initial !important;
+  -webkit-text-fill-color:var(--bp-navy) !important;
+  filter:none !important;
+  text-shadow:0 2px 0 rgba(214,180,110,.32), 0 0 10px rgba(22,52,58,.18) !important;
+  opacity:1 !important;
+}
+
+/* X-Center / Y-Center movement icons: use the updated version with visible
+   breathing room between the center line and inward arrows. */
+#game-area .hud-bar .movement-xcenter,
+#levelStartIcon.movement-xcenter{
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4v16M4 12h5M7 8l3 4-3 4M20 12h-5M17 8l-3 4 3 4' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4v16M4 12h5M7 8l3 4-3 4M20 12h-5M17 8l-3 4 3 4' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+}
+#game-area .hud-bar .movement-ycenter,
+#levelStartIcon.movement-ycenter{
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h16M12 4v5M8 7l4 3 4-3M12 20v-5M8 17l4-3 4 3' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12h16M12 4v5M8 7l4 3 4-3M12 20v-5M8 17l4-3 4 3' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+}

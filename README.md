@@ -9,3 +9,11 @@ Boarding Pass visual design with latest v5.17 gameplay/rules logic merged:
 - Rule popup appears on Continue and Restart before timer starts.
 - Main Game helpers deduct immediately and persist without refund on restart/quit/game over.
 - Quick Game helpers remain temporary per session.
+
+## Boarding Pass Polish Patch 3
+
+- Tuned startup ticket height by orientation:
+  - landscape is slightly shorter so the rounded boarding-pass corners remain visible;
+  - portrait is slightly taller so the middle ticket fields are not clipped after rotation.
+- Fixed the level-start popup number contrast by removing the old chrome/transparent text fill.
+- Updated X-Center and Y-Center movement icons to the version with a visible gap between the arrows and the center line.
