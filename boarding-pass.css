@@ -1347,3 +1347,227 @@ html body #overlay .bp-lower-info{
     gap:clamp(8px, 1.4vw, 12px) !important;
   }
 }
+
+/* ============================================================
+   Boarding Pass patch 11 — integrated How-to-Play / Boarding Instructions.
+   ============================================================ */
+.bp-howto-overlay{
+  padding:max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)) !important;
+  overflow:auto !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+html body .bp-howto-card{
+  width:min(920px, 94vw) !important;
+  max-height:min(92dvh, 760px) !important;
+  overflow:auto !important;
+  padding:clamp(18px, 2.6vw, 30px) !important;
+  border-radius:18px !important;
+  background:
+    radial-gradient(circle at 18% 8%, rgba(214,180,110,.22), transparent 34%),
+    linear-gradient(180deg, #f8f0dc 0%, #f3ecdc 100%) !important;
+  border:2px solid var(--bp-navy) !important;
+  box-shadow:0 18px 48px rgba(0,0,0,.34), inset 0 0 0 1px rgba(255,255,255,.48) !important;
+}
+.bp-howto-topline{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  font-family:'Space Mono', monospace;
+  font-size:clamp(9px, 1.1vw, 12px);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--bp-navy-soft);
+  opacity:.86;
+  margin-bottom:4px;
+}
+html body .bp-howto-title{ margin-bottom:2px !important; }
+.bp-howto-subtitle{
+  color:var(--bp-navy-soft);
+  font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight:600;
+  text-align:center;
+  margin:0 0 12px;
+}
+.bp-howto-content{
+  display:grid;
+  grid-template-columns:minmax(0, 1.55fr) minmax(240px, .9fr);
+  gap:clamp(14px, 2vw, 22px);
+  margin-top:16px;
+}
+.bp-howto-rules{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0,1fr));
+  gap:12px;
+}
+.bp-howto-cardlet{
+  background:rgba(255,255,255,.42);
+  border:1.5px solid var(--bp-navy);
+  border-radius:12px;
+  padding:12px;
+  min-height:176px;
+  box-shadow:0 5px 0 rgba(22,52,58,.10);
+}
+.bp-howto-cardlet h2{
+  color:var(--bp-navy);
+  font-family:'Saira Condensed', sans-serif;
+  font-size:clamp(18px, 2.1vw, 22px);
+  line-height:1;
+  letter-spacing:.03em;
+  margin:12px 0 6px;
+}
+.bp-howto-cardlet p,
+.bp-howto-tips p{
+  color:var(--bp-navy-soft);
+  font-size:13px;
+  line-height:1.32;
+  margin:0;
+}
+.bp-path-demo{
+  position:relative;
+  height:70px;
+  border-radius:10px;
+  background:rgba(22,52,58,.055);
+  border:1px dashed rgba(22,52,58,.38);
+  overflow:hidden;
+}
+.bp-path-demo::before,
+.bp-path-demo::after{
+  content:'';
+  position:absolute;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:#f3ecdc;
+  border:3px solid var(--bp-navy);
+  z-index:2;
+  box-shadow:0 2px 0 rgba(214,180,110,.55);
+}
+.bp-path-demo::before{ left:16px; top:24px; }
+.bp-path-demo::after{ right:16px; bottom:24px; }
+.bp-path-demo i,
+.bp-path-demo b{
+  position:absolute;
+  display:block;
+  background:var(--bp-gold);
+  border-radius:99px;
+  box-shadow:0 0 0 2px rgba(22,52,58,.12);
+}
+.bp-path-demo.straight::before{ left:15px; top:25px; }
+.bp-path-demo.straight::after{ right:15px; top:25px; bottom:auto; }
+.bp-path-demo.straight i{ height:4px; left:35px; right:35px; top:34px; }
+.bp-path-demo.one-turn::before{ left:15px; top:14px; }
+.bp-path-demo.one-turn::after{ right:15px; bottom:14px; }
+.bp-path-demo.one-turn i{ width:4px; left:24px; top:33px; bottom:24px; }
+.bp-path-demo.one-turn b{ height:4px; left:24px; right:34px; bottom:23px; }
+.bp-path-demo.two-turn::before{ left:14px; bottom:13px; top:auto; }
+.bp-path-demo.two-turn::after{ right:14px; top:13px; bottom:auto; }
+.bp-path-demo.two-turn i{ height:4px; left:33px; right:34px; bottom:22px; }
+.bp-path-demo.two-turn b{ width:4px; right:31px; top:31px; bottom:22px; }
+.bp-howto-tips{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.bp-howto-tips div{
+  display:grid;
+  grid-template-columns:42px minmax(0,1fr);
+  gap:10px;
+  align-items:center;
+  min-height:52px;
+  padding:10px;
+  background:rgba(22,52,58,.045);
+  border:1.5px solid var(--bp-navy);
+  border-radius:10px;
+}
+.bp-howto-tips span{
+  display:grid;
+  place-items:center;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:var(--bp-navy);
+  color:var(--bp-gold);
+  font-family:'Space Mono', monospace;
+  font-weight:700;
+  font-size:12px;
+}
+.bp-howto-actions{ margin-top:18px !important; }
+html body .fmw-help-row{
+  appearance:none;
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  background:rgba(22,52,58,.07) !important;
+  border:0;
+  border-bottom:0 !important;
+  cursor:pointer;
+  padding:13px 0;
+  font:inherit;
+}
+html body .fmw-help-row strong{
+  color:var(--bp-navy);
+  font-family:'Saira Condensed', sans-serif;
+  font-size:20px;
+  letter-spacing:.03em;
+}
+html body .fmw-help-row:hover strong{ color:var(--bp-red); }
+
+@media (orientation: landscape) and (max-height: 520px){
+  html body .bp-howto-card{
+    width:min(960px, calc(100vw - env(safe-area-inset-left) - env(safe-area-inset-right) - 36px)) !important;
+    max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 22px) !important;
+    padding:14px 16px !important;
+  }
+  .bp-howto-content{ grid-template-columns:1.65fr .9fr; gap:12px; margin-top:10px; }
+  .bp-howto-cardlet{ min-height:146px; padding:10px; }
+  .bp-path-demo{ height:54px; }
+  .bp-howto-cardlet h2{ font-size:18px; margin-top:9px; }
+  .bp-howto-cardlet p,.bp-howto-tips p{ font-size:12px; line-height:1.25; }
+  .bp-howto-tips{ gap:8px; }
+  .bp-howto-tips div{ min-height:42px; padding:7px 8px; }
+  .bp-howto-tips span{ width:28px; height:28px; font-size:10px; }
+  .bp-howto-actions{ margin-top:10px !important; }
+}
+
+@media (orientation: portrait) and (max-width: 700px){
+  .bp-howto-overlay{
+    align-items:flex-start !important;
+    justify-content:center !important;
+    overflow:auto !important;
+  }
+  html body .bp-howto-card{
+    width:min(92vw, 430px) !important;
+    max-height:none !important;
+    min-height:calc(100dvh - max(30px, env(safe-area-inset-top)) - max(30px, env(safe-area-inset-bottom))) !important;
+    padding:18px 16px 20px !important;
+    border-radius:20px !important;
+  }
+  .bp-howto-topline{ font-size:9px; }
+  .bp-howto-subtitle{ font-size:14px; max-width:28ch; margin-left:auto; margin-right:auto; }
+  .bp-howto-content{ display:block; margin-top:14px; }
+  .bp-howto-rules{ display:flex; flex-direction:column; gap:10px; }
+  .bp-howto-cardlet{
+    display:grid;
+    grid-template-columns:92px minmax(0,1fr);
+    grid-template-rows:auto auto;
+    column-gap:12px;
+    align-items:center;
+    min-height:0;
+    padding:10px;
+  }
+  .bp-howto-cardlet .bp-path-demo{ grid-row:1 / span 2; height:70px; }
+  .bp-howto-cardlet h2{ margin:0 0 4px; font-size:20px; }
+  .bp-howto-cardlet p{ font-size:12.5px; }
+  .bp-howto-tips{ margin-top:12px; gap:8px; }
+  .bp-howto-tips div{ min-height:46px; padding:8px; }
+  .bp-howto-actions{
+    position:sticky;
+    bottom:0;
+    background:linear-gradient(180deg, rgba(243,236,220,0), #f3ecdc 25%, #f3ecdc 100%);
+    padding-top:14px;
+    margin-bottom:-4px !important;
+  }
+}

@@ -151,6 +151,9 @@
           <button class="bp-mrow" id="quickGameBtn" type="button">
             <span class="bp-mk"><i>Express</i><b>Quick Game</b></span><span class="bp-seat">QG</span>
           </button>
+          <button class="bp-mrow" id="howToPlayBtn" type="button">
+            <span class="bp-mk"><i>Guide</i><b>Boarding Instructions</b></span><span class="bp-seat">?</span>
+          </button>
           <button class="bp-mrow" id="settingsBtn" type="button">
             <span class="bp-mk"><i>Cabin</i><b>Settings</b></span><span class="bp-seat">&#9881;</span>
           </button>
@@ -294,8 +297,53 @@
     <div class="fmw-settings-panel">
       <div class="fmw-setting-row"><span>Music</span><button class="fmw-toggle" id="settingsMusicToggle" type="button" aria-pressed="true"><span></span></button></div>
       <div class="fmw-setting-row"><span>Sound Effects</span><button class="fmw-toggle" id="settingsSoundToggle" type="button" aria-pressed="true"><span></span></button></div>
+      <button class="fmw-setting-row fmw-help-row" id="settingsHowToPlayBtn" type="button"><span>Boarding Instructions</span><strong>How to Play</strong></button>
     </div>
     <div class="fmw-actions"><button class="fmw-btn fmw-btn-teal" id="settingsBackBtn" type="button">Back</button></div>
+  </div>
+</section>
+
+<section class="overlay hidden fmw-popup-overlay bp-howto-overlay" id="howToPlayOverlay" aria-hidden="true">
+  <div class="fmw-popup-card bp-howto-card" role="dialog" aria-modal="true" aria-labelledby="howToPlayTitle">
+    <div class="bp-howto-topline">
+      <span>Flight Manual</span>
+      <span>Gate FMW</span>
+    </div>
+    <h1 class="fmw-popup-title bp-howto-title" id="howToPlayTitle">BOARDING INSTRUCTIONS</h1>
+    <p class="bp-howto-subtitle">Match identical flags that can be connected by a clear route.</p>
+    <hr class="fmw-gold-rule">
+
+    <div class="bp-howto-content">
+      <section class="bp-howto-rules" aria-label="Route rules">
+        <article class="bp-howto-cardlet">
+          <div class="bp-path-demo straight" aria-hidden="true"><i></i><b></b></div>
+          <h2>Straight Match</h2>
+          <p>Connect two matching flags in a straight horizontal or vertical line.</p>
+        </article>
+        <article class="bp-howto-cardlet">
+          <div class="bp-path-demo one-turn" aria-hidden="true"><i></i><b></b></div>
+          <h2>One-Turn Match</h2>
+          <p>The route may turn once when the path is clear.</p>
+        </article>
+        <article class="bp-howto-cardlet">
+          <div class="bp-path-demo two-turn" aria-hidden="true"><i></i><b></b></div>
+          <h2>Two-Turn Match</h2>
+          <p>The route may turn up to two times, but never through another tile.</p>
+        </article>
+      </section>
+
+      <section class="bp-howto-tips" aria-label="Gameplay tips">
+        <div><span>01</span><p>Tap a flag to show the country name.</p></div>
+        <div><span>02</span><p>Matched flags disappear immediately.</p></div>
+        <div><span>03</span><p>Use Hint to reveal one valid pair when stuck.</p></div>
+        <div><span>04</span><p>Use Shuffle to rearrange the remaining flags.</p></div>
+      </section>
+    </div>
+
+    <div class="fmw-actions two bp-howto-actions">
+      <button class="fmw-btn fmw-btn-teal" id="howToBackBtn" type="button">Back</button>
+      <button class="fmw-btn fmw-btn-green" id="howToStartBtn" type="button">Start Playing</button>
+    </div>
   </div>
 </section>
 <section class="overlay hidden fmw-popup-overlay" id="restartConfirmOverlay">

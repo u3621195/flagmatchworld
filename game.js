@@ -4384,3 +4384,136 @@ refreshSaveSlot(); // show saved game slot on start screen if one exists
   window.addEventListener('pageshow', applyAll, {passive:true});
   setTimeout(applyAll, 0);
 })();
+
+// Boarding Pass patch 11: integrated Boarding Instructions / How-to-Play flow.
+(function fmwBoardingPassHowToPlay(){
+  const q = (id) => document.getElementById(id);
+  const HOWTO_SEEN_KEY = 'fmw.boardingPass.howToPlaySeen.v1';
+  let pendingStartAction = null;
+  let returnContext = 'startup';
+
+  function setHidden(id, hidden){
+    const el = q(id);
+    if(!el) return;
+    el.classList.toggle('hidden', !!hidden);
+    el.setAttribute('aria-hidden', hidden ? 'true' : 'false');
+    if(hidden) el.style.display = 'none';
+    else el.style.removeProperty('display');
+  }
+  function setModalOpen(on){
+    try { if(typeof modalOpen === 'function') modalOpen(!!on); } catch(e) {}
+    document.body.classList.toggle('fmw-modal-open', !!on);
+    document.documentElement.classList.toggle('fmw-modal-open', !!on);
+  }
+  function markSeen(){
+    try { localStorage.setItem(HOWTO_SEEN_KEY, 'true'); } catch(e) {}
+  }
+  function hasSeen(){
+    try { return localStorage.getItem(HOWTO_SEEN_KEY) === 'true'; } catch(e) { return false; }
+  }
+  function prepButtons(){
+    const startBtn = q('howToStartBtn');
+    const backBtn = q('howToBackBtn');
+    if(startBtn){
+      const canStart = !!pendingStartAction || returnContext === 'startup';
+      startBtn.classList.toggle('hidden', !canStart);
+      startBtn.textContent = pendingStartAction ? 'Start Playing' : 'New Game';
+    }
+    if(backBtn){
+      backBtn.textContent = pendingStartAction ? 'Back' : (returnContext === 'pause' ? 'Back to Game' : returnContext === 'settings' ? 'Back to Settings' : 'Back');
+    }
+  }
+  function openHowTo(context='startup', action=null){
+    returnContext = context;
+    pendingStartAction = typeof action === 'function' ? action : null;
+    if(context === 'settings') setHidden('settingsOverlay', true);
+    if(context === 'pause') setHidden('pauseOverlay', true);
+    prepButtons();
+    setHidden('howToPlayOverlay', false);
+    setModalOpen(true);
+  }
+  function restoreAfterHowTo(){
+    if(returnContext === 'settings'){
+      setHidden('settingsOverlay', false);
+      setModalOpen(true);
+    } else if(returnContext === 'pause' && (typeof gameStarted === 'undefined' || gameStarted) && (typeof paused === 'undefined' || paused)){
+      setHidden('pauseOverlay', false);
+      setModalOpen(true);
+    } else {
+      setModalOpen(false);
+    }
+  }
+  function closeHowTo(runPending=false){
+    const action = pendingStartAction;
+    const context = returnContext;
+    setHidden('howToPlayOverlay', true);
+    markSeen();
+    pendingStartAction = null;
+    if(runPending && action){
+      setModalOpen(false);
+      action();
+      return;
+    }
+    if(runPending && !action && context === 'startup'){
+      setModalOpen(false);
+      try { startNewGameFromTitle(false); } catch(e) {}
+      return;
+    }
+    restoreAfterHowTo();
+  }
+  function maybeShowFirstTime(action){
+    if(!hasSeen()) openHowTo('startup', action);
+    else action();
+  }
+  function ensureHowToMenuRow(){
+    const btn=q('howToPlayBtn');
+    if(btn){
+      btn.innerHTML = '<span class="bp-mk"><i>Guide</i><b>Boarding Instructions</b></span><span class="bp-seat">?</span>';
+    }
+  }
+
+  const oldRefreshStart = (typeof refreshStartScreen === 'function') ? refreshStartScreen : null;
+  if(oldRefreshStart){
+    refreshStartScreen = function(){
+      try { oldRefreshStart(); } catch(e) {}
+      ensureHowToMenuRow();
+    };
+  }
+
+  const bind = (id, fn) => { const el=q(id); if(el) el.onclick=fn; };
+  bind('howToPlayBtn', () => openHowTo('startup'));
+  bind('settingsHowToPlayBtn', () => openHowTo('settings'));
+  bind('howToBackBtn', () => closeHowTo(false));
+  bind('howToStartBtn', () => closeHowTo(true));
+  const overlay = q('howToPlayOverlay');
+  if(overlay){
+    overlay.addEventListener('click', (e) => { if(e.target === overlay) closeHowTo(false); });
+  }
+
+  // Replace the final Boarding Pass bindings so first-time players see the manual before Level 1.
+  bind('startBtn', () => {
+    try {
+      const existing = (typeof loadSave === 'function') ? loadSave('flags') : null;
+      if(existing){ startNewGameFromTitle(false); return; }
+    } catch(e) {}
+    maybeShowFirstTime(() => startNewGameFromTitle(false));
+  });
+  bind('quickGameBtn', () => maybeShowFirstTime(() => startQuickGame()));
+  bind('confirmNewGameBtn', () => {
+    setHidden('newGameConfirmOverlay', true);
+    maybeShowFirstTime(() => startNewGameFromTitle(true));
+  });
+
+  // Keep the original Settings and Pause paths, with instructions available through Settings.
+  bind('settingsBtn', () => { try { openSettings('startup'); } catch(e) { setHidden('settingsOverlay', false); setModalOpen(true); } });
+  bind('pauseSettingsBtn', () => { try { openSettings('pause'); } catch(e) { setHidden('pauseOverlay', true); setHidden('settingsOverlay', false); setModalOpen(true); } });
+
+  document.addEventListener('keydown', (e) => {
+    const el=q('howToPlayOverlay');
+    if(el && !el.classList.contains('hidden') && e.key === 'Escape'){
+      e.preventDefault();
+      closeHowTo(false);
+    }
+  });
+  ensureHowToMenuRow();
+})();
